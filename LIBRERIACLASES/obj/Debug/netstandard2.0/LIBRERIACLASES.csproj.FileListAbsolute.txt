@@ -1,0 +1,36 @@
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.deps.json
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csprojAssemblyReference.cache
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfoInputs.cache
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Desktop\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.deps.json
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csprojAssemblyReference.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfoInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Proyecto1\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.deps.json
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csprojAssemblyReference.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfoInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4A\PGTA\Code\PGTA_Proyecto1\Proyecto1_Final1\Proyecto1_Final1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.deps.json
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csprojAssemblyReference.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfoInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb

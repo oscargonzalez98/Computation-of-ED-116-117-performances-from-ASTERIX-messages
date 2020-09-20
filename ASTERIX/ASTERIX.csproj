@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B7D7095F-33A9-4459-B9F4-B4A11C2A6E96}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ASTERIX</RootNamespace>
+    <AssemblyName>ASTERIX</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GMap.NET.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsForms, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.WindowsForms.1.7.5\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACASResolutionAdvisoryCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ACASResolutionAdvisoryCAT21.Designer.cs">
+      <DependentUpon>ACASResolutionAdvisoryCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AircraftOperationalStatusCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AircraftOperationalStatusCAT21.Designer.cs">
+      <DependentUpon>AircraftOperationalStatusCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BrowseFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BrowseFile.Designer.cs">
+      <DependentUpon>BrowseFile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataAgesCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataAgesCAT21.Designer.cs">
+      <DependentUpon>DataAgesCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ED.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ED.Designer.cs">
+      <DependentUpon>ED.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ED1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ED1.Designer.cs">
+      <DependentUpon>ED1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Export.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Export.Designer.cs">
+      <DependentUpon>Export.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FigureofMeritv23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FigureofMeritv23.Designer.cs">
+      <DependentUpon>FigureofMeritv23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinalStateSelectedAltitudev23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FinalStateSelectedAltitudev23.Designer.cs">
+      <DependentUpon>FinalStateSelectedAltitudev23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FinalStateSelectedAltitudeCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FinalStateSelectedAltitudeCAT21.Designer.cs">
+      <DependentUpon>FinalStateSelectedAltitudeCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlightLevelinBinaryRepresentationCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlightLevelinBinaryRepresentationCAT10.Designer.cs">
+      <DependentUpon>FlightLevelinBinaryRepresentationCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IntermediateStateSelectedAltitudev23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IntermediateStateSelectedAltitudev23.Designer.cs">
+      <DependentUpon>IntermediateStateSelectedAltitudev23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LinkTechnologyv23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LinkTechnologyv23.Designer.cs">
+      <DependentUpon>LinkTechnologyv23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MapView1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapView1.Designer.cs">
+      <DependentUpon>MapView1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MetInfoCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MetInfoCAT21.Designer.cs">
+      <DependentUpon>MetInfoCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MetInfov23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MetInfov23.Designer.cs">
+      <DependentUpon>MetInfov23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Mode3ACodeCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Mode3ACodeCAT10.Designer.cs">
+      <DependentUpon>Mode3ACodeCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModeSMBDataCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModeSMBDataCAT10.Designer.cs">
+      <DependentUpon>ModeSMBDataCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ModeSMBDataCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModeSMBDataCAT21.Designer.cs">
+      <DependentUpon>ModeSMBDataCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MOPSVersionCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MOPSVersionCAT21.Designer.cs">
+      <DependentUpon>MOPSVersionCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MoreInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MoreInfo.Designer.cs">
+      <DependentUpon>MoreInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Portada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Portada.Designer.cs">
+      <DependentUpon>Portada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="pruebapoly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="pruebapoly.Designer.cs">
+      <DependentUpon>pruebapoly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QualityIndicatorsCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QualityIndicatorsCAT21.Designer.cs">
+      <DependentUpon>QualityIndicatorsCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectedAltitudeCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectedAltitudeCAT21.Designer.cs">
+      <DependentUpon>SelectedAltitudeCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SurfaceCapabilitiesAndCharacteristicsCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SurfaceCapabilitiesAndCharacteristicsCAT21.Designer.cs">
+      <DependentUpon>SurfaceCapabilitiesAndCharacteristicsCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SystemStatusCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SystemStatusCAT10.Designer.cs">
+      <DependentUpon>SystemStatusCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tables.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tables.Designer.cs">
+      <DependentUpon>Tables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TargetReportDescriptorCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TargetReportDescriptorCAT10.Designer.cs">
+      <DependentUpon>TargetReportDescriptorCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TargetReportDescriptorCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TargetReportDescriptorCAT21.Designer.cs">
+      <DependentUpon>TargetReportDescriptorCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TargetReportDescriptorv23.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TargetReportDescriptorv23.Designer.cs">
+      <DependentUpon>TargetReportDescriptorv23.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TargetSizeOrientationCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TargetSizeOrientationCAT10.Designer.cs">
+      <DependentUpon>TargetSizeOrientationCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TargetStatusCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TargetStatusCAT21.Designer.cs">
+      <DependentUpon>TargetStatusCAT21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackStatusCAT10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackStatusCAT10.Designer.cs">
+      <DependentUpon>TrackStatusCAT10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrajectoryIntentCAT21.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrajectoryIntentCAT21.Designer.cs">
+      <DependentUpon>TrajectoryIntentCAT21.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ACASResolutionAdvisoryCAT21.resx">
+      <DependentUpon>ACASResolutionAdvisoryCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AircraftOperationalStatusCAT21.resx">
+      <DependentUpon>AircraftOperationalStatusCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BrowseFile.resx">
+      <DependentUpon>BrowseFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataAgesCAT21.resx">
+      <DependentUpon>DataAgesCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ED.resx">
+      <DependentUpon>ED.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ED1.resx">
+      <DependentUpon>ED1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Export.resx">
+      <DependentUpon>Export.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FigureofMeritv23.resx">
+      <DependentUpon>FigureofMeritv23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinalStateSelectedAltitudeCAT21.resx">
+      <DependentUpon>FinalStateSelectedAltitudeCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FinalStateSelectedAltitudev23.resx">
+      <DependentUpon>FinalStateSelectedAltitudev23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlightLevelinBinaryRepresentationCAT10.resx">
+      <DependentUpon>FlightLevelinBinaryRepresentationCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IntermediateStateSelectedAltitudev23.resx">
+      <DependentUpon>IntermediateStateSelectedAltitudev23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LinkTechnologyv23.resx">
+      <DependentUpon>LinkTechnologyv23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapView1.resx">
+      <DependentUpon>MapView1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MetInfoCAT21.resx">
+      <DependentUpon>MetInfoCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MetInfov23.resx">
+      <DependentUpon>MetInfov23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mode3ACodeCAT10.resx">
+      <DependentUpon>Mode3ACodeCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModeSMBDataCAT10.resx">
+      <DependentUpon>ModeSMBDataCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ModeSMBDataCAT21.resx">
+      <DependentUpon>ModeSMBDataCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MOPSVersionCAT21.resx">
+      <DependentUpon>MOPSVersionCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MoreInfo.resx">
+      <DependentUpon>MoreInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Portada.resx">
+      <DependentUpon>Portada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="pruebapoly.resx">
+      <DependentUpon>pruebapoly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QualityIndicatorsCAT21.resx">
+      <DependentUpon>QualityIndicatorsCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectedAltitudeCAT21.resx">
+      <DependentUpon>SelectedAltitudeCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SurfaceCapabilitiesAndCharacteristicsCAT21.resx">
+      <DependentUpon>SurfaceCapabilitiesAndCharacteristicsCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SystemStatusCAT10.resx">
+      <DependentUpon>SystemStatusCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tables.resx">
+      <DependentUpon>Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TargetReportDescriptorCAT10.resx">
+      <DependentUpon>TargetReportDescriptorCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TargetReportDescriptorCAT21.resx">
+      <DependentUpon>TargetReportDescriptorCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TargetReportDescriptorv23.resx">
+      <DependentUpon>TargetReportDescriptorv23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TargetSizeOrientationCAT10.resx">
+      <DependentUpon>TargetSizeOrientationCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TargetStatusCAT21.resx">
+      <DependentUpon>TargetStatusCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackStatusCAT10.resx">
+      <DependentUpon>TrackStatusCAT10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrajectoryIntentCAT21.resx">
+      <DependentUpon>TrajectoryIntentCAT21.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LIBRERIACLASES\LIBRERIACLASES.csproj">
+      <Project>{329f9e2f-5f22-46ef-ab70-7644bdff52fe}</Project>
+      <Name>LIBRERIACLASES</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

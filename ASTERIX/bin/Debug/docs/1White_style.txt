@@ -1,0 +1,9 @@
+	<Style id="white">
+ 		<LineStyle>
+ 			<color>7fffffff</color>
+ 			<width>4</width>
+ 		</LineStyle>
+ 		<PolyStyle>
+ 			<color>7fffffff</color>
+ 		</PolyStyle>
+ 	</Style>
