@@ -28,10 +28,15 @@ namespace ASTERIX
         List<CAT10> listaMLAT = new List<CAT10>();
         List<CAT10> listaSMR = new List<CAT10>();
 
+        List<CAT10> listaMLATmodeS = new List<CAT10>();
+
         List<CAT10> listaMLAT_Stand = new List<CAT10>();
         List<CAT10> listaMLAT_Apron = new List<CAT10>();
         List<CAT10> listaMLAT_MA = new List<CAT10>();
         List<CAT10> listaMLAT_Airborne = new List<CAT10>();
+
+        List<CAT10> listaMLAT_Airborne_2coma5NM = new List<CAT10>();
+        List<CAT10> listaMLAT_Airborne_5NM = new List<CAT10>();
 
         public List<PointLatLng>  polygonApoints = new List<PointLatLng>();
         public List<PointLatLng>  polygonBpoints = new List<PointLatLng>();
@@ -59,7 +64,7 @@ namespace ASTERIX
             this.listaCAT21 = listaCAT21;
             this.listaCAT21v23 = listaCAT21v23;
 
-
+            // Cordenadas de los poligonos/superficies
             polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
             polygonApoints.Add(new PointLatLng(41.28723009374163, 2.078718953092844));
             polygonApoints.Add(new PointLatLng(41.28885874916784, 2.077748868970652));
@@ -71,20 +76,17 @@ namespace ASTERIX
             polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
             polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
 
-
             polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
             polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
             polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
             polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
             polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
 
-
             polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
             polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
             polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
             polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
             polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
-
 
             polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
             polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
@@ -107,13 +109,11 @@ namespace ASTERIX
             polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
             polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
 
-
             polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
             polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
             polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
             polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
             polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
-
 
             polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
             polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
@@ -121,7 +121,6 @@ namespace ASTERIX
             polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
             polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
             polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
-
 
             polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
             polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
@@ -133,7 +132,6 @@ namespace ASTERIX
             polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
             polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
             polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
-
 
             polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
             polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
@@ -161,7 +159,6 @@ namespace ASTERIX
             polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
             polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
             polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
-
 
             polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
             polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
@@ -203,6 +200,47 @@ namespace ASTERIX
 
         private void ED1_Load(object sender, EventArgs e)
         {
+            // En el load vamos a hacer los filtros y las separaciones que necesitamos para calcular cada performance
+
+            // Separamos los paquetes según son SMR o MLAT
+
+            int i = 0;
+            while (i < listaCAT10.Count)
+            {
+                int SAC = listaCAT10[i].SAC;
+                int SIC = listaCAT10[i].SIC;
+
+                if (SAC == 0 && SIC == 7)
+                {
+                    listaSMR.Add(listaCAT10[i]);
+                }
+                if (SAC == 0 && SIC == 107)
+                {
+                    listaMLAT.Add(listaCAT10[i]);
+                }
+                i = i + 1;
+            }
+
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S
+
+            i = 0;
+            while(i<listaMLAT.Count)
+            {
+                if(listaMLAT[i].TYP == "Mode S multilateration.")
+                {
+                    listaMLATmodeS.Add(listaMLAT[i]);
+                }
+                i = i + 1;
+            }
+
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // Probability of Update: Separamos la listaMLATmodeS en 4 listas según la posición del paquete en el mapa
+
             // Creamos las superficies con las coordenadas anteriores
             var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
             {
@@ -258,59 +296,76 @@ namespace ASTERIX
                 Fill = new SolidBrush(Color.Green)
             };
 
-            // Separamos los paquetes según son SMR o MLAT
-
-            int i = 0;
-            while (i < listaCAT10.Count)
-            {
-                int SAC = listaCAT10[i].SAC;
-                int SIC = listaCAT10[i].SIC;
-
-                if (SAC == 0 && SIC == 7)
-                {
-                    listaSMR.Add(listaCAT10[i]);
-                }
-                if (SAC == 0 && SIC == 107)
-                {
-                    listaMLAT.Add(listaCAT10[i]);
-                }
-                i = i + 1;
-            }
 
             // Separamos los paquetes MLAt según su zona del aeropuerto
 
             i = 0;
-            while(i<listaMLAT.Count)
+            while(i<listaMLATmodeS.Count)
             {
-                // Calculamos coordenadas en wgs84
-
                 double[] coordenadas;
 
-                if(listaMLAT[i].MeasuredPositioninPolarCoordinates.Length>0)
+                if((listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length>0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length>0) || (listaMLATmodeS[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
                 {
-                    coordenadas = NewCoordinatesMLAT(listaMLAT[i].Rho, listaMLAT[i].Theta);
+                    if(listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tienen posición en coordenadas polares
+                    {
+                        coordenadas = NewCoordinatesMLAT(listaMLATmodeS[i].Rho, listaMLATmodeS[i].Theta);
+                    }
+
+                    else // si tienen posición en coordenadas cartesianas
+                    {
+                        double rho = Math.Sqrt((listaMLATmodeS[i].X_cartesian) * (listaMLATmodeS[i].X_cartesian) + (listaMLATmodeS[i].Y_cartesian) * (listaMLATmodeS[i].Y_cartesian));
+                        double theta = (180 / Math.PI) * Math.Atan2(listaMLATmodeS[i].X_cartesian, listaMLATmodeS[i].Y_cartesian);
+
+                        coordenadas = NewCoordinatesMLAT(rho, theta);
+                    }
+
+                    // Todos los paquetes que pasan por aqui tienen coordenadas convertidas a wgs84 y info de la velocidad en coordenadas polares
+                    // Ahora comprobamos si el paquete de turno esta en alguna zona del aeropuerto
+                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                    // Separtamos los paquetes según su zona del aeropuerto, diferenciando los que estan volando y los que no (para pasar de NM/s a kts, o lo que es lo mismo NM/h, hay que multiplicar *3600)
+
+                    // Zona Stand (A,B,C,D,E)
+                    if((insideA==true || insideB == true || insideC == true || insideD == true || insideE == true) && listaMLATmodeS[i].GroundSpeed * 3600 < 200) 
+                    {
+                        listaMLAT_Stand.Add(listaMLATmodeS[i]);
+                    }
+
+                    // Zona Apron (F,G,H)
+                    else if ((insideF == true || insideG == true || insideH == true) && listaMLATmodeS[i].GroundSpeed * 3600 < 200)
+                    {
+                        listaMLAT_Apron.Add(listaMLATmodeS[i]);
+                    }
+
+                    // Zona MA (I)
+                    else if (insideI == true  && listaMLATmodeS[i].GroundSpeed * 3600 < 200)
+                    {
+                        listaMLAT_MA.Add(listaMLATmodeS[i]);
+                    }
+                    
+                    // zona Airborne
+                    else
+                    {
+                        listaMLAT_Airborne.Add(listaMLATmodeS[i]);
+                    }
                 }
-
-                else
-                {
-                    double rho = Math.Sqrt((listaMLAT[i].X_cartesian) * (listaMLAT[i].X_cartesian) + (listaMLAT[i].Y_cartesian) * (listaMLAT[i].Y_cartesian));
-                    double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[i].X_cartesian, listaMLAT[i].Y_cartesian);
-
-                    coordenadas = NewCoordinatesMLAT(rho, theta);
-                }
-
-                bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
 
                 i = i + 1;
             }
+
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // Position Accuracy: Ya temgo las listas de paquetes en Stand, MA y Apron, falta filtrar los paquetes Airborne segun estan a 2.5NM o entre 2.5 y 5 NM del threshold de la pista
+
         }
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -34,3 +34,12 @@ C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRER
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\AsterixDecoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.deps.json
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csprojAssemblyReference.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfoInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb

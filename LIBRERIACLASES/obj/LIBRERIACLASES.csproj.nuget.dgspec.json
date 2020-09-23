@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\AsterixDecoder\\LIBRERIACLASES\\LIBRERIACLASES.csproj": {}
+    "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\LIBRERIACLASES.csproj": {}
   },
   "projects": {
-    "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\AsterixDecoder\\LIBRERIACLASES\\LIBRERIACLASES.csproj": {
+    "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\LIBRERIACLASES.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\AsterixDecoder\\LIBRERIACLASES\\LIBRERIACLASES.csproj",
+        "projectUniqueName": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\LIBRERIACLASES.csproj",
         "projectName": "LIBRERIACLASES",
-        "projectPath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\AsterixDecoder\\LIBRERIACLASES\\LIBRERIACLASES.csproj",
+        "projectPath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\LIBRERIACLASES.csproj",
         "packagesPath": "C:\\Users\\oscar\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\AsterixDecoder\\LIBRERIACLASES\\obj\\",
+        "outputPath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\oscar\\AppData\\Roaming\\NuGet\\NuGet.Config",
