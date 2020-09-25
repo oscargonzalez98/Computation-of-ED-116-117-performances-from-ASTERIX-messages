@@ -379,8 +379,6 @@ namespace ASTERIX
             pb_UpdateRate.Maximum = listaMLATmodeS.Count;
             pb_UpdateRate.Value = 0;
 
-            int suma = 0;
-
             int i= 0;
             while(i<listaMLATmodeS.Count)
             {
@@ -413,7 +411,6 @@ namespace ASTERIX
                         }
 
                         listadelistasdeavionesconmismonombre.Add(ListaPlanesMismoNombre);
-                        suma = suma + ListaPlanesMismoNombre.Count;
                         if (listaMLATmodeS[i].TargetIdentification.Length > 0) { listaNombresUsados.Add(TargetIdentification); }
                         if (listaMLATmodeS[i].TargetAdress.Length > 0) { listaNombresUsados.Add(TargetAddress); }
 
@@ -425,8 +422,10 @@ namespace ASTERIX
                             AvgSeconds = AvgSeconds + (ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds);
                             k = k + 1;
                         }
-                        AvgSeconds = AvgSeconds / (ListaPlanesMismoNombre.Count);
+                        AvgSeconds = AvgSeconds / (ListaPlanesMismoNombre.Count-1);
                         listaAvgDelay.Add(AvgSeconds);
+
+
 
                         IndividualBar bar1 = new IndividualBar(TargetIdentification, TargetAddress, AvgSeconds);
                         listBarsUpdateRate.Add(bar1);
@@ -435,8 +434,6 @@ namespace ASTERIX
                 i = i + 1;
                 pb_UpdateRate.Value = i;
             }
-
-            listBarsUpdateRate = listBarsUpdateRate.OrderBy(o => o.AverageTime).ToList();
         }
 
         private void bt_ShowResultsUpdateRate_Click(object sender, EventArgs e)

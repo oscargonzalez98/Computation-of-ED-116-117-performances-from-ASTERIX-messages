@@ -47,7 +47,6 @@
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
-            series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart.Series.Add(series1);
