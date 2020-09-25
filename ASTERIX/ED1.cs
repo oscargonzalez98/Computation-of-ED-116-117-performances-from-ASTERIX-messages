@@ -56,6 +56,9 @@ namespace ASTERIX
         double LatMLAT = 41.297063;
         double LonMLAT = 2.078447;
 
+        // Lista Bar Chart UpdateRate
+        public List<IndividualBar> listBarsUpdateRate = new List<IndividualBar>();
+
         public ED1(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23)
         {
             InitializeComponent();
@@ -360,13 +363,123 @@ namespace ASTERIX
 
                 i = i + 1;
             }
-
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-            // Position Accuracy: Ya temgo las listas de paquetes en Stand, MA y Apron, falta filtrar los paquetes Airborne segun estan a 2.5NM o entre 2.5 y 5 NM del threshold de la pista
-
         }
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        private void bt_CalculateUpdateRate_Click(object sender, EventArgs e)
+        {
+
+            List<string> listaNombresUsados = new List<string>();
+            List<List<CAT10>> listadelistasdeavionesconmismonombre = new List<List<CAT10>>();
+            List<double> listaAvgDelay = new List<double>();
+
+            pb_UpdateRate.Maximum = listaMLATmodeS.Count;
+            pb_UpdateRate.Value = 0;
+
+            int suma = 0;
+
+            int i= 0;
+            while(i<listaMLATmodeS.Count)
+            {
+                string TargetIdentification;
+                string TargetAddress;
+
+                if ((listaMLATmodeS[i].TargetIdentification.Length > 0 && listaMLATmodeS[i].TargetAdress.Length > 0) || (listaMLATmodeS[i].TargetIdentification.Length > 0) || (listaMLATmodeS[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
+                {
+                    TargetIdentification = listaMLATmodeS[i].TargetIdentification_decoded;
+                    TargetAddress = listaMLATmodeS[i].TargetAdress_decoded;
+
+                    if ((listaNombresUsados.Contains(TargetIdentification) && listaNombresUsados.Contains(TargetAddress)) || (listaNombresUsados.Contains(TargetIdentification)) || (listaNombresUsados.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados
+                    { }
+                    else
+                    {
+                        int j = 0;
+                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
+                        while (j < listaMLATmodeS.Count)
+                        {
+                            if (listaMLATmodeS[j].TargetIdentification_decoded == TargetIdentification && listaMLATmodeS[j].TargetIdentification_decoded != "")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLATmodeS[j]);
+                            }
+
+                            else if (listaMLATmodeS[j].TargetAdress_decoded == TargetAddress && listaMLATmodeS[j].TargetAdress_decoded !="")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLATmodeS[j]);
+                            }
+                            j = j + 1;
+                        }
+
+                        listadelistasdeavionesconmismonombre.Add(ListaPlanesMismoNombre);
+                        suma = suma + ListaPlanesMismoNombre.Count;
+                        if (listaMLATmodeS[i].TargetIdentification.Length > 0) { listaNombresUsados.Add(TargetIdentification); }
+                        if (listaMLATmodeS[i].TargetAdress.Length > 0) { listaNombresUsados.Add(TargetAddress); }
+
+
+                        int k = 0;
+                        double AvgSeconds = 0;
+                        while (k < ListaPlanesMismoNombre.Count - 1)
+                        {
+                            AvgSeconds = AvgSeconds + (ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds);
+                            k = k + 1;
+                        }
+                        AvgSeconds = AvgSeconds / (ListaPlanesMismoNombre.Count);
+                        listaAvgDelay.Add(AvgSeconds);
+
+                        IndividualBar bar1 = new IndividualBar(TargetIdentification, TargetAddress, AvgSeconds);
+                        listBarsUpdateRate.Add(bar1);
+                    }
+                }
+                i = i + 1;
+                pb_UpdateRate.Value = i;
+            }
+
+            listBarsUpdateRate = listBarsUpdateRate.OrderBy(o => o.AverageTime).ToList();
+        }
+
+        private void bt_ShowResultsUpdateRate_Click(object sender, EventArgs e)
+        {
+            BarChartGraphUpdateRate barchart1 = new BarChartGraphUpdateRate(listBarsUpdateRate);
+            barchart1.Show();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -454,5 +567,7 @@ namespace ASTERIX
 
             return listaCoordenadas;
         }
+
+
     }
 }

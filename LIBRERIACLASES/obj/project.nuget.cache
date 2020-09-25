@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "RrP4M52G7+GjjLa3hBCSfa1D6V8o0aUom3igFDEzLNYwt/RL65aSVkIW3xzmH+Egg6wP1rjpKSe2doqrq1M7Ow==",
+  "dgSpecHash": "z2gkO57QXKKsNt0dwVcVFmyS4GMsdJPWyWTt25fHoc2jtTf4zVnzh3Mkdzc+En5z+PwdYo9v7pSMXvvQ5Umdbw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\LIBRERIACLASES.csproj",
+  "projectFilePath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Copia de seguridad Asterix Decoder\\AsterixDecoder\\LIBRERIACLASES\\LIBRERIACLASES.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\oscar\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\oscar\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
