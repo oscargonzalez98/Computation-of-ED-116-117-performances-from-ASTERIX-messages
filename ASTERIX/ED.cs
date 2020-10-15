@@ -456,8 +456,6 @@ namespace ASTERIX
 
             lb_PA.Text = Math.Round((contador_bien / contador_total) * 100, 3).ToString() + " %";
             lb_PA.Visible = true;
-
-            int a = 0;
         }
 
         private void lb_ProbabilityofUpdate_Click(object sender, EventArgs e)

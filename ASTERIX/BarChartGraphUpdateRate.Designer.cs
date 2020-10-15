@@ -47,10 +47,11 @@
             this.chart.Location = new System.Drawing.Point(12, 12);
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
+            series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart.Series.Add(series1);
-            this.chart.Size = new System.Drawing.Size(1396, 426);
+            this.chart.Size = new System.Drawing.Size(1396, 741);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart1";
             this.chart.Click += new System.EventHandler(this.chart_Click);
@@ -59,7 +60,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1420, 450);
+            this.ClientSize = new System.Drawing.Size(1420, 765);
             this.Controls.Add(this.chart);
             this.Name = "BarChartGraphUpdateRate";
             this.Text = "BarChartGraphUpdateRate";

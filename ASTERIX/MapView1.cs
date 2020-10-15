@@ -538,12 +538,19 @@ namespace ASTERIX
                                     overlayLoad.Markers.Add(marker);
                                     marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
                                 }
+                                if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded, " Speed:", listaCAT10[i].GroundSpeed * 1852*3.6); }
+                                else if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded); }
 
-
-
-                                if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded); }
+                                else if (listaCAT10[i].TargetAdress.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[i].TargetAdress_decoded, " Speed:", listaCAT10[i].GroundSpeed * 1852*3.6); }
                                 else if (listaCAT10[i].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[i].TargetAdress_decoded); }
+
+                                else if (listaCAT10[i].TrackNumber.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[i].Tracknumber_value, " Speed:", listaCAT10[i].GroundSpeed * 1852*3.6); }
                                 else if (listaCAT10[i].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[i].Tracknumber_value); }
+
+
+                                //if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded); }
+                                //else if (listaCAT10[i].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[i].TargetAdress_decoded); }
+                                //else if (listaCAT10[i].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[i].Tracknumber_value); }
                             }
 
                             if (listaCAT10[i].MeasuredPositioninPolarCoordinates.Length == 0 && listaCAT10[i].PositioninCartesianCoordinates.Length > 0) // si no tenemos coordenadas polares pero si coordenadas cartesianas
@@ -570,9 +577,17 @@ namespace ASTERIX
                                 overlay.Markers.Add(marker);
 
                                 marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                                if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded); }
+                                if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded, " Speed:", listaCAT10[i].GroundSpeed * 1852*3.6); }
+                                else if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded); }
+
+                                else if (listaCAT10[i].TargetAdress.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[i].TargetAdress_decoded, " Speed:", listaCAT10[i].GroundSpeed * 1852*3.6); }
                                 else if (listaCAT10[i].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[i].TargetAdress_decoded); }
+
+                                else if (listaCAT10[i].TrackNumber.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[i].Tracknumber_value, " Speed:", listaCAT10[i].GroundSpeed * 1852*3.6); }
                                 else if (listaCAT10[i].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[i].Tracknumber_value); }
+                                //if (listaCAT10[i].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[i].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[i].TargetIdentification_decoded); }
+                                //else if (listaCAT10[i].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[i].TargetAdress_decoded); }
+                                //else if (listaCAT10[i].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[i].Tracknumber_value); }
                             }
                         }
                     }
@@ -1596,12 +1611,17 @@ namespace ASTERIX
                                     overlay.Markers.Add(marker);
                                     marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
                                 }
-
-
-
-                                if (listaCAT10[vuelosCAT10[i]].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[vuelosCAT10[i]].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[vuelosCAT10[i]].TargetIdentification_decoded); }
-                                else if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded); }
+                                if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded); }
                                 else if (listaCAT10[vuelosCAT10[i]].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value); }
+                                else if (listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //if (listaCAT10[vuelosCAT10[i]].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[vuelosCAT10[i]].TargetIdentification, 2) > 1 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[vuelosCAT10[i]].TargetIdentification_decoded, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //else if (listaCAT10[vuelosCAT10[i]].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[vuelosCAT10[i]].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[vuelosCAT10[i]].TargetIdentification_decoded); }
+
+                                //else if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //else if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded); }
+
+                                //else if (listaCAT10[vuelosCAT10[i]].TrackNumber.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //else if (listaCAT10[vuelosCAT10[i]].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value); }
                             }
 
                             if (listaCAT10[vuelosCAT10[i]].MeasuredPositioninPolarCoordinates.Length == 0 && listaCAT10[vuelosCAT10[i]].PositioninCartesianCoordinates.Length > 0) // si no tenemos coordenadas polares pero si coordenadas cartesianas
@@ -1628,9 +1648,17 @@ namespace ASTERIX
                                 overlay.Markers.Add(marker);
 
                                 marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                                if (listaCAT10[vuelosCAT10[i]].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[vuelosCAT10[i]].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[vuelosCAT10[i]].TargetIdentification_decoded); }
-                                else if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded); }
+                                //if (listaCAT10[vuelosCAT10[i]].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[vuelosCAT10[i]].TargetIdentification, 2) > 1 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[vuelosCAT10[i]].TargetIdentification_decoded, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //else if (listaCAT10[vuelosCAT10[i]].TargetIdentification.Length > 0 && Convert.ToInt64(listaCAT10[vuelosCAT10[i]].TargetIdentification, 2) > 1) { marker.ToolTipText = string.Concat("Target Identification: ", listaCAT10[vuelosCAT10[i]].TargetIdentification_decoded); }
+
+                                //else if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //else if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded); }
+
+                                //else if (listaCAT10[vuelosCAT10[i]].TrackNumber.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
+                                //else if (listaCAT10[vuelosCAT10[i]].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value); }
+                                if (listaCAT10[vuelosCAT10[i]].TargetAdress.Length > 0) { marker.ToolTipText = string.Concat("Target Address: ", listaCAT10[vuelosCAT10[i]].TargetAdress_decoded); }
                                 else if (listaCAT10[vuelosCAT10[i]].TrackNumber.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value); }
+                                else if (listaCAT10[vuelosCAT10[i]].CalculatedTrackVelocityinPolarCoordinates.Length > 0) { marker.ToolTipText = string.Concat("Track Number: ", listaCAT10[vuelosCAT10[i]].Tracknumber_value, " Speed:", listaCAT10[vuelosCAT10[i]].GroundSpeed * 3600); }
                             }
                         }
                     }
