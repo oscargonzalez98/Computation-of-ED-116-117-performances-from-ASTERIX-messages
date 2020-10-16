@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ASTERIX
@@ -786,10 +787,10 @@ namespace ASTERIX
             Mapa.DragButton = MouseButtons.Left;
             Mapa.CanDragMap = true;
             Mapa.MapProvider = GMapProviders.GoogleMap;
-            Mapa.Position = new PointLatLng(0, 0);
-            Mapa.MinZoom = 6;
-            Mapa.MaxZoom = 24;
-            Mapa.Zoom = 14;
+            Mapa.Position = new PointLatLng(LatMLAT, LonMLAT);
+            Mapa.MinZoom = 1;
+            Mapa.MaxZoom = 30;
+            Mapa.Zoom = 8;
             Mapa.AutoScroll = true;
 
 
@@ -844,30 +845,25 @@ namespace ASTERIX
                     { }
                     else
                     {
-                        int j = 0;
+                        int j = i+1;
                         List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
                         while (j < listaMLATmodeS.Count)
                         {
                             if (listaMLATmodeS[j].TargetIdentification_decoded == TargetIdentification && listaMLATmodeS[j].TargetIdentification_decoded != "")
                             {
                                 ListaPlanesMismoNombre.Add(listaMLATmodeS[j]);
+                                listaNombresUsados.Add(TargetIdentification);
                             }
 
                             else if (listaMLATmodeS[j].TargetAdress_decoded == TargetAddress && listaMLATmodeS[j].TargetAdress_decoded != "")
                             {
                                 ListaPlanesMismoNombre.Add(listaMLATmodeS[j]);
+                                listaNombresUsados.Add(TargetAddress);
                             }
                             j = j + 1;
                         }
 
-                        if(TargetAddress=="H12" || TargetIdentification=="H12")
-                        {
-
-                        }
-
                         listadelistasdeavionesconmismonombre.Add(ListaPlanesMismoNombre);
-                        if (listaMLATmodeS[i].TargetIdentification.Length > 0) { listaNombresUsados.Add(TargetIdentification); }
-                        else if (listaMLATmodeS[i].TargetAdress.Length > 0) { listaNombresUsados.Add(TargetAddress); }
 
                         int k = 0;
                         double AvgSeconds = 0;
@@ -895,393 +891,23 @@ namespace ASTERIX
 
         private void pb_ProbabilityofUpdate_Click(object sender, EventArgs e)
         {
-            pb_ProbUpdate.Value = 0;
-            pb_ProbUpdate.Maximum = listaMLAT_Apron.Count() + listaMLAT_Stand.Count() + listaMLAT_MA.Count() + listaMLAT_Airborne.Count();
 
             // Apron
 
-            List<string> listaNombresUsados_Apron = new List<string>();
-            List<List<CAT10>> listadelistasdeavionesconmismonombre_Apron = new List<List<CAT10>>();
-            List<double> listaAvgDelay_Apron = new List<double>();
-
-            //pb_UpdateRate.Maximum = listaMLATmodeS.Count;
-            //pb_UpdateRate.Value = 0;
-
-            int i = 0;
-            while (i < listaMLAT_Apron.Count)
-            {
-                string TargetIdentification;
-                string TargetAddress;
-
-                if ((listaMLAT_Apron[i].TargetIdentification.Length > 0 && listaMLAT_Apron[i].TargetAdress.Length > 0) || (listaMLAT_Apron[i].TargetIdentification.Length > 0) || (listaMLAT_Apron[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
-                {
-                    TargetIdentification = listaMLAT_Apron[i].TargetIdentification_decoded;
-                    TargetAddress = listaMLAT_Apron[i].TargetAdress_decoded;
-
-                    if ((listaNombresUsados_Apron.Contains(TargetIdentification) && listaNombresUsados_Apron.Contains(TargetAddress)) || (listaNombresUsados_Apron.Contains(TargetIdentification)) || (listaNombresUsados_Apron.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
-                    { }
-                    else
-                    {
-                        int j = 0;
-                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
-                        while (j < listaMLAT_Apron.Count)
-                        {
-                            if (listaMLAT_Apron[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_Apron[j].TargetIdentification_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
-                            }
-
-                            else if (listaMLAT_Apron[j].TargetAdress_decoded == TargetAddress && listaMLAT_Apron[j].TargetAdress_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
-                            }
-                            j = j + 1;
-                        }
-
-                        listadelistasdeavionesconmismonombre_Apron.Add(ListaPlanesMismoNombre);
-                        if (listaMLAT_Apron[i].TargetIdentification.Length > 0) { listaNombresUsados_Apron.Add(TargetIdentification); }
-                        if (listaMLAT_Apron[i].TargetAdress.Length > 0) { listaNombresUsados_Apron.Add(TargetAddress); }
-
-
-                        int k = 0;
-                        double AvgSeconds = 0;
-
-                        double counterSteps = 0;
-                        double counterTrue = 0;
-
-                        while (k < ListaPlanesMismoNombre.Count - 1)
-                        {
-                            if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30)
-                            {
-                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= 1)
-                                {
-                                    counterTrue = counterTrue + 1;
-                                }
-                                counterSteps = counterSteps + 1;
-                            }
-                            k = k + 1;
-                        }
-                        AvgSeconds = counterTrue / counterSteps;
-                        listaAvgDelay_Apron.Add(AvgSeconds);
-
-                        //IndividualBar bar1 = new IndividualBar(TargetIdentification, TargetAddress, AvgSeconds);
-                        //listBarsUpdateRate.Add(bar1);
-                    }
-                }
-                i = i + 1;
-                pb_ProbUpdate.Value = pb_ProbUpdate.Value + 1;
-                //pb_UpdateRate.Value = i;
-            }
-
-            double AverafeDelayApron = listaAvgDelay_Apron.Average();
-
-
-            double w = -0.5;
-            listaLimitAverageValue_Apron.Add(1 + w);
-            while (w < 0.5)
-            {
-                w = w + 0.001;
-                listaLimitAverageValue_Apron.Add(1 + w);
-            }
-
-            int p = 0;
-            while (p < listaLimitAverageValue_Apron.Count)
-            {
-                double secumpleupdate1s = 0;
-                int q = 0;
-                while (q < listaAvgDelay_Apron.Count)
-                {
-                    if (listaAvgDelay_Apron[q] <= listaLimitAverageValue_Apron[p])
-                    {
-                        secumpleupdate1s = secumpleupdate1s + 1;
-                    }
-                    q = q + 1;
-                }
-                double PUpdateApron = secumpleupdate1s / listaAvgDelay_Apron.Count();
-                listaProbabilityUpdate_Apron.Add(PUpdateApron);
-                p = p + 1;
-            }
+            double AverafeDelayApron = CalculateProbabilityofUpdate(listaMLAT_Apron);
 
             // Stand
 
-            List<string> listaNombresUsados_Stand = new List<string>();
-            List<List<CAT10>> listadelistasdeavionesconmismonombre_Stand = new List<List<CAT10>>();
-            List<double> listaAvgDelay_Stand = new List<double>();
-
-            //pb_UpdateRate.Maximum = listaMLATmodeS.Count;
-            //pb_UpdateRate.Value = 0;
-
-            i = 0;
-            while (i < listaMLAT_Stand.Count)
-            {
-                string TargetIdentification;
-                string TargetAddress;
-
-                if ((listaMLAT_Stand[i].TargetIdentification.Length > 0 && listaMLAT_Stand[i].TargetAdress.Length > 0) || (listaMLAT_Stand[i].TargetIdentification.Length > 0) || (listaMLAT_Stand[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
-                {
-                    TargetIdentification = listaMLAT_Stand[i].TargetIdentification_decoded;
-                    TargetAddress = listaMLAT_Stand[i].TargetAdress_decoded;
-
-                    if ((listaNombresUsados_Stand.Contains(TargetIdentification) && listaNombresUsados_Stand.Contains(TargetAddress)) || (listaNombresUsados_Stand.Contains(TargetIdentification)) || (listaNombresUsados_Stand.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
-                    { }
-                    else
-                    {
-                        int j = 0;
-                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
-                        while (j < listaMLAT_Stand.Count)
-                        {
-                            if (listaMLAT_Stand[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_Stand[j].TargetIdentification_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Stand[j]);
-                            }
-
-                            else if (listaMLAT_Stand[j].TargetAdress_decoded == TargetAddress && listaMLAT_Stand[j].TargetAdress_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Stand[j]);
-                            }
-                            j = j + 1;
-                        }
-
-                        listadelistasdeavionesconmismonombre_Stand.Add(ListaPlanesMismoNombre);
-                        if (listaMLAT_Stand[i].TargetIdentification.Length > 0) { listaNombresUsados_Stand.Add(TargetIdentification); }
-                        if (listaMLAT_Stand[i].TargetAdress.Length > 0) { listaNombresUsados_Stand.Add(TargetAddress); }
-
-
-                        int k = 0;
-                        double AvgSeconds = 0;
-                        double counterSteps = 0;
-                        double counterTrue = 0;
-                        while (k < ListaPlanesMismoNombre.Count - 1)
-                        {
-                            if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30)
-                            {
-                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= 1)
-                                {
-                                    counterTrue = counterTrue + 1;
-                                }
-                                counterSteps = counterSteps + 1;
-                            }
-                            k = k + 1;
-                        }
-                        AvgSeconds = counterTrue / counterSteps;
-                        listaAvgDelay_Stand.Add(AvgSeconds);
-
-
-
-                        //IndividualBar bar1 = new IndividualBar(TargetIdentification, TargetAddress, AvgSeconds);
-                        //listBarsUpdateRate.Add(bar1);
-                    }
-                }
-                i = i + 1;
-                pb_ProbUpdate.Value = pb_ProbUpdate.Value + 1;
-                //pb_UpdateRate.Value = i;
-            }
-
-            double AverafeDelayStand = listaAvgDelay_Stand.Average();
-
-            p = 0;
-            while (p < listaLimitAverageValue_Apron.Count)
-            {
-                double secumpleupdate1s = 0;
-                int q = 0;
-                while (q < listaAvgDelay_Stand.Count)
-                {
-                    if (listaAvgDelay_Stand[q] <= listaLimitAverageValue_Apron[p])
-                    {
-                        secumpleupdate1s = secumpleupdate1s + 1;
-                    }
-                    q = q + 1;
-                }
-                double PUpdateStand = secumpleupdate1s / listaAvgDelay_Stand.Count();
-                listaProbabilityUpdate_Stand.Add(PUpdateStand);
-                p = p + 1;
-            }
+            double AverafeDelayStand = CalculateProbabilityofUpdate(listaMLAT_Stand);
 
             // MA
 
-            List<string> listaNombresUsados_MA = new List<string>();
-            List<List<CAT10>> listadelistasdeavionesconmismonombre_MA = new List<List<CAT10>>();
-            List<double> listaAvgDelay_MA = new List<double>();
-
-            //pb_UpdateRate.Maximum = listaMLATmodeS.Count;
-            //pb_UpdateRate.Value = 0;
-
-            i = 0;
-            while (i < listaMLAT_MA.Count)
-            {
-                string TargetIdentification;
-                string TargetAddress;
-
-                if ((listaMLAT_MA[i].TargetIdentification.Length > 0 && listaMLAT_MA[i].TargetAdress.Length > 0) || (listaMLAT_MA[i].TargetIdentification.Length > 0) || (listaMLAT_MA[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
-                {
-                    TargetIdentification = listaMLAT_MA[i].TargetIdentification_decoded;
-                    TargetAddress = listaMLAT_MA[i].TargetAdress_decoded;
-
-                    if ((listaNombresUsados_MA.Contains(TargetIdentification) && listaNombresUsados_MA.Contains(TargetAddress)) || (listaNombresUsados_MA.Contains(TargetIdentification)) || (listaNombresUsados_MA.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
-                    { }
-                    else
-                    {
-                        int j = 0;
-                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
-                        while (j < listaMLAT_MA.Count)
-                        {
-                            if (listaMLAT_MA[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_MA[j].TargetIdentification_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_MA[j]);
-                            }
-
-                            else if (listaMLAT_MA[j].TargetAdress_decoded == TargetAddress && listaMLAT_MA[j].TargetAdress_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_MA[j]);
-                            }
-                            j = j + 1;
-                        }
-
-                        listadelistasdeavionesconmismonombre_MA.Add(ListaPlanesMismoNombre);
-                        if (listaMLAT_MA[i].TargetIdentification.Length > 0) { listaNombresUsados_MA.Add(TargetIdentification); }
-                        if (listaMLAT_MA[i].TargetAdress.Length > 0) { listaNombresUsados_MA.Add(TargetAddress); }
-
-
-                        int k = 0;
-                        double AvgSeconds = 0;
-                        double counterSteps = 0;
-                        double counterTrue = 0;
-                        while (k < ListaPlanesMismoNombre.Count - 1)
-                        {
-                            if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 10)
-                            {
-                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= 1)
-                                {
-                                    counterTrue = counterTrue + 1;
-                                }
-                                counterSteps = counterSteps + 1;
-                            }
-                            k = k + 1;
-                        }
-                        AvgSeconds = counterTrue / counterSteps;
-                        listaAvgDelay_MA.Add(AvgSeconds);
-
-
-
-                        //IndividualBar bar1 = new IndividualBar(TargetIdentification, TargetAddress, AvgSeconds);
-                        //listBarsUpdateRate.Add(bar1);
-                    }
-                }
-                i = i + 1;
-                pb_ProbUpdate.Value = pb_ProbUpdate.Value + 1;
-                //pb_UpdateRate.Value = i;
-            }
-
-            p = 0;
-            while (p < listaLimitAverageValue_Apron.Count)
-            {
-                double secumpleupdate1s = 0;
-                int q = 0;
-                while (q < listaAvgDelay_MA.Count)
-                {
-                    if (listaAvgDelay_MA[q] <= listaLimitAverageValue_Apron[p])
-                    {
-                        secumpleupdate1s = secumpleupdate1s + 1;
-                    }
-                    q = q + 1;
-                }
-                double PUpdateStand = secumpleupdate1s / listaAvgDelay_MA.Count();
-                listaProbabilityUpdate_MA.Add(PUpdateStand);
-                p = p + 1;
-            }
-
-            double AverafeDelayMA = listaAvgDelay_MA.Average();
+            double AverafeDelayMA = CalculateProbabilityofUpdate(listaMLAT_MA);
 
             // Airborne
 
-            List<string> listaNombresUsados_Airborne = new List<string>();
-            List<List<CAT10>> listadelistasdeavionesconmismonombre_Airborne = new List<List<CAT10>>();
-            List<double> listaAvgDelay_Airborne = new List<double>();
-
-            //pb_UpdateRate.Maximum = listaMLATmodeS.Count;
-            //pb_UpdateRate.Value = 0;
-
-            i = 0;
-            while (i < listaMLAT_Airborne.Count)
-            {
-                string TargetIdentification;
-                string TargetAddress;
-
-                if ((listaMLAT_Airborne[i].TargetIdentification.Length > 0 && listaMLAT_Airborne[i].TargetAdress.Length > 0) || (listaMLAT_Airborne[i].TargetIdentification.Length > 0) || (listaMLAT_Airborne[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
-                {
-                    TargetIdentification = listaMLAT_Airborne[i].TargetIdentification_decoded;
-                    TargetAddress = listaMLAT_Airborne[i].TargetAdress_decoded;
-
-                    if ((listaNombresUsados_Airborne.Contains(TargetIdentification) && listaNombresUsados_Airborne.Contains(TargetAddress)) || (listaNombresUsados_Airborne.Contains(TargetIdentification)) || (listaNombresUsados_Airborne.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
-                    { }
-                    else
-                    {
-                        int j = 0;
-                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
-                        while (j < listaMLAT_Airborne.Count)
-                        {
-                            if (listaMLAT_Airborne[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_Airborne[j].TargetIdentification_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Airborne[j]);
-                            }
-
-                            else if (listaMLAT_Airborne[j].TargetAdress_decoded == TargetAddress && listaMLAT_Airborne[j].TargetAdress_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Airborne[j]);
-                            }
-                            j = j + 1;
-                        }
-
-                        listadelistasdeavionesconmismonombre_Airborne.Add(ListaPlanesMismoNombre);
-                        if (listaMLAT_Airborne[i].TargetIdentification.Length > 0) { listaNombresUsados_Airborne.Add(TargetIdentification); }
-                        if (listaMLAT_Airborne[i].TargetAdress.Length > 0) { listaNombresUsados_Airborne.Add(TargetAddress); }
-
-
-                        int k = 0;
-                        double AvgSeconds = 0;
-                        double counterSteps = 0;
-                        double counterTrue = 0;
-                        if(ListaPlanesMismoNombre.Count() > 1)
-                        {
-                            while (k < ListaPlanesMismoNombre.Count - 1)
-                            {
-                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30)
-                                {
-                                    if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= 1)
-                                    {
-                                        counterTrue = counterTrue + 1;
-                                    }
-                                    counterSteps = counterSteps + 1;
-                                }
-                                k = k + 1;
-                            }
-                            AvgSeconds = counterTrue / counterSteps;
-                            listaAvgDelay_Airborne.Add(AvgSeconds);
-                        }
-                    }
-                }
-                i = i + 1;
-                pb_ProbUpdate.Value = pb_ProbUpdate.Value + 1;
-            }
-
-            p = 0;
-            while (p < listaLimitAverageValue_Apron.Count)
-            {
-                double secumpleupdate1s = 0;
-                int q = 0;
-                while (q < listaAvgDelay_Airborne.Count)
-                {
-                    if (listaAvgDelay_Airborne[q] <= listaLimitAverageValue_Apron[p])
-                    {
-                        secumpleupdate1s = secumpleupdate1s + 1;
-                    }
-                    q = q + 1;
-                }
-                double PUpdateStand = secumpleupdate1s / listaAvgDelay_Airborne.Count();
-                listaProbabilityUpdate_Airborne.Add(PUpdateStand);
-                p = p + 1;
-            }
-            double AverafeDelayAirborne = listaAvgDelay_Airborne.Average();
+            double AverafeDelayAirborne_2coma5NM = CalculateProbabilityofUpdate(listaMLAT_Airborne_2coma5NM);
+            double AverafeDelayAirborne_5NM = CalculateProbabilityofUpdate(listaMLAT_Airborne_5NM);
         }
 
         private void bt_PrecissionAccuracy_Click(object sender, EventArgs e)
@@ -1427,40 +1053,6 @@ namespace ASTERIX
             PlotProbabilityofUpdate lchart1 = new PlotProbabilityofUpdate(listaLimitAverageValue_Apron, listaProbabilityUpdate_Apron, listaProbabilityUpdate_Stand, listaProbabilityUpdate_MA, listaProbabilityUpdate_Airborne);
             lchart1.Show();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1792,6 +1384,89 @@ namespace ASTERIX
             }
 
             return overlayLoad;
+        }
+
+        public double CalculateProbabilityofUpdate(List<CAT10> listaMLAT_Apron)
+        {
+            pb_ProbUpdate.Value = 0;
+            pb_ProbUpdate.Maximum = listaMLAT_Apron.Count() + listaMLAT_Stand.Count() + listaMLAT_MA.Count() + listaMLAT_Airborne.Count();
+
+            // Apron
+
+            List<string> listaNombresUsados_Apron = new List<string>();
+            List<List<CAT10>> listadelistasdeavionesconmismonombre_Apron = new List<List<CAT10>>();
+            List<double> listaAvgDelay_Apron = new List<double>();
+
+            //pb_UpdateRate.Maximum = listaMLATmodeS.Count;
+            //pb_UpdateRate.Value = 0;
+
+            int i = 0;
+            while (i < listaMLAT_Apron.Count)
+            {
+                string TargetIdentification;
+                string TargetAddress;
+
+                if ((listaMLAT_Apron[i].TargetIdentification.Length > 0 && listaMLAT_Apron[i].TargetAdress.Length > 0) || (listaMLAT_Apron[i].TargetIdentification.Length > 0) || (listaMLAT_Apron[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
+                {
+                    TargetIdentification = listaMLAT_Apron[i].TargetIdentification_decoded;
+                    TargetAddress = listaMLAT_Apron[i].TargetAdress_decoded;
+
+                    if ((listaNombresUsados_Apron.Contains(TargetIdentification) && listaNombresUsados_Apron.Contains(TargetAddress)) || (listaNombresUsados_Apron.Contains(TargetIdentification)) || (listaNombresUsados_Apron.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
+                    { }
+                    else
+                    {
+                        int j = i;
+                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
+                        while (j < listaMLAT_Apron.Count)
+                        {
+                            if (listaMLAT_Apron[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_Apron[j].TargetIdentification_decoded != "")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
+                            }
+
+                            else if (listaMLAT_Apron[j].TargetAdress_decoded == TargetAddress && listaMLAT_Apron[j].TargetAdress_decoded != "")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
+                            }
+                            j = j + 1;
+                        }
+
+                        listadelistasdeavionesconmismonombre_Apron.Add(ListaPlanesMismoNombre);
+                        if (listaMLAT_Apron[i].TargetIdentification.Length > 0) { listaNombresUsados_Apron.Add(TargetIdentification); }
+                        else if (listaMLAT_Apron[i].TargetAdress.Length > 0) { listaNombresUsados_Apron.Add(TargetAddress); }
+
+
+                        int k = 0;
+                        double AvgSeconds = 0;
+
+                        if (ListaPlanesMismoNombre.Count() > 1)
+                        {
+                            double counterSteps = 0;
+                            double counterTrue = 0;
+
+                            while (k < ListaPlanesMismoNombre.Count - 1)
+                            {
+                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30)
+                                {
+                                    if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= 1)
+                                    {
+                                        counterTrue = counterTrue + 1;
+                                    }
+                                    counterSteps = counterSteps + 1;
+                                }
+                                k = k + 1;
+                            }
+                            AvgSeconds = counterTrue / counterSteps;
+                            listaAvgDelay_Apron.Add(AvgSeconds);
+                        }
+                    }
+                }
+                i = i + 1;
+                pb_ProbUpdate.Value = pb_ProbUpdate.Value + 1;
+                //pb_UpdateRate.Value = i;
+            }
+
+            return listaAvgDelay_Apron.Average() * 100;
         }
     }
 }
