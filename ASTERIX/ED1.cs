@@ -252,7 +252,7 @@ namespace ASTERIX
             polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
             polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
 
-            // Supewrficies pista 07R
+            // Superficies pista 07R
             double[] coordenadas1 = new double[2];
             coordenadas1[0] = 41.282576;
             coordenadas1[1] = 2.074278;
@@ -277,8 +277,8 @@ namespace ASTERIX
             double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
-            polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
+            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
+            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
             polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -314,8 +314,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -351,8 +351,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
-            polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
+            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
+            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
             polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -388,8 +388,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -425,8 +425,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
-            polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
+            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
+            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
             polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -462,8 +462,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -473,48 +473,10 @@ namespace ASTERIX
             polygonVpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-
-
-
-
         }
 
         private void ED1_Load(object sender, EventArgs e)
         {
-            // Intento de funcion de calculo de zonas aire
-            double[] coordenadas1 = new double[2];
-            coordenadas1[0] = 41.282576;
-            coordenadas1[1] = 2.074278;
-            double[] coordenadas2 = new double[2];
-            coordenadas2[0] = 41.282102;
-            coordenadas2[1] = 2.074562;
-
-            double angle1 = CalculateDistanceBetweenCoordinates(coordenadas1, coordenadas2);
-            double angle2 = angle1 + 90;
-
-            double[] newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            double[] coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            double[] coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            double[] coordenadas5 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-
-
-            polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
-            polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
-            polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonKpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-
             // En el load vamos a hacer los filtros y las separaciones que necesitamos para calcular cada performance
 
             // Separamos los paquetes según son SMR o MLAT
@@ -625,7 +587,7 @@ namespace ASTERIX
                 Fill = new SolidBrush(Color.Red)
             };
 
-            var polygonL = new GMapPolygon(polygonKpoints, "PolygonL")
+            var polygonL = new GMapPolygon(polygonLpoints, "PolygonL")
             {
                 Stroke = new Pen(Color.Green, 2),
                 Fill = new SolidBrush(Color.Red)
@@ -692,7 +654,7 @@ namespace ASTERIX
             };
 
 
-            // Separamos los paquetes MLAt según su zona del aeropuerto
+            // Separamos los paquetes MLAT según su zona del aeropuerto
 
             List<double> listavelocidades = new List<double>();
 
@@ -730,6 +692,16 @@ namespace ASTERIX
                     bool insideJ = polygonJ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
                     bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
                     bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
 
                     // Separtamos los paquetes según su zona del aeropuerto, diferenciando los que estan volando y los que no
                     double Vthreshold = 250;
@@ -746,45 +718,64 @@ namespace ASTERIX
                     }
 
                     // Zona MA (I)
-                    else if (insideI == true )
+                    else if (insideI)
                     {
-                        if(listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) < Vthreshold)
+                        // si va a una velocidad "baja"
+                        if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) < Vthreshold)
                         {
                             listaMLAT_MA.Add(listaMLATmodeS[i]);
                         }
 
-                        else
+                        else // si va a una velocidad alta
                         {
                             listaMLAT_Airborne.Add(listaMLATmodeS[i]);
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
                         }
                     }
-                    else
+                    else if(insideI==false && insideJ == true) // fuera de Apron, Stand, MA pero dentro de Zona aeropuerto
                     {
-                        if(insideJ==false)
-                        {
-                            if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > 110)
-                            {
-                                listaMLAT_Airborne.Add(listaMLATmodeS[i]);
-                            }
-                        }
-
-                        else if(listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > Vthreshold)
+                        if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > Vthreshold)
                         {
                             listaMLAT_Airborne.Add(listaMLATmodeS[i]);
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                        }
+                    }
+                    else // fuera de la zona aeropuerto
+                    {
+                        if(listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > 110)
+                        {
+                            listaMLAT_Airborne.Add(listaMLATmodeS[i]);
+
+                            if (insideK) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); }
+                            if (insideM) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); }
+                            if (insideO) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); }
+                            if (insideQ) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); }
+                            if (insideS) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); }
+                            if (insideU) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); }
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
                         }
                     }
                     i = i + 1;
                 }
             }
-
-            Mapa.DragButton = MouseButtons.Left;
-            Mapa.CanDragMap = true;
-            Mapa.MapProvider = GMapProviders.GoogleMap;
-            Mapa.Position = new PointLatLng(0, 0);
-            Mapa.MinZoom = 6;
-            Mapa.MaxZoom = 24;
-            Mapa.Zoom = 14;
-            Mapa.AutoScroll = true;
 
             //////----------------------------------------------------------------------- Ploteamos en el mapa
 
@@ -802,17 +793,23 @@ namespace ASTERIX
             Mapa.AutoScroll = true;
 
 
-            GMapOverlay overlaySTAND = PlotListadePaquetesenOverlay(listaMLAT_Stand, blue_plane);
-            Mapa.Overlays.Add(overlaySTAND);
+            //GMapOverlay overlaySTAND = PlotListadePaquetesenOverlay(listaMLAT_Stand, blue_plane);
+            //Mapa.Overlays.Add(overlaySTAND);
 
-            GMapOverlay overlayAPRON = PlotListadePaquetesenOverlay(listaMLAT_Apron, green_plane);
-            Mapa.Overlays.Add(overlayAPRON);
+            //GMapOverlay overlayAPRON = PlotListadePaquetesenOverlay(listaMLAT_Apron, green_plane);
+            //Mapa.Overlays.Add(overlayAPRON);
 
             GMapOverlay overlayMA = PlotListadePaquetesenOverlay(listaMLAT_MA, red_plane);
             Mapa.Overlays.Add(overlayMA);
 
-            GMapOverlay overlayAIRBORNE = PlotListadePaquetesenOverlay(listaMLAT_Airborne, white_plane);
-            Mapa.Overlays.Add(overlayAIRBORNE);
+            GMapOverlay overlayAIRBORNE25 = PlotListadePaquetesenOverlay(listaMLAT_Airborne_2coma5NM, white_plane);
+            Mapa.Overlays.Add(overlayAIRBORNE25);
+
+            GMapOverlay overlayAIRBORNE5 = PlotListadePaquetesenOverlay(listaMLAT_Airborne_5NM, blue_plane);
+            Mapa.Overlays.Add(overlayAIRBORNE5);
+
+            //GMapOverlay overlayAIRBORNE = PlotListadePaquetesenOverlay(listaMLAT_Airborne, green_plane);
+            //Mapa.Overlays.Add(overlayAIRBORNE);
 
 
         }

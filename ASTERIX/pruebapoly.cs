@@ -98,8 +98,8 @@ namespace ASTERIX
             double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
-            polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
+            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
+            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
             polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -135,8 +135,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -172,8 +172,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
-            polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
+            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
+            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
             polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -209,8 +209,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -246,8 +246,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
-            polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
+            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
+            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
             polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -283,8 +283,8 @@ namespace ASTERIX
             coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
 
 
-            polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
             polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
             polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
@@ -560,7 +560,7 @@ namespace ASTERIX
             var polygonL = new GMapPolygon(polygonLpoints, "PolygonL")
             {
                 Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.Blue)
+                Fill = new SolidBrush(Color.LightBlue)
             };
             polygonsOverlay.Polygons.Add(polygonL);
 
@@ -574,7 +574,7 @@ namespace ASTERIX
             var polygonN = new GMapPolygon(polygonNpoints, "PolygonN")
             {
                 Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.Blue)
+                Fill = new SolidBrush(Color.LightBlue)
             };
             polygonsOverlay.Polygons.Add(polygonN);
 
@@ -588,7 +588,7 @@ namespace ASTERIX
             var polygonP = new GMapPolygon(polygonPpoints, "PolygonP")
             {
                 Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.Blue)
+                Fill = new SolidBrush(Color.LightBlue)
             };
             polygonsOverlay.Polygons.Add(polygonP);
 
@@ -602,7 +602,7 @@ namespace ASTERIX
             var polygonR = new GMapPolygon(polygonRpoints, "PolygonR")
             {
                 Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.Blue)
+                Fill = new SolidBrush(Color.LightBlue)
             };
             polygonsOverlay.Polygons.Add(polygonR);
 
@@ -616,7 +616,7 @@ namespace ASTERIX
             var polygonT = new GMapPolygon(polygonTpoints, "PolygonT")
             {
                 Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.Blue)
+                Fill = new SolidBrush(Color.LightBlue)
             };
             polygonsOverlay.Polygons.Add(polygonT);
 
@@ -630,7 +630,7 @@ namespace ASTERIX
             var polygonV = new GMapPolygon(polygonVpoints, "PolygonV")
             {
                 Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.Blue)
+                Fill = new SolidBrush(Color.LightBlue)
             };
             polygonsOverlay.Polygons.Add(polygonV);
 
