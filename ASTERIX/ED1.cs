@@ -1415,25 +1415,25 @@ namespace ASTERIX
                     { }
                     else
                     {
-                        int j = i;
+                        int j = i+1;
                         List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
                         while (j < listaMLAT_Apron.Count)
                         {
                             if (listaMLAT_Apron[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_Apron[j].TargetIdentification_decoded != "")
                             {
                                 ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
+                                listaNombresUsados_Apron.Add(TargetIdentification);
                             }
 
                             else if (listaMLAT_Apron[j].TargetAdress_decoded == TargetAddress && listaMLAT_Apron[j].TargetAdress_decoded != "")
                             {
                                 ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
+                                listaNombresUsados_Apron.Add(TargetAddress);
                             }
                             j = j + 1;
                         }
 
                         listadelistasdeavionesconmismonombre_Apron.Add(ListaPlanesMismoNombre);
-                        if (listaMLAT_Apron[i].TargetIdentification.Length > 0) { listaNombresUsados_Apron.Add(TargetIdentification); }
-                        else if (listaMLAT_Apron[i].TargetAdress.Length > 0) { listaNombresUsados_Apron.Add(TargetAddress); }
 
 
                         int k = 0;
