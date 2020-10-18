@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,13 @@ namespace ASTERIX
         public List<CAT21> listaCAT21 = new List<CAT21>();
         public List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
 
+        public List<MLATCalibrationData> listaMLATCalibrationVehicleData = new List<MLATCalibrationData>();
 
-        public BrowseFile()
+        public bool forASTERIX;
+        public bool forMULTI;
+
+
+        public BrowseFile(bool forASTERIX, bool forMULTI)
         {
             InitializeComponent();
 
@@ -30,6 +36,9 @@ namespace ASTERIX
 
             lblError.Text = "";
             lbTitle.Text = "BROWSE A FILE AND SELECT IT TO DECODE";
+
+            this.forASTERIX = forASTERIX;
+            this.forMULTI = forMULTI;
         }
 
 
@@ -81,31 +90,62 @@ namespace ASTERIX
 
         private void bt_Decode_Click(object sender, EventArgs e)
         {
-            if (tbDirection.Text.Length > 0)
+            if(forASTERIX==true && forMULTI==false)
             {
-                try
+                if (tbDirection.Text.Length > 0)
                 {
+                    try
+                    {
+                        string path = tbDirection.Text;
+                        Fichero newfichero = new Fichero(path);
+                        newfichero.leer();
 
-                    string path = tbDirection.Text;
-                    Fichero newfichero = new Fichero(path);
-                    newfichero.leer();
+                        listaCAT21v23 = newfichero.GetListCAT21v23();
+                        listaCAT21 = newfichero.GetListCAT21(); // devuelve lista de clases CAT21, cada una con un paquete
+                        listaCAT20 = newfichero.GetListCAT20();
+                        listaCAT10 = newfichero.getListCAT10();
 
-                    listaCAT21v23 = newfichero.GetListCAT21v23();
-                    listaCAT21 = newfichero.GetListCAT21(); // devuelve lista de clases CAT21, cada una con un paquete
-                    listaCAT20 = newfichero.GetListCAT20();
-                    listaCAT10 = newfichero.getListCAT10();
-
-                    this.Close();
+                        this.Close();
+                    }
+                    catch
+                    {
+                        lblError.Text = "Error. Please select a valid file.";
+                    }
                 }
-                catch
+
+                else
                 {
-                    lblError.Text = "Error. Please select a valid file.";
+                    lblError.Text = "Please select a file.";
                 }
             }
 
-            else
+            if(forASTERIX==false && forMULTI == true)
             {
-                lblError.Text = "Please select a file.";
+                string[] startinglines = File.ReadAllLines(tbDirection.Text);
+
+                StreamReader sr = new StreamReader(tbDirection.Text);
+                string line = sr.ReadLine();
+
+                while (line != null)
+                {
+                    if (line.Length > 0)
+                    {
+                        string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
+                        string[] properties = line.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
+
+                        if(properties[0]!="IGNORE")
+                        {
+                            MLATCalibrationData data1 = new MLATCalibrationData(properties[0], properties[1], properties[2], properties[3], properties[4], properties[5], properties[6], properties[7], properties[8], properties[9]);
+                            listaMLATCalibrationVehicleData.Add(data1);
+                        }
+                        else
+                        {
+                            MLATCalibrationData data1 = new MLATCalibrationData("", properties[1], properties[2], "", "", "", "", properties[5], properties[6], properties[7]);
+                            listaMLATCalibrationVehicleData.Add(data1);
+                        }
+                    }
+                    line = sr.ReadLine();
+                }
             }
         }
 

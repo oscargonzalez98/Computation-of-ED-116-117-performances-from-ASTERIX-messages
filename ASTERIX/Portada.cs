@@ -35,7 +35,7 @@ namespace ASTERIX
 
         private void bt_BrowseFile_Click(object sender, EventArgs e)
         {
-            BrowseFile BrowseFile1 = new BrowseFile();
+            BrowseFile BrowseFile1 = new BrowseFile(true, false);
             BrowseFile1.ShowDialog();
             listaCAT10 = BrowseFile1.ListaCAT10;
             listaCAT20 = BrowseFile1.ListaCAT20;
@@ -118,6 +118,12 @@ namespace ASTERIX
         {
             ED1 formED1 = new ED1(listaCAT10, listaCAT21, listaCAT21v23);
             formED1.Show();
+        }
+
+        private void bt_ReaddCalibrationVehicleData_Click(object sender, EventArgs e)
+        {
+            BrowseFile browsefile1 = new BrowseFile(false, true);
+            browsefile1.ShowDialog();
         }
     }
 }

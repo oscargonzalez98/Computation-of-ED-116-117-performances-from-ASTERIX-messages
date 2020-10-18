@@ -33,9 +33,7 @@
             this.pb_UpdateRate = new System.Windows.Forms.ProgressBar();
             this.bt_ShowResultsUpdateRate = new System.Windows.Forms.Button();
             this.pb_ProbabilityofUpdate = new System.Windows.Forms.Button();
-            this.bt_ShowResultsProbabilityofUpdate = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.pb_ProbUpdate = new System.Windows.Forms.ProgressBar();
             this.bt_PrecissionAccuracy = new System.Windows.Forms.Button();
             this.Mapa = new GMap.NET.WindowsForms.GMapControl();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -72,7 +70,7 @@
             // 
             // pb_ProbabilityofUpdate
             // 
-            this.pb_ProbabilityofUpdate.Location = new System.Drawing.Point(3, 376);
+            this.pb_ProbabilityofUpdate.Location = new System.Drawing.Point(3, 377);
             this.pb_ProbabilityofUpdate.Name = "pb_ProbabilityofUpdate";
             this.pb_ProbabilityofUpdate.Size = new System.Drawing.Size(181, 45);
             this.pb_ProbabilityofUpdate.TabIndex = 3;
@@ -80,30 +78,13 @@
             this.pb_ProbabilityofUpdate.UseVisualStyleBackColor = true;
             this.pb_ProbabilityofUpdate.Click += new System.EventHandler(this.pb_ProbabilityofUpdate_Click);
             // 
-            // bt_ShowResultsProbabilityofUpdate
-            // 
-            this.bt_ShowResultsProbabilityofUpdate.Location = new System.Drawing.Point(564, 376);
-            this.bt_ShowResultsProbabilityofUpdate.Name = "bt_ShowResultsProbabilityofUpdate";
-            this.bt_ShowResultsProbabilityofUpdate.Size = new System.Drawing.Size(181, 45);
-            this.bt_ShowResultsProbabilityofUpdate.TabIndex = 4;
-            this.bt_ShowResultsProbabilityofUpdate.Text = "Show Results";
-            this.bt_ShowResultsProbabilityofUpdate.UseVisualStyleBackColor = true;
-            this.bt_ShowResultsProbabilityofUpdate.Click += new System.EventHandler(this.bt_ShowResultsProbabilityofUpdate_Click);
-            // 
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // pb_ProbUpdate
-            // 
-            this.pb_ProbUpdate.Location = new System.Drawing.Point(190, 376);
-            this.pb_ProbUpdate.Name = "pb_ProbUpdate";
-            this.pb_ProbUpdate.Size = new System.Drawing.Size(368, 45);
-            this.pb_ProbUpdate.TabIndex = 5;
-            // 
             // bt_PrecissionAccuracy
             // 
-            this.bt_PrecissionAccuracy.Location = new System.Drawing.Point(3, 749);
+            this.bt_PrecissionAccuracy.Location = new System.Drawing.Point(3, 751);
             this.bt_PrecissionAccuracy.Name = "bt_PrecissionAccuracy";
             this.bt_PrecissionAccuracy.Size = new System.Drawing.Size(181, 30);
             this.bt_PrecissionAccuracy.TabIndex = 6;
@@ -154,8 +135,6 @@
             this.tableLayoutPanel1.Controls.Add(this.Mapa, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.bt_PrecissionAccuracy, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.bt_CalculateUpdateRate, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.bt_ShowResultsProbabilityofUpdate, 2, 1);
-            this.tableLayoutPanel1.Controls.Add(this.pb_ProbUpdate, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.bt_ShowResultsUpdateRate, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.pb_ProbabilityofUpdate, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.pb_UpdateRate, 1, 0);
@@ -189,9 +168,7 @@
         private System.Windows.Forms.ProgressBar pb_UpdateRate;
         private System.Windows.Forms.Button bt_ShowResultsUpdateRate;
         private System.Windows.Forms.Button pb_ProbabilityofUpdate;
-        private System.Windows.Forms.Button bt_ShowResultsProbabilityofUpdate;
         private System.Windows.Forms.ErrorProvider errorProvider1;
-        private System.Windows.Forms.ProgressBar pb_ProbUpdate;
         private System.Windows.Forms.Button bt_PrecissionAccuracy;
         private GMap.NET.WindowsForms.GMapControl Mapa;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

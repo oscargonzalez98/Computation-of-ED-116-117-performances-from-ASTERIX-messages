@@ -38,9 +38,7 @@ namespace ASTERIX
 
         //Listas de Aviones en cada segundo por categoria
         List<double> listasecondsCAT10 = new List<double>(); // lista de segundos en los que se envia un paquete de la categoria CAT10
-
         List<double> listasecondsCAT21 = new List<double>(); // lista de segundos en los que se envia un paquete de la categoria CAT21
-
         List<double> listasecondsCAT21v23 = new List<double>(); // lista de segundos en los que se envia un paquete de la categoria CAT21v23
 
         public double secondCounter;

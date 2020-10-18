@@ -40,6 +40,7 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.btn_ED1 = new System.Windows.Forms.Button();
+            this.bt_ReaddCalibrationVehicleData = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lb_Title
@@ -159,11 +160,21 @@
             this.btn_ED1.UseVisualStyleBackColor = true;
             this.btn_ED1.Click += new System.EventHandler(this.btn_ED1_Click);
             // 
+            // bt_ReaddCalibrationVehicleData
+            // 
+            this.bt_ReaddCalibrationVehicleData.Location = new System.Drawing.Point(420, 252);
+            this.bt_ReaddCalibrationVehicleData.Name = "bt_ReaddCalibrationVehicleData";
+            this.bt_ReaddCalibrationVehicleData.Size = new System.Drawing.Size(95, 46);
+            this.bt_ReaddCalibrationVehicleData.TabIndex = 15;
+            this.bt_ReaddCalibrationVehicleData.Text = "Read calibration vehicle data";
+            this.bt_ReaddCalibrationVehicleData.Click += new System.EventHandler(this.bt_ReaddCalibrationVehicleData_Click);
+            // 
             // Portada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(689, 352);
+            this.Controls.Add(this.bt_ReaddCalibrationVehicleData);
             this.Controls.Add(this.btn_ED1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
@@ -197,6 +208,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btn_ED1;
+        private System.Windows.Forms.Button bt_ReaddCalibrationVehicleData;
     }
 }
 

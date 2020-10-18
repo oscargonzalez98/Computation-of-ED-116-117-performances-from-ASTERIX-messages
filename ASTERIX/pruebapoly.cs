@@ -636,13 +636,6 @@ namespace ASTERIX
 
 
             Mapa.Overlays.Add(polygonsOverlay);
-
-
-            //var marker = new GMarkerGoogle(new PointLatLng(0.5, 0.5),GMarkerGoogleType.green);
-            bool inside = polygonA.IsInside(new PointLatLng(1.5, 1.5));
-
-            int i = 0;
-
         }
 
         //-----------------------------------------------------------------------------------------------------------------------------------------------------------

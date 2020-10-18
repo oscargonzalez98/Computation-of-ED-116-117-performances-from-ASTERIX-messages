@@ -4,7 +4,6 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using LIBRERIACLASES;
-using MultiCAT6.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -1049,12 +1048,6 @@ namespace ASTERIX
             barplot1.Show();
         }
 
-        private void bt_ShowResultsProbabilityofUpdate_Click(object sender, EventArgs e)
-        {
-            PlotProbabilityofUpdate lchart1 = new PlotProbabilityofUpdate(listaLimitAverageValue_Apron, listaProbabilityUpdate_Apron, listaProbabilityUpdate_Stand, listaProbabilityUpdate_MA, listaProbabilityUpdate_Airborne);
-            lchart1.Show();
-        }
-
 
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1389,17 +1382,12 @@ namespace ASTERIX
 
         public double CalculateProbabilityofUpdate(List<CAT10> listaMLAT_Apron)
         {
-            pb_ProbUpdate.Value = 0;
-            pb_ProbUpdate.Maximum = listaMLAT_Apron.Count() + listaMLAT_Stand.Count() + listaMLAT_MA.Count() + listaMLAT_Airborne.Count();
 
             // Apron
 
             List<string> listaNombresUsados_Apron = new List<string>();
             List<List<CAT10>> listadelistasdeavionesconmismonombre_Apron = new List<List<CAT10>>();
             List<double> listaAvgDelay_Apron = new List<double>();
-
-            //pb_UpdateRate.Maximum = listaMLATmodeS.Count;
-            //pb_UpdateRate.Value = 0;
 
             int i = 0;
             while (i < listaMLAT_Apron.Count)
@@ -1463,8 +1451,6 @@ namespace ASTERIX
                     }
                 }
                 i = i + 1;
-                pb_ProbUpdate.Value = pb_ProbUpdate.Value + 1;
-                //pb_UpdateRate.Value = i;
             }
 
             return listaAvgDelay_Apron.Average() * 100;
