@@ -4,6 +4,7 @@ using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using LIBRERIACLASES;
+using MultiCAT6.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
