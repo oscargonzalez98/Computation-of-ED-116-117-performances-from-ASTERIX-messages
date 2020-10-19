@@ -124,6 +124,11 @@ namespace ASTERIX
         {
             BrowseFile browsefile1 = new BrowseFile(false, true);
             browsefile1.ShowDialog();
+            MLATCalibrationVehicle CalibrationVehicleForm = new MLATCalibrationVehicle(browsefile1.listaMLATCalibrationVehicleData);
+            CalibrationVehicleForm.Show();
+
+
         }
+
     }
 }

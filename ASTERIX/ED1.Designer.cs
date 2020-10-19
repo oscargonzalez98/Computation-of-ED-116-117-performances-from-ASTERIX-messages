@@ -70,7 +70,7 @@
             // 
             // pb_ProbabilityofUpdate
             // 
-            this.pb_ProbabilityofUpdate.Location = new System.Drawing.Point(3, 377);
+            this.pb_ProbabilityofUpdate.Location = new System.Drawing.Point(3, 348);
             this.pb_ProbabilityofUpdate.Name = "pb_ProbabilityofUpdate";
             this.pb_ProbabilityofUpdate.Size = new System.Drawing.Size(181, 45);
             this.pb_ProbabilityofUpdate.TabIndex = 3;
@@ -84,7 +84,7 @@
             // 
             // bt_PrecissionAccuracy
             // 
-            this.bt_PrecissionAccuracy.Location = new System.Drawing.Point(3, 751);
+            this.bt_PrecissionAccuracy.Location = new System.Drawing.Point(3, 693);
             this.bt_PrecissionAccuracy.Name = "bt_PrecissionAccuracy";
             this.bt_PrecissionAccuracy.Size = new System.Drawing.Size(181, 30);
             this.bt_PrecissionAccuracy.TabIndex = 6;
@@ -118,7 +118,7 @@
             this.Mapa.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             this.Mapa.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
             this.Mapa.ShowTileGridLines = false;
-            this.Mapa.Size = new System.Drawing.Size(931, 1116);
+            this.Mapa.Size = new System.Drawing.Size(931, 1031);
             this.Mapa.TabIndex = 7;
             this.Mapa.Zoom = 0D;
             // 
@@ -144,14 +144,14 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1685, 1122);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1685, 1037);
             this.tableLayoutPanel1.TabIndex = 8;
             // 
             // ED1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1709, 1146);
+            this.ClientSize = new System.Drawing.Size(1709, 1061);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "ED1";
             this.Text = "ED1";

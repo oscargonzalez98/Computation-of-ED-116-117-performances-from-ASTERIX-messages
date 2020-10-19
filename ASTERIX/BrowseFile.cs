@@ -146,6 +146,8 @@ namespace ASTERIX
                     }
                     line = sr.ReadLine();
                 }
+
+                this.Close();
             }
         }
 

@@ -19,16 +19,16 @@ namespace LIBRERIACLASES
 
         public MLATCalibrationData(string cosa00, string cosa11, string cosa22, string cosa33, string cosa44, string cosa55, string cosa66, string cosa77, string cosa88, string cosa99)
         {
-            try { double cosa0 = Convert.ToDouble(cosa00.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa1 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa2 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa3 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa4 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa5 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa6 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa7 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa8 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
-            try { double cosa9 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa0 = Convert.ToDouble(cosa00.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa1 = Convert.ToDouble(cosa11.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa2 = Convert.ToDouble(cosa22.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa3 = Convert.ToDouble(cosa33.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa4 = Convert.ToDouble(cosa44.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa5 = Convert.ToDouble(cosa55.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa6 = Convert.ToDouble(cosa66.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa7 = Convert.ToDouble(cosa77.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa8 = Convert.ToDouble(cosa88.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
+            try { this.cosa9 = Convert.ToDouble(cosa99.Replace(Convert.ToChar("."), Convert.ToChar(","))); } catch { }
 
         }
     }

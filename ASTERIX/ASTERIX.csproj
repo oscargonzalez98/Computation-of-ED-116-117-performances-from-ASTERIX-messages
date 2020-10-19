@@ -221,6 +221,12 @@
     <Compile Include="MoreInfo.Designer.cs">
       <DependentUpon>MoreInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="MLATCalibrationVehicle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MLATCalibrationVehicle.Designer.cs">
+      <DependentUpon>MLATCalibrationVehicle.cs</DependentUpon>
+    </Compile>
     <Compile Include="PlotProbabilityofUpdate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MetInfov23.resx">
       <DependentUpon>MetInfov23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MLATCalibrationVehicle.resx">
+      <DependentUpon>MLATCalibrationVehicle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mode3ACodeCAT10.resx">
       <DependentUpon>Mode3ACodeCAT10.cs</DependentUpon>
