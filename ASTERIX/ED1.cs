@@ -1,9 +1,11 @@
 ﻿using Clases;
+using DotNetMatrix;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
 using LIBRERIACLASES;
+using MultiCAT6.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -33,11 +35,6 @@ namespace ASTERIX
         List<CAT10> listaCAT10 = new List<CAT10>();
         List<CAT21> listaCAT21 = new List<CAT21>();
         List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
-
-        List<CAT21> listaCAT21_Apron = new List<CAT21>();
-        List<CAT21> listaCAT21_Stand = new List<CAT21>();
-        List<CAT21> listaCAT21_MA = new List<CAT21>();
-        List<CAT21> listaCAT21_Airborne = new List<CAT21>();
 
         List<CAT10> listaMLAT = new List<CAT10>();
         List<CAT10> listaSMR = new List<CAT10>();
@@ -82,6 +79,7 @@ namespace ASTERIX
         // Coordenadas MLAT
         double LatMLAT = 41.297063;
         double LonMLAT = 2.078447;
+        public CoordinatesWGS84 radarcoordinates = new CoordinatesWGS84(41 + 17 / 60 + 49.426 / 3600, 2 + 04 / 60 + 42.41 / 3600);
 
         // Lista Bar Chart UpdateRate
         public List<IndividualBar> listBarsUpdateRate = new List<IndividualBar>();
@@ -811,11 +809,7 @@ namespace ASTERIX
 
             //GMapOverlay overlayAIRBORNE = PlotListadePaquetesenOverlay(listaMLAT_Airborne, green_plane);
             //Mapa.Overlays.Add(overlayAIRBORNE);
-
-
         }
-
-
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -912,129 +906,102 @@ namespace ASTERIX
 
         private void bt_PrecissionAccuracy_Click(object sender, EventArgs e)
         {
-            // Stand
+            string TargetAddresssMLAT;
+            double[] coordenadasADSB = new double[2];
+            List<double> listadistances = new List<double>();
 
-            double contadordecasos = 0;
-            double contadordebuenos = 0;
-
-            // Recorremos lista ADSB y buscamos cual es el paquete MLAt que tienen mas cerca en tiempo, comparamos sus posiciones, diistancia entre ellos etc... y actualizamos el contador segun los resultados
-
-            int i = 0;
-            while(i<listaMLAT_Stand.Count())
+            for (int i = 0; i<listaMLAT_Apron.Count(); i++)
             {
-                string TargetIdentificationMLAT;
-                string TargetAddressMLAT;
+                double timedelay = 1e5;
 
-                string TargetIdentificationCAT21;
-                string TargetAddressCAT21;
-
-                double timeMLAT = listaMLAT_Stand[i].TimeofDay_seconds;
-                double diferenciadetiempo = 10e5; // le asignamos un valor muy alto para si lo vemos saber que no se ha modificado
-
-                if ((listaMLAT_Stand[i].TargetIdentification_decoded.Length > 0 && listaMLAT_Stand[i].TargetAdress_decoded.Length > 0) || (listaMLAT_Stand[i].TargetIdentification_decoded.Length > 0) || (listaMLAT_Stand[i].TargetAdress_decoded.Length > 0))// cojemos los paquetes que tienen Target Address y/o Target Identification
+                if (listaMLAT_Apron[i].TargetAdress_decoded.Length > 0)
                 {
-                    TargetIdentificationMLAT = listaMLAT_Stand[i].TargetIdentification_decoded;
-                    TargetAddressMLAT = listaMLAT_Stand[i].TargetAdress_decoded;
+                    TargetAddresssMLAT = listaMLAT_Apron[i].TargetAdress_decoded;
 
-                    int indexj = 1000000;
-
-                    //Buscamos el MLAT mas cercano en lista general
-                    int j = 0;
-                    while(j<listaCAT21.Count())
+                    for (int j=0; j < listaCAT21.Count; j++)
                     {
-                        //Nos aseguramos de que tengan Target Identification Target Address o las dos
-                        if ((listaCAT21[j].TargetIdentification.Length > 0 && listaCAT21[j].TargetAdress_real.Length > 0) || (listaCAT21[j].TargetIdentification.Length > 0) || (listaCAT21[j].TargetAdress_real.Length > 0))
+                        if(listaCAT21[j].TargetAdress_real.Length > 0 && listaCAT21[j].TargetAdress_real == TargetAddresssMLAT)
                         {
-                            TargetIdentificationCAT21 = listaCAT21[j].TargetIdentification_decoded;
-                            TargetAddressCAT21 = listaCAT21[j].TargetAdress_real;
-
-                            double timeCAT21 = listaCAT21[j].TimeofASTERIXReportTransmission_seconds;
-                            // si tienen el mismo nombre
-                            if (((TargetIdentificationCAT21 == TargetIdentificationMLAT && TargetAddressCAT21 == TargetAddressMLAT)) || TargetIdentificationCAT21 == TargetIdentificationMLAT|| TargetAddressCAT21 == TargetAddressMLAT)
+                            if (Math.Abs(listaMLAT_Apron[i].TimeofDay_seconds - listaCAT21[j].TimeofASTERIXReportTransmission_seconds)<timedelay)
                             {
-                                // si hemos encontrado paquete con mismo nombre y mas cerca en el tiempo (y es una diferencia de tiempo razonable, en este caso de 30s max) substituimos la diferencia de tiempo anterior por la nueva
-                                if (Math.Abs(timeCAT21 - timeMLAT) < diferenciadetiempo && Math.Abs(timeCAT21 - timeMLAT) < 5) 
-                                { 
-                                    diferenciadetiempo = timeMLAT - timeCAT21;
-                                    indexj = j;
-                                }
+                                timedelay = listaMLAT_Apron[i].TimeofDay_seconds - listaCAT21[j].TimeofASTERIXReportTransmission_seconds;
+                                coordenadasADSB[0] = listaCAT21[j].latWGS84;
+                                coordenadasADSB[1] = listaCAT21[j].lonWGS84;
                             }
                         }
-                        j = j + 1;
                     }
 
-                    // una vez recorrida toda la listaMLAT tenemos la diferencia de tiempo mas pequeña entre el paquete CAT21 de turno y su correspondiente
-
-                    if(indexj!=1000000)
+                    if (timedelay != 1e5 && Math.Abs(timedelay) < 10)
                     {
-                        // Ahora nos aseguramos que el paquete mlat tiene info de posición y interpolamos para calcular posiciones
-                        double[] coordenadasMLAT = new double[2];
+                        double[] coordenadasMLAT;
 
-                        if ((listaMLAT_Stand[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Stand[i].PositioninCartesianCoordinates.Length > 0) || (listaMLAT_Stand[i].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLAT_Stand[i].PositioninCartesianCoordinates.Length > 0)) // si tenemos info de las coordenadas MLAT
+                        if ((listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
                         {
-                            if (listaMLAT_Stand[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tenemos coordenadas polares
+                            double distance;
+
+                            if (listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tienen posición en coordenadas polares
                             {
-                                coordenadasMLAT = NewCoordinatesMLAT(listaMLAT_Stand[i].Rho, listaMLAT_Stand[i].Theta);
+                                coordenadasMLAT = NewCoordinatesMLAT(listaMLAT_Apron[i].Rho, listaMLAT_Apron[i].Theta);
                             }
 
-                            else // si no tenemos coordenadas polares pero si coordenadas cartesianas
+                            else // si tienen posición en coordenadas cartesianas
                             {
-                                double rho = Math.Sqrt((listaMLAT_Stand[i].X_cartesian) * (listaMLAT_Stand[i].X_cartesian) + (listaMLAT_Stand[i].Y_cartesian) * (listaMLAT_Stand[i].Y_cartesian));
-                                double theta = (180 / Math.PI) * Math.Atan2(listaMLAT_Stand[i].X_cartesian, listaMLAT_Stand[i].Y_cartesian);
+                                double rho = Math.Sqrt((listaMLAT_Apron[i].X_cartesian) * (listaMLAT_Apron[i].X_cartesian) + (listaMLAT_Apron[i].Y_cartesian) * (listaMLAT_Apron[i].Y_cartesian));
+                                double theta = (180 / Math.PI) * Math.Atan2(listaMLAT_Apron[i].X_cartesian, listaMLAT_Apron[i].Y_cartesian);
 
                                 coordenadasMLAT = NewCoordinatesMLAT(rho, theta);
                             }
 
-                            double[] coordenadasCAT21 = new double[2];
-                            if (listaCAT21[indexj].PositioninWGS_HRcoordinates.Length > 0)
+                            double deltaX = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Cos(toRadians(listaMLAT_Apron[i].TrackAngle))*timedelay;
+                            double deltaY = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Sin(toRadians(listaMLAT_Apron[i].TrackAngle))*timedelay;
+
+                            //listadistances.Add(CalculateDistanceBetweenCoordinates(coordenadasADSB, coordenadasMLAT));
+
+                            if (timedelay > 0)
                             {
-                                coordenadasCAT21[0] = listaCAT21[indexj].latWGS84_HR;
-                                coordenadasCAT21[1] = listaCAT21[indexj].lonWGS84_HR;
+                                double coordX = listaMLAT_Apron[i].X_cartesian - deltaX;
+                                double coordY = listaMLAT_Apron[i].Y_cartesian - deltaY;
+
+                                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                                double theta = (180/Math.PI)*Math.Atan2(coordX, coordY);
+
+
+                                double[] coordenadas = NewCoordinatesMLAT(rho, theta);
+
+                                listadistances.Add(CalculateDistanceBetweenCoordinates(coordenadas, coordenadasADSB));
                             }
-                            else
+
+                            if (timedelay < 0)
                             {
-                                coordenadasCAT21[0] = listaCAT21[indexj].latWGS84;
-                                coordenadasCAT21[1] = listaCAT21[indexj].lonWGS84;
+                                double coordX = listaMLAT_Apron[i].X_cartesian + deltaX;
+                                double coordY = listaMLAT_Apron[i].Y_cartesian + deltaY;
+
+                                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                                double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+
+                                double[] coordenadas = NewCoordinatesMLAT(rho, theta);
+
+                                listadistances.Add(CalculateDistanceBetweenCoordinates(coordenadas, coordenadasADSB));
                             }
 
-                            // Ahora nos aseguramos de que los paquetes a comparar tienen info de velocidad
-
-                            if (listaMLAT_Apron[i].GroundSpeed > 0 && listaCAT21[indexj].GroundSpeed > 0)
                             {
-                                double speedMLAT = listaMLAT_Stand[i].GroundSpeed;
-                                double headingMLAT = listaMLAT_Stand[i].TrackAngle;
-                                double speedCAT21 = listaCAT21[indexj].GroundSpeed;
-                                double headingCAT21 = listaCAT21[indexj].TrackAngle;
+                                double coordX = listaMLAT_Apron[i].X_cartesian;
+                                double coordY = listaMLAT_Apron[i].Y_cartesian;
 
-                                double distanciaentrecoordenadas=0;
+                                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                                double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
 
-                                // Interpolamos para sacar la posicion 
 
-                                if (diferenciadetiempo > 0 && diferenciadetiempo!=10e5)
-                                {
-                                    // calculamos nuevas coordenadas con tiempos comparables
-                                    double[] newCoordinatesCAT21 = NewCoordinatesMLAT(Math.Abs((speedMLAT - speedCAT21) * diferenciadetiempo) * 1851.9984, headingCAT21);
+                                double[] coordenadas = NewCoordinatesMLAT(rho, theta);
 
-                                    // Calculamos diferencia entre esas coordenadas y las MLAT
-                                    distanciaentrecoordenadas = CalculateDistanceBetweenCoordinates(newCoordinatesCAT21, coordenadasMLAT);
-                                }
-
-                                else if (diferenciadetiempo < 0)
-                                {
-                                    // calculamos nuevas coordenadas con tiempos comparables
-                                    double[] newCoordinatesCAT21 = NewCoordinatesMLAT(Math.Abs((speedMLAT - speedCAT21) * diferenciadetiempo) * 1851.9984, headingCAT21+180);
-
-                                    // Calculamos diferencia entre esas coordenadas y las MLAT
-                                    distanciaentrecoordenadas = CalculateDistanceBetweenCoordinates(newCoordinatesCAT21, coordenadasMLAT);
-                                }
-
-                                // Una vez calculada la distancia actualizamos contadores
-
+                                listadistances.Add(CalculateDistanceBetweenCoordinates(coordenadas, coordenadasADSB));
                             }
+
                         }
                     }
+
                 }
-                i = i + 1;
             }
         }
 
@@ -1049,12 +1016,26 @@ namespace ASTERIX
         }
 
 
+    //                                if (timedelay > 0)
+    //                        {
+    //                            double coordX = listaMLAT_Apron[i].X_cartesian - deltaX;
+    //    double coordY = listaMLAT_Apron[i].Y_cartesian - deltaY;
 
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //    double rho = Math.Sqrt(coordX) * (coordX) + (coordY) * (coordY));
+    //    double theta = (180 / Math.PI) * Math.Atan2(listaMLATmodeS[i].X_cartesian, listaMLATmodeS[i].Y_cartesian);
 
-        public double toRadians(double grados)
+    //    coordenadas = NewCoordinatesMLAT(rho, theta);
+
+
+
+    //}
+
+
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public double toRadians(double grados)
         {
             return grados * Math.PI / 180;
         }
