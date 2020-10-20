@@ -39,6 +39,9 @@ namespace ASTERIX
         public List<PointLatLng> polygonTpoints;
         public List<PointLatLng> polygonUpoints;
         public List<PointLatLng> polygonVpoints;
+        public List<PointLatLng> polygonWpoints;
+        public List<PointLatLng> polygonXpoints;
+        public List<PointLatLng> polygonYpoints;
 
         // Coordenadas MLAT
         double LatMLAT = 41.297063;
@@ -69,6 +72,9 @@ namespace ASTERIX
             polygonTpoints = new List<PointLatLng>();
             polygonUpoints = new List<PointLatLng>();
             polygonVpoints = new List<PointLatLng>();
+            polygonWpoints = new List<PointLatLng>();
+            polygonXpoints = new List<PointLatLng>();
+            polygonYpoints = new List<PointLatLng>();
         }
 
         private void pruebapoly_Load(object sender, EventArgs e)
@@ -295,7 +301,24 @@ namespace ASTERIX
             polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
             polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
 
+            // RWY1 (la diagonal)
+            polygonWpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonWpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonWpoints.Add(new PointLatLng(41.309307, 2.094396));
+            polygonWpoints.Add(new PointLatLng(41.309180, 2.094881));
 
+            // RW2(la de abajo))
+            polygonXpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonXpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonXpoints.Add(new PointLatLng(41.291965, 2.103366));
+            polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
+
+
+            // RW3 (la de arriba)
+            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
+            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
 
 
             Mapa.DragButton = MouseButtons.Left;
@@ -320,20 +343,17 @@ namespace ASTERIX
             polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
             polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
 
-
             polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
             polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
             polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
             polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
             polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
 
-
             polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
             polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
             polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
             polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
             polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
-
 
             polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
             polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
@@ -356,13 +376,11 @@ namespace ASTERIX
             polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
             polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
 
-
             polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
             polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
             polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
             polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
             polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
-
 
             polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
             polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
@@ -370,7 +388,6 @@ namespace ASTERIX
             polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
             polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
             polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
-
 
             polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
             polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
@@ -382,7 +399,6 @@ namespace ASTERIX
             polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
             polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
             polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
-
 
             polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
             polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
@@ -410,7 +426,6 @@ namespace ASTERIX
             polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
             polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
             polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
-
 
             polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
             polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
@@ -469,14 +484,13 @@ namespace ASTERIX
             polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
             polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
 
-
+            var polygonsOverlay = new GMapOverlay("polygons");
 
             var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
             {
                 Stroke = new Pen(Color.Magenta, 2),
                 Fill = new SolidBrush(Color.Magenta)
             };
-            var polygonsOverlay = new GMapOverlay("polygons");
             polygonsOverlay.Polygons.Add(polygonA);
             Mapa.Overlays.Add(polygonsOverlay);
 
@@ -542,7 +556,6 @@ namespace ASTERIX
                 Fill = new SolidBrush(Color.Green)
             };
             polygonsOverlay.Polygons.Add(polygonI);
-
 
             var polygonJ = new GMapPolygon(polygonJpoints, "PolygonJ")
             {
@@ -634,6 +647,26 @@ namespace ASTERIX
             };
             polygonsOverlay.Polygons.Add(polygonV);
 
+            var polygonW = new GMapPolygon(polygonWpoints, "PolygonW")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonW);
+
+            var polygonX = new GMapPolygon(polygonXpoints, "PolygonX")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonX);
+
+            var polygonY = new GMapPolygon(polygonYpoints, "PolygonY")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonY);
 
             Mapa.Overlays.Add(polygonsOverlay);
         }
