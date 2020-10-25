@@ -42,6 +42,8 @@ namespace ASTERIX
         public List<PointLatLng> polygonWpoints;
         public List<PointLatLng> polygonXpoints;
         public List<PointLatLng> polygonYpoints;
+        public List<PointLatLng> polygonZpoints;
+        public List<PointLatLng> polygonZ1points;
 
         // Coordenadas MLAT
         double LatMLAT = 41.297063;
@@ -75,6 +77,8 @@ namespace ASTERIX
             polygonWpoints = new List<PointLatLng>();
             polygonXpoints = new List<PointLatLng>();
             polygonYpoints = new List<PointLatLng>();
+            polygonZpoints = new List<PointLatLng>();
+            polygonZ1points = new List<PointLatLng>();
         }
 
         private void pruebapoly_Load(object sender, EventArgs e)
@@ -484,6 +488,12 @@ namespace ASTERIX
             polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
             polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
 
+            polygonZpoints.Add(new PointLatLng(41, 2));
+            polygonZpoints.Add(new PointLatLng(42, 2));
+
+            polygonZ1points.Add(new PointLatLng(41, 3));
+            polygonZ1points.Add(new PointLatLng(42, 3));
+
             var polygonsOverlay = new GMapOverlay("polygons");
 
             var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
@@ -667,6 +677,20 @@ namespace ASTERIX
                 Fill = new SolidBrush(Color.White)
             };
             polygonsOverlay.Polygons.Add(polygonY);
+
+            var polygonZ = new GMapPolygon(polygonZpoints, "PolygonZ")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonZ);
+
+            var polygonZ1 = new GMapPolygon(polygonZ1points, "PolygonZ1")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonZ1);
 
             Mapa.Overlays.Add(polygonsOverlay);
         }

@@ -367,13 +367,12 @@ C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad As
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\AsterixDecoder\ASTERIX\obj\Debug\ASTERIX.pdb
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\AsterixDecoder\ASTERIX\obj\Debug\ASTERIX.BarChartGraphUpdateRate.resources
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.BarChartGraphUpdateRate.resources
-C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\OxyPlot.dll
-C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\OxyPlot.WindowsForms.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\ScottPlot.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\ScottPlot.WinForms.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\System.Drawing.Common.dll
-C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\OxyPlot.xml
-C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\OxyPlot.WindowsForms.xml
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.PlotProbabilityofUpdate.resources
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.BarPlotUpdateRate1.resources
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.MLATCalibrationVehicle.resources
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\EPPlus.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\System.ComponentModel.Annotations.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\EPPlus.xml

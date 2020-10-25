@@ -13,6 +13,10 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
+using System;
+using System.Diagnostics;
+using System.Threading;
+
 namespace ASTERIX
 {
     public partial class ED1 : Form
@@ -52,6 +56,8 @@ namespace ASTERIX
 
         List<CAT10> listaMLAT_Airborne_2coma5NM = new List<CAT10>();
         List<CAT10> listaMLAT_Airborne_5NM = new List<CAT10>();
+
+        List<CAT21> listaCAT21nearAirport = new List<CAT21>();
 
         public List<PointLatLng> polygonApoints = new List<PointLatLng>();
         public List<PointLatLng> polygonBpoints = new List<PointLatLng>();
@@ -98,6 +104,7 @@ namespace ASTERIX
         double heading25R;
         double heading02;
         double heading20;
+        int i = 0;
 
         public ED1(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23)
         {
@@ -547,8 +554,17 @@ namespace ASTERIX
                 i = i + 1;
             }
 
-            //listaMLATmodeS = listaMLAT;
+            // Filtramos los paquetes CAT21 mas alejados del aeropuerto
+            double[] c1 = new double[2];
+            c1[0] = LatMLAT;
+            c1[1] = LonMLAT;
 
+            for(i=0; i<listaCAT21.Count(); i++)
+            {
+                double distance = CalculateDistanceBetweenCoordinates(c1, CoordinatesADSB_WGS84(listaCAT21[i]));
+                if (distance < 10 * 1852) { listaCAT21nearAirport.Add(listaCAT21[i]); } // cojemos los paquetes a menos de 10NM del aeropuerto
+            }
+            
             //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -705,7 +721,6 @@ namespace ASTERIX
                 Fill = new SolidBrush(Color.White)
             };
 
-
             // Separamos los paquetes MLAT según su zona del aeropuerto
 
             List<double> listavelocidades = new List<double>();
@@ -759,7 +774,7 @@ namespace ASTERIX
                     bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
 
                     // Separtamos los paquetes según su zona del aeropuerto, diferenciando los que estan volando y los que no
-                    double Vthreshold = 180;
+                    double Vthreshold = 200;
                     // Zona Stand (A,B,C,D,E)
                     if ((insideA == true || insideB == true || insideC == true || insideD == true || insideE == true))
                     {
@@ -784,7 +799,7 @@ namespace ASTERIX
                             if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); }
                             if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); }
                             if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); }
-                            if(insideW==false && insideX==false && insideY == false) { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); }
+                            if (insideW == false && insideX == false && insideY == false) { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); }
                         }
 
                         else // si va a una velocidad alta
@@ -861,13 +876,13 @@ namespace ASTERIX
             //GMapOverlay overlayAPRON = PlotListadePaquetesenOverlay(listaMLAT_Apron, green_plane);
             //Mapa.Overlays.Add(overlayAPRON);
 
-            GMapOverlay overlayMA = PlotListadePaquetesenOverlay(listaMLAT_MA, red_plane);
+            GMapOverlay overlayMA = PlotListadePaquetesenOverlayMLAT(listaMLAT_MA, red_circle);
             Mapa.Overlays.Add(overlayMA);
 
-            GMapOverlay overlayAIRBORNE25 = PlotListadePaquetesenOverlay(listaMLAT_Airborne_2coma5NM, white_plane);
+            GMapOverlay overlayAIRBORNE25 = PlotListadePaquetesenOverlayMLAT(listaMLAT_Airborne_2coma5NM, white_circle);
             Mapa.Overlays.Add(overlayAIRBORNE25);
 
-            GMapOverlay overlayAIRBORNE5 = PlotListadePaquetesenOverlay(listaMLAT_Airborne_5NM, blue_plane);
+            GMapOverlay overlayAIRBORNE5 = PlotListadePaquetesenOverlayMLAT(listaMLAT_Airborne_5NM, blue_circle);
             Mapa.Overlays.Add(overlayAIRBORNE5);
 
             //GMapOverlay overlayAIRBORNE = PlotListadePaquetesenOverlay(listaMLAT_Airborne, green_plane);
@@ -883,9 +898,6 @@ namespace ASTERIX
             List<string> listaNombresUsados = new List<string>();
             List<List<CAT10>> listadelistasdeavionesconmismonombre = new List<List<CAT10>>();
             List<double> listaAvgDelay = new List<double>();
-
-            pb_UpdateRate.Maximum = listaMLATmodeS.Count;
-            pb_UpdateRate.Value = 0;
 
             int i= 0;
             while(i<listaMLATmodeS.Count)
@@ -904,6 +916,7 @@ namespace ASTERIX
                     {
                         int j = i+1;
                         List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
+                        ListaPlanesMismoNombre.Add(listaMLATmodeS[i]);
                         while (j < listaMLATmodeS.Count)
                         {
                             if (listaMLATmodeS[j].TargetIdentification_decoded == TargetIdentification && listaMLATmodeS[j].TargetIdentification_decoded != "")
@@ -942,49 +955,48 @@ namespace ASTERIX
                     }
                 }
                 i = i + 1;
-                pb_UpdateRate.Value = i;
             }
         }
 
         private void pb_ProbabilityofUpdate_Click(object sender, EventArgs e)
         {
-            // APRON
-            double AverafeDelayApron = CalculateProbabilityofUpdate(listaMLAT_Apron);
+            //// APRON
+            //double AverafeDelayApron = CalculateProbabilityofUpdate(listaMLAT_Apron);
 
-            // STAND
-            double AverafeDelayStand = CalculateProbabilityofUpdate(listaMLAT_Stand);
+            //// STAND
+            //double AverafeDelayStand = CalculateProbabilityofUpdate(listaMLAT_Stand);
 
-            // MA
-            double AverafeDelayMA = CalculateProbabilityofUpdate(listaMLAT_MA);
+            //// MA
+            //double AverafeDelayMA = CalculateProbabilityofUpdate(listaMLAT_MA);
 
-            double AverafeDelayMA_Runway1 = CalculateProbabilityofUpdate(listaRunway1);
-            double AverafeDelayMA_Runway2 = CalculateProbabilityofUpdate(listaRunway2);
-            double AverafeDelayMA_Runway3 = CalculateProbabilityofUpdate(listaRunway3);
+            ////double AverafeDelayMA_Runway1 = CalculateProbabilityofUpdate(listaRunway1);
+            ////double AverafeDelayMA_Runway2 = CalculateProbabilityofUpdate(listaRunway2);
+            ////double AverafeDelayMA_Runway3 = CalculateProbabilityofUpdate(listaRunway3);
 
-            double AverafeDelayMA_Taxiway = CalculateProbabilityofUpdate(listaMLAT_Taxiway);
+            //double AverafeDelayMA_Taxiway = CalculateProbabilityofUpdate(listaMLAT_Taxiway);
 
-            // AIRBORNE
-            double AverafeDelayAirborne_2coma5NM = CalculateProbabilityofUpdate(listaMLAT_Airborne_2coma5NM);
-            double AverafeDelayAirborne_5NM = CalculateProbabilityofUpdate(listaMLAT_Airborne_5NM);
-        }
+            //// AIRBORNE
+            //double AverafeDelayAirborne_2coma5NM = CalculateProbabilityofUpdate(listaMLAT_Airborne_2coma5NM);
+            //double AverafeDelayAirborne_5NM = CalculateProbabilityofUpdate(listaMLAT_Airborne_5NM);
+
+         }
 
         private void bt_PrecissionAccuracy_Click(object sender, EventArgs e)
         {
+            //// STAND
+            //var listaSTAND = CalculatePRecissionAccuracySTAND(listaMLAT_Stand, listaCAT21);
+            //listaSTAND.Sort();
+            //double a = listaSTAND.Average();
+            //int percentle95_floor_STAND = Convert.ToInt32(Math.Floor(0.95 * listaSTAND.Count()));
+            //int percentle95_ceil_STAND = Convert.ToInt32(Math.Ceiling(0.95 * listaSTAND.Count()));
+            //double percentile95_STAND = (listaSTAND[percentle95_floor_STAND] + listaSTAND[percentle95_ceil_STAND]) / 2;
 
-            // STAND
-            var listaSTAND = CalculatePRecissionAccuracySTAND(listaMLAT_Stand, listaCAT21);
-            listaSTAND.Sort();
-            double a = listaSTAND.Average();
-            int percentle95_floor_STAND = Convert.ToInt32(Math.Floor(0.95 * listaSTAND.Count()));
-            int percentle95_ceil_STAND = Convert.ToInt32(Math.Ceiling(0.95 * listaSTAND.Count()));
-            double percentile95_STAND = (listaSTAND[percentle95_floor_STAND] + listaSTAND[percentle95_ceil_STAND]) / 2;
-
-            int percentle99_floor_STAND = Convert.ToInt32(Math.Floor(0.99 * listaSTAND.Count()));
-            int percentle99_ceil_STAND = Convert.ToInt32(Math.Ceiling(0.99 * listaSTAND.Count()));
-            double percentile99_STAND = (listaSTAND[percentle99_floor_STAND] + listaSTAND[percentle99_ceil_STAND]) / 2;
+            //int percentle99_floor_STAND = Convert.ToInt32(Math.Floor(0.99 * listaSTAND.Count()));
+            //int percentle99_ceil_STAND = Convert.ToInt32(Math.Ceiling(0.99 * listaSTAND.Count()));
+            //double percentile99_STAND = (listaSTAND[percentle99_floor_STAND] + listaSTAND[percentle99_ceil_STAND]) / 2;
 
             // APRON
-            List<double> listadistancesAPRON = CalculatePRecissionAccuracy(listaMLAT_Apron, listaCAT21);
+            List<double> listadistancesAPRON = CalculatePrecissionAccuracy_fromnearestdistance1(listaMLAT_Apron, listaCAT21nearAirport);
             listadistancesAPRON.Sort();
             int percentle95_floor_APRON = Convert.ToInt32(Math.Floor(0.95 * listadistancesAPRON.Count()));
             int percentle95_ceil_APRON = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesAPRON.Count()));
@@ -994,63 +1006,53 @@ namespace ASTERIX
             int percentle99_ceil_APRON = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesAPRON.Count()));
             double percentile99_APRON = (listadistancesAPRON[percentle99_floor_APRON] + listadistancesAPRON[percentle99_ceil_APRON]) / 2;
 
-            // RUNWAY 1
-            List<double> listadistancesRW1 = CalculatePRecissionAccuracy(listaRunway1, listaCAT21);
-            listadistancesRW1.Sort();
-            int percentle95_floor_RW1 = Convert.ToInt32(Math.Floor(0.95 * listadistancesRW1.Count()));
-            int percentle95_ceil_RW1 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesRW1.Count()));
-            double percentile95_RW1 = (listadistancesRW1[percentle95_floor_APRON] + listadistancesRW1[percentle95_ceil_RW1]) / 2;
-
-            int percentle99_floor_RW1 = Convert.ToInt32(Math.Floor(0.99 * listadistancesRW1.Count()));
-            int percentle99_ceil_RW1 = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesRW1.Count()));
-            double percentile99_RW1 = (listadistancesRW1[percentle95_floor_RW1] + listadistancesRW1[percentle99_ceil_RW1]) / 2;
-
-            // RUNWAY 2
-            List<double> listadistancesRW2 = CalculatePRecissionAccuracy(listaRunway2, listaCAT21);
-            listadistancesRW2.Sort();
-            int percentle95_floor_RW2 = Convert.ToInt32(Math.Floor(0.95 * listadistancesRW2.Count()));
-            int percentle95_ceil_RW2 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesRW2.Count()));
-            double percentile95_RW2 = (listadistancesRW2[percentle95_floor_RW2] + listadistancesRW2[percentle95_ceil_RW2]) / 2;
-
-            int percentle99_floor_RW2 = Convert.ToInt32(Math.Floor(0.99 * listadistancesRW2.Count()));
-            int percentle99_ceil_RW2 = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesRW2.Count()));
-            double percentile99_RW2 = (listadistancesRW2[percentle99_floor_RW2] + listadistancesRW2[percentle99_ceil_RW2]) / 2;
-
-            // RUNWAY 3
-            List<double> listadistancesRW3 = CalculatePRecissionAccuracy(listaRunway3, listaCAT21);
-            listadistancesRW3.Sort();
-            int percentle95_floor_RW3 = Convert.ToInt32(Math.Floor(0.95 * listadistancesRW3.Count()));
-            int percentle95_ceil_RW3 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesRW3.Count()));
-            double percentile95_RW3 = (listadistancesRW3[percentle95_floor_RW3] + listadistancesRW3[percentle95_ceil_RW3]) / 2;
-
-            int percentle99_floor_RW3 = Convert.ToInt32(Math.Floor(0.99 * listadistancesRW3.Count()));
-            int percentle99_ceil_RW3 = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesRW3.Count()));
-            double percentile99_RW3 = (listadistancesRW3[percentle99_floor_RW3] + listadistancesRW3[percentle99_ceil_RW3]) / 2;
-
-            // APRON + MA
+            //APRON + MA
             List<CAT10> listaMLATMA_Apron = new List<CAT10>();
             for (int i = 0; i < listaMLAT_MA.Count(); i++) { listaMLATMA_Apron.Add(listaMLAT_MA[i]); }
             for (int i = 0; i < listaMLAT_Apron.Count(); i++) { listaMLATMA_Apron.Add(listaMLAT_Apron[i]); }
 
-            List<double> listadistancesMA = CalculatePRecissionAccuracy(listaMLATMA_Apron, listaCAT21);
+            List<double> listadistancesMA = CalculatePrecissionAccuracy_fromnearestdistance1(listaMLATMA_Apron, listaCAT21nearAirport);
             listadistancesMA.Sort();
             int percentle95_floor_MA = Convert.ToInt32(Math.Floor(0.95 * listadistancesMA.Count()));
             int percentle95_ceil_MA = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesMA.Count()));
             double percentile95_MA = (listadistancesMA[percentle95_floor_MA] + listadistancesMA[percentle95_ceil_MA]) / 2;
 
-            // AIRBORNE 2.5NM
-            List<double> listadistancesAIRBORNE25 = CalculatePRecissionAccuracy(listaMLAT_Airborne_2coma5NM, listaCAT21);
+            int percentle99_floor_MA = Convert.ToInt32(Math.Floor(0.99 * listadistancesMA.Count()));
+            int percentle99_ceil_MA = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesMA.Count()));
+            double percentile99_MA = (listadistancesMA[percentle99_floor_MA] + listadistancesMA[percentle99_ceil_MA]) / 2;
+
+            //AIRBORNE 2.5NM
+            List<double> listadistancesAIRBORNE25 = CalculatePrecissionAccuracy_fromnearestdistance1(listaMLAT_Airborne_2coma5NM, listaCAT21nearAirport);
             listadistancesAIRBORNE25.Sort();
             int percentle95_floor_AIRBORNE25 = Convert.ToInt32(Math.Floor(0.95 * listadistancesAIRBORNE25.Count()));
             int percentle95_ceil_AIRBORNE25 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesAIRBORNE25.Count()));
             double percentile95_AIRBORNE25 = (listadistancesAIRBORNE25[percentle95_floor_AIRBORNE25] + listadistancesAIRBORNE25[percentle95_ceil_AIRBORNE25]) / 2;
 
-            // AIRBORNE 5NM
-            List<double> listadistancesAIRBORNE5 = CalculatePRecissionAccuracy(listaMLAT_Airborne_5NM, listaCAT21);
+            //AIRBORNE 5NM
+            List<double> listadistancesAIRBORNE5 = CalculatePrecissionAccuracy_fromnearestdistance1(listaMLAT_Airborne_5NM, listaCAT21nearAirport);
             listadistancesAIRBORNE5.Sort();
             int percentle95_floor_AIRBORNE5 = Convert.ToInt32(Math.Floor(0.95 * listadistancesAIRBORNE5.Count()));
             int percentle95_ceil_AIRBORNE5 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesAIRBORNE5.Count()));
             double percentile95_AIRBORNE5 = (listadistancesAIRBORNE5[percentle95_floor_AIRBORNE5] + listadistancesAIRBORNE5[percentle95_ceil_AIRBORNE5]) / 2;
+        }
+
+        private void bt_MLATDetection_Click(object sender, EventArgs e)
+        {
+            double probabilityofMLATDetection_RWY1 = CalculateProbabilityofMLATDetection(listaRunway1, 2);
+            double probabilityofMLATDetection_RWY2 = CalculateProbabilityofMLATDetection(listaRunway2, 2);
+            double probabilityofMLATDetection_RWY3 = CalculateProbabilityofMLATDetection(listaRunway3, 2);
+
+            double probabilityofMLATDetection_Taxyway = CalculateProbabilityofMLATDetection(listaMLAT_Taxiway, 2);
+
+            double probabilityofMLATDetection_MA = CalculateProbabilityofMLATDetection(listaMLAT_MA, 2);
+
+            double probabilityofMLATDetection_STAND = CalculateProbabilityofMLATDetection(listaMLAT_Stand, 5);
+        }
+
+        private void bt_ProbofIdentification_Click(object sender, EventArgs e)
+        {
+            List<double> listofProbabilityofIdentification = CalculateProbabilityofIdentification(listaMLATmodeS);
+            double ProbabilityofIdentifcation = listofProbabilityofIdentification.Average()*100;
         }
 
 
@@ -1068,10 +1070,54 @@ namespace ASTERIX
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        public double[] MLATcoordinates2WGS84(CAT10 packet)
+        {
+            double[] coordenadesMLAT_WGS84 = new double[2];
+
+            if (packet.PositioninCartesianCoordinates.Length > 0)
+            {
+                double coordX = packet.X_cartesian;
+                double coordY = packet.Y_cartesian;
+
+                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                coordenadesMLAT_WGS84 = NewCoordinatesMLAT(rho, theta);
+            }
+            else
+            {
+                double rho = packet.Rho;
+                double theta = packet.TrackAngle;
+
+                coordenadesMLAT_WGS84 = NewCoordinatesMLAT(rho, theta);
+            }
+
+            return coordenadesMLAT_WGS84;
+        }
+
+        public double[] CoordinatesADSB_WGS84(CAT21 packet)
+        {
+            double[] coordenadasADSB = new double[2];
+
+            if (packet.PositioninWGS_HRcoordinates.Length > 0)
+            {
+                coordenadasADSB[0] = packet.latWGS84_HR;
+                coordenadasADSB[1] = packet.lonWGS84_HR;
+            }
+            else
+            {
+                coordenadasADSB[0] = packet.latWGS84;
+                coordenadasADSB[1] = packet.lonWGS84;
+            }
+
+            return coordenadasADSB;
+        }
+
         public double toRadians(double grados)
         {
             return grados * Math.PI / 180;
         }
+
         public double toDegrees(double radians)
         {
             return radians * 180 / (Math.PI);
@@ -1345,7 +1391,7 @@ namespace ASTERIX
             return heading_btw_points;
         }
 
-        public GMapOverlay PlotListadePaquetesenOverlay(List<CAT10> listaMLATmodeS, Bitmap blue_plane)
+        public GMapOverlay PlotListadePaquetesenOverlayMLAT(List<CAT10> listaMLATmodeS, Bitmap blue_plane)
         {
             GMapOverlay overlayLoad = new GMapOverlay();
             overlayLoad.Clear();
@@ -1394,62 +1440,64 @@ namespace ASTERIX
 
         public double CalculateProbabilityofUpdate(List<CAT10> listaMLAT_Apron)
         {
+            List<CAT10> lista1 = new List<CAT10>();
+            for (int k = 0; k < listaMLAT_Apron.Count(); k++)
+            {
+                if (listaMLAT_Apron[k].TargetAdress.Length != 0 && listaMLAT[k].TargetAdress_decoded != "") { lista1.Add(listaMLAT_Apron[k]); }
+            }
+            listaMLAT_Apron.Clear();
+            for (int k = 0; k < lista1.Count; k++) { listaMLAT_Apron.Add(lista1[k]); }
 
             // Apron
 
             List<string> listaNombresUsados_Apron = new List<string>();
-            List<List<CAT10>> listadelistasdeavionesconmismonombre_Apron = new List<List<CAT10>>();
             List<double> listaAvgDelay_Apron = new List<double>();
 
             int i = 0;
             while (i < listaMLAT_Apron.Count)
             {
-                string TargetIdentification;
                 string TargetAddress;
 
-                if ((listaMLAT_Apron[i].TargetIdentification.Length > 0 && listaMLAT_Apron[i].TargetAdress.Length > 0) || (listaMLAT_Apron[i].TargetIdentification.Length > 0) || (listaMLAT_Apron[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
+                if (listaMLAT_Apron[i].TargetAdress.Length > 0) // cojemos los paquetes que tienen Target Address y/o Target Identification
                 {
-                    TargetIdentification = listaMLAT_Apron[i].TargetIdentification_decoded;
                     TargetAddress = listaMLAT_Apron[i].TargetAdress_decoded;
 
-                    if ((listaNombresUsados_Apron.Contains(TargetIdentification) && listaNombresUsados_Apron.Contains(TargetAddress)) || (listaNombresUsados_Apron.Contains(TargetIdentification)) || (listaNombresUsados_Apron.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
+                    if (listaNombresUsados_Apron.Contains(TargetAddress)) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
                     { }
                     else
                     {
-                        int j = i+1;
+                        int j = 0;
                         List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
+                        ListaPlanesMismoNombre.Add(listaMLAT_Apron[i]);
                         while (j < listaMLAT_Apron.Count)
                         {
-                            if (listaMLAT_Apron[j].TargetIdentification_decoded == TargetIdentification && listaMLAT_Apron[j].TargetIdentification_decoded != "")
+                            if (listaMLAT_Apron[j].TargetAdress_decoded == TargetAddress && listaMLAT_Apron[j].TargetAdress_decoded != "")
                             {
                                 ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
-                                listaNombresUsados_Apron.Add(TargetIdentification);
-                            }
-
-                            else if (listaMLAT_Apron[j].TargetAdress_decoded == TargetAddress && listaMLAT_Apron[j].TargetAdress_decoded != "")
-                            {
-                                ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
-                                listaNombresUsados_Apron.Add(TargetAddress);
                             }
                             j = j + 1;
                         }
 
-                        listadelistasdeavionesconmismonombre_Apron.Add(ListaPlanesMismoNombre);
+                        // Ordenamos lista por tiempo
+                        List<CAT10> ListaPlanesMismoNombre1 = ListaPlanesMismoNombre.OrderBy(o => o.TimeofDay_seconds).ToList();
 
 
                         int k = 0;
                         double AvgSeconds = 0;
 
-                        if (ListaPlanesMismoNombre.Count() > 1)
+                        if (ListaPlanesMismoNombre1.Count() > 1)
                         {
                             double counterSteps = 0;
                             double counterTrue = 0;
 
-                            while (k < ListaPlanesMismoNombre.Count - 1)
+                            while (k < ListaPlanesMismoNombre1.Count - 1)
                             {
-                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30)
+                                double a = ListaPlanesMismoNombre1[k + 1].TimeofDay_seconds;
+                                double b = ListaPlanesMismoNombre1[k].TimeofDay_seconds;
+
+                                if (Math.Abs(ListaPlanesMismoNombre1[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre1[k].TimeofDay_seconds) < 30)
                                 {
-                                    if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= 1)
+                                    if (Math.Abs(ListaPlanesMismoNombre1[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre1[k].TimeofDay_seconds) <= 1)
                                     {
                                         counterTrue = counterTrue + 1;
                                     }
@@ -1464,7 +1512,6 @@ namespace ASTERIX
                 }
                 i = i + 1;
             }
-
             return listaAvgDelay_Apron.Average() * 100;
         }
 
@@ -1472,6 +1519,7 @@ namespace ASTERIX
         {
             string TargetAddresssMLAT;
             double[] coordenadasADSB = new double[2];
+            double[] coordenadasMLAT = new double[2];
             List<double> listadistances = new List<double>();
 
             for (int i = 0; i < listaMLAT_Apron.Count(); i++)
@@ -1489,8 +1537,109 @@ namespace ASTERIX
                             if (Math.Abs(listaMLAT_Apron[i].TimeofDay_seconds - listaCAT21[j].TimeofASTERIXReportTransmission_seconds) < timedelay)
                             {
                                 timedelay = listaMLAT_Apron[i].TimeofDay_seconds - listaCAT21[j].TimeofASTERIXReportTransmission_seconds;
-                                coordenadasADSB[0] = listaCAT21[j].latWGS84;
-                                coordenadasADSB[1] = listaCAT21[j].lonWGS84;
+
+                                coordenadasADSB = CoordinatesADSB_WGS84(listaCAT21[j]);
+                                coordenadasMLAT = MLATcoordinates2WGS84(listaMLAT_Apron[i]);
+                            }
+                        }
+                    }
+
+                    if (timedelay != 1e5 && Math.Abs(timedelay) < 4)
+                    {
+                        if ((listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
+                        {
+                            double distance = CalculateDistanceBetweenCoordinates(coordenadasADSB, coordenadasMLAT);
+
+                            double deltaX = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Cos(toRadians(listaMLAT_Apron[i].TrackAngle)) * timedelay;
+                            double deltaY = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Sin(toRadians(listaMLAT_Apron[i].TrackAngle)) * timedelay;
+
+                            // interpolamos
+
+                            if (timedelay > 0 && distance<500)
+                            {
+                                double coordX = listaMLAT_Apron[i].X_cartesian - deltaX;
+                                double coordY = listaMLAT_Apron[i].Y_cartesian - deltaY;
+
+                                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                                double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                                double[] newCoordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                                distance = CalculateDistanceBetweenCoordinates(newCoordenadasMLAT, coordenadasADSB);
+                                listadistances.Add(distance);
+                            }
+
+                            else if (timedelay < 0 && distance<500)
+                            {
+                                double coordX = listaMLAT_Apron[i].X_cartesian + deltaX;
+                                double coordY = listaMLAT_Apron[i].Y_cartesian + deltaY;
+
+                                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                                double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                                double[] newCoordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                                distance = CalculateDistanceBetweenCoordinates(newCoordenadasMLAT, coordenadasADSB);
+                                listadistances.Add(distance);
+                            }
+                            else if (timedelay == 0 && distance<500)
+                            {
+                                double coordX = listaMLAT_Apron[i].X_cartesian;
+                                double coordY = listaMLAT_Apron[i].Y_cartesian;
+
+                                double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                                double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                                double[] newCoordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                                distance = CalculateDistanceBetweenCoordinates(newCoordenadasMLAT, coordenadasADSB);
+                                listadistances.Add(distance);
+                            }
+                        }
+                    }
+                }
+            }
+            return listadistances;
+        }
+
+        public List<double> CalculatePRecissionAccuracyMAPA(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
+        {
+            Mapa.Overlays.Clear();
+            var overlay = new GMapOverlay();
+            int indexj;
+
+            string TargetAddresssMLAT;
+            double[] coordenadasADSB = new double[2];
+            List<double> listadistances = new List<double>();
+            //List<int> listaindexjusados = new List<int>();
+
+            for (int i = 0; i < listaMLAT_Apron.Count(); i++)
+            {
+                double timedelay = 1e5;
+
+                if (listaMLAT_Apron[i].TargetAdress_decoded.Length > 0 && listaMLAT_Apron[i].TargetAdress_decoded != "")
+                {
+                    TargetAddresssMLAT = listaMLAT_Apron[i].TargetAdress_decoded;
+
+                    for (int j = 0; j < listaCAT21.Count; j++)
+                    {
+                        if (listaCAT21[j].TargetAdress_real.Length > 0 && listaCAT21[j].TargetAdress_real == TargetAddresssMLAT)
+                        {
+                            if (Math.Abs(listaMLAT_Apron[i].TimeofDay_seconds - listaCAT21[j].TimeofASTERIXReportTransmission_seconds) < timedelay /*&& listaindexjusados.Contains(j)==false*/)
+                            {
+                                timedelay = listaMLAT_Apron[i].TimeofDay_seconds - listaCAT21[j].TimeofASTERIXReportTransmission_seconds;
+                                //listaindexjusados.Add(j); 
+
+                                if (listaCAT21[j].PositioninWGS_HRcoordinates.Length > 0)
+                                {
+                                    coordenadasADSB[0] = listaCAT21[j].latWGS84_HR;
+                                    coordenadasADSB[1] = listaCAT21[j].lonWGS84_HR;
+                                }
+                                else if ((listaCAT21[j].PositioninWGS_coordinates.Length > 0))
+                                {
+                                    coordenadasADSB[0] = listaCAT21[j].latWGS84;
+                                    coordenadasADSB[1] = listaCAT21[j].lonWGS84;
+                                }
                             }
                         }
                     }
@@ -1518,6 +1667,20 @@ namespace ASTERIX
 
                                 distance = CalculateDistanceBetweenCoordinates(coordenadasMLAT, coordenadasADSB);
                                 listadistances.Add(distance);
+
+                                //if(overlay.Polygons.Count<2)
+                                //{
+                                List<PointLatLng> polygon_points = new List<PointLatLng>();
+                                polygon_points.Clear();
+                                polygon_points.Add(new PointLatLng(coordenadasADSB[0], coordenadasADSB[1]));
+                                polygon_points.Add(new PointLatLng(coordenadasMLAT[0], coordenadasMLAT[1]));
+                                var polygonZ = new GMapPolygon(polygon_points, "PolygonZ")
+                                {
+                                    Stroke = new Pen(Color.Red, 2),
+                                    Fill = new SolidBrush(Color.Red)
+                                };
+                                overlay.Polygons.Add(polygonZ);
+                                //}
                             }
 
                             if (timedelay < 0)
@@ -1532,8 +1695,22 @@ namespace ASTERIX
 
                                 distance = CalculateDistanceBetweenCoordinates(coordenadasMLAT, coordenadasADSB);
                                 listadistances.Add(distance);
-                            }
 
+                                //if(overlay.Polygons.Count<2)
+                                //{
+                                List<PointLatLng> polygon_points = new List<PointLatLng>();
+                                polygon_points.Clear();
+                                polygon_points.Add(new PointLatLng(coordenadasADSB[0], coordenadasADSB[1]));
+                                polygon_points.Add(new PointLatLng(coordenadasMLAT[0], coordenadasMLAT[1]));
+                                var polygonZ = new GMapPolygon(polygon_points, "PolygonZ")
+                                {
+                                    Stroke = new Pen(Color.Red, 2),
+                                    Fill = new SolidBrush(Color.Red)
+                                };
+                                overlay.Polygons.Add(polygonZ);
+                                //}
+                            }
+                            if (timedelay == 0)
                             {
                                 double coordX = listaMLAT_Apron[i].X_cartesian;
                                 double coordY = listaMLAT_Apron[i].Y_cartesian;
@@ -1545,12 +1722,154 @@ namespace ASTERIX
 
                                 distance = CalculateDistanceBetweenCoordinates(coordenadasMLAT, coordenadasADSB);
                                 listadistances.Add(distance);
+
+                                //if(overlay.Polygons.Count<2)
+                                //{
+                                List<PointLatLng> polygon_points = new List<PointLatLng>();
+                                polygon_points.Clear();
+                                polygon_points.Add(new PointLatLng(coordenadasADSB[0], coordenadasADSB[1]));
+                                polygon_points.Add(new PointLatLng(coordenadasMLAT[0], coordenadasMLAT[1]));
+                                var polygonZ = new GMapPolygon(polygon_points, "PolygonZ")
+                                {
+                                    Stroke = new Pen(Color.Red, 2),
+                                    Fill = new SolidBrush(Color.Red)
+                                };
+                                overlay.Polygons.Add(polygonZ);
+                                //}
+
+
                             }
                         }
                     }
                 }
             }
+            Mapa.Overlays.Add(overlay);
             return listadistances;
+        }
+
+        public List<double> CalculatePrecissionAccuracy_fromnearestdistance(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
+        {
+            // Filtramos los paquetes que no tienen target identification
+            List<CAT10> lista1 = new List<CAT10>();
+            for(int i = 0; i<listaMLAT_Apron.Count(); i++)
+            {
+                if (listaMLAT_Apron[i].TargetAdress.Length != 0 && listaMLAT[i].TargetAdress_decoded!="") { lista1.Add(listaMLAT_Apron[i]); }
+            }
+            listaMLAT_Apron.Clear();
+            for(i = 0; i < lista1.Count; i++) { listaMLAT_Apron.Add(lista1[i]); }
+
+
+            // Filtramos los paquetes que no tengan coordemadas + velocidad en polares
+            lista1.Clear();
+            for (i = 0; i < listaMLAT_Apron.Count();i++ )
+                {
+                if ((listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
+                {
+                    lista1.Add(listaMLAT_Apron[i]);
+                }
+            }
+            listaMLAT_Apron.Clear();
+            for (i = 0; i < lista1.Count; i++) { listaMLAT_Apron.Add(lista1[i]); }
+
+            string TargetAddresssMLAT;
+            List<double> listadistances = new List<double>();
+            var overlay = new GMapOverlay();
+            int indexj = 0;
+
+
+            double[] CoordenadasMLAT = new double[2];
+            double[] CoordenadasADSB = new double[2];
+
+            for (int i = 0; i < listaMLAT_Apron.Count(); i++) // recorrem la lista MLAT
+            {
+                double distance = 1e8;
+                TargetAddresssMLAT = listaMLAT_Apron[i].TargetAdress_decoded;
+                List<CAT21> listaavionesCAT21mismonombre = new List<CAT21>();
+
+                // Recorremos listaCAT21 y guardamos los paquetes con mismo Target Address
+                for (int j = 0; j < listaCAT21.Count(); j++) { if (listaCAT21[j].TargetAdress_real == TargetAddresssMLAT /*&& listaCAT21[j].AirborneGoundVector.Length>0*/) { listaavionesCAT21mismonombre.Add(listaCAT21[j]); } }
+
+                //Ahora recorremos lista de aviones con mismo address y nos quedamos con el mas cercano
+                for(int j = 0; j < listaavionesCAT21mismonombre.Count; j++)
+                {
+                    var coord_i = MLATcoordinates2WGS84(listaMLAT_Apron[i]);
+                    var coord_j = CoordinatesADSB_WGS84(listaavionesCAT21mismonombre[j]);
+                    double d1 = CalculateDistanceBetweenCoordinates(coord_i, coord_j);
+
+                    if (d1 < distance)
+                    {
+                        distance = d1;
+
+                        CoordenadasADSB = coord_j;
+                        CoordenadasMLAT = coord_i;
+
+                        indexj = j;
+                    }
+                }
+
+                if (distance != 1e8)
+                {
+                    double timedelay = listaMLAT_Apron[i].TimeofDay_seconds - listaavionesCAT21mismonombre[indexj].TimeofASTERIXReportTransmission_seconds;
+
+                    double[] newCordenadasMLAT = new double[2];
+
+                    double deltaX = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Cos(toRadians(listaMLAT_Apron[i].TrackAngle)) * timedelay;
+                    double deltaY = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Sin(toRadians(listaMLAT_Apron[i].TrackAngle)) * timedelay;
+
+                    // interpolamos
+
+                    if (timedelay > 0/* && Math.Abs(timedelay) < 10*/)
+                    {
+                        double coordX = listaMLAT_Apron[i].X_cartesian - deltaX;
+                        double coordY = listaMLAT_Apron[i].Y_cartesian - deltaY;
+
+                        double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                        double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                        newCordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                        distance = CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB);
+                        listadistances.Add(distance);
+
+                        //if (CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB) < distance) { listadistances.Add(CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB)); }
+                        //else { listadistances.Add(distance); }
+                    }
+
+                    if (timedelay < 0 /*&& Math.Abs(timedelay) < 10*/)
+                    {
+                        double coordX = listaMLAT_Apron[i].X_cartesian + deltaX;
+                        double coordY = listaMLAT_Apron[i].Y_cartesian + deltaY;
+
+                        double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                        double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                        newCordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                        distance = CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB);
+                        listadistances.Add(distance);
+
+                        //if (CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB) < distance) { listadistances.Add(CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB)); }
+                        //else { listadistances.Add(distance); }
+                    }
+                    else if (timedelay == 0)
+                    {
+                        double coordX = listaMLAT_Apron[i].X_cartesian;
+                        double coordY = listaMLAT_Apron[i].Y_cartesian;
+
+                        double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                        double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                        newCordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                        distance = CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB);
+                        listadistances.Add(distance);
+
+                        //if (CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB) < distance) { listadistances.Add(CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB)); }
+                        //else { listadistances.Add(distance); }
+                    }
+                }
+            }
+            return (listadistances);
         }
 
         public List<double> CalculatePRecissionAccuracySTAND(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
@@ -1662,6 +1981,255 @@ namespace ASTERIX
                 }
             }
             return listaAverages;
+        }
+
+        public double CalculateProbabilityofMLATDetection(List<CAT10> listaMLAT_Apron, double interval)
+        {
+            List<CAT10> lista1 = new List<CAT10>();
+            for (int k = 0; k < listaMLAT_Apron.Count(); k++)
+            {
+                if (listaMLAT_Apron[k].TargetAdress.Length != 0 && listaMLAT[k].TargetAdress_decoded != "") { lista1.Add(listaMLAT_Apron[k]); }
+            }
+            listaMLAT_Apron.Clear();
+            for (int k = 0; k < lista1.Count; k++) { listaMLAT_Apron.Add(lista1[k]); }
+
+            // Apron
+
+            List<string> listaNombresUsados_Apron = new List<string>();
+            List<double> listaAvgDelay_Apron = new List<double>();
+
+            int i = 0;
+            while (i < listaMLAT_Apron.Count)
+            {
+                string TargetAddress;
+
+                if (listaMLAT_Apron[i].TargetAdress.Length > 0) // cojemos los paquetes que tienen Target Address y/o Target Identification
+                {
+                    TargetAddress = listaMLAT_Apron[i].TargetAdress_decoded;
+
+                    if (listaNombresUsados_Apron.Contains(TargetAddress)) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
+                    { }
+                    else
+                    {
+                        int j = i + 1;
+                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
+                        ListaPlanesMismoNombre.Add(listaMLAT_Apron[i]);
+                        while (j < listaMLAT_Apron.Count)
+                        {
+                            if (listaMLAT_Apron[j].TargetAdress_decoded == TargetAddress && listaMLAT_Apron[j].TargetAdress_decoded != "")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLAT_Apron[j]);
+                                listaNombresUsados_Apron.Add(TargetAddress);
+                            }
+                            j = j + 1;
+                        }
+
+                        // Ordenamos lista por tiempo
+                        List<CAT10> SortedList = ListaPlanesMismoNombre.OrderBy(o => o.TimeofDay_seconds).ToList();
+
+                        int k = 0;
+                        double AvgSeconds = 0;
+
+                        if (ListaPlanesMismoNombre.Count() > 1)
+                        {
+                            double counterSteps = 0;
+                            double counterTrue = 0;
+
+                            while (k < ListaPlanesMismoNombre.Count - 1)
+                            {
+                                if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30)
+                                {
+                                    if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) <= interval)
+                                    {
+                                        counterTrue = counterTrue + 1;
+                                    }
+                                    counterSteps = counterSteps + 1;
+                                }
+                                k = k + 1;
+                            }
+                            AvgSeconds = counterTrue / counterSteps;
+                            listaAvgDelay_Apron.Add(AvgSeconds);
+                        }
+                    }
+                }
+                i = i + 1;
+            }
+            return listaAvgDelay_Apron.Average() * 100;
+        }
+
+        public List<double> CalculateProbabilityofIdentification(List<CAT10> listaMLATmodeS)
+        {
+            string TrackNumber;
+            List<string> listaTrackNumbers = new List<string>();
+            List<double> listofProbabilityofIdentification = new List<double>();
+
+            for (int i = 0; i < listaMLATmodeS.Count; i++)
+            {
+                if (listaMLATmodeS[i].TrackNumber.Length > 0 && listaTrackNumbers.Contains(listaMLATmodeS[i].TrackNumber) == false)
+                {
+                    TrackNumber = listaMLATmodeS[i].TrackNumber;
+                    listaTrackNumbers.Add(listaMLATmodeS[i].TrackNumber);
+
+                    List<CAT10> listapaquetesmismonombre = new List<CAT10>();
+                    listapaquetesmismonombre.Add(listaMLATmodeS[i]);
+
+                    // Ahora buscamos todos los paquetes con ese track number y los metemos en una lista
+
+                    for (int j = i + 1; j < listaMLATmodeS.Count; j++)
+                    {
+                        if (listaMLATmodeS[j].TrackNumber == TrackNumber) { listapaquetesmismonombre.Add(listaMLATmodeS[j]); }
+                    }
+
+                    // Ahora recorremos esa lista comprobando que todos los paquetes tengan el mismo Target Address
+                    // Contamos cuantos nombres hay y cuantas veces aparece cada uno, luego el Address que mas veces aparezca es el bueno y el resto son errores
+
+                    // 1- Contamos cuantos nombres diferentes hay
+                    List<string> listadenombres = new List<string>();
+                    for (int k = 0; k < listapaquetesmismonombre.Count(); k++)
+                    {
+                        if (listadenombres.Contains(listapaquetesmismonombre[k].TargetAdress) == false) { listadenombres.Add(listapaquetesmismonombre[k].TargetAdress); }
+                    }
+
+                    // 2- Cuantos paquetes hay con cada nombre?
+                    List<int> listadecontadores = new List<int>();
+                    for (int m = 0; m < listadenombres.Count; m++)
+                    {
+                        int counter = 0;
+                        for (int n = 0; n < listapaquetesmismonombre.Count; n++)
+                        {
+                            if (listadenombres[m] == listapaquetesmismonombre[n].TargetAdress) { counter = counter + 1; }
+                        }
+                        listadecontadores.Add(counter);
+                    }
+
+                    // 3- Calculamos porcentaje de aciertos/errores
+
+                    double casosbuenos = listadecontadores.Max();
+                    double casostotales = listapaquetesmismonombre.Count();
+
+                    listofProbabilityofIdentification.Add(casosbuenos / casostotales);
+                }
+            }
+
+            return listofProbabilityofIdentification;
+        }
+
+        public List<double> CalculatePrecissionAccuracy_fromnearestdistance1(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
+        {
+            // Filtramos los paquetes que no tienen target identification
+            List<CAT10> lista1 = new List<CAT10>();
+            for (int i = 0; i < listaMLAT_Apron.Count(); i++)
+            {
+                if (listaMLAT_Apron[i].TargetAdress.Length != 0 && listaMLAT[i].TargetAdress_decoded != "") { lista1.Add(listaMLAT_Apron[i]); }
+            }
+            listaMLAT_Apron.Clear();
+            for (i = 0; i < lista1.Count; i++) { listaMLAT_Apron.Add(lista1[i]); }
+
+
+            // Filtramos los paquetes que no tengan coordemadas + velocidad en polares
+            lista1.Clear();
+            for (i = 0; i < listaMLAT_Apron.Count(); i++)
+            {
+                if ((listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLAT_Apron[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLAT_Apron[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0 && listaMLAT_Apron[i].PositioninCartesianCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
+                {
+                    lista1.Add(listaMLAT_Apron[i]);
+                }
+            }
+            listaMLAT_Apron.Clear();
+            for (i = 0; i < lista1.Count; i++) { listaMLAT_Apron.Add(lista1[i]); }
+
+            string TargetAddresssMLAT;
+            List<double> listadistances = new List<double>();
+            List<double> listatimedelays = new List<double>();
+
+
+            double[] CoordenadasMLAT = new double[2];
+            double[] CoordenadasADSB = new double[2];
+
+            for (int i = 0; i < listaMLAT_Apron.Count(); i++) // recorrem la lista MLAT
+            {
+                double distance = 1e8;
+                TargetAddresssMLAT = listaMLAT_Apron[i].TargetAdress_decoded;
+                List<CAT21> listaavionesCAT21mismonombre = new List<CAT21>();
+
+                // Recorremos listaCAT21 y guardamos los paquetes con mismo Target Address
+                for (int j = 0; j < listaCAT21.Count(); j++) { if (listaCAT21[j].TargetAdress_real == TargetAddresssMLAT) { listaavionesCAT21mismonombre.Add(listaCAT21[j]); } }
+
+                if(listaavionesCAT21mismonombre.Count>0)
+                {
+                    //Ahora recorremos lista de aviones con mismo address y nos quedamos con el mas cercano
+                    for (int j = 0; j < listaavionesCAT21mismonombre.Count; j++)
+                    {
+                        double d1=1e8;
+
+                        CoordenadasMLAT = MLATcoordinates2WGS84(listaMLAT_Apron[i]);
+                        CoordenadasADSB = CoordinatesADSB_WGS84(listaavionesCAT21mismonombre[j]);
+
+                        double timedelay = listaMLAT_Apron[i].TimeofDay_seconds - listaavionesCAT21mismonombre[j].TimeofASTERIXReportTransmission_seconds;
+
+                        double[] newCordenadasMLAT = new double[2];
+
+                        double deltaX = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Cos(toRadians(listaMLAT_Apron[i].TrackAngle)) * timedelay;
+                        double deltaY = listaMLAT_Apron[i].GroundSpeed * 1852 * Math.Sin(toRadians(listaMLAT_Apron[i].TrackAngle)) * timedelay;
+
+                        // interpolamos
+
+                        if (timedelay > 0 /*&& Math.Abs(timedelay) < 4*/)
+                        {
+                            double coordX = listaMLAT_Apron[i].X_cartesian - deltaX;
+                            double coordY = listaMLAT_Apron[i].Y_cartesian - deltaY;
+
+                            double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                            double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                            newCordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                            d1 = CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB);
+
+                            //if (CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB) < distance) { listadistances.Add(CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB)); }
+                            //else { listadistances.Add(distance); }
+                        }
+
+                        else if (timedelay < 0 /*&& Math.Abs(timedelay) < 4*/)
+                        {
+                            double coordX = listaMLAT_Apron[i].X_cartesian + deltaX;
+                            double coordY = listaMLAT_Apron[i].Y_cartesian + deltaY;
+
+                            double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                            double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                            newCordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                            d1 = CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB);
+
+                            //if (CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB) < distance) { listadistances.Add(CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB)); }
+                            //else { listadistances.Add(distance); }
+                        }
+                        else if (timedelay == 0 /*&& Math.Abs(timedelay) < 4*/)
+                        {
+                            double coordX = listaMLAT_Apron[i].X_cartesian;
+                            double coordY = listaMLAT_Apron[i].Y_cartesian;
+
+                            double rho = Math.Sqrt(coordX * coordX + coordY * coordY);
+                            double theta = (180 / Math.PI) * Math.Atan2(coordX, coordY);
+
+                            newCordenadasMLAT = NewCoordinatesMLAT(rho, theta);
+
+                            d1 = CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB);
+
+                            //if (CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB) < distance) { listadistances.Add(CalculateDistanceBetweenCoordinates(newCordenadasMLAT, CoordenadasADSB)); }
+                            //else { listadistances.Add(distance); }
+                        }
+
+                        if (d1 < distance && d1!= 1e8)
+                        {
+                            distance = d1;
+                        }
+                    }
+                }
+                if (distance != 1e8) { listadistances.Add(distance); }
+            }
+            return listadistances;
         }
     }
 }
