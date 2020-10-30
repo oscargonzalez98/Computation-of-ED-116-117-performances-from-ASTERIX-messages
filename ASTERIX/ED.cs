@@ -460,6 +460,8 @@ namespace ASTERIX
 
         private void lb_ProbabilityofUpdate_Click(object sender, EventArgs e)
         {
+            List<double> listaaverages111 = new List<double>();
+
             pb_probabilityofupdate.Maximum =listanombres.Count;
             pb_probabilityofupdate.Value = 0;
 
@@ -493,10 +495,13 @@ namespace ASTERIX
                     counter_total = counter_total + 1;
                 }
 
+                listaaverages111.Add((counter_bien) / Convert.ToDouble(counter_total));
                 if (Convert.ToDouble(counter_bien) / Convert.ToDouble(counter_total) < 0.95) { aviones_mal.Add(nombre); }
                 i = i + 1;
                 pb_probabilityofupdate.Value = pb_probabilityofupdate.Value + 1;
             }
+
+            double hola = listaaverages111.Average();
 
             i = 0;
 
@@ -746,7 +751,7 @@ namespace ASTERIX
                 i = i + 1;
             }
 
-            double sec = lista.Min(); ;
+            double sec = lista.Min();
             listaquedevolvemos.Add(sec);
 
             i = 0;
@@ -761,7 +766,6 @@ namespace ASTERIX
             }
 
             return listaquedevolvemos;
-
         }
 
         public void CalculateListaSecondsCAT21()
