@@ -19,19 +19,21 @@ namespace ASTERIX
         public List<CAT20> listaCAT20 = new List<CAT20>();
         public List<CAT21> listaCAT21 = new List<CAT21>();
         public List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
+        public List<MLATCalibrationData> listaCalibrationDataVehicle = new List<MLATCalibrationData>();
 
         int contador_forward = 1;
         int contador_backward = 0;
 
         int numero_de_decimales = 5;
 
-        public Tables(List<CAT10> listaCAT10, List<CAT20> listaCAT20, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23)
+        public Tables(List<CAT10> listaCAT10, List<CAT20> listaCAT20, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23, List<MLATCalibrationData> listaCalibrationDataVehicle)
         {
             InitializeComponent();
             this.listaCAT10 = listaCAT10;
             this.listaCAT20 = listaCAT20;
             this.listaCAT21 = listaCAT21;
             this.listaCAT21v23 = listaCAT21v23;
+            this.listaCalibrationDataVehicle = listaCalibrationDataVehicle;
 
             if (listaCAT10.Count > 0)
             {
@@ -45,6 +47,10 @@ namespace ASTERIX
             {
                 btCAT21.BackColor = SystemColors.ActiveCaption;
             }
+            if (listaCalibrationDataVehicle.Count > 0)
+            {
+                bt_CalibrationVehicle.BackColor = SystemColors.ActiveCaption;
+            }
 
             lb_Pages.Text = "";
         }
@@ -54,6 +60,7 @@ namespace ASTERIX
             panelCAT10.Visible = true;
             panelCAT20.Visible = false;
             panelCAT21.Visible = false;
+            panelCalibrationVehicle.Visible = false;
             panelCAT10.BackColor = SystemColors.ActiveCaption;
 
             label1.Visible = true;
@@ -81,6 +88,7 @@ namespace ASTERIX
             panelCAT10.Visible = true;
             panelCAT20.Visible = true;
             panelCAT21.Visible = false;
+            panelCalibrationVehicle.Visible = false;
             panelCAT20.BackColor = SystemColors.ActiveCaption;
 
             label1.Visible = true;
@@ -104,10 +112,10 @@ namespace ASTERIX
 
         private void btCAT21_Click(object sender, EventArgs e)
         {
-
             panelCAT10.Visible = true;
             panelCAT20.Visible = true;
             panelCAT21.Visible = true;
+            panelCalibrationVehicle.Visible = false;
 
             label1.Visible = true;
             tb_name.Visible = true;
@@ -130,10 +138,37 @@ namespace ASTERIX
             }
         }
 
+        private void bt_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            panelCAT10.Visible = true;
+            panelCAT20.Visible = true;
+            panelCAT21.Visible = true;
+            panelCalibrationVehicle.Visible = true;
+
+            label1.Visible = true;
+            tb_name.Visible = true;
+            lb_FilterCAT21.Visible = true;
+
+            panelCalibrationVehicle.BackColor = SystemColors.ActiveCaption;
+            dgvCalibrationVehicle1.Rows.Clear();
+
+            int i = 0;
+            while (i < 50 && i < listaCalibrationDataVehicle.Count)
+            {
+                EscribirlineaCalibrationVehicle(i);
+                i = i + 1;
+            }
+
+            if (listaCalibrationDataVehicle.Count > 0)
+            {
+                lb_Pages.Text = "1 - 50";
+            }
+        }
+
         private void bt_Forward_Click(object sender, EventArgs e)
         {
             int i;
-            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false && panelCalibrationVehicle.Visible==false)
             {
                 dgvCAT10.Rows.Clear();
                 contador_forward = contador_forward + 1;
@@ -160,7 +195,7 @@ namespace ASTERIX
             }
 
 
-            if(panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == false)
+            if(panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == false && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT20.Rows.Clear();
                 contador_forward = contador_forward + 1;
@@ -190,8 +225,7 @@ namespace ASTERIX
             }
 
 
-
-            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT21.Rows.Clear();
                 contador_forward = contador_forward + 1;
@@ -217,12 +251,39 @@ namespace ASTERIX
 
                 lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
             }
+
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == true)
+            {
+                dgvCalibrationVehicle1.Rows.Clear();
+                contador_forward = contador_forward + 1;
+                int valorinicial = 50 * (contador_forward - contador_backward - 1);
+                i = valorinicial;
+                if (valorinicial < 0) { valorinicial = 0; }
+                int valorfinal = 50 * (contador_forward - contador_backward);
+                if (valorfinal > listaCalibrationDataVehicle.Count - 1) { valorfinal = listaCalibrationDataVehicle.Count - 1; }
+
+                if (valorinicial == 0 && valorfinal == 0)
+                {
+                    valorinicial = 0;
+                    valorfinal = 50;
+                    i = valorinicial;
+                    contador_forward = contador_forward - 1;
+                }
+
+                while (i < valorfinal && i < listaCalibrationDataVehicle.Count && i >= 0)
+                {
+                    EscribirlineaCalibrationVehicle(i);
+                    i = i + 1;
+                }
+
+                lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
+            }
         }
 
         public void bt_Backward_Click(object sender, EventArgs e)
         {
             int i;
-            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false && panelCalibrationVehicle.Visible==false)
             {
 
                 dgvCAT10.Rows.Clear();
@@ -251,7 +312,7 @@ namespace ASTERIX
             }
 
 
-            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == false)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == false && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT20.Rows.Clear();
                 contador_backward = contador_backward + 1;
@@ -278,7 +339,7 @@ namespace ASTERIX
                 lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
             }
 
-            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == false)
             { 
                 dgvCAT21.Rows.Clear();
                 contador_backward = contador_backward + 1;
@@ -304,11 +365,38 @@ namespace ASTERIX
 
                 lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
             }
+
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == true)
+            {
+                dgvCalibrationVehicle1.Rows.Clear();
+                contador_backward = contador_backward + 1;
+                int valorinicial = 50 * (contador_forward - contador_backward - 1);
+                i = valorinicial;
+                if (valorinicial < 0) { valorinicial = 0; }
+                int valorfinal = 50 * (contador_forward - contador_backward);
+                if (valorfinal > listaCalibrationDataVehicle.Count - 1) { valorfinal = listaCalibrationDataVehicle.Count - 1; }
+
+                if (valorinicial <= 0 && valorfinal <= 0)
+                {
+                    valorinicial = 0;
+                    valorfinal = 50;
+                    i = valorinicial;
+                    contador_backward = contador_backward - 1;
+                }
+
+                while (i < valorfinal && i < listaCalibrationDataVehicle.Count && i >= 0)
+                {
+                    EscribirlineaCalibrationVehicle(i);
+                    i = i + 1;
+                }
+
+                lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
+            }
         }
 
         private void bt_FastForward_Click(object sender, EventArgs e)
         {
-            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false && panelCalibrationVehicle.Visible==false)
             {
                 dgvCAT10.Rows.Clear();
 
@@ -352,7 +440,7 @@ namespace ASTERIX
 
             }
 
-            if(panelCAT10.Visible==true && panelCAT20.Visible==true && panelCAT21.Visible==false)
+            if(panelCAT10.Visible==true && panelCAT20.Visible==true && panelCAT21.Visible== false && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT20.Rows.Clear();
 
@@ -369,170 +457,33 @@ namespace ASTERIX
 
                 while (valorinicial != valorinicial1)
                 {
-                    EscribirlineaCAT20(i);
-                    i = i + 1;
+                    dgvCAT20.Rows.Clear();
+                    contador_forward = contador_forward + 1;
+                    valorinicial = 50 * (contador_forward - contador_backward - 1);
+                    i = valorinicial;
+                    if (valorinicial < 0) { valorinicial = 0; }
+                    valorfinal = 50 * (contador_forward - contador_backward);
+                    if (valorfinal > listaCAT21v23.Count - 1) { valorfinal = listaCAT21v23.Count - 1; }
+
+                    if (valorinicial == 0 && valorfinal == 0)
+                    {
+                        valorinicial = 0;
+                        valorfinal = 50;
+                        i = valorinicial;
+                        contador_forward = contador_forward - 1;
+                    }
                 }
 
                 while (i < valorfinal && i < listaCAT21v23.Count && i >= 0)
                 {
-                    int n = dgvCAT20.Rows.Add();
-
-                    dgvCAT20.Rows[n].Cells[0].Value = i + 1; // ----------------------------------------------------------------------------------------- 0
-                    dgvCAT20.Rows[n].Cells[1].Value = String.Concat(listaCAT21v23[i].SAC, "/", listaCAT21v23[i].SIC); //---------------------------------------- 1
-
-                    if (listaCAT21v23[i].TargetReportDescriptor.Length > 0) // ---------------------------------------------------------------------------------------- 2
-                    {
-                        dgvCAT20.Rows[n].Cells[2].Value = "Clcik here for more information";
-                    }
-                    else { dgvCAT20.Rows[n].Cells[2].Value = "No info"; }
-
-
-                    TimeSpan t = TimeSpan.FromSeconds(listaCAT21v23[i].TimeofDay_seconds);
-
-                    if (listaCAT21v23[i].TimeofDay.Length > 0) // ---------------------------------------------------------------------------------------- 3
-                    {
-                        dgvCAT20.Rows[n].Cells[3].Value = String.Concat(t.Hours, ":", t.Minutes, ":", t.Seconds);
-                    }
-                    else { dgvCAT20.Rows[n].Cells[3].Value = "No info"; }
-
-                    if (listaCAT21v23[i].PositioninWGS_coordinates.Length > 0) // ---------------------------------------------------------------------------------------- 4
-                    {
-                        dgvCAT20.Rows[n].Cells[4].Value = String.Concat(listaCAT21v23[i].latWGS84, "/", listaCAT21v23[i].lonWGS84);
-                    }
-                    else { dgvCAT20.Rows[n].Cells[4].Value = "No info"; }
-
-                    if (listaCAT21v23[i].TargetAddress_bin.Length > 0) // ---------------------------------------------------------------------------------------- 5
-                    {
-                        dgvCAT20.Rows[n].Cells[5].Value = listaCAT21v23[i].TargetAdress_real;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[5].Value = "No info"; }
-
-                    if (listaCAT21v23[i].GeometricAltitude.Length > 0) // ---------------------------------------------------------------------------------------- 6
-                    {
-                        dgvCAT20.Rows[n].Cells[6].Value = listaCAT21v23[i].GeometricAltitude_ft;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[6].Value = "No info"; }
-
-                    if (listaCAT21v23[i].FigureofMerit.Length > 0) // ---------------------------------------------------------------------------------------- 7
-                    {
-                        dgvCAT20.Rows[n].Cells[7].Value = "Clcik here for more information";
-                    }
-                    else { dgvCAT20.Rows[n].Cells[7].Value = "No info"; }
-
-                    // -------------------------------------------------------------------------------------------------------------------------------- FX  
-
-                    if (listaCAT21v23[i].LinkTechnologyIndicator.Length > 0) // ---------------------------------------------------------------------------------------- 8
-                    {
-                        dgvCAT20.Rows[n].Cells[8].Value = "Clcik here for more information";
-                    }
-                    else { dgvCAT20.Rows[n].Cells[8].Value = "No info"; }
-
-                    if (listaCAT21v23[i].RollAngle.Length > 0) // ---------------------------------------------------------------------------------------- 9
-                    {
-                        dgvCAT20.Rows[n].Cells[10].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].RollAngle_degrees; ;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[9].Value = "No info"; }
-
-                    if (listaCAT21v23[i].FlightLevel.Length > 0) // ---------------------------------------------------------------------------------------- 10
-                    {
-                        dgvCAT20.Rows[n].Cells[10].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].FlightLevel_FL; ;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[10].Value = "No info"; }
-
-                    if (listaCAT21v23[i].AirSpeed.Length > 0) // ---------------------------------------------------------------------------------------- 11
-                    {
-                        dgvCAT20.Rows[n].Cells[11].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].AirSpeed_velocity;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[11].Value = "No info"; }
-
-                    if (listaCAT21v23[i].TrueAirSpeed.Length > 0) // ---------------------------------------------------------------------------------------- 12
-                    {
-                        dgvCAT20.Rows[n].Cells[12].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].TrueAirSpeed_number;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[12].Value = "No info"; }
-
-                    if (listaCAT21v23[i].MagneticHeading.Length > 0) // ---------------------------------------------------------------------------------------- 13
-                    {
-                        dgvCAT20.Rows[n].Cells[13].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].MagneticHeading_degrees;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[13].Value = "No info"; }
-
-                    if (listaCAT21v23[i].BarometricVerticalRate.Length > 0) // ---------------------------------------------------------------------------------------- 14
-                    {
-                        dgvCAT20.Rows[n].Cells[14].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].BarometricVerticalRate_fmin;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[14].Value = "No info"; }
-
-                    // -------------------------------------------------------------------------------------------------------------------------------- FX 
-
-                    if (listaCAT21v23[i].GeometricVerticalRate.Length > 0) // ---------------------------------------------------------------------------------------- 15
-                    {
-                        dgvCAT20.Rows[n].Cells[15].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].GeometricVerticalRate_fmin;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[15].Value = "No info"; }
-
-                    if (listaCAT21v23[i].GroundVector.Length > 0) // ---------------------------------------------------------------------------------------- 16
-                    {
-                        dgvCAT20.Rows[n].Cells[16].Value = dgvCAT20.Rows[n].Cells[9].Value = String.Concat(listaCAT21v23[i].GroundSpeed, "/", listaCAT21v23[i].TrackAngle);
-                    }
-                    else { dgvCAT20.Rows[n].Cells[16].Value = "No info"; }
-
-                    if (listaCAT21v23[i].RateofTurn.Length > 0) // ---------------------------------------------------------------------------------------- 17
-                    {
-                        dgvCAT20.Rows[n].Cells[17].Value = dgvCAT20.Rows[n].Cells[9].Value = String.Concat(listaCAT21v23[i].RateofTurn_deg, "/", listaCAT21v23[i].TI);
-                    }
-                    else { dgvCAT20.Rows[n].Cells[17].Value = "No info"; }
-
-                    if (listaCAT21v23[i].TargetIdentification.Length > 0) // ---------------------------------------------------------------------------------------- 18
-                    {
-                        dgvCAT20.Rows[n].Cells[18].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].TargetIdentification_decoded;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[18].Value = "No info"; }
-
-                    if (listaCAT21v23[i].TimeofDayAccuracy.Length > 0) // ---------------------------------------------------------------------------------------- 20
-                    {
-                        dgvCAT20.Rows[n].Cells[19].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].TimeofDayAccuracy_sec;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[19].Value = "No info"; }
-
-                    if (listaCAT21v23[i].TargetStatus.Length > 0) // ---------------------------------------------------------------------------------------- 21
-                    {
-                        dgvCAT20.Rows[n].Cells[20].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].TargetStatus_decoded;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[20].Value = "No info"; }
-
-                    // -------------------------------------------------------------------------------------------------------------------------------- FX  
-
-                    if (listaCAT21v23[i].EmitterCategory.Length > 0) // ---------------------------------------------------------------------------------------- 22
-                    {
-                        dgvCAT20.Rows[n].Cells[21].Value = dgvCAT20.Rows[n].Cells[9].Value = listaCAT21v23[i].ECAT;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[21].Value = "No info"; }
-
-                    if (listaCAT21v23[i].MetInfo.Length > 0) // ---------------------------------------------------------------------------------------- 23
-                    {
-                        dgvCAT20.Rows[n].Cells[22].Value = "Clcik here for more information";
-                    }
-                    else { dgvCAT20.Rows[n].Cells[22].Value = "No info"; }
-
-                    if (listaCAT21v23[i].IntermediateStateSelectedAltitude.Length > 0) // ---------------------------------------------------------------------------------------- 24
-                    {
-                        dgvCAT20.Rows[n].Cells[23].Value = listaCAT21v23[i].Altitude;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[23].Value = "No info"; }
-
-                    if (listaCAT21v23[i].FinalStateSelectedAltitude.Length > 0) // ---------------------------------------------------------------------------------------- 25
-                    {
-                        dgvCAT20.Rows[n].Cells[24].Value = listaCAT21v23[i].FSS_Altitude;
-                    }
-                    else { dgvCAT20.Rows[n].Cells[24].Value = "No info"; }
+                    EscribirlineaCAT20(i); 
 
                     i = i + 1;
                 }
                 lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
             }
 
-            if (panelCAT10.Visible==true && panelCAT20.Visible==true && panelCAT21.Visible==true)
+            if (panelCAT10.Visible==true && panelCAT20.Visible==true && panelCAT21.Visible== true && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT21.Rows.Clear();
 
@@ -566,13 +517,54 @@ namespace ASTERIX
                     }
                 }
 
-
                 while (i < valorfinal && i < listaCAT21.Count && i >= 0)
                 {
                     EscribirLineaCAT21(i);
                     i = i + 1;
                 }
                 lb_Pages.Text = (valorinicial+1) + " - " + valorfinal;
+            }
+
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == true)
+            {
+                dgvCalibrationVehicle1.Rows.Clear();
+
+                double distance = listaCalibrationDataVehicle.Count - 1;
+                double numerode50 = Math.Floor(distance / 50);
+                double numerofinal = ((distance / 50) - numerode50) * 50;
+
+                double valorfinal1 = distance;
+                double valorinicial1 = valorfinal1 - numerofinal;
+                int i = Convert.ToInt32(valorinicial1);
+
+                int valorinicial = 0;
+                int valorfinal = 0;
+
+                while (valorinicial != valorinicial1)
+                {
+                    dgvCalibrationVehicle1.Rows.Clear();
+                    contador_forward = contador_forward + 1;
+                    valorinicial = 50 * (contador_forward - contador_backward - 1);
+                    i = valorinicial;
+                    if (valorinicial < 0) { valorinicial = 0; }
+                    valorfinal = 50 * (contador_forward - contador_backward);
+                    if (valorfinal > listaCalibrationDataVehicle.Count - 1) { valorfinal = listaCalibrationDataVehicle.Count - 1; }
+
+                    if (valorinicial == 0 && valorfinal == 0)
+                    {
+                        valorinicial = 0;
+                        valorfinal = 50;
+                        i = valorinicial;
+                        contador_forward = contador_forward - 1;
+                    }
+                }
+
+                while (i < valorfinal && i < listaCalibrationDataVehicle.Count && i >= 0)
+                {
+                    EscribirlineaCalibrationVehicle(i);
+                    i = i + 1;
+                }
+                lb_Pages.Text = (valorinicial + 1) + " - " + valorfinal;
             }
         }
 
@@ -582,7 +574,7 @@ namespace ASTERIX
             contador_backward = 0;
 
 
-            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == false && panelCAT21.Visible == false && panelCalibrationVehicle.Visible==false)
             {
                 dgvCAT10.Rows.Clear();
                 int i = 0;
@@ -599,7 +591,7 @@ namespace ASTERIX
 
             }
 
-            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == false)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == false && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT20.Rows.Clear();
                 int i = 0;
@@ -613,7 +605,7 @@ namespace ASTERIX
                 lb_Pages.Text = "1 - 50";
             }
 
-            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true)
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == false)
             {
                 dgvCAT21.Rows.Clear();
                 int i = 0;
@@ -624,6 +616,22 @@ namespace ASTERIX
                 }
 
                 if (listaCAT21.Count > 0)
+                {
+                    lb_Pages.Text = "1 - 50";
+                }
+            }
+
+            if (panelCAT10.Visible == true && panelCAT20.Visible == true && panelCAT21.Visible == true && panelCalibrationVehicle.Visible == true)
+            {
+                dgvCalibrationVehicle1.Rows.Clear();
+                int i = 0;
+                while (i < 50 && i < listaCalibrationDataVehicle.Count)
+                {
+                    EscribirlineaCalibrationVehicle(i);
+                    i = i + 1;
+                }
+
+                if (listaCalibrationDataVehicle.Count > 0)
                 {
                     lb_Pages.Text = "1 - 50";
                 }
@@ -1687,5 +1695,47 @@ namespace ASTERIX
             else { dgvCAT20.Rows[n].Cells[24].Value = "No info"; }
         }
 
+        public void EscribirlineaCalibrationVehicle(int i)
+        {
+            int n = dgvCalibrationVehicle1.Rows.Add();
+
+            if (listaCalibrationDataVehicle[i].Code == 1e10)
+            { 
+                dgvCalibrationVehicle1.Rows[n].Cells[0].Value = "IGNORE";
+            } 
+            else 
+            { 
+                dgvCalibrationVehicle1.Rows[n].Cells[0].Value = listaCalibrationDataVehicle[i].Code.ToString(); 
+            }
+
+            dgvCalibrationVehicle1.Rows[n].Cells[1].Value = listaCalibrationDataVehicle[i].Lat.ToString();
+            dgvCalibrationVehicle1.Rows[n].Cells[2].Value = listaCalibrationDataVehicle[i].Lon.ToString();
+            
+            if (listaCalibrationDataVehicle[i].Alt == 1e10) 
+            { 
+                dgvCalibrationVehicle1.Rows[n].Cells[3].Value = "IGNORE"; 
+            } 
+            else 
+            {
+                dgvCalibrationVehicle1.Rows[n].Cells[3].Value = listaCalibrationDataVehicle[i].Alt.ToString(); 
+            }
+
+            if (listaCalibrationDataVehicle[i].Day == 1e10) 
+            { 
+                dgvCalibrationVehicle1.Rows[n].Cells[4].Value = "IGNORE"; 
+            } 
+            else 
+            {
+                dgvCalibrationVehicle1.Rows[n].Cells[4].Value = listaCalibrationDataVehicle[i].Day.ToString() + "/" + listaCalibrationDataVehicle[i].Month.ToString() + "/" + listaCalibrationDataVehicle[i].Year.ToString();
+            }
+            if (listaCalibrationDataVehicle[i].Hour == 1e10)
+            {
+                dgvCalibrationVehicle1.Rows[n].Cells[5].Value = "IGNORE"; 
+            } 
+            else 
+            { 
+                dgvCalibrationVehicle1.Rows[n].Cells[5].Value = listaCalibrationDataVehicle[i].Hour.ToString() + ":" + listaCalibrationDataVehicle[i].Min.ToString() + ":" + listaCalibrationDataVehicle[i].Sec.ToString(); 
+            }
+        }
     }
 }

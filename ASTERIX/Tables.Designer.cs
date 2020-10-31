@@ -142,6 +142,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tb_name = new System.Windows.Forms.TextBox();
             this.lb_FilterCAT21 = new System.Windows.Forms.Button();
+            this.panelCalibrationVehicle = new System.Windows.Forms.Panel();
+            this.bt_CalibrationVehicle = new System.Windows.Forms.Button();
+            this.dgvCalibrationVehicle1 = new System.Windows.Forms.DataGridView();
+            this.Identification = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Latitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Longitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Altitude = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tlpTables.SuspendLayout();
             this.panelCAT10.SuspendLayout();
             this.panelCAT20.SuspendLayout();
@@ -151,6 +160,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvCAT10)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.panelCalibrationVehicle.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCalibrationVehicle1)).BeginInit();
             this.SuspendLayout();
             // 
             // tlpTables
@@ -158,7 +169,8 @@
             this.tlpTables.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tlpTables.ColumnCount = 9;
+            this.tlpTables.ColumnCount = 10;
+            this.tlpTables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tlpTables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tlpTables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
             this.tlpTables.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
@@ -172,19 +184,21 @@
             this.tlpTables.Controls.Add(this.btCAT20, 1, 0);
             this.tlpTables.Controls.Add(this.btCAT21, 2, 0);
             this.tlpTables.Controls.Add(this.panelCAT10, 0, 1);
-            this.tlpTables.Controls.Add(this.bt_FastBackward, 3, 0);
-            this.tlpTables.Controls.Add(this.bt_Backward, 4, 0);
-            this.tlpTables.Controls.Add(this.bt_Forward, 5, 0);
-            this.tlpTables.Controls.Add(this.bt_FastForward, 6, 0);
-            this.tlpTables.Controls.Add(this.lb_Pages, 8, 0);
-            this.tlpTables.Controls.Add(this.panel1, 7, 0);
+            this.tlpTables.Controls.Add(this.bt_FastBackward, 4, 0);
+            this.tlpTables.Controls.Add(this.bt_Backward, 5, 0);
+            this.tlpTables.Controls.Add(this.bt_Forward, 6, 0);
+            this.tlpTables.Controls.Add(this.bt_FastForward, 7, 0);
+            this.tlpTables.Controls.Add(this.lb_Pages, 9, 0);
+            this.tlpTables.Controls.Add(this.panel1, 8, 0);
+            this.tlpTables.Controls.Add(this.bt_CalibrationVehicle, 3, 0);
             this.tlpTables.Location = new System.Drawing.Point(9, 10);
             this.tlpTables.Margin = new System.Windows.Forms.Padding(2);
             this.tlpTables.Name = "tlpTables";
             this.tlpTables.RowCount = 2;
             this.tlpTables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 41F));
             this.tlpTables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpTables.Size = new System.Drawing.Size(1626, 346);
+            this.tlpTables.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tlpTables.Size = new System.Drawing.Size(1581, 593);
             this.tlpTables.TabIndex = 0;
             // 
             // btCAT10
@@ -235,13 +249,13 @@
             this.panelCAT10.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tlpTables.SetColumnSpan(this.panelCAT10, 9);
+            this.tlpTables.SetColumnSpan(this.panelCAT10, 10);
             this.panelCAT10.Controls.Add(this.panelCAT20);
             this.panelCAT10.Controls.Add(this.dgvCAT10);
             this.panelCAT10.Location = new System.Drawing.Point(2, 43);
             this.panelCAT10.Margin = new System.Windows.Forms.Padding(2);
             this.panelCAT10.Name = "panelCAT10";
-            this.panelCAT10.Size = new System.Drawing.Size(1622, 301);
+            this.panelCAT10.Size = new System.Drawing.Size(1622, 548);
             this.panelCAT10.TabIndex = 11;
             this.panelCAT10.Visible = false;
             // 
@@ -253,18 +267,19 @@
             this.panelCAT20.Location = new System.Drawing.Point(0, 0);
             this.panelCAT20.Margin = new System.Windows.Forms.Padding(2);
             this.panelCAT20.Name = "panelCAT20";
-            this.panelCAT20.Size = new System.Drawing.Size(1622, 301);
+            this.panelCAT20.Size = new System.Drawing.Size(1622, 548);
             this.panelCAT20.TabIndex = 2;
             this.panelCAT20.Visible = false;
             // 
             // panelCAT21
             // 
+            this.panelCAT21.Controls.Add(this.panelCalibrationVehicle);
             this.panelCAT21.Controls.Add(this.dgvCAT21);
             this.panelCAT21.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelCAT21.Location = new System.Drawing.Point(0, 0);
             this.panelCAT21.Margin = new System.Windows.Forms.Padding(2);
             this.panelCAT21.Name = "panelCAT21";
-            this.panelCAT21.Size = new System.Drawing.Size(1622, 301);
+            this.panelCAT21.Size = new System.Drawing.Size(1622, 548);
             this.panelCAT21.TabIndex = 1;
             this.panelCAT21.Visible = false;
             // 
@@ -322,7 +337,7 @@
             this.dgvCAT21.Name = "dgvCAT21";
             this.dgvCAT21.RowHeadersWidth = 51;
             this.dgvCAT21.RowTemplate.Height = 24;
-            this.dgvCAT21.Size = new System.Drawing.Size(1622, 301);
+            this.dgvCAT21.Size = new System.Drawing.Size(1622, 548);
             this.dgvCAT21.TabIndex = 1;
             this.dgvCAT21.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCAT21_CellClick);
             // 
@@ -655,7 +670,7 @@
             this.dgvCAT20.Name = "dgvCAT20";
             this.dgvCAT20.RowHeadersWidth = 51;
             this.dgvCAT20.RowTemplate.Height = 24;
-            this.dgvCAT20.Size = new System.Drawing.Size(1622, 301);
+            this.dgvCAT20.Size = new System.Drawing.Size(1622, 548);
             this.dgvCAT20.TabIndex = 0;
             this.dgvCAT20.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCAT20_CellClick);
             // 
@@ -871,7 +886,7 @@
             this.dgvCAT10.Name = "dgvCAT10";
             this.dgvCAT10.RowHeadersWidth = 51;
             this.dgvCAT10.RowTemplate.Height = 24;
-            this.dgvCAT10.Size = new System.Drawing.Size(1622, 301);
+            this.dgvCAT10.Size = new System.Drawing.Size(1622, 548);
             this.dgvCAT10.TabIndex = 1;
             this.dgvCAT10.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCAT10_CellClick);
             // 
@@ -1064,7 +1079,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bt_FastBackward.Image = ((System.Drawing.Image)(resources.GetObject("bt_FastBackward.Image")));
-            this.bt_FastBackward.Location = new System.Drawing.Point(272, 2);
+            this.bt_FastBackward.Location = new System.Drawing.Point(362, 2);
             this.bt_FastBackward.Margin = new System.Windows.Forms.Padding(2);
             this.bt_FastBackward.Name = "bt_FastBackward";
             this.bt_FastBackward.Size = new System.Drawing.Size(34, 37);
@@ -1078,7 +1093,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bt_Backward.Image = ((System.Drawing.Image)(resources.GetObject("bt_Backward.Image")));
-            this.bt_Backward.Location = new System.Drawing.Point(310, 2);
+            this.bt_Backward.Location = new System.Drawing.Point(400, 2);
             this.bt_Backward.Margin = new System.Windows.Forms.Padding(2);
             this.bt_Backward.Name = "bt_Backward";
             this.bt_Backward.Size = new System.Drawing.Size(34, 37);
@@ -1092,7 +1107,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bt_Forward.Image = ((System.Drawing.Image)(resources.GetObject("bt_Forward.Image")));
-            this.bt_Forward.Location = new System.Drawing.Point(348, 2);
+            this.bt_Forward.Location = new System.Drawing.Point(438, 2);
             this.bt_Forward.Margin = new System.Windows.Forms.Padding(2);
             this.bt_Forward.Name = "bt_Forward";
             this.bt_Forward.Size = new System.Drawing.Size(34, 37);
@@ -1106,7 +1121,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.bt_FastForward.Image = ((System.Drawing.Image)(resources.GetObject("bt_FastForward.Image")));
-            this.bt_FastForward.Location = new System.Drawing.Point(386, 2);
+            this.bt_FastForward.Location = new System.Drawing.Point(476, 2);
             this.bt_FastForward.Margin = new System.Windows.Forms.Padding(2);
             this.bt_FastForward.Name = "bt_FastForward";
             this.bt_FastForward.Size = new System.Drawing.Size(34, 37);
@@ -1121,10 +1136,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lb_Pages.AutoSize = true;
             this.lb_Pages.Font = new System.Drawing.Font("Microsoft Sans Serif", 25F);
-            this.lb_Pages.Location = new System.Drawing.Point(874, 0);
+            this.lb_Pages.Location = new System.Drawing.Point(964, 0);
             this.lb_Pages.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Pages.Name = "lb_Pages";
-            this.lb_Pages.Size = new System.Drawing.Size(750, 41);
+            this.lb_Pages.Size = new System.Drawing.Size(660, 41);
             this.lb_Pages.TabIndex = 16;
             this.lb_Pages.Text = "label1";
             // 
@@ -1132,7 +1147,7 @@
             // 
             this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(425, 3);
+            this.panel1.Location = new System.Drawing.Point(515, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(444, 35);
             this.panel1.TabIndex = 17;
@@ -1195,11 +1210,80 @@
             this.lb_FilterCAT21.Visible = false;
             this.lb_FilterCAT21.Click += new System.EventHandler(this.lb_Filter_Click);
             // 
+            // panelCalibrationVehicle
+            // 
+            this.panelCalibrationVehicle.Controls.Add(this.dgvCalibrationVehicle1);
+            this.panelCalibrationVehicle.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCalibrationVehicle.Location = new System.Drawing.Point(0, 0);
+            this.panelCalibrationVehicle.Name = "panelCalibrationVehicle";
+            this.panelCalibrationVehicle.Size = new System.Drawing.Size(1622, 548);
+            this.panelCalibrationVehicle.TabIndex = 2;
+            this.panelCalibrationVehicle.Visible = false;
+            // 
+            // bt_CalibrationVehicle
+            // 
+            this.bt_CalibrationVehicle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bt_CalibrationVehicle.Location = new System.Drawing.Point(273, 3);
+            this.bt_CalibrationVehicle.Name = "bt_CalibrationVehicle";
+            this.bt_CalibrationVehicle.Size = new System.Drawing.Size(84, 35);
+            this.bt_CalibrationVehicle.TabIndex = 18;
+            this.bt_CalibrationVehicle.Text = "Calibration Vehicle";
+            this.bt_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_CalibrationVehicle.Click += new System.EventHandler(this.bt_CalibrationVehicle_Click);
+            // 
+            // dgvCalibrationVehicle1
+            // 
+            this.dgvCalibrationVehicle1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCalibrationVehicle1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Identification,
+            this.Latitude,
+            this.Longitude,
+            this.Altitude,
+            this.Date,
+            this.Time});
+            this.dgvCalibrationVehicle1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCalibrationVehicle1.Location = new System.Drawing.Point(0, 0);
+            this.dgvCalibrationVehicle1.Name = "dgvCalibrationVehicle1";
+            this.dgvCalibrationVehicle1.Size = new System.Drawing.Size(1622, 548);
+            this.dgvCalibrationVehicle1.TabIndex = 1;
+            // 
+            // Identification
+            // 
+            this.Identification.HeaderText = "Identification";
+            this.Identification.Name = "Identification";
+            // 
+            // Latitude
+            // 
+            this.Latitude.HeaderText = "Latitude WGS-84";
+            this.Latitude.Name = "Latitude";
+            // 
+            // Longitude
+            // 
+            this.Longitude.HeaderText = "Longitude WGS-84";
+            this.Longitude.Name = "Longitude";
+            // 
+            // Altitude
+            // 
+            this.Altitude.HeaderText = "Altitude";
+            this.Altitude.Name = "Altitude";
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "Date";
+            this.Date.Name = "Date";
+            // 
+            // Time
+            // 
+            this.Time.HeaderText = "Time";
+            this.Time.Name = "Time";
+            // 
             // Tables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1644, 366);
+            this.ClientSize = new System.Drawing.Size(1599, 613);
             this.Controls.Add(this.tlpTables);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Tables";
@@ -1216,6 +1300,8 @@
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.panelCalibrationVehicle.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCalibrationVehicle1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1335,5 +1421,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb_name;
         private System.Windows.Forms.Button lb_FilterCAT21;
+        private System.Windows.Forms.Panel panelCalibrationVehicle;
+        private System.Windows.Forms.Button bt_CalibrationVehicle;
+        private System.Windows.Forms.DataGridView dgvCalibrationVehicle1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Identification;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Latitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Longitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Altitude;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
     }
 }

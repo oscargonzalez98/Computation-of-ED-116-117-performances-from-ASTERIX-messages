@@ -19,6 +19,7 @@ namespace ASTERIX
         public List<CAT20> listaCAT20 = new List<CAT20>();
         public List<CAT21> listaCAT21 = new List<CAT21>();
         public List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
+        public List<MLATCalibrationData> listaCalibrationDataVehicle = new List<MLATCalibrationData>();
 
         public Portada()
         {
@@ -47,7 +48,7 @@ namespace ASTERIX
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Tables Tables1 = new Tables(listaCAT10, listaCAT20, listaCAT21, listaCAT21v23);
+            Tables Tables1 = new Tables(listaCAT10, listaCAT20, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
             Tables1.Show();
         }
 
@@ -127,7 +128,7 @@ namespace ASTERIX
             MLATCalibrationVehicle CalibrationVehicleForm = new MLATCalibrationVehicle(browsefile1.listaMLATCalibrationVehicleData);
             CalibrationVehicleForm.Show();
 
-
+            listaCalibrationDataVehicle = browsefile1.listaMLATCalibrationVehicleData;
         }
 
     }

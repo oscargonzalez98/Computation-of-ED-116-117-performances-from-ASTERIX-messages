@@ -51,7 +51,7 @@
             this.lb_Title.AutoSize = true;
             this.lb_Title.BackColor = System.Drawing.Color.White;
             this.lb_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F);
-            this.lb_Title.Location = new System.Drawing.Point(130, 55);
+            this.lb_Title.Location = new System.Drawing.Point(228, 30);
             this.lb_Title.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Title.Name = "lb_Title";
             this.lb_Title.Size = new System.Drawing.Size(403, 46);
@@ -60,19 +60,19 @@
             // 
             // bt_BrowseFile
             // 
-            this.bt_BrowseFile.Location = new System.Drawing.Point(58, 214);
+            this.bt_BrowseFile.Location = new System.Drawing.Point(325, 129);
             this.bt_BrowseFile.Margin = new System.Windows.Forms.Padding(2);
             this.bt_BrowseFile.Name = "bt_BrowseFile";
-            this.bt_BrowseFile.Size = new System.Drawing.Size(76, 32);
+            this.bt_BrowseFile.Size = new System.Drawing.Size(200, 50);
             this.bt_BrowseFile.TabIndex = 4;
-            this.bt_BrowseFile.Text = "Browse File";
+            this.bt_BrowseFile.Text = "Browse & Decode ASTERIX File";
             this.bt_BrowseFile.UseVisualStyleBackColor = true;
             this.bt_BrowseFile.Click += new System.EventHandler(this.bt_BrowseFile_Click);
             // 
             // lb_Instructions
             // 
             this.lb_Instructions.AutoSize = true;
-            this.lb_Instructions.Location = new System.Drawing.Point(317, 130);
+            this.lb_Instructions.Location = new System.Drawing.Point(415, 93);
             this.lb_Instructions.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lb_Instructions.Name = "lb_Instructions";
             this.lb_Instructions.Size = new System.Drawing.Size(35, 13);
@@ -81,10 +81,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(138, 214);
+            this.button1.Location = new System.Drawing.Point(171, 279);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(76, 32);
+            this.button1.Size = new System.Drawing.Size(103, 48);
             this.button1.TabIndex = 6;
             this.button1.Text = "Tables";
             this.button1.UseVisualStyleBackColor = true;
@@ -95,7 +95,7 @@
             this.lbErrores.AutoSize = true;
             this.lbErrores.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lbErrores.ForeColor = System.Drawing.Color.Red;
-            this.lbErrores.Location = new System.Drawing.Point(306, 288);
+            this.lbErrores.Location = new System.Drawing.Point(404, 444);
             this.lbErrores.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbErrores.Name = "lbErrores";
             this.lbErrores.Size = new System.Drawing.Size(46, 18);
@@ -106,16 +106,16 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(219, 214);
+            this.button3.Location = new System.Drawing.Point(311, 280);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(95, 32);
+            this.button3.Size = new System.Drawing.Size(95, 48);
             this.button3.TabIndex = 9;
             this.button3.Text = "Map Simulation";
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(522, 214);
+            this.button2.Location = new System.Drawing.Point(465, 378);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(95, 32);
             this.button2.TabIndex = 10;
@@ -124,27 +124,27 @@
             // 
             // bt_ED
             // 
-            this.bt_ED.Location = new System.Drawing.Point(320, 214);
+            this.bt_ED.Location = new System.Drawing.Point(364, 378);
             this.bt_ED.Name = "bt_ED";
-            this.bt_ED.Size = new System.Drawing.Size(95, 32);
+            this.bt_ED.Size = new System.Drawing.Size(95, 35);
             this.bt_ED.TabIndex = 11;
             this.bt_ED.Text = "Calculate ED";
             this.bt_ED.Click += new System.EventHandler(this.bt_ED_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(421, 214);
+            this.button4.Location = new System.Drawing.Point(561, 281);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(95, 32);
+            this.button4.Size = new System.Drawing.Size(95, 48);
             this.button4.TabIndex = 12;
             this.button4.Text = "Export";
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(421, 304);
+            this.button5.Location = new System.Drawing.Point(264, 382);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(94, 25);
+            this.button5.Size = new System.Drawing.Size(94, 28);
             this.button5.TabIndex = 13;
             this.button5.Text = "boton de prueba";
             this.button5.UseVisualStyleBackColor = true;
@@ -152,9 +152,9 @@
             // 
             // btn_ED1
             // 
-            this.btn_ED1.Location = new System.Drawing.Point(320, 252);
+            this.btn_ED1.Location = new System.Drawing.Point(437, 281);
             this.btn_ED1.Name = "btn_ED1";
-            this.btn_ED1.Size = new System.Drawing.Size(94, 31);
+            this.btn_ED1.Size = new System.Drawing.Size(94, 47);
             this.btn_ED1.TabIndex = 14;
             this.btn_ED1.Text = "Calculate ED1";
             this.btn_ED1.UseVisualStyleBackColor = true;
@@ -162,18 +162,18 @@
             // 
             // bt_ReaddCalibrationVehicleData
             // 
-            this.bt_ReaddCalibrationVehicleData.Location = new System.Drawing.Point(420, 252);
+            this.bt_ReaddCalibrationVehicleData.Location = new System.Drawing.Point(325, 198);
             this.bt_ReaddCalibrationVehicleData.Name = "bt_ReaddCalibrationVehicleData";
-            this.bt_ReaddCalibrationVehicleData.Size = new System.Drawing.Size(95, 46);
+            this.bt_ReaddCalibrationVehicleData.Size = new System.Drawing.Size(200, 50);
             this.bt_ReaddCalibrationVehicleData.TabIndex = 15;
-            this.bt_ReaddCalibrationVehicleData.Text = "Read calibration vehicle data";
+            this.bt_ReaddCalibrationVehicleData.Text = "Browse & Decode Calibration Vehicle File";
             this.bt_ReaddCalibrationVehicleData.Click += new System.EventHandler(this.bt_ReaddCalibrationVehicleData_Click);
             // 
             // Portada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 352);
+            this.ClientSize = new System.Drawing.Size(873, 517);
             this.Controls.Add(this.bt_ReaddCalibrationVehicleData);
             this.Controls.Add(this.btn_ED1);
             this.Controls.Add(this.button5);

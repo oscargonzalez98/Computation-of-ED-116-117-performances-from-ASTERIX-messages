@@ -959,6 +959,8 @@ namespace ASTERIX
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        // Parametros ED-117 de un archivo ASTERIX
+
         private void bt_CalculateUpdateRate_Click(object sender, EventArgs e)
         {
             List<string> listaNombresUsados = new List<string>();
@@ -1071,10 +1073,10 @@ namespace ASTERIX
             //double ProbabilityofUpdate_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[2];
         }
 
-        private void bt_PrecissionAccuracy_Click(object sender, EventArgs e)
+        private void bt_CalculatePRecissionAccuracy_Click(object sender, EventArgs e)
         {
-            ////STAND
-            //var listaSTAND = CalculatePRecissionAccuracySTAND1(listaMLAT_Stand, listaCAT21);
+            //STAND
+            //var listaSTAND = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Stand, listaCAT21nearAirport);
             //listaSTAND.Sort();
             //double a = listaSTAND.Average();
             //int percentle95_floor_STAND = Convert.ToInt32(Math.Floor(0.95 * listaSTAND.Count()));
@@ -1127,7 +1129,7 @@ namespace ASTERIX
             //double percentile95_AIRBORNE5 = (listadistancesAIRBORNE5[percentle95_floor_AIRBORNE5] + listadistancesAIRBORNE5[percentle95_ceil_AIRBORNE5]) / 2;
         }
 
-        private void bt_MLATDetection_Click(object sender, EventArgs e)
+        private void bt_CalculateProbabilityofMLATDetection_Click(object sender, EventArgs e)
         {
             ////STAND
             //double[] info_probabilityofMLATDetection_STAND = CalculateProbabilityofMLATDetection(listaMLAT_Stand, 5);
@@ -1142,22 +1144,31 @@ namespace ASTERIX
             //double probabilityofMLATDetection_MA = info_probabilityofMLATDetection_MA[2];
         }
 
-        private void bt_ProbofIdentification_Click(object sender, EventArgs e)
+        private void bt_ProbabilityofMLATIdentification_Click(object sender, EventArgs e)
         {
             List<double> listofProbabilityofIdentification = CalculateProbabilityofIdentification(listaMLATmodeS);
             double ProbabilityofIdentifcation = listofProbabilityofIdentification.Average() * 100;
         }
 
 
-        private void bt_ShowResultsUpdateRate_Click(object sender, EventArgs e)
+        //private void bt_ShowResultsUpdateRate_Click(object sender, EventArgs e)
+        //{
+        //    BarChartGraphUpdateRate barchart1 = new BarChartGraphUpdateRate(listBarsUpdateRate);
+        //    barchart1.Show();
+
+        //    BarPlotUpdateRate1 barplot1 = new BarPlotUpdateRate1(listBarsUpdateRate);
+        //    barplot1.Show();
+        //}
+
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        // Parametros ED-117 de un archivo Calibration Vehicle
+
+        private void pb_ProbabilityofUpdate_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            BarChartGraphUpdateRate barchart1 = new BarChartGraphUpdateRate(listBarsUpdateRate);
-            barchart1.Show();
-
-            BarPlotUpdateRate1 barplot1 = new BarPlotUpdateRate1(listBarsUpdateRate);
-            barplot1.Show();
         }
-
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2914,6 +2925,11 @@ namespace ASTERIX
                 this.cat21 = cat21;
                 this.time = time;
             }
+        }
+
+        private void Mapa_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

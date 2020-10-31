@@ -32,12 +32,12 @@ namespace ASTERIX
             {
                 int n = dataGridView1.Rows.Add();
 
-                if (listaMLATCalibrationVehicle[i].cosa0 == 0) { dataGridView1.Rows[n].Cells[0].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[0].Value = listaMLATCalibrationVehicle[i].cosa0.ToString(); }
-                dataGridView1.Rows[n].Cells[1].Value = listaMLATCalibrationVehicle[i].cosa1.ToString();
-                dataGridView1.Rows[n].Cells[2].Value = listaMLATCalibrationVehicle[i].cosa2.ToString();
-                if (listaMLATCalibrationVehicle[i].cosa3 == 0) { dataGridView1.Rows[n].Cells[3].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[3].Value = listaMLATCalibrationVehicle[i].cosa3.ToString(); }
-                if (listaMLATCalibrationVehicle[i].cosa4 == 0) { dataGridView1.Rows[n].Cells[4].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[4].Value = listaMLATCalibrationVehicle[i].cosa4.ToString() +"/"+ listaMLATCalibrationVehicle[i].cosa5.ToString() +"/"+ listaMLATCalibrationVehicle[i].cosa6.ToString(); }
-                if (listaMLATCalibrationVehicle[i].cosa7 == 0) { dataGridView1.Rows[n].Cells[5].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[5].Value = listaMLATCalibrationVehicle[i].cosa7.ToString() + ":" + listaMLATCalibrationVehicle[i].cosa8.ToString() + ":" + listaMLATCalibrationVehicle[i].cosa9.ToString(); }
+                if (listaMLATCalibrationVehicle[i].Code == 0) { dataGridView1.Rows[n].Cells[0].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[0].Value = listaMLATCalibrationVehicle[i].Code.ToString(); }
+                dataGridView1.Rows[n].Cells[1].Value = listaMLATCalibrationVehicle[i].Lat.ToString();
+                dataGridView1.Rows[n].Cells[2].Value = listaMLATCalibrationVehicle[i].Lon.ToString();
+                if (listaMLATCalibrationVehicle[i].Alt == 0) { dataGridView1.Rows[n].Cells[3].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[3].Value = listaMLATCalibrationVehicle[i].Alt.ToString(); }
+                if (listaMLATCalibrationVehicle[i].Day == 0) { dataGridView1.Rows[n].Cells[4].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[4].Value = listaMLATCalibrationVehicle[i].Day.ToString() +"/"+ listaMLATCalibrationVehicle[i].Month.ToString() +"/"+ listaMLATCalibrationVehicle[i].Year.ToString(); }
+                if (listaMLATCalibrationVehicle[i].Hour == 0) { dataGridView1.Rows[n].Cells[5].Value = "IGNORE"; } else { dataGridView1.Rows[n].Cells[5].Value = listaMLATCalibrationVehicle[i].Hour.ToString() + ":" + listaMLATCalibrationVehicle[i].Min.ToString() + ":" + listaMLATCalibrationVehicle[i].Sec.ToString(); }
             }
 
             Mapa.DragButton = MouseButtons.Left;
@@ -53,7 +53,9 @@ namespace ASTERIX
 
             for(int i=0; i<listaMLATCalibrationVehicle.Count(); i++)
             {
-                GMapMarker marker = new GMarkerGoogle(new PointLatLng(listaMLATCalibrationVehicle[i].cosa1, listaMLATCalibrationVehicle[i].cosa2), green_pushback);
+                GMapMarker marker = new GMarkerGoogle(new PointLatLng(listaMLATCalibrationVehicle[i].Lat, listaMLATCalibrationVehicle[i].Lon), green_pushback);
+                marker.ToolTipText = listaMLATCalibrationVehicle[i].time.TotalSeconds.ToString();
+
                 overlayLoad.Markers.Add(marker);
             }
 
