@@ -13,11 +13,14 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
-using System;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows.Media.Media3D;
 using System.Security.Cryptography.X509Certificates;
+using System.Runtime.Remoting.Messaging;
+using System.IO;
+using System.Collections;
+
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ASTERIX
 {
@@ -72,6 +75,11 @@ namespace ASTERIX
 
         List<CAT21> listaCAT21nearAirport = new List<CAT21>();
 
+        DataGridView dgv_ProbabilityofUpdate_fromASTERIXfile = new DataGridView();
+        DataGridView dgv_PrecissionAccuracy_fromASTERIXfile = new DataGridView();
+        DataGridView dgv_ProbabilityofMLATDetection_fromASTERIXfile = new DataGridView();
+        DataGridView dgv_ProbabilityofMLATIdentification_fromASTERIXfile = new DataGridView();
+
         public List<PointLatLng> polygonApoints = new List<PointLatLng>();
         public List<PointLatLng> polygonBpoints = new List<PointLatLng>();
         public List<PointLatLng> polygonCpoints = new List<PointLatLng>();
@@ -118,6 +126,16 @@ namespace ASTERIX
         double heading02;
         double heading20;
         int i = 0;
+
+        List<List<double>> ListResults_STAND;
+        List<List<double>> ListResults_APRON;
+        List<List<double>> ListResults_TAXI;
+        List<List<double>> ListResults_RW1;
+        List<List<double>> ListResults_RW2;
+        List<List<double>> ListResults_RW3;
+        List<List<double>> ListResults_MA_APRON;
+        List<List<double>> ListResults_AIRBORNE25;
+        List<List<double>> ListResults_AIRBORNE5;
 
         public ED1(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23)
         {
@@ -850,6 +868,7 @@ namespace ASTERIX
                     {
                         double velocity = listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000);
 
+                        //Si la velocidad esta por encima de un valor threshold esta en Zona Aire
                         if (insideL && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
                         if (insideN && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
                         if (insideP && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
@@ -857,38 +876,16 @@ namespace ASTERIX
                         if (insideT && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
                         if (insideV && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
 
-                        if (insideL && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
-                        if (insideN && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
-                        if (insideP && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
-                        if (insideR && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
-                        if (insideT && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
-                        if (insideV && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
+                        // Si esta por debajo de un treshold esta en MA. Como esta en MA, filtramos para saber si esta en una runway o en Taxi
+                        if (insideL && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideN && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideP && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideR && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideT && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideV && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
 
-                        if (insideI && insideL == false && insideN == false && insideP == false && insideR == false && insideT == false && insideV == false) { listaMLAT_MA.Add(listaMLATmodeS[i]); }
+                        if (insideI && insideL == false && insideN == false && insideP == false && insideR == false && insideT == false && insideV == false) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
 
-                        //double heading = listaMLATmodeS[i].TrackAngle;
-                        //// si va a una velocidad "baja"
-                        //if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) < Vthreshold/* || (heading < heading07R + 10 && heading > heading07R - 10) || (heading < heading25L + 10 && heading > heading25L - 10) || (heading < heading25R + 10 && heading > heading25R - 10) || (heading < heading07L + 10 && heading > heading07L - 10) || (heading < heading20 + 10 && heading > heading20 - 10) || (heading < heading02 + 10 && heading > heading02 - 10)*/)
-                        //{
-                        //    listaMLAT_MA.Add(listaMLATmodeS[i]);
-
-                        //    if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); }
-                        //    if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); }
-                        //    if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); }
-                        //    if (insideW == false && insideX == false && insideY == false) { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); }
-                        //}
-
-                        //else // si va a una velocidad alta
-                        //{
-                        //    listaMLAT_Airborne.Add(listaMLATmodeS[i]);
-
-                        //    if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
-                        //    if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
-                        //    if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
-                        //    if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
-                        //    if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
-                        //    if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); }
-                        //}
                     }
                     else if (insideI == false && insideJ == true) // fuera de Apron, Stand, MA pero dentro de Zona aeropuerto
                     {
@@ -1028,120 +1025,500 @@ namespace ASTERIX
 
         private void pb_ProbabilityofUpdate_Click(object sender, EventArgs e)
         {
-            // APRON
-            //double[] info_ProbabilityofUpdate_APRON = CalculateProbabilityofUpdateGROUND(listaMLAT_Apron);
-            //double found_APRON = info_ProbabilityofUpdate_APRON[0];
-            //double expected_APRON = info_ProbabilityofUpdate_APRON[1];
-            //double ProbabilityofUpdate_APRON = info_ProbabilityofUpdate_APRON[2];
+            //STAND
+            double[] info_ProbabilityofUpdate_STAND = CalculateProbabilityofUpdateGROUND(listaMLAT_Stand);
+            double found_STAND = info_ProbabilityofUpdate_STAND[0];
+            double expected_STAND = info_ProbabilityofUpdate_STAND[1];
+            double ProbabilityofUpdate_STAND = info_ProbabilityofUpdate_STAND[2];
+
+            //APRON
+            double[] info_ProbabilityofUpdate_APRON = CalculateProbabilityofUpdateGROUND(listaMLAT_Apron);
+            double found_APRON = info_ProbabilityofUpdate_APRON[0];
+            double expected_APRON = info_ProbabilityofUpdate_APRON[1];
+            double ProbabilityofUpdate_APRON = info_ProbabilityofUpdate_APRON[2];
+
+            //TAXI
+            double[] info_ProbabilityofUpdate_TAXI = CalculateProbabilityofUpdateGROUND(listaMLAT_Taxiway);
+            double found_TAXI = info_ProbabilityofUpdate_TAXI[0];
+            double expected_TAXI = info_ProbabilityofUpdate_TAXI[1];
+            double ProbabilityofUpdate_TAXI = info_ProbabilityofUpdate_TAXI[2];
+
+            //RWY1
+            double[] info_ProbabilityofUpdate_RWY1 = CalculateProbabilityofUpdateGROUND(listaRunway1);
+            double found_RWY1 = info_ProbabilityofUpdate_RWY1[0];
+            double expected_RWY1 = info_ProbabilityofUpdate_RWY1[1];
+            double ProbabilityofUpdate_RWY1 = info_ProbabilityofUpdate_RWY1[2];
+
+            //RWY2
+            double[] info_ProbabilityofUpdate_RWY2 = CalculateProbabilityofUpdateGROUND(listaRunway2);
+            double found_RWY2 = info_ProbabilityofUpdate_RWY2[0];
+            double expected_RWY2 = info_ProbabilityofUpdate_RWY2[1];
+            double ProbabilityofUpdate_RWY2 = info_ProbabilityofUpdate_RWY2[2];
+
+            //RWY3
+            double[] info_ProbabilityofUpdate_RWY3 = CalculateProbabilityofUpdateGROUND(listaRunway3);
+            double found_RWY3 = info_ProbabilityofUpdate_RWY3[0];
+            double expected_RWY3 = info_ProbabilityofUpdate_RWY3[1];
+            double ProbabilityofUpdate_RWY3 = info_ProbabilityofUpdate_RWY3[2];
+
+            //MA
+            double[] info_ProbabilityofUpdate_MA = CalculateProbabilityofUpdateGROUND(listaMLAT_MA);
+            double found_MA = info_ProbabilityofUpdate_MA[0];
+            double expected_MA = info_ProbabilityofUpdate_MA[1];
+            double ProbabilityofUpdate_MA = info_ProbabilityofUpdate_MA[2];
+
+            //AIRBORNE
+            List<List<CAT10>> Lista_listaMLAT_Airborne_2coma5NM = new List<List<CAT10>>();
+            List<List<CAT10>> Lista_listaMLAT_Airborne_5NM = new List<List<CAT10>>();
+
+            Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_L);
+            Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_N);
+            Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_P);
+            Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_R);
+            Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_T);
+            Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_V);
+            double[] info_ProbabilityofUpdateAirborne__2coma5NM = CalculateProbabilityofUpdateAIRBORNE(Lista_listaMLAT_Airborne_2coma5NM);
+            double found_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[0];
+            double expected_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[1];
+            double ProbabilityofUpdate_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[2];
+
+            Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_K);
+            Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_M);
+            Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_O);
+            Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_Q);
+            Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_S);
+            Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_U);
+            double[] info_ProbabilityofUpdateAirborne_5NM = CalculateProbabilityofUpdateAIRBORNE(Lista_listaMLAT_Airborne_5NM);
+            double found_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[0];
+            double expected_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[1];
+            double ProbabilityofUpdate_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[2];
+
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            dgv_ProbabilityofUpdate_fromASTERIXfile.ColumnCount = 6;
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[1].Name = "Expected Updates";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[2].Name = "Received Updates";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[3].Name = "Missing Updates";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[4].Name = "Probability of Update (%)";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[5].Name = "ED - 117 Value (%)";
+
+            int n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Airport Zone", "Expected Updates", "Received Updates", "Missing Updates", "Probability of Update (%)", "ED - 117 Value (%)");
 
             // STAND
-            //double[] info_ProbabilityofUpdate_STAND = CalculateProbabilityofUpdateGROUND(listaMLAT_Stand);
-            //double found_STAND = info_ProbabilityofUpdate_STAND[0];
-            //double expected_STAND = info_ProbabilityofUpdate_STAND[1];
-            //double ProbabilityofUpdate_STAND = info_ProbabilityofUpdate_STAND[2];
+            if (info_ProbabilityofUpdate_STAND.Count() > 0) 
+            {
+                string PU = info_ProbabilityofUpdate_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Stand", info_ProbabilityofUpdate_STAND[0], info_ProbabilityofUpdate_STAND[1], info_ProbabilityofUpdate_STAND[0] - info_ProbabilityofUpdate_STAND[1], PU, "50");
+            }
+
+            // APRON
+            if (info_ProbabilityofUpdate_APRON.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdate_APRON[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Apron", info_ProbabilityofUpdate_APRON[0], info_ProbabilityofUpdate_APRON[1], info_ProbabilityofUpdate_APRON[0] - info_ProbabilityofUpdate_APRON[1], PU, "70");
+            }
+
+            // TAXI
+            if (info_ProbabilityofUpdate_TAXI.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdate_TAXI[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Taxiway", info_ProbabilityofUpdate_TAXI[0], info_ProbabilityofUpdate_TAXI[1], info_ProbabilityofUpdate_TAXI[0] - info_ProbabilityofUpdate_TAXI[1], PU, "95");
+            }
+
+            // RWY1
+            if (info_ProbabilityofUpdate_RWY1.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdate_RWY1[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 02/20", info_ProbabilityofUpdate_RWY1[0], info_ProbabilityofUpdate_RWY1[1], info_ProbabilityofUpdate_RWY1[0] - info_ProbabilityofUpdate_RWY1[1], PU, "95");
+            }
+
+            // RWY2
+            if (info_ProbabilityofUpdate_RWY2.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdate_RWY2[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 07R/25L", info_ProbabilityofUpdate_RWY2[0], info_ProbabilityofUpdate_RWY2[1], info_ProbabilityofUpdate_RWY2[0] - info_ProbabilityofUpdate_RWY2[1], PU, "95");
+            }
+
+            // RWY3
+            if (info_ProbabilityofUpdate_RWY3.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdate_RWY3[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 07L/25R", info_ProbabilityofUpdate_RWY3[0], info_ProbabilityofUpdate_RWY3[1], info_ProbabilityofUpdate_RWY3[0] - info_ProbabilityofUpdate_RWY3[1], PU, "95");
+            }
 
             // MA
-            //double[] info_ProbabilityofUpdate_MA = CalculateProbabilityofUpdateGROUND(listaMLAT_MA);
-            //double found_MA = info_ProbabilityofUpdate_MA[0];
-            //double expected_MA = info_ProbabilityofUpdate_MA[1];
-            //double ProbabilityofUpdate_MA = info_ProbabilityofUpdate_MA[2];
+            if (info_ProbabilityofUpdate_MA.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdate_MA[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("MANEUVERING AREA", info_ProbabilityofUpdate_MA[0], info_ProbabilityofUpdate_MA[1], info_ProbabilityofUpdate_MA[0] - info_ProbabilityofUpdate_MA[1], PU, "95");
+            }
 
-            // AIRBORNE
-            //List<List<CAT10>> Lista_listaMLAT_Airborne_2coma5NM = new List<List<CAT10>>();
-            //List<List<CAT10>> Lista_listaMLAT_Airborne_5NM = new List<List<CAT10>>();
+            // AIRBORNE 2.5
+            if (info_ProbabilityofUpdateAirborne__2coma5NM.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdateAirborne__2coma5NM[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("AIRBORNE 0 - 2.5 NM", info_ProbabilityofUpdateAirborne__2coma5NM[0], info_ProbabilityofUpdateAirborne__2coma5NM[1], info_ProbabilityofUpdateAirborne__2coma5NM[0] - info_ProbabilityofUpdateAirborne__2coma5NM[1], PU, "95");
+            }
 
-            //Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_L);
-            //Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_N);
-            //Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_P);
-            //Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_R);
-            //Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_T);
-            //Lista_listaMLAT_Airborne_2coma5NM.Add(listaMLAT_Airborne_2coma5NM_V);
-            //double[] info_ProbabilityofUpdateAirborne__2coma5NM = CalculateProbabilityofUpdateAIRBORNE(Lista_listaMLAT_Airborne_2coma5NM);
-            //double found_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[0];
-            //double expected_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[1];
-            //double ProbabilityofUpdate_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[2];
-
-            //Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_K);
-            //Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_M);
-            //Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_O);
-            //Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_Q);
-            //Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_S);
-            //Lista_listaMLAT_Airborne_5NM.Add(listaMLAT_Airborne_5NM_U);
-            //double[] info_ProbabilityofUpdateAirborne_5NM = CalculateProbabilityofUpdateAIRBORNE(Lista_listaMLAT_Airborne_5NM);
-            //double found_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[0];
-            //double expected_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[1];
-            //double ProbabilityofUpdate_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[2];
+            // AIRBORNE 5
+            if (info_ProbabilityofUpdateAirborne_5NM.Count() > 0)
+            {
+                string PU = info_ProbabilityofUpdateAirborne_5NM[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("AIRBORNE 2.5 - 5 NM", info_ProbabilityofUpdateAirborne_5NM[0], info_ProbabilityofUpdateAirborne_5NM[1], info_ProbabilityofUpdateAirborne_5NM[0] - info_ProbabilityofUpdateAirborne_5NM[1], PU, "95");
+            }
         }
 
         private void bt_CalculatePRecissionAccuracy_Click(object sender, EventArgs e)
         {
+            string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
+            string[] properties = comboBox1.Text.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
+
+            int PIC = Convert.ToInt32(properties[0]);
+
             //STAND
-            //var listaSTAND = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Stand, listaCAT21nearAirport);
-            //listaSTAND.Sort();
-            //double a = listaSTAND.Average();
-            //int percentle95_floor_STAND = Convert.ToInt32(Math.Floor(0.95 * listaSTAND.Count()));
-            //int percentle95_ceil_STAND = Convert.ToInt32(Math.Ceiling(0.95 * listaSTAND.Count()));
-            //double percentile95_STAND = (listaSTAND[percentle95_floor_STAND] + listaSTAND[percentle95_ceil_STAND]) / 2;
+            ListResults_STAND = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Stand, listaCAT21nearAirport, PIC);
 
-            //int percentle99_floor_STAND = Convert.ToInt32(Math.Floor(0.99 * listaSTAND.Count()));
-            //int percentle99_ceil_STAND = Convert.ToInt32(Math.Ceiling(0.99 * listaSTAND.Count()));
-            //double percentile99_STAND = (listaSTAND[percentle99_floor_STAND] + listaSTAND[percentle99_ceil_STAND]) / 2;
-
-            //// APRON
-            //List<double> listadistancesAPRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Apron, listaCAT21nearAirport);
-            //listadistancesAPRON.Sort();
-            //int percentle95_floor_APRON = Convert.ToInt32(Math.Floor(0.95 * listadistancesAPRON.Count()));
-            //int percentle95_ceil_APRON = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesAPRON.Count()));
-            //double percentile95_APRON = (listadistancesAPRON[percentle95_floor_APRON] + listadistancesAPRON[percentle95_ceil_APRON]) / 2;
-
-            //int percentle99_floor_APRON = Convert.ToInt32(Math.Floor(0.99 * listadistancesAPRON.Count()));
-            //int percentle99_ceil_APRON = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesAPRON.Count()));
-            //double percentile99_APRON = (listadistancesAPRON[percentle99_floor_APRON] + listadistancesAPRON[percentle99_ceil_APRON]) / 2;
-
-            ////APRON + MA
-            //List<CAT10> listaMLATMA_Apron = new List<CAT10>();
-            //for (int i = 0; i < listaMLAT_MA.Count(); i++) { listaMLATMA_Apron.Add(listaMLAT_MA[i]); }
-            //for (int i = 0; i < listaMLAT_Apron.Count(); i++) { listaMLATMA_Apron.Add(listaMLAT_Apron[i]); }
-
-            //List<double> listadistancesMA = CalculatePrecissionAccuracy_fromnearestdistance(listaMLATMA_Apron, listaCAT21nearAirport);
-            //listadistancesMA.Sort();
-            //int percentle95_floor_MA = Convert.ToInt32(Math.Floor(0.95 * listadistancesMA.Count()));
-            //int percentle95_ceil_MA = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesMA.Count()));
-            //double percentile95_MA = (listadistancesMA[percentle95_floor_MA] + listadistancesMA[percentle95_ceil_MA]) / 2;
-
-            //int percentle99_floor_MA = Convert.ToInt32(Math.Floor(0.99 * listadistancesMA.Count()));
-            //int percentle99_ceil_MA = Convert.ToInt32(Math.Ceiling(0.99 * listadistancesMA.Count()));
-            //double percentile99_MA = (listadistancesMA[percentle99_floor_MA] + listadistancesMA[percentle99_ceil_MA]) / 2;
+            // APRON
+            ListResults_APRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Apron, listaCAT21nearAirport, PIC);
 
 
-            ////AIRBORNE 2.5NM
-            //List<double> listadistancesAIRBORNE25 = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Airborne_2coma5NM, listaCAT21nearAirport);
-            //listadistancesAIRBORNE25.Sort();
-            //int percentle95_floor_AIRBORNE25 = Convert.ToInt32(Math.Floor(0.95 * listadistancesAIRBORNE25.Count()));
-            //int percentle95_ceil_AIRBORNE25 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesAIRBORNE25.Count()));
-            //double percentile95_AIRBORNE25 = (listadistancesAIRBORNE25[percentle95_floor_AIRBORNE25] + listadistancesAIRBORNE25[percentle95_ceil_AIRBORNE25]) / 2;
+            // TAXI
+            ListResults_TAXI = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Taxiway, listaCAT21nearAirport, PIC);
 
-            ////AIRBORNE 5NM
-            //List<double> listadistancesAIRBORNE5 = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Airborne_5NM, listaCAT21nearAirport);
-            //listadistancesAIRBORNE5.Sort();
-            //int percentle95_floor_AIRBORNE5 = Convert.ToInt32(Math.Floor(0.95 * listadistancesAIRBORNE5.Count()));
-            //int percentle95_ceil_AIRBORNE5 = Convert.ToInt32(Math.Ceiling(0.95 * listadistancesAIRBORNE5.Count()));
-            //double percentile95_AIRBORNE5 = (listadistancesAIRBORNE5[percentle95_floor_AIRBORNE5] + listadistancesAIRBORNE5[percentle95_ceil_AIRBORNE5]) / 2;
+
+            // RUNWAY 1
+            ListResults_RW1 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway1, listaCAT21nearAirport, PIC);
+
+
+            // RUNWAY 2
+            ListResults_RW2 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway2, listaCAT21nearAirport, PIC);
+
+
+            // RUNWAY 3
+            ListResults_RW3 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway3, listaCAT21nearAirport, PIC);
+
+
+            //APRON + MA
+            List<CAT10> listaMLATMA_Apron = new List<CAT10>();
+
+            listaMLATMA_Apron.AddRange(listaMLAT_MA);
+            listaMLATMA_Apron.AddRange(listaMLAT_Apron);
+
+            ListResults_MA_APRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLATMA_Apron, listaCAT21nearAirport, PIC);
+
+
+            //airborne 2.5nm
+            ListResults_AIRBORNE25 = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Airborne_2coma5NM, listaCAT21nearAirport, PIC);
+
+
+            //airborne 5nm
+            ListResults_AIRBORNE5 = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Airborne_2coma5NM, listaCAT21nearAirport, PIC);
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            // Creamos DGV y columnas
+            dgv_PrecissionAccuracy_fromASTERIXfile.ColumnCount = 8;
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[1].Name = "95th Percentile (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[2].Name = "ED-117 Value (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[3].Name = "99th Percentile (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[4].Name = "ED-117 Value (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[5].Name = "Mean (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[6].Name = "STD Deviation (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[7].Name = "Samples";
+            // _EScribimos el nombre de las columnas otra vez para poder verlas en el excel
+            int n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Airport Zone", "95th Percentile (m)", "ED-117 Value (m)", "99th Percentile (m)", "ED-117 Value (m)", "Mean (m)", "STD Deviation (m)", "Samples");
+
+
+            // STAND
+            if (ListResults_STAND[0].Count() > 0)
+            {
+                ListResults_STAND[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_STAND[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("STAND", p95, "20", "----------", "----------", average, STDdeviation, ListResults_STAND[0].Count().ToString());
+            }
+
+            // APRON
+            if (ListResults_APRON[0].Count() > 0)
+            {
+                ListResults_APRON[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string p99 = CalculatePercentile(99, ListResults_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_APRON[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("APRON", p95, "7.5", p99, "12", average, STDdeviation , ListResults_APRON[0].Count().ToString());
+            }
+
+            // TAXI
+            if (ListResults_TAXI[0].Count() > 0)
+            {
+                ListResults_TAXI[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_TAXI[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string p99 = CalculatePercentile(99, ListResults_TAXI[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_TAXI[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_TAXI[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Taxiway", p95, "7.5", p99, "12", average, STDdeviation, ListResults_TAXI[0].Count().ToString());
+            }
+
+            // RW1
+            if (ListResults_RW1[0].Count() > 0)
+            {
+                ListResults_RW1[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_RW1[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string p99 = CalculatePercentile(99, ListResults_RW1[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_RW1[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_RW1[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 02/20", p95, "7.5", p99, "12", average, STDdeviation, ListResults_RW1[0].Count().ToString());
+            }
+
+            // RW2
+            if (ListResults_RW2[0].Count() > 0)
+            {
+                ListResults_RW2[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_RW2[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string p99 = CalculatePercentile(99, ListResults_RW2[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_RW2[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_RW2[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 07R/25L", p95, "7.5", p99, "12", average, STDdeviation , ListResults_RW2[0].Count().ToString());
+            }
+
+            // RW3
+            if (ListResults_RW3[0].Count() > 0)
+            {
+                ListResults_RW3[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_RW3[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string p99 = CalculatePercentile(99, ListResults_RW3[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_RW3[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_RW3[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 07L/25R", p95, "7.5", p99, "12", average, STDdeviation, ListResults_RW3[0].Count().ToString());
+            }
+
+            // MA
+            if (ListResults_MA_APRON[0].Count() > 0)
+            {
+                ListResults_MA_APRON[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_MA_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string p99 = CalculatePercentile(99, ListResults_MA_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_MA_APRON[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_MA_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("MANEUVERING AREA", p95, "7.5", p99, "12", average, STDdeviation, ListResults_MA_APRON[0].Count().ToString());
+            }
+
+            // AIRBORNE 0-2.5 NM
+            if (ListResults_AIRBORNE25[0].Count() > 0)
+            {
+                ListResults_AIRBORNE25[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_AIRBORNE25[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_AIRBORNE25[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_AIRBORNE25[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("AIRBORNE 0 - 2.5 NM", p95, "20", "----------", "----------", average, STDdeviation, ListResults_AIRBORNE25[0].Count().ToString());
+            }
+
+            // AIRBORNE 2.5-5 NM
+            if (ListResults_AIRBORNE5[0].Count() > 0)
+            {
+                ListResults_AIRBORNE5[0].Sort();
+                string p95 = CalculatePercentile(95, ListResults_AIRBORNE5[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string average = ListResults_AIRBORNE5[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string STDdeviation = CalculateStandardDeviation(ListResults_AIRBORNE5[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("AIRBORNE 2.5 - 5 NM", p95, "20", "----------", "----------", average, STDdeviation, ListResults_AIRBORNE5[0].Count().ToString());
+            }
+        }
+
+        private void bt_ShowData_PA_fromASTERIXfile_Click(object sender, EventArgs e)
+        {
+
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofUpdate_fromASTERIXfile.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+
+                rows = rows + 5;
+
+                for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < dgv_PrecissionAccuracy_fromASTERIXfile.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+
+                rows = rows + 5;
+
+                for (int i = 0; i < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+
+
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    Recorremos el DataGridView rellenando la hoja de trabajo
+            //    for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracy_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[i + 1, j + 1] = dgv_PrecissionAccuracy_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //    }
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
+
+            // SHOW Plots:
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            //ScatterPlot PA_STAND_fromASTERIXfile = new ScatterPlot(ListResults_STAND[1], ListResults_STAND[2], "Precission Acuracy Error in Stand", "X axis Error (m)", "Y axis Error (m)");
+            //PA_STAND_fromASTERIXfile.Show();
+
+            //ScatterPlot PA_MA_fromASTERIXfile = new ScatterPlot(ListResults_MA_APRON[1], ListResults_MA_APRON[2], "Precission Acuracy Error in Manoeuvring Area", "X axis Error (m)", "Y axis Error (m)");
+            //PA_MA_fromASTERIXfile.Show();
+
+            //ScatterPlot PA_AIRBORNE25_fromASTERIXfile = new ScatterPlot(ListResults_AIRBORNE25[1], ListResults_AIRBORNE25[2], "Precission Acuracy Error in Airborne Area (0 - 2.5 NM)", "X axis Error (m)", "Y axis Error (m)");
+            //PA_AIRBORNE25_fromASTERIXfile.Show();
+
+            //ScatterPlot PA_AIRBORNE5_fromASTERIXfile = new ScatterPlot(ListResults_AIRBORNE5[1], ListResults_AIRBORNE5[2], "Precission Acuracy Error in Airborne Area (2.5 NM - 5 NM)", "X axis Error (m)", "Y axis Error (m)");
+            //PA_AIRBORNE5_fromASTERIXfile.Show();
+
+            // SHOW Plots:
+            //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            DataGrid_PositionAcuracy_fromASTERIXfile DGV1 = new DataGrid_PositionAcuracy_fromASTERIXfile(ListResults_STAND, ListResults_APRON, ListResults_TAXI, ListResults_RW1, ListResults_RW2, ListResults_RW3, ListResults_MA_APRON, ListResults_AIRBORNE25, ListResults_AIRBORNE5);
+            DGV1.Show();
+
+
         }
 
         private void bt_CalculateProbabilityofMLATDetection_Click(object sender, EventArgs e)
         {
-            ////STAND
-            //double[] info_probabilityofMLATDetection_STAND = CalculateProbabilityofMLATDetection(listaMLAT_Stand, 5);
-            //double found_STAND = info_probabilityofMLATDetection_STAND[0];
-            //double total_STAND = info_probabilityofMLATDetection_STAND[1];
-            //double probabilityofMLATDetection_STAND = info_probabilityofMLATDetection_STAND[2];
+            //STAND
+            double[] info_probabilityofMLATDetection_STAND = CalculateProbabilityofMLATDetection(listaMLAT_Stand, 5);
+            double found_STAND = info_probabilityofMLATDetection_STAND[0];
+            double total_STAND = info_probabilityofMLATDetection_STAND[1];
+            double probabilityofMLATDetection_STAND = info_probabilityofMLATDetection_STAND[2];
 
-            //// MA
-            //double[] info_probabilityofMLATDetection_MA = CalculateProbabilityofMLATDetection(listaMLAT_MA, 2);
-            //double found_MA = info_probabilityofMLATDetection_MA[0];
-            //double total_MA = info_probabilityofMLATDetection_MA[1];
-            //double probabilityofMLATDetection_MA = info_probabilityofMLATDetection_MA[2];
+            // taxi
+            double[] info_probabilityofMLATDetection_MA = CalculateProbabilityofMLATDetection(listaMLAT_Taxiway, 2);
+
+            // RWY1
+            double[] info_probabilityofMLATDetection_RWY1 = CalculateProbabilityofMLATDetection(listaRunway1, 2);
+
+            // RWY2
+            double[] info_probabilityofMLATDetection_RWY2 = CalculateProbabilityofMLATDetection(listaRunway2, 2);
+
+            // RWY3
+            double[] info_probabilityofMLATDetection_RWY3 = CalculateProbabilityofMLATDetection(listaRunway3, 2);
+
+            // MA
+            double[] info_probabilityofMLATDetection_APRON = CalculateProbabilityofMLATDetection(listaMLAT_MA, 2);
+            double found_MA = info_probabilityofMLATDetection_MA[0];
+            double total_MA = info_probabilityofMLATDetection_MA[1];
+            double probabilityofMLATDetection_MA = info_probabilityofMLATDetection_MA[2];
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.ColumnCount = 6;
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[1].Name = "Expected Updates";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[2].Name = "Received Updates";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[3].Name = "Missing Updates";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[4].Name = "Probability of MLAT Detection (%)";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[5].Name = "ED - 117 Value (%)";
+
+            int n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("Airport Zone", "Expected Updates", "Received Updates", "Missing Updates", "Probability of MLAT Detection (%)", "ED - 117 Value (%)");
+
+            // STAND
+            if (info_probabilityofMLATDetection_STAND.Count() > 0)
+            {
+                string PU = info_probabilityofMLATDetection_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("Stand", info_probabilityofMLATDetection_STAND[1], info_probabilityofMLATDetection_STAND[0], info_probabilityofMLATDetection_STAND[1] - info_probabilityofMLATDetection_STAND[0], PU, "99.9");
+            }
+
+            // APRON
+            if (info_probabilityofMLATDetection_APRON.Count() > 0)
+            {
+                string PU = info_probabilityofMLATDetection_APRON[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("Apron", info_probabilityofMLATDetection_APRON[1], info_probabilityofMLATDetection_APRON[0], info_probabilityofMLATDetection_APRON[1] - info_probabilityofMLATDetection_APRON[0], PU, "99.9");
+            }
+
+            // RWY1
+            if (info_probabilityofMLATDetection_RWY1.Count() > 0)
+            {
+                string PU = info_probabilityofMLATDetection_RWY1[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("Runway 02/20", info_probabilityofMLATDetection_RWY1[1], info_probabilityofMLATDetection_RWY1[0], info_probabilityofMLATDetection_RWY1[1] - info_probabilityofMLATDetection_RWY1[0], PU, "99.9");
+            }
+
+            // RWY2
+            if (info_probabilityofMLATDetection_RWY2.Count() > 0)
+            {
+                string PU = info_probabilityofMLATDetection_RWY2[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("Runway 07R/25L", info_probabilityofMLATDetection_RWY2[1], info_probabilityofMLATDetection_RWY2[0], info_probabilityofMLATDetection_RWY2[1] - info_probabilityofMLATDetection_RWY2[0], PU, "99.9");
+            }
+
+            // RWY3
+            if (info_probabilityofMLATDetection_RWY3.Count() > 0)
+            {
+                string PU = info_probabilityofMLATDetection_RWY3[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("Runway 07L/25R", info_probabilityofMLATDetection_RWY3[1], info_probabilityofMLATDetection_RWY3[0], info_probabilityofMLATDetection_RWY3[1] - info_probabilityofMLATDetection_RWY3[0], PU, "99.9");
+            }
+
+            // RWY3
+            if (info_probabilityofMLATDetection_MA.Count() > 0)
+            {
+                string PU = info_probabilityofMLATDetection_MA[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add("MANEUVERING AREA", info_probabilityofMLATDetection_MA[1], info_probabilityofMLATDetection_MA[0], info_probabilityofMLATDetection_MA[1] - info_probabilityofMLATDetection_MA[0], PU, "99.9");
+            }
         }
 
         private void bt_ProbabilityofMLATIdentification_Click(object sender, EventArgs e)
@@ -1150,15 +1527,6 @@ namespace ASTERIX
             double ProbabilityofIdentifcation = listofProbabilityofIdentification.Average() * 100;
         }
 
-
-        //private void bt_ShowResultsUpdateRate_Click(object sender, EventArgs e)
-        //{
-        //    BarChartGraphUpdateRate barchart1 = new BarChartGraphUpdateRate(listBarsUpdateRate);
-        //    barchart1.Show();
-
-        //    BarPlotUpdateRate1 barplot1 = new BarPlotUpdateRate1(listBarsUpdateRate);
-        //    barplot1.Show();
-        //}
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1867,6 +2235,78 @@ namespace ASTERIX
             return listaquedevolvemos;
         }
 
+        public double CalculateStandardDeviation(IEnumerable<double> values)
+        {
+            double standardDeviation = 0;
+
+            if (values.Any())
+            {
+                // Compute the average.     
+                double avg = values.Average();
+
+                // Perform the Sum of (value-avg)_2_2.      
+                double sum = values.Sum(d => Math.Pow(d - avg, 2));
+
+                // Put it all together.      
+                standardDeviation = Math.Sqrt((sum) / (values.Count() - 1));
+            }
+
+            return standardDeviation;
+        }
+
+        public double CalculatePercentile(int perc, List<double> lista)
+        {
+            double percentile = Convert.ToDouble(perc);
+            percentile = percentile / 100;
+
+            int posicion_inferior = Convert.ToInt32(Math.Floor(lista.Count() * percentile));
+            int posicion_superior = Convert.ToInt32(Math.Ceiling(lista.Count() * percentile));
+
+            try
+            {
+                return (lista[posicion_inferior] + lista[posicion_superior]) / 2;
+            }
+            catch
+            {
+                return lista[posicion_inferior - 1];
+            }
+        }
+
+        public double[] CalculateComponentesDistancia(double[] CoordenadasMLAT, double[] CoordenadasADSB)
+        {
+            double LatMLAT = CoordenadasMLAT[0];
+            double LonMLAT = CoordenadasMLAT[1];
+
+            double LatADSB = CoordenadasADSB[0];
+            double LonADSB = CoordenadasADSB[1];
+
+            double deltaX = CalculateDistanceBetweenCoordinates(new double[] { LatMLAT, LonADSB }, CoordenadasMLAT);
+            double deltaY = CalculateDistanceBetweenCoordinates(new double[] { LatADSB, LonMLAT }, CoordenadasMLAT);
+
+            if (LatADSB >= LatMLAT && LonADSB>=LonMLAT)
+            {
+                // No hacemos nada porque las dos componentes son positivas ya
+            }
+
+            else if(LonADSB>=LonMLAT && LatADSB < LatMLAT)
+            {
+                deltaY = -1 * deltaY;
+            }
+
+            else if (LonADSB < LonMLAT && LatADSB >= LatMLAT)
+            {
+                deltaX = -1 * deltaX;
+            }
+            else if(LonADSB<LonMLAT && LatADSB < LatMLAT)
+            {
+                deltaY = -1 * deltaY;
+                deltaX = -1 * deltaX;
+            }
+
+            double[] results = new double[] { deltaX, deltaY };
+            return results;
+        }
+
 
 
         public double[] CalculateProbabilityofUpdateGROUND(List<CAT10> listaMLAT_Apron)
@@ -2165,7 +2605,7 @@ namespace ASTERIX
             return listaAvgDelay_Apron.Average() * 100;
         }
 
-        public List<double> CalculatePrecissionAccuracy_fromnearestdistance(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
+        public List<List<double>> CalculatePrecissionAccuracy_fromnearestdistance(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21, int PIC)
         {
             List<CAT10> listaMLAT = new List<CAT10>();
             listaMLAT.AddRange(listaMLAT_Apron);
@@ -2209,10 +2649,26 @@ namespace ASTERIX
             listaADSB.Clear();
             for (i = 0; i < lista2.Count(); i++) { listaADSB.Add(lista2[i]); }
 
+            ////Filtramos paquetes ADSB PIC inferior al num de introducimos como parametro
+            List<CAT21> lista3 = new List<CAT21>();
+            lista3.Clear();
+            for (int i = 0; i < listaADSB.Count; i++)
+            {
+                if (listaADSB[i].PIC >= PIC)
+                {
+                    lista3.Add(listaADSB[i]);
+                }
+            }
+            listaADSB.Clear();
+            for (i = 0; i < lista3.Count(); i++) { listaADSB.Add(lista3[i]); }
 
+
+            List<List<double>> results = new List<List<double>>();
+            List<double> listadistances = new List<double>();
+            List<double> listaDeltaX = new List<double>();
+            List<double> listaDeltaY = new List<double>();
 
             string TargetAddresssMLAT;
-            List<double> listadistances = new List<double>();
             int indexi = 1000000;
             int indexj = 1000000;
 
@@ -2270,43 +2726,57 @@ namespace ASTERIX
                         if (ListaPlanesMismoNombre1[k].time > timeMLAT) { indexj_posterior = k; }
                     }
 
-
-                    if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && Math.Abs(indexj_anterior - indexj_posterior) <= 2 /*&& Math.Abs(timeMLAT- timeanteriorADSB)<=0.5 && Math.Abs(timeMLAT - timesiguienteADSB) <= 0.5*/)
+                    if (indexj_anterior != 1000000 && indexj_posterior != 1000000)
                     {
-                        double[] newCoordinatesADSB = new double[2];
+                        double timeanteriorADSB = ListaPlanesMismoNombre1[indexj_anterior].time;
+                        double timesiguienteADSB = ListaPlanesMismoNombre1[indexj_posterior].time;
 
-                        //Interpolamos para encontrar Lat
-                        double x0 = ListaPlanesMismoNombre1[indexj_anterior].time;
-                        double x1 = ListaPlanesMismoNombre1[indexj_posterior].time;
-                        double x = timeMLAT;
-
-                        double y0 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_anterior].cat21)[0];
-                        double y1 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_posterior].cat21)[0];
-
-                        if ((x1 - x0) == 0)
+                        if(Math.Abs(indexj_anterior - indexj_posterior) <= 1 /*&& (Math.Abs(timeMLAT - timeanteriorADSB) + Math.Abs(timeMLAT - timesiguienteADSB) <= 1)*/)
                         {
-                            newCoordinatesADSB[0] = (y0 + y1) / 2;
+                            double[] newCoordinatesADSB = new double[2];
+
+                            //Interpolamos para encontrar Lat
+                            double x0 = ListaPlanesMismoNombre1[indexj_anterior].time;
+                            double x1 = ListaPlanesMismoNombre1[indexj_posterior].time;
+                            double x = timeMLAT;
+
+                            double y0 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_anterior].cat21)[0];
+                            double y1 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_posterior].cat21)[0];
+
+                            if ((x1 - x0) == 0)
+                            {
+                                newCoordinatesADSB[0] = (y0 + y1) / 2;
+                            }
+                            newCoordinatesADSB[0] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                            // Interpolamos para encontrar Lon
+                            y0 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_anterior].cat21)[1];
+                            y1 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_posterior].cat21)[1];
+                            x = timeMLAT;
+
+                            if ((x1 - x0) == 0)
+                            {
+                                newCoordinatesADSB[1] = (y0 + y1) / 2;
+                            }
+                            newCoordinatesADSB[1] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                            // Ahora calculamos distancia entre MLAT y ADSB
+                            distance = CalculateDistanceBetweenCoordinates(newCoordinatesADSB, MLATcoordinates2WGS84(listaMLAT[i]));
+                            listadistances.Add(distance);
+
+                            // Calculamos componente X e Y de la distancia, suponiendo ADSB en el centro
+                            double[] distancecopmponents = CalculateComponentesDistancia(newCoordinatesADSB, MLATcoordinates2WGS84(listaMLAT[i]));
+                            listaDeltaX.Add(distancecopmponents[0] * -1);
+                            listaDeltaY.Add(distancecopmponents[1] * -1);
                         }
-                        newCoordinatesADSB[0] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Interpolamos para encontrar Lon
-                        y0 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_anterior].cat21)[1];
-                        y1 = CoordinatesADSB_WGS84(ListaPlanesMismoNombre1[indexj_posterior].cat21)[1];
-                        x = timeMLAT;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCoordinatesADSB[1] = (y0 + y1) / 2;
-                        }
-                        newCoordinatesADSB[1] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Ahora calculamos distancia entre MLAT y ADSB
-                        distance = CalculateDistanceBetweenCoordinates(newCoordinatesADSB, MLATcoordinates2WGS84(listaMLAT[i]));
-                        listadistances.Add(distance);
                     }
                 }
             }
-            return listadistances;
+            results.Add(listadistances);
+            results.Add(listaDeltaX);
+            results.Add(listaDeltaY);
+
+            return results;
         }
 
         public List<double> CalculatePrecissionAccuracy_fromnearestdistance1(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
@@ -2910,7 +3380,6 @@ namespace ASTERIX
 
             return listofProbabilityofIdentification;
         }
-
 
 
 

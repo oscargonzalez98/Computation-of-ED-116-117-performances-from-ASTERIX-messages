@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Clases;
 using LIBRERIACLASES;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace ASTERIX
 {
@@ -1041,6 +1042,32 @@ namespace ASTERIX
 
                 lb_Pages.Text = "1 - " + j;
             }
+
+            //------------------------------------------------------------------------------------------
+
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
+            //    for (int i = 0; i < dgvCAT21.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgvCAT21.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[i + 1, j + 1] = dgvCAT21.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //    }
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         public void EscribirLineaCAT21(int i)
@@ -1360,7 +1387,7 @@ namespace ASTERIX
                 dgvCAT21.Rows[n].Cells[41].Value = "Click Here for more information.";
             }
             else { dgvCAT21.Rows[n].Cells[41].Value = "No info."; }
-        }
+        }                                  
 
         public void EscribirLineaCAT10(int i)
         {
