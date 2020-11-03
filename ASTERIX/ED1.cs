@@ -80,6 +80,7 @@ namespace ASTERIX
         DataGridView dgv_ProbabilityofMLATDetection_fromASTERIXfile = new DataGridView();
         DataGridView dgv_ProbabilityofMLATIdentification_fromASTERIXfile = new DataGridView();
 
+
         public List<PointLatLng> polygonApoints = new List<PointLatLng>();
         public List<PointLatLng> polygonBpoints = new List<PointLatLng>();
         public List<PointLatLng> polygonCpoints = new List<PointLatLng>();
@@ -1198,13 +1199,8 @@ namespace ASTERIX
             ListResults_RW3 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway3, listaCAT21nearAirport, PIC);
 
 
-            //APRON + MA
-            List<CAT10> listaMLATMA_Apron = new List<CAT10>();
-
-            listaMLATMA_Apron.AddRange(listaMLAT_MA);
-            listaMLATMA_Apron.AddRange(listaMLAT_Apron);
-
-            ListResults_MA_APRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLATMA_Apron, listaCAT21nearAirport, PIC);
+            //MA
+            ListResults_MA_APRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_MA, listaCAT21nearAirport, PIC);
 
 
             //airborne 2.5nm
@@ -1353,6 +1349,9 @@ namespace ASTERIX
 
                 int rows = 0;
 
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF UPDATE:";
+                rows = rows + 2;
+
                 for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofUpdate_fromASTERIXfile.Columns.Count; j++)
@@ -1361,8 +1360,10 @@ namespace ASTERIX
                     }
                     rows = rows + 1;
                 }
-
                 rows = rows + 5;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PRECISSIUON ACCURACY:";
+                rows = rows + 2;
 
                 for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 1; i++)
                 {
@@ -1372,14 +1373,29 @@ namespace ASTERIX
                     }
                     rows = rows + 1;
                 }
-
                 rows = rows + 5;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT DETECTION:";
+                rows = rows + 2;
 
                 for (int i = 0; i < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns.Count; j++)
                     {
                         hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT IDENTIFICATION:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
                     rows = rows + 1;
                 }
@@ -1525,6 +1541,89 @@ namespace ASTERIX
         {
             List<double> listofProbabilityofIdentification = CalculateProbabilityofIdentification(listaMLATmodeS);
             double ProbabilityofIdentifcation = listofProbabilityofIdentification.Average() * 100;
+
+
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.ColumnCount = 6;
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns[1].Name = "Expected Updates";
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns[2].Name = "Received Updates";
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns[3].Name = "Missing Updates";
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns[4].Name = "Probability of Update (%)";
+            dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Columns[5].Name = "ED - 117 Value (%)";
+
+            int n = dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Airport Zone", "Expected Updates", "Received Updates", "Missing Updates", "Probability of Update (%)", "ED - 117 Value (%)");
+
+            // Stand
+            List<double> listofProbabilityofIdentification_STAND = CalculateProbabilityofIdentification(listaMLAT_Stand);
+            if (listofProbabilityofIdentification_STAND[1] > 0) 
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Stand", listofProbabilityofIdentification_STAND[1].ToString(), listofProbabilityofIdentification_STAND[0].ToString(), (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString(), PU, "99.9");
+            }
+
+            // Apron
+            List<double> listofProbabilityofIdentification_APRON = CalculateProbabilityofIdentification(listaMLAT_Apron);
+            if (listofProbabilityofIdentification_APRON[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_APRON[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Apron", listofProbabilityofIdentification_APRON[1].ToString(), listofProbabilityofIdentification_APRON[0].ToString(), (listofProbabilityofIdentification_APRON[1] - listofProbabilityofIdentification_APRON[0]).ToString(), PU, "99.9");
+            }
+
+            // Taxiway
+            List<double> listofProbabilityofIdentification_TAXI = CalculateProbabilityofIdentification(listaMLAT_Taxiway);
+            if (listofProbabilityofIdentification_TAXI[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_TAXI[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Apron", listofProbabilityofIdentification_TAXI[1].ToString(), listofProbabilityofIdentification_TAXI[0].ToString(), (listofProbabilityofIdentification_TAXI[1] - listofProbabilityofIdentification_TAXI[0]).ToString(), PU, "99.9");
+            }
+
+            // RWY1
+            List<double> listofProbabilityofIdentification_RWY1 = CalculateProbabilityofIdentification(listaRunway1);
+            if (listofProbabilityofIdentification_TAXI[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_TAXI[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Runway 02/20", listofProbabilityofIdentification_TAXI[1].ToString(), listofProbabilityofIdentification_TAXI[0].ToString(), (listofProbabilityofIdentification_TAXI[1] - listofProbabilityofIdentification_TAXI[0]).ToString(), PU, "99.9");
+            }
+
+            // RWY2
+            List<double> listofProbabilityofIdentification_RWY2 = CalculateProbabilityofIdentification(listaRunway2);
+            if (listofProbabilityofIdentification_RWY2[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_RWY2[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Runway 07R/25L", listofProbabilityofIdentification_RWY2[1].ToString(), listofProbabilityofIdentification_RWY2[0].ToString(), (listofProbabilityofIdentification_RWY2[1] - listofProbabilityofIdentification_RWY2[0]).ToString(), PU, "99.9");
+            }
+
+            // RWY3
+            List<double> listofProbabilityofIdentification_RWY3 = CalculateProbabilityofIdentification(listaRunway3);
+            if (listofProbabilityofIdentification_RWY3[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_RWY3[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("Runway 07l/25r", listofProbabilityofIdentification_RWY3[1].ToString(), listofProbabilityofIdentification_RWY3[0].ToString(), (listofProbabilityofIdentification_RWY3[1] - listofProbabilityofIdentification_RWY3[0]).ToString(), PU, "99.9");
+            }
+
+            // MA
+            List<double> listofProbabilityofIdentification_MA    = CalculateProbabilityofIdentification(listaMLAT_MA);
+            if (listofProbabilityofIdentification_MA[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_MA[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("MANEUVERING AREA", listofProbabilityofIdentification_MA[1].ToString(), listofProbabilityofIdentification_MA[0].ToString(), (listofProbabilityofIdentification_MA[1] - listofProbabilityofIdentification_MA[0]).ToString(), PU, "99.9");
+            }
+
+            // AIRBORNE 2.5 NM
+            List<double> listofProbabilityofIdentification_AIRBORNE25 = CalculateProbabilityofIdentification(listaMLAT_Airborne_2coma5NM);
+            if (listofProbabilityofIdentification_AIRBORNE25[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_AIRBORNE25[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("AIRBORNE 0 - 2.5 NM", listofProbabilityofIdentification_AIRBORNE25[1].ToString(), listofProbabilityofIdentification_AIRBORNE25[0].ToString(), (listofProbabilityofIdentification_AIRBORNE25[1] - listofProbabilityofIdentification_AIRBORNE25[0]).ToString(), PU, "99.9");
+            }
+
+            // AIRBORNE 5 NM
+            List<double> listofProbabilityofIdentification_AIRBORNE5 = CalculateProbabilityofIdentification(listaMLAT_Airborne_5NM);
+            if (listofProbabilityofIdentification_AIRBORNE5[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_AIRBORNE5[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofMLATIdentification_fromASTERIXfile.Rows.Add("AIRBORNE 2.5 - 5 NM", listofProbabilityofIdentification_AIRBORNE5[1].ToString(), listofProbabilityofIdentification_AIRBORNE5[0].ToString(), (listofProbabilityofIdentification_AIRBORNE5[1] - listofProbabilityofIdentification_AIRBORNE5[0]).ToString(), PU, "99.9");
+            }
         }
 
 
@@ -3329,6 +3428,10 @@ namespace ASTERIX
             string TrackNumber;
             List<string> listaTrackNumbers = new List<string>();
             List<double> listofProbabilityofIdentification = new List<double>();
+            List<double> listResults = new List<double>();
+
+            double counter_true = 0;
+            double counter_total = 0;
 
             for (int i = 0; i < listaMLATmodeS.Count; i++)
             {
@@ -3338,11 +3441,10 @@ namespace ASTERIX
                     listaTrackNumbers.Add(listaMLATmodeS[i].TrackNumber);
 
                     List<CAT10> listapaquetesmismonombre = new List<CAT10>();
-                    listapaquetesmismonombre.Add(listaMLATmodeS[i]);
 
                     // Ahora buscamos todos los paquetes con ese track number y los metemos en una lista
 
-                    for (int j = i + 1; j < listaMLATmodeS.Count; j++)
+                    for (int j = 0; j < listaMLATmodeS.Count; j++)
                     {
                         if (listaMLATmodeS[j].TrackNumber == TrackNumber) { listapaquetesmismonombre.Add(listaMLATmodeS[j]); }
                     }
@@ -3374,15 +3476,15 @@ namespace ASTERIX
                     double casosbuenos = listadecontadores.Max();
                     double casostotales = listapaquetesmismonombre.Count();
 
-                    listofProbabilityofIdentification.Add(casosbuenos / casostotales);
+                    counter_true = counter_true + casosbuenos;
+                    counter_total = counter_total + casostotales;
                 }
             }
-
-            return listofProbabilityofIdentification;
+            listResults.Add(counter_true);
+            listResults.Add(counter_total);
+            listResults.Add((counter_true / counter_total)*100);
+            return listResults;
         }
-
-
-
 
         public class PaqueteADSByTiempo
         {
