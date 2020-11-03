@@ -1159,8 +1159,8 @@ namespace MultiCAT6.Utils
             s.AppendFormat("{0:d3}:{1:d2}:{2:f4}" + (n == 0 ? 'E' : 'W') + " ", (int)d1, (int)d2, d3);
             s.AppendFormat("{0:f4}m", height);
             s.Append(Environment.NewLine);
-            s.AppendFormat("lat:{0:f9} lon:{1:f9}", this.Lat*GeoUtils.RADS2DEGS, this.Lon*GeoUtils.RADS2DEGS);
-            return s.ToString(); 
+            s.AppendFormat("lat:{0:f9} lon:{1:f9}", this.Lat * GeoUtils.RADS2DEGS, this.Lon * GeoUtils.RADS2DEGS);
+            return s.ToString();
         }
     }
 }

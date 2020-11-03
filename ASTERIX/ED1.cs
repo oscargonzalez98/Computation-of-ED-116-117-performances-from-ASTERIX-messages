@@ -114,7 +114,6 @@ namespace ASTERIX
         // Coordenadas MLAT
         double LatMLAT = 41.297063;
         double LonMLAT = 2.078447;
-        public CoordinatesWGS84 radarcoordinates = new CoordinatesWGS84(41 + 17 / 60 + 49.426 / 3600, 2 + 04 / 60 + 42.41 / 3600);
 
         // Lista Bar Chart UpdateRate
         public List<IndividualBar> listBarsUpdateRate = new List<IndividualBar>();
@@ -1123,28 +1122,28 @@ namespace ASTERIX
             if (info_ProbabilityofUpdate_TAXI.Count() > 0)
             {
                 string PU = info_ProbabilityofUpdate_TAXI[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Taxiway", info_ProbabilityofUpdate_TAXI[0], info_ProbabilityofUpdate_TAXI[1], info_ProbabilityofUpdate_TAXI[0] - info_ProbabilityofUpdate_TAXI[1], PU, "95");
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Taxiway", info_ProbabilityofUpdate_TAXI[0], info_ProbabilityofUpdate_TAXI[1], info_ProbabilityofUpdate_TAXI[0] - info_ProbabilityofUpdate_TAXI[1], PU, "----------");
             }
 
             // RWY1
             if (info_ProbabilityofUpdate_RWY1.Count() > 0)
             {
                 string PU = info_ProbabilityofUpdate_RWY1[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 02/20", info_ProbabilityofUpdate_RWY1[0], info_ProbabilityofUpdate_RWY1[1], info_ProbabilityofUpdate_RWY1[0] - info_ProbabilityofUpdate_RWY1[1], PU, "95");
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 02/20", info_ProbabilityofUpdate_RWY1[0], info_ProbabilityofUpdate_RWY1[1], info_ProbabilityofUpdate_RWY1[0] - info_ProbabilityofUpdate_RWY1[1], PU, "----------");
             }
 
             // RWY2
             if (info_ProbabilityofUpdate_RWY2.Count() > 0)
             {
                 string PU = info_ProbabilityofUpdate_RWY2[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 07R/25L", info_ProbabilityofUpdate_RWY2[0], info_ProbabilityofUpdate_RWY2[1], info_ProbabilityofUpdate_RWY2[0] - info_ProbabilityofUpdate_RWY2[1], PU, "95");
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 07R/25L", info_ProbabilityofUpdate_RWY2[0], info_ProbabilityofUpdate_RWY2[1], info_ProbabilityofUpdate_RWY2[0] - info_ProbabilityofUpdate_RWY2[1], PU, "----------");
             }
 
             // RWY3
             if (info_ProbabilityofUpdate_RWY3.Count() > 0)
             {
                 string PU = info_ProbabilityofUpdate_RWY3[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 07L/25R", info_ProbabilityofUpdate_RWY3[0], info_ProbabilityofUpdate_RWY3[1], info_ProbabilityofUpdate_RWY3[0] - info_ProbabilityofUpdate_RWY3[1], PU, "95");
+                n = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add("Runway 07L/25R", info_ProbabilityofUpdate_RWY3[0], info_ProbabilityofUpdate_RWY3[1], info_ProbabilityofUpdate_RWY3[0] - info_ProbabilityofUpdate_RWY3[1], PU, "----------");
             }
 
             // MA
@@ -1246,7 +1245,7 @@ namespace ASTERIX
                 string average = ListResults_APRON[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
                 string STDdeviation = CalculateStandardDeviation(ListResults_APRON[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
 
-                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("APRON", p95, "7.5", p99, "12", average, STDdeviation , ListResults_APRON[0].Count().ToString());
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("APRON", p95, "----------", p99, "----------", average, STDdeviation , ListResults_APRON[0].Count().ToString());
             }
 
             // TAXI
@@ -1258,7 +1257,7 @@ namespace ASTERIX
                 string average = ListResults_TAXI[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
                 string STDdeviation = CalculateStandardDeviation(ListResults_TAXI[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
 
-                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Taxiway", p95, "7.5", p99, "12", average, STDdeviation, ListResults_TAXI[0].Count().ToString());
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Taxiway", p95, "----------", p99, "----------", average, STDdeviation, ListResults_TAXI[0].Count().ToString());
             }
 
             // RW1
@@ -1270,7 +1269,7 @@ namespace ASTERIX
                 string average = ListResults_RW1[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
                 string STDdeviation = CalculateStandardDeviation(ListResults_RW1[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
 
-                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 02/20", p95, "7.5", p99, "12", average, STDdeviation, ListResults_RW1[0].Count().ToString());
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 02/20", p95, "----------", p99, "----------", average, STDdeviation, ListResults_RW1[0].Count().ToString());
             }
 
             // RW2
@@ -1282,7 +1281,7 @@ namespace ASTERIX
                 string average = ListResults_RW2[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
                 string STDdeviation = CalculateStandardDeviation(ListResults_RW2[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
 
-                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 07R/25L", p95, "7.5", p99, "12", average, STDdeviation , ListResults_RW2[0].Count().ToString());
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 07R/25L", p95, "----------", p99, "----------", average, STDdeviation , ListResults_RW2[0].Count().ToString());
             }
 
             // RW3
@@ -1294,7 +1293,7 @@ namespace ASTERIX
                 string average = ListResults_RW3[0].Average().ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
                 string STDdeviation = CalculateStandardDeviation(ListResults_RW3[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
 
-                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 07L/25R", p95, "7.5", p99, "12", average, STDdeviation, ListResults_RW3[0].Count().ToString());
+                n = dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add("Runway 07L/25R", p95, "----------", p99, "----------", average, STDdeviation, ListResults_RW3[0].Count().ToString());
             }
 
             // MA
