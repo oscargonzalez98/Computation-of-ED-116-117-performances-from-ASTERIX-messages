@@ -713,7 +713,7 @@ namespace MultiCAT6.Utils
         /// </summary>
         /// <param name="polarCoordinates">rho(m), theta(radians), elevation(radians)</param>
         /// <returns>x,y,z in meters</returns>
-        static public CoordinatesXYZ change_radar_spherical2radar_cartesian(CoordinatesPolar polarCoordinates)
+        public CoordinatesXYZ change_radar_spherical2radar_cartesian(CoordinatesPolar polarCoordinates)
         {
             if (polarCoordinates == null) return (CoordinatesXYZ)null;
 

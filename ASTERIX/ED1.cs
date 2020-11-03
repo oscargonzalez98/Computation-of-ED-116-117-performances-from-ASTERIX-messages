@@ -1170,6 +1170,18 @@ namespace ASTERIX
 
         private void bt_CalculatePRecissionAccuracy_Click(object sender, EventArgs e)
         {
+            //double[] coordMLAT1 = MLATcoordinates2WGS84(listaMLAT_Apron[0]);
+            //double[] coordMLAT2 = new double[] { listaMLAT_Apron[0].coordinatesWGS84.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[0].coordinatesWGS84.Lon * GeoUtils.RADS2DEGS };
+            //double[] coordADSB = CoordinatesADSB_WGS84(listaCAT21nearAirport[0]);
+            //double U1 = listaMLAT_Apron[0].coordinatesUVH.U;
+            //double V1 = listaMLAT_Apron[0].coordinatesUVH.V;
+            //double U2 = listaCAT21nearAirport[0].coordinatesUVH.U;
+            //double V2 = listaCAT21nearAirport[0].coordinatesUVH.V;
+
+            //double distancia1 = CalculateDistanceBetweenCoordinates(coordMLAT1, coordADSB);
+            //double distancia2 = CalculateDistanceBetweenCoordinates(coordMLAT2, coordADSB);
+            //double distance3 = Math.Sqrt(Math.Abs(U1 - U2) * Math.Abs(U1 - U2) + Math.Abs(V1 - V2) * Math.Abs(V1 - V2));
+
             string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
             string[] properties = comboBox1.Text.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
 
