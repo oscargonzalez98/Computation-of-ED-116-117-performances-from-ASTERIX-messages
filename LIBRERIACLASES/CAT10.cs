@@ -55,6 +55,7 @@ namespace LIBRERIACLASES
 
         public string TimeofDay = "";
         public double TimeofDay_seconds;
+        public double timetotal;
 
         public string PositioninWGS84_coordinates = "";
         public double latWGS84 = 0;
@@ -839,6 +840,8 @@ namespace LIBRERIACLASES
 
                     TimeofDay_seconds = Convert.ToInt32(TimeofDay, 2);
                     TimeofDay_seconds = TimeofDay_seconds / 128;
+
+                    timetotal = TimeofDay_seconds;
 
                     int a = 1;
 

@@ -17,7 +17,9 @@ namespace LIBRERIACLASES
         public double Hour = 1e10;
         public double Min = 1e10;
         public double Sec = 1e10;
-        public TimeSpan time;
+        public TimeSpan timespan;
+        public double time1;
+        public double timetotal;
 
         public MLATCalibrationData(string cosa00, string cosa11, string cosa22, string cosa33, string cosa44, string cosa55, string cosa66, string cosa77, string cosa88, string cosa99)
         {
@@ -32,7 +34,10 @@ namespace LIBRERIACLASES
             this.Min = Convert.ToDouble(cosa88.Replace(Convert.ToChar("."), Convert.ToChar(",")));
             this.Sec = Convert.ToDouble(cosa99.Replace(Convert.ToChar("."), Convert.ToChar(",")));
 
-            time = TimeSpan.FromSeconds(this.Hour * 3600 + this.Min * 60 + this.Sec);
+            timespan = TimeSpan.FromSeconds(this.Hour * 3600 + this.Min * 60 + this.Sec);
+            time1 = Hour * 3600 + Min * 60 + Sec;
+            timetotal = time1;
+
         }
     }
 }

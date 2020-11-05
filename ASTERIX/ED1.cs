@@ -44,6 +44,7 @@ namespace ASTERIX
         List<CAT10> listaCAT10 = new List<CAT10>();
         List<CAT21> listaCAT21 = new List<CAT21>();
         List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
+        List<MLATCalibrationData> listaCalibrationDataVehicle = new List<MLATCalibrationData>();
 
         List<CAT10> listaMLAT = new List<CAT10>();
         List<CAT10> listaSMR = new List<CAT10>();
@@ -137,13 +138,14 @@ namespace ASTERIX
         List<List<double>> ListResults_AIRBORNE25;
         List<List<double>> ListResults_AIRBORNE5;
 
-        public ED1(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23)
+        public ED1(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23, List<MLATCalibrationData> listaCalibrationDataVehicle)
         {
             InitializeComponent();
 
             this.listaCAT10 = listaCAT10;
             this.listaCAT21 = listaCAT21;
             this.listaCAT21v23 = listaCAT21v23;
+            this.listaCalibrationDataVehicle = listaCalibrationDataVehicle;
 
             // Cordenadas de los poligonos/superficies
             polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
@@ -573,7 +575,7 @@ namespace ASTERIX
             //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-            //// Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S) 
+            // Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S) 
 
             i = 0;
             while (i < listaMLAT.Count)
@@ -586,6 +588,14 @@ namespace ASTERIX
             }
 
             listaCAT21nearAirport = FilterCAT21packets(listaCAT21);
+
+
+            //List<CAT10> listaVehicluloCalibracionTerrestre = new List<CAT10>();
+            //for (i = 0; i < listaMLATmodeS.Count(); i++) { if (listaMLATmodeS[i].TargetIdentification_decoded == "MLAT01") { listaVehicluloCalibracionTerrestre.Add(listaMLATmodeS[i]); } }
+            //listaMLATmodeS.Clear();
+            //listaMLATmodeS.AddRange(listaVehicluloCalibracionTerrestre);
+
+
 
             //List<CAT10> lista2 = new List<CAT10>();
             //for (i = 0; i < listaMLATmodeS.Count(); i++)
@@ -1170,17 +1180,20 @@ namespace ASTERIX
 
         private void bt_CalculatePRecissionAccuracy_Click(object sender, EventArgs e)
         {
-            //double[] coordMLAT1 = MLATcoordinates2WGS84(listaMLAT_Apron[0]);
-            //double[] coordMLAT2 = new double[] { listaMLAT_Apron[0].coordinatesWGS84.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[0].coordinatesWGS84.Lon * GeoUtils.RADS2DEGS };
-            //double[] coordADSB = CoordinatesADSB_WGS84(listaCAT21nearAirport[0]);
-            //double U1 = listaMLAT_Apron[0].coordinatesUVH.U;
-            //double V1 = listaMLAT_Apron[0].coordinatesUVH.V;
-            //double U2 = listaCAT21nearAirport[0].coordinatesUVH.U;
-            //double V2 = listaCAT21nearAirport[0].coordinatesUVH.V;
+            double[] coordMLAT1 = MLATcoordinates2WGS84(listaMLAT_Apron[0]);
+            double[] coordMLAT2 = new double[] { listaMLAT_Apron[0].coordinatesWGS84.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[0].coordinatesWGS84.Lon * GeoUtils.RADS2DEGS };
+            double[] coordADSB = CoordinatesADSB_WGS84(listaCAT21nearAirport[0]);
+            double U1 = listaMLAT_Apron[0].coordinatesUVH.U;
+            double V1 = listaMLAT_Apron[0].coordinatesUVH.V;
+            double U2 = listaCAT21nearAirport[0].coordinatesUVH.U;
+            double V2 = listaCAT21nearAirport[0].coordinatesUVH.V;
 
-            //double distancia1 = CalculateDistanceBetweenCoordinates(coordMLAT1, coordADSB);
-            //double distancia2 = CalculateDistanceBetweenCoordinates(coordMLAT2, coordADSB);
-            //double distance3 = Math.Sqrt(Math.Abs(U1 - U2) * Math.Abs(U1 - U2) + Math.Abs(V1 - V2) * Math.Abs(V1 - V2));
+            double distancia1 = CalculateDistanceBetweenCoordinates(coordMLAT1, coordADSB);
+            double distancia2 = CalculateDistanceBetweenCoordinates(coordMLAT2, coordADSB);
+            double distance3 = Math.Sqrt(Math.Abs(U1 - U2) * Math.Abs(U1 - U2) + Math.Abs(V1 - V2) * Math.Abs(V1 - V2));
+
+            double a = distancia1 - distancia2;
+            double b = distancia1 - distance3;
 
             string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
             string[] properties = comboBox1.Text.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
@@ -1193,30 +1206,23 @@ namespace ASTERIX
             // APRON
             ListResults_APRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Apron, listaCAT21nearAirport, PIC);
 
-
             // TAXI
             ListResults_TAXI = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Taxiway, listaCAT21nearAirport, PIC);
-
 
             // RUNWAY 1
             ListResults_RW1 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway1, listaCAT21nearAirport, PIC);
 
-
             // RUNWAY 2
             ListResults_RW2 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway2, listaCAT21nearAirport, PIC);
-
 
             // RUNWAY 3
             ListResults_RW3 = CalculatePrecissionAccuracy_fromnearestdistance(listaRunway3, listaCAT21nearAirport, PIC);
 
-
             //MA
             ListResults_MA_APRON = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_MA, listaCAT21nearAirport, PIC);
 
-
             //airborne 2.5nm
             ListResults_AIRBORNE25 = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Airborne_2coma5NM, listaCAT21nearAirport, PIC);
-
 
             //airborne 5nm
             ListResults_AIRBORNE5 = CalculatePrecissionAccuracy_fromnearestdistance(listaMLAT_Airborne_2coma5NM, listaCAT21nearAirport, PIC);
@@ -1646,13 +1652,32 @@ namespace ASTERIX
 
         private void pb_ProbabilityofUpdate_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
         {
+            List<CAT10> listaVehicluloCalibracionTerrestre = new List<CAT10>();
+            for (int i = 0; i < listaMLATmodeS.Count(); i++) { if (listaMLATmodeS[i].TargetIdentification_decoded == "MLAT01") { listaVehicluloCalibracionTerrestre.Add(listaMLATmodeS[i]); } }
+
+            List<CAT10> listaVehicluloCalibracionAereo = new List<CAT10>();
+            for (int i = 0; i < listaMLATmodeS.Count(); i++) { if (listaMLATmodeS[i].TargetIdentification_decoded == "ECKJQ") { listaVehicluloCalibracionAereo.Add(listaMLATmodeS[i]); } }
+
+            List<CAT10> listaMLAT = new List<CAT10>();
+            if (listaVehicluloCalibracionTerrestre.Count > 0) { listaMLAT.AddRange(listaVehicluloCalibracionTerrestre); }
+            else { listaMLAT.AddRange(listaVehicluloCalibracionAereo); }
+
+            var Results = CalculatePrecissionAccuracy_fromnearestdistance_CalibrationVehicle(listaMLAT, listaCalibrationDataVehicle);
+            var listadisntaces = Results[0];
+            listadisntaces.Sort();
+            double p95 = CalculatePercentile(95, listadisntaces);
+            double p99 = CalculatePercentile(99, listadisntaces);
+
+            var Results1 = CalculatePrecissionAccuracy_fromnearestdistance_CalibrationVehicle_MAP(listaMLAT, listaCalibrationDataVehicle);
+            Mapa.Overlays.Clear();
+            Mapa.Overlays.Add(Results1);
         }
 
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-        public double[] MLATcoordinates2WGS84(CAT10 packet)
+            public double[] MLATcoordinates2WGS84(CAT10 packet)
         {
             double[] coordenadesMLAT_WGS84 = new double[2];
 
@@ -2889,6 +2914,250 @@ namespace ASTERIX
             return results;
         }
 
+        public List<List<double>> CalculatePrecissionAccuracy_fromnearestdistance_CalibrationVehicle(List<CAT10> listaMLAT_Apron, List<MLATCalibrationData> listaCAT21)
+        {
+            // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
+            // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
+            for (int i = 0; i < listaMLAT_Apron.Count()-1; i++)
+            {
+                if (Math.Abs(listaMLAT_Apron[i + 1].TimeofDay_seconds - listaMLAT_Apron[i].TimeofDay_seconds) > 12 * 3600)
+                {
+                    i = i + 1;
+                    while (i < listaMLAT_Apron.Count())
+                    {
+                        listaMLAT_Apron[i].timetotal = listaMLAT_Apron[i].TimeofDay_seconds + 24 * 3600;
+                        i = i + 1;
+                    }
+                    break;
+                }
+            }
+
+            List<CAT10> listaMLAT = new List<CAT10>();
+            listaMLAT.AddRange(listaMLAT_Apron);
+
+            List<MLATCalibrationData> listaADSB = new List<MLATCalibrationData>();
+            listaADSB.AddRange(listaCAT21);
+
+            // Identificamos el Update rate de la listaDGPS:
+            List<double> list1 = new List<double>();
+            for (int i = 1; i < listaADSB.Count(); i++) { list1.Add(listaADSB[i].timetotal - listaADSB[i - 1].timetotal); }
+            double tupdate = list1.Average();
+            tupdate = (Math.Floor(tupdate * 1e5))/1e5;
+
+            GMapOverlay overlay1 = new GMapOverlay();
+            double[] coordinatesADSB = new double[2];
+            double[] newCoordinatesADSB = new double[2];
+
+
+            List<List<double>> results = new List<List<double>>();
+            List<double> listadistances = new List<double>();
+            List<double> listaDeltaX = new List<double>();
+            List<double> listaDeltaY = new List<double>();
+
+            for (int i = 0; i < listaMLAT.Count(); i++) // recorrem la lista MLAT
+            {
+                double timeMLAT = listaMLAT[i].timetotal;
+
+                int indexj_anterior = 1000000;
+                int indexj_posterior = 1000000;
+                double distance = 1000000;
+
+                //double[] newCoordinatesADSB = new double[2];
+
+                // buacamos paquete Vehiculo de calibracion mas cercano en tiempo por debajo
+                for (int j = 0; j < listaADSB.Count(); j++)
+                {
+                    double timedelay = Math.Abs(timeMLAT - listaADSB[j].timetotal);
+                    if (timedelay < 1 && listaADSB[j].timetotal < timeMLAT) { indexj_anterior = j; }
+                }
+
+                // buacamos paquete Vehiculo de calibracion mas cercano en tiempo por debajo
+                for (int j = listaADSB.Count - 1; j >= 0; j--)
+                {
+                    double timedelay = Math.Abs(timeMLAT - listaADSB[j].timetotal);
+                    if (timedelay < 1 && listaADSB[j].timetotal > timeMLAT) { indexj_posterior = j; }
+                }
+
+                if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && indexj_posterior - indexj_anterior <= 1)
+                {
+                    //double timedistancewith_posterior = listaADSB[indexj_posterior].timetotal - timeMLAT;
+                    //double timedistancewith_anterior = timeMLAT - listaADSB[indexj_anterior].timetotal;
+
+                    //if (timedistancewith_posterior + timedistancewith_anterior <= 2)
+
+                    double timedistancewith_posterior = listaADSB[indexj_posterior].timetotal - listaADSB[indexj_anterior].timetotal;
+
+                    if (timedistancewith_posterior <= tupdate)
+                    {
+                        //Interpolamos para encontrar Lat
+                        double x0 = listaADSB[indexj_anterior].timetotal;
+                        double x1 = listaADSB[indexj_posterior].timetotal;
+                        double x = timeMLAT;
+
+                        double y0 = (listaADSB[indexj_anterior].Lat);
+                        double y1 = (listaADSB[indexj_posterior].Lat);
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCoordinatesADSB[0] = (y0 + y1) / 2;
+                        }
+                        newCoordinatesADSB[0] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                        //Interpolamos para encontrar Lat
+                        x0 = listaADSB[indexj_anterior].timetotal;
+                        x1 = listaADSB[indexj_posterior].timetotal;
+                        x = timeMLAT;
+
+                        y0 = (listaADSB[indexj_anterior].Lon);
+                        y1 = (listaADSB[indexj_posterior].Lon);
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCoordinatesADSB[1] = (y0 + y1) / 2;
+                        }
+                        newCoordinatesADSB[1] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+
+                        distance = CalculateDistanceBetweenCoordinates(newCoordinatesADSB, MLATcoordinates2WGS84(listaMLAT[i]));
+                    }
+                }
+                if (distance != 1000000 && distance < 500)
+                {
+                    listadistances.Add(distance);
+                }
+            }
+            results.Add(listadistances);
+            results.Add(listaDeltaX);
+            results.Add(listaDeltaY);
+
+            return results;
+        }
+
+        public GMapOverlay CalculatePrecissionAccuracy_fromnearestdistance_CalibrationVehicle_MAP(List<CAT10> listaMLAT_Apron, List<MLATCalibrationData> listaCAT21)
+        {
+            // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
+            // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
+            for (int i = 0; i < listaMLAT_Apron.Count()-1; i++)
+            {
+                if (Math.Abs(listaMLAT_Apron[i + 1].TimeofDay_seconds - listaMLAT_Apron[i].TimeofDay_seconds) > 12 * 3600)
+                {
+                    i = i + 1;
+                    while (i < listaMLAT_Apron.Count())
+                    {
+                        listaMLAT_Apron[i].timetotal = listaMLAT_Apron[i].TimeofDay_seconds + 24 * 3600;
+                        i = i + 1;
+                    }
+                    break;
+                }
+            }
+
+            List<CAT10> listaMLAT = new List<CAT10>();
+            listaMLAT.AddRange(listaMLAT_Apron);
+
+            List<MLATCalibrationData> listaADSB = new List<MLATCalibrationData>();
+            listaADSB.AddRange(listaCAT21);
+
+            GMapOverlay overlay1 = new GMapOverlay();
+            double[] coordinatesADSB = new double[2];
+            double[] newCoordinatesADSB = new double[2];
+
+            // Identificamos el Update rate de la listaDGPS:
+            List<double> list1 = new List<double>();
+            for (int i = 1; i < listaADSB.Count(); i++) { list1.Add(listaADSB[i].timetotal - listaADSB[i - 1].timetotal); }
+            double tupdate = list1.Average();
+            tupdate = (Math.Floor(tupdate * 1e5)) / 1e5;
+
+
+            List<List<double>> results = new List<List<double>>();
+            List<double> listadistances = new List<double>();
+            List<double> listaDeltaX = new List<double>();
+            List<double> listaDeltaY = new List<double>();
+
+            for (int i = 0; i < listaMLAT.Count(); i++) // recorrem la lista MLAT
+            {
+                double timeMLAT = listaMLAT[i].timetotal;
+
+                int indexj_anterior = 1000000;
+                int indexj_posterior = 1000000;
+                double distance = 1000000;
+
+                //double[] newCoordinatesADSB = new double[2];
+
+                // buacamos paquete Vehiculo de calibracion mas cercano en tiempo por debajo
+                for (int j = 0; j<listaADSB.Count(); j++)
+                {
+                    double timedelay = Math.Abs(timeMLAT - listaADSB[j].timetotal);
+                    if(timedelay < 1 && listaADSB[j].timetotal < timeMLAT){ indexj_anterior = j; }
+                }
+
+                // buacamos paquete Vehiculo de calibracion mas cercano en tiempo por debajo
+                for (int j = listaADSB.Count-1; j >= 0 ; j--)
+                {
+                    double timedelay = Math.Abs(timeMLAT - listaADSB[j].timetotal);
+                    if (timedelay < 1 && listaADSB[j].timetotal > timeMLAT) { indexj_posterior = j; }
+                }
+
+                if(indexj_anterior != 1000000 && indexj_posterior != 1000000 && indexj_posterior - indexj_anterior == 1 )
+                {
+                    double timedistance = listaADSB[indexj_posterior].timetotal - listaADSB[indexj_anterior].timetotal;
+
+                    if (timedistance <= tupdate)
+                    {
+                        //Interpolamos para encontrar Lat
+                        double x0 = listaADSB[indexj_anterior].timetotal;
+                        double x1 = listaADSB[indexj_posterior].timetotal;
+                        double x = timeMLAT;
+
+                        double y0 = (listaADSB[indexj_anterior].Lat);
+                        double y1 = (listaADSB[indexj_posterior].Lat);
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCoordinatesADSB[0] = (y0 + y1) / 2;
+                        }
+                        newCoordinatesADSB[0] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                        //Interpolamos para encontrar Lat
+                        x0 = listaADSB[indexj_anterior].timetotal;
+                        x1 = listaADSB[indexj_posterior].timetotal;
+                        x = timeMLAT;
+
+                        y0 = (listaADSB[indexj_anterior].Lon);
+                        y1 = (listaADSB[indexj_posterior].Lon);
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCoordinatesADSB[1] = (y0 + y1) / 2;
+                        }
+                        newCoordinatesADSB[1] = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+
+                        distance = CalculateDistanceBetweenCoordinates(newCoordinatesADSB, MLATcoordinates2WGS84(listaMLAT[i]));
+                    }
+                }
+                if(distance!= 1000000 && distance<500) 
+                {
+                    listadistances.Add(distance);
+
+                    List<PointLatLng> points_poly = new List<PointLatLng>();
+                    points_poly.Add(new PointLatLng(newCoordinatesADSB[0], newCoordinatesADSB[1]));
+                    points_poly.Add(new PointLatLng(MLATcoordinates2WGS84(listaMLAT[i])[0], MLATcoordinates2WGS84(listaMLAT[i])[1]));
+
+                    var polygonN = new GMapPolygon(points_poly, "PolygonN")
+                    {
+                        Stroke = new Pen(Color.Red, 3),
+                        Fill = new SolidBrush(Color.Red)
+                    };
+                    overlay1.Polygons.Add(polygonN);
+                }
+            }
+            results.Add(listadistances);
+            results.Add(listaDeltaX);
+            results.Add(listaDeltaY);
+
+            return overlay1;
+        }
+
         public List<double> CalculatePrecissionAccuracy_fromnearestdistance1(List<CAT10> listaMLAT_Apron, List<CAT21> listaCAT21)
         {
             // Filtramos los paquetes que no tienen target identification
@@ -3497,6 +3766,8 @@ namespace ASTERIX
             return listResults;
         }
 
+
+
         public class PaqueteADSByTiempo
         {
             public double time;
@@ -3513,5 +3784,12 @@ namespace ASTERIX
         {
 
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
     }
 }

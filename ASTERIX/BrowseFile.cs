@@ -147,6 +147,22 @@ namespace ASTERIX
                     line = sr.ReadLine();
                 }
 
+                // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
+                // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
+                for(int i=0; i<listaMLATCalibrationVehicleData.Count()-1; i++)
+                {
+                    if(Math.Abs(listaMLATCalibrationVehicleData[i+1].time1 - listaMLATCalibrationVehicleData[i].time1) > 12 * 3600)
+                    {
+                        i = i + 1;
+                        while(i< listaMLATCalibrationVehicleData.Count())
+                        {
+                            listaMLATCalibrationVehicleData[i].timetotal = listaMLATCalibrationVehicleData[i].time1 + 24*3600;
+                            i = i + 1;
+                        }
+                        break;
+                    }
+                }
+
                 this.Close();
             }
         }

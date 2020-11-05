@@ -117,7 +117,7 @@ namespace ASTERIX
 
         private void btn_ED1_Click(object sender, EventArgs e)
         {
-            ED1 formED1 = new ED1(listaCAT10, listaCAT21, listaCAT21v23);
+            ED1 formED1 = new ED1(listaCAT10, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
             formED1.Show();
         }
 
