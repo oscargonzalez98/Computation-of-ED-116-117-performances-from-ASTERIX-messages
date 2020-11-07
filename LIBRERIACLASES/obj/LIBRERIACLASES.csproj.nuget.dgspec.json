@@ -13,6 +13,9 @@
         "packagesPath": "C:\\Users\\oscar\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\oscar\\Dropbox\\Oscar\\Sistemes Aeroespacials\\4B\\TFG\\Computation-of-ED-116-117-performances-from-ASTERIX-messages\\LIBRERIACLASES\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
           "C:\\Users\\oscar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"

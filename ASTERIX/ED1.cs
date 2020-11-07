@@ -80,33 +80,13 @@ namespace ASTERIX
         DataGridView dgv_PrecissionAccuracy_fromASTERIXfile = new DataGridView();
         DataGridView dgv_ProbabilityofMLATDetection_fromASTERIXfile = new DataGridView();
         DataGridView dgv_ProbabilityofMLATIdentification_fromASTERIXfile = new DataGridView();
+        DataGridView dgv_ProbabilityofFalseIdentification_fromASTERIXfile = new DataGridView();
 
-
-        public List<PointLatLng> polygonApoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonBpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonCpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonDpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonEpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonFpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonGpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonHpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonIpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonJpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonKpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonLpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonMpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonNpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonOpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonPpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonQpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonRpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonSpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonTpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonUpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonVpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonWpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonXpoints = new List<PointLatLng>();
-        public List<PointLatLng> polygonYpoints = new List<PointLatLng>();
+        DataGridView dgv_ProbabilityofUpdate_fromACalibrationVehicle = new DataGridView();
+        DataGridView dgv_PrecissionAccuracy_fromCalibrationVehicle = new DataGridView();
+        DataGridView dgv_ProbabilityofMLATDetection_fromCalibrationVehicle = new DataGridView();
+        DataGridView dgv_ProbabilityofMLATIdentification_fromCalibrationVehicle = new DataGridView();
+        DataGridView dgv_ProbabilityofFalseIdentification_fromCalibrationVehicle = new DataGridView();
 
         // CoordenadasSMR
         double LatSMR = 41.295618;
@@ -146,796 +126,11 @@ namespace ASTERIX
             this.listaCAT21 = listaCAT21;
             this.listaCAT21v23 = listaCAT21v23;
             this.listaCalibrationDataVehicle = listaCalibrationDataVehicle;
-
-            // Cordenadas de los poligonos/superficies
-            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
-            polygonApoints.Add(new PointLatLng(41.28723009374163, 2.078718953092844));
-            polygonApoints.Add(new PointLatLng(41.28885874916784, 2.077748868970652));
-            polygonApoints.Add(new PointLatLng(41.29065643929236, 2.082995639066103));
-            polygonApoints.Add(new PointLatLng(41.29222850233552, 2.083778238090788));
-            polygonApoints.Add(new PointLatLng(41.29331871109087, 2.083045684310492));
-            polygonApoints.Add(new PointLatLng(41.29106949349184, 2.076476920740631));
-            polygonApoints.Add(new PointLatLng(41.29254944569193, 2.07558284559707));
-            polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
-            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
-
-            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
-            polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
-            polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
-            polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
-            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
-
-            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
-            polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
-            polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
-            polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
-            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
-
-            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
-            polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
-            polygonDpoints.Add(new PointLatLng(41.30000776347889, 2.070917770368974));
-            polygonDpoints.Add(new PointLatLng(41.29967596479406, 2.071688864944305));
-            polygonDpoints.Add(new PointLatLng(41.29959146994269, 2.073228664122788));
-            polygonDpoints.Add(new PointLatLng(41.30345473670611, 2.084537100676138));
-            polygonDpoints.Add(new PointLatLng(41.30290495825957, 2.084875104603385));
-            polygonDpoints.Add(new PointLatLng(41.30427409853728, 2.088851435790822));
-            polygonDpoints.Add(new PointLatLng(41.30590241356465, 2.087869558272031));
-            polygonDpoints.Add(new PointLatLng(41.3066804890744, 2.090125795521962));
-            polygonDpoints.Add(new PointLatLng(41.30814452382673, 2.090862227752639));
-            polygonDpoints.Add(new PointLatLng(41.30909185035398, 2.090291339935599));
-            polygonDpoints.Add(new PointLatLng(41.30793723174423, 2.087009092954473));
-            polygonDpoints.Add(new PointLatLng(41.30723056199035, 2.087458996395015));
-            polygonDpoints.Add(new PointLatLng(41.30537957229418, 2.082053043424263));
-            polygonDpoints.Add(new PointLatLng(41.30456131346386, 2.082557609714792));
-            polygonDpoints.Add(new PointLatLng(41.3008830436416, 2.071957346981628));
-            polygonDpoints.Add(new PointLatLng(41.30108765385491, 2.071574780556449));
-            polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
-            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
-
-            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
-            polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
-            polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
-            polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
-            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
-
-            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
-            polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
-            polygonFpoints.Add(new PointLatLng(41.30667782929991, 2.090126725817183));
-            polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
-            polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
-            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
-
-            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
-            polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
-            polygonGpoints.Add(new PointLatLng(41.29959074400027, 2.073228700331884));
-            polygonGpoints.Add(new PointLatLng(41.29967470998086, 2.071693187872741));
-            polygonGpoints.Add(new PointLatLng(41.30000697053827, 2.070919075000397));
-            polygonGpoints.Add(new PointLatLng(41.30039357167374, 2.070459446529713));
-            polygonGpoints.Add(new PointLatLng(41.30065260460123, 2.070303243523943));
-            polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
-            polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
-            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
-
-            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
-            polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
-            polygonHpoints.Add(new PointLatLng(41.28902431178173, 2.067520686236));
-            polygonHpoints.Add(new PointLatLng(41.28955440513675, 2.068940144725449));
-            polygonHpoints.Add(new PointLatLng(41.29012143210162, 2.06851590292412));
-            polygonHpoints.Add(new PointLatLng(41.2925490011068, 2.075579761626731));
-            polygonHpoints.Add(new PointLatLng(41.29106910015326, 2.076481303710718));
-            polygonHpoints.Add(new PointLatLng(41.29331848519782, 2.08304615591185));
-            polygonHpoints.Add(new PointLatLng(41.29222983099868, 2.083777753836971));
-            polygonHpoints.Add(new PointLatLng(41.29065712208786, 2.082996332139622));
-            polygonHpoints.Add(new PointLatLng(41.28885798115613, 2.077750786024948));
-            polygonHpoints.Add(new PointLatLng(41.28723092652747, 2.078719350618556));
-            polygonHpoints.Add(new PointLatLng(41.28504511955603, 2.072303471860446));
-            polygonHpoints.Add(new PointLatLng(41.28429457970675, 2.073252038146045));
-            polygonHpoints.Add(new PointLatLng(41.28661860767006, 2.080221795722565));
-            polygonHpoints.Add(new PointLatLng(41.28733664026725, 2.0797506736647));
-            polygonHpoints.Add(new PointLatLng(41.28855512194733, 2.079026526525407));
-            polygonHpoints.Add(new PointLatLng(41.28980251153607, 2.082629487656971));
-            polygonHpoints.Add(new PointLatLng(41.28803492635546, 2.081812539971151));
-            polygonHpoints.Add(new PointLatLng(41.28734153685148, 2.079747588265484));
-            polygonHpoints.Add(new PointLatLng(41.28661855511135, 2.080222823254285));
-            polygonHpoints.Add(new PointLatLng(41.28708936718802, 2.081638558546843));
-            polygonHpoints.Add(new PointLatLng(41.29231849483453, 2.084087751298431));
-            polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
-            polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
-            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
-
-            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
-            polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
-            polygonIpoints.Add(new PointLatLng(41.29224414586391, 2.061526737006945));
-            polygonIpoints.Add(new PointLatLng(41.29046417484277, 2.062609057585825));
-            polygonIpoints.Add(new PointLatLng(41.28956626644186, 2.065553730733145));
-            polygonIpoints.Add(new PointLatLng(41.29523767718762, 2.082250085220523));
-            polygonIpoints.Add(new PointLatLng(41.29231726437897, 2.084091640755907));
-            polygonIpoints.Add(new PointLatLng(41.28708946239801, 2.081639593866493));
-            polygonIpoints.Add(new PointLatLng(41.28429573389018, 2.073249376619946));
-            polygonIpoints.Add(new PointLatLng(41.28316212451168, 2.072989239047482));
-            polygonIpoints.Add(new PointLatLng(41.28173786975413, 2.073784781912147));
-            polygonIpoints.Add(new PointLatLng(41.29214530239392, 2.104127198089036));
-            polygonIpoints.Add(new PointLatLng(41.29276318268523, 2.103757546620602));
-            polygonIpoints.Add(new PointLatLng(41.29268764126339, 2.103528317911267));
-            polygonIpoints.Add(new PointLatLng(41.29376290078783, 2.102914286073472));
-            polygonIpoints.Add(new PointLatLng(41.29406164912393, 2.101945088686166));
-            polygonIpoints.Add(new PointLatLng(41.28984141121184, 2.089462718011443));
-            polygonIpoints.Add(new PointLatLng(41.29291561892327, 2.087628140011148));
-            polygonIpoints.Add(new PointLatLng(41.29770085373364, 2.089788471416973));
-            polygonIpoints.Add(new PointLatLng(41.30310731952297, 2.105503857052842));
-            polygonIpoints.Add(new PointLatLng(41.3045527080456, 2.106123180658501));
-            polygonIpoints.Add(new PointLatLng(41.30589157106402, 2.105346701864339));
-            polygonIpoints.Add(new PointLatLng(41.30600926520326, 2.105639828306998));
-            polygonIpoints.Add(new PointLatLng(41.30663924753058, 2.105276267770742));
-            polygonIpoints.Add(new PointLatLng(41.30655247146466, 2.104984548921465));
-            polygonIpoints.Add(new PointLatLng(41.30837639640288, 2.103832509588435));
-            polygonIpoints.Add(new PointLatLng(41.30873186529448, 2.10248806583335));
-            polygonIpoints.Add(new PointLatLng(41.30889602389677, 2.102398604206603));
-            polygonIpoints.Add(new PointLatLng(41.30585742852851, 2.093493628556393));
-            polygonIpoints.Add(new PointLatLng(41.30981681400108, 2.095287778329102));
-            polygonIpoints.Add(new PointLatLng(41.31026232364314, 2.09403547590874));
-            polygonIpoints.Add(new PointLatLng(41.30944477429792, 2.091586281567523));
-            polygonIpoints.Add(new PointLatLng(41.30668316969677, 2.090133391519693));
-            polygonIpoints.Add(new PointLatLng(41.30601822928018, 2.090406330589658));
-            polygonIpoints.Add(new PointLatLng(41.3045732877946, 2.089731129076438));
-            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
-
-            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
-            polygonJpoints.Add(new PointLatLng(41.28530469506816, 2.090058251819151));
-            polygonJpoints.Add(new PointLatLng(41.28605447581095, 2.091570242240717));
-            polygonJpoints.Add(new PointLatLng(41.29063812643459, 2.105913970311935));
-            polygonJpoints.Add(new PointLatLng(41.29737362002733, 2.101759523428246));
-            polygonJpoints.Add(new PointLatLng(41.30771845741656, 2.11093540410253));
-            polygonJpoints.Add(new PointLatLng(41.31473140675691, 2.104026880102139));
-            polygonJpoints.Add(new PointLatLng(41.31668145005288, 2.102337915089512));
-            polygonJpoints.Add(new PointLatLng(41.30899903959134, 2.079427650796146));
-            polygonJpoints.Add(new PointLatLng(41.30683929524009, 2.080486992271846));
-            polygonJpoints.Add(new PointLatLng(41.2978989759275, 2.054726075032385));
-            polygonJpoints.Add(new PointLatLng(41.29289249376819, 2.057959899448454));
-            polygonJpoints.Add(new PointLatLng(41.29146706018695, 2.058982856630855));
-            polygonJpoints.Add(new PointLatLng(41.28818507652813, 2.060651401810178));
-            polygonJpoints.Add(new PointLatLng(41.28607411574124, 2.065276741711466));
-            polygonJpoints.Add(new PointLatLng(41.28417467071309, 2.070733183164153));
-            polygonJpoints.Add(new PointLatLng(41.28156789356743, 2.070583348773718));
-            polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
-            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
-
-            // Superficies pista 07R
-            double[] coordenadas1 = new double[2];
-            coordenadas1[0] = 41.282576;
-            coordenadas1[1] = 2.074278;
-            double[] coordenadas2 = new double[2];
-            coordenadas2[0] = 41.282102;
-            coordenadas2[1] = 2.074562;
-
-            double angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
-            double angle2 = angle1 + 90;
-            heading07R = angle1 - 90;
-
-            double[] newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            double[] coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            double[] coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            double[] coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-
-            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
-            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
-            polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonKpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            polygonLpoints.Add(new PointLatLng(41.282576, 2.074278));
-            polygonLpoints.Add(new PointLatLng(41.282102, 2.074562));
-            polygonLpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonLpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            // Superficies pista 25L
-            coordenadas2 = new double[2];
-            coordenadas2[0] = 41.291965;
-            coordenadas2[1] = 2.103366;
-            coordenadas1 = new double[2];
-            coordenadas1[0] = 41.292440;
-            coordenadas1[1] = 2.103079;
-
-            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
-            angle2 = angle1 - 90;
-            heading25L = angle1 + 90;
-
-            newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-
-            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
-            polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonMpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            polygonNpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonNpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
-            polygonNpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonNpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            // Superficies pista 07L
-            coordenadas1 = new double[2];
-            coordenadas1[0] = 41.295108;
-            coordenadas1[1] = 2.071877;
-            coordenadas2 = new double[2];
-            coordenadas2[0] = 41.294635;
-            coordenadas2[1] = 2.072162;
-
-            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
-            angle2 = angle1 + 90;
-            heading07L = angle1 - 90;
-
-            newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-
-            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
-            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
-            polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonOpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            polygonPpoints.Add(new PointLatLng(41.295108, 2.071877));
-            polygonPpoints.Add(new PointLatLng(41.294635, 2.072162));
-            polygonPpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonPpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            // Superficies pista 25R
-            coordenadas1 = new double[2];
-            coordenadas1[0] = 41.305946;
-            coordenadas1[1] = 2.103528;
-            coordenadas2 = new double[2];
-            coordenadas2[0] = 41.305473;
-            coordenadas2[1] = 2.103814;
-
-            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
-            angle2 = angle1 - 90;
-            heading25R = angle1 + 90;
-
-            newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-
-            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
-            polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonQpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            polygonRpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonRpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
-            polygonRpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonRpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            // Superficies pista 02
-            coordenadas1 = new double[2];
-            coordenadas1[0] = 41.287878;
-            coordenadas1[1] = 2.084619;
-            coordenadas2 = new double[2];
-            coordenadas2[0] = 41.287752;
-            coordenadas2[1] = 2.085107;
-
-            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
-            angle2 = angle1 + 90;
-            heading02 = angle1 - 90;
-
-            newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-
-            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
-            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
-            polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonSpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            polygonTpoints.Add(new PointLatLng(41.287878, 2.084619));
-            polygonTpoints.Add(new PointLatLng(41.287752, 2.085107));
-            polygonTpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonTpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            // Superficies pista 20
-            coordenadas1 = new double[2];
-            coordenadas1[0] = 41.309307;
-            coordenadas1[1] = 2.094396;
-            coordenadas2 = new double[2];
-            coordenadas2[0] = 41.309180;
-            coordenadas2[1] = 2.094881;
-
-            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
-            angle2 = angle1 - 90;
-            heading20 = angle1 + 90;
-
-            newcoordinates = new double[2];
-            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
-            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
-
-            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
-            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
-
-
-            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
-            polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
-            polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
-            polygonUpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            polygonVpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
-            polygonVpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
-            polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
-            polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
-
-            // RWY1 (la diagonal)
-            polygonWpoints.Add(new PointLatLng(41.287752, 2.085107));
-            polygonWpoints.Add(new PointLatLng(41.287878, 2.084619));
-            polygonWpoints.Add(new PointLatLng(41.309307, 2.094396));
-            polygonWpoints.Add(new PointLatLng(41.309180, 2.094881));
-
-            // RW2(la de abajo))
-            polygonXpoints.Add(new PointLatLng(41.282576, 2.074278));
-            polygonXpoints.Add(new PointLatLng(41.282102, 2.074562));
-            polygonXpoints.Add(new PointLatLng(41.291965, 2.103366));
-            polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
-
-
-            // RW3 (la de arriba)
-            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
-            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
-            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
-            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
-
         }
 
         private void ED1_Load(object sender, EventArgs e)
         {
-            // En el load vamos a hacer los filtros y las separaciones que necesitamos para calcular cada performance
-
-            // Separamos los paquetes según son SMR o MLAT
-
-            int i = 0;
-            while (i < listaCAT10.Count)
-            {
-                int SAC = listaCAT10[i].SAC;
-                int SIC = listaCAT10[i].SIC;
-
-                if (SAC == 0 && SIC == 7)
-                {
-                    listaSMR.Add(listaCAT10[i]);
-                }
-                if (SAC == 0 && SIC == 107)
-                {
-                    listaMLAT.Add(listaCAT10[i]);
-                }
-                i = i + 1;
-            }
-
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-            // Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S) 
-
-            i = 0;
-            while (i < listaMLAT.Count)
-            {
-                if (listaMLAT[i].TYP == "Mode S multilateration." && listaMLAT[i].MessageType_decodified != "Periodic Status Message" && listaMLAT[i].MessageType_decodified != "Start of Update Cycle" && listaMLAT[i].TOT == "Aircraft.")
-                {
-                    listaMLATmodeS.Add(listaMLAT[i]);
-                }
-                i = i + 1;
-            }
-
-            listaCAT21nearAirport = FilterCAT21packets(listaCAT21);
-
-
-            //List<CAT10> listaVehicluloCalibracionTerrestre = new List<CAT10>();
-            //for (i = 0; i < listaMLATmodeS.Count(); i++) { if (listaMLATmodeS[i].TargetIdentification_decoded == "MLAT01") { listaVehicluloCalibracionTerrestre.Add(listaMLATmodeS[i]); } }
-            //listaMLATmodeS.Clear();
-            //listaMLATmodeS.AddRange(listaVehicluloCalibracionTerrestre);
-
-
-
-            //List<CAT10> lista2 = new List<CAT10>();
-            //for (i = 0; i < listaMLATmodeS.Count(); i++)
-            //{
-            //    if (listaMLATmodeS[i].TargetAdress_decoded != "34340A") // cojemos solo los paquetes con info de posición y velocidad en radianes
-            //    {
-            //        lista2.Add(listaMLATmodeS[i]);
-            //    }
-            //}
-            //listaMLATmodeS.Clear();
-            //for (i = 0; i < lista2.Count; i++) { listaMLATmodeS.Add(lista2[i]); }
-
-            //// Filtramos los paquetes CAT21 mas alejados del aeropuerto
-            //double[] c1 = new double[2];
-            //c1[0] = LatMLAT;
-            //c1[1] = LonMLAT;
-
-            //for(i=0; i<listaCAT21.Count(); i++)
-            //{
-            //    double distance = CalculateDistanceBetweenCoordinates(c1, CoordinatesADSB_WGS84(listaCAT21[i]));
-            //    if (distance < 6.5 * 1852) { listaCAT21nearAirport.Add(listaCAT21[i]); } // cojemos los paquetes a menos de 10NM del aeropuerto
-            //}
-
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-            // Probability of Update: Separamos la listaMLATmodeS en 4 listas según la posición del paquete en el mapa
-
-            // Creamos las superficies con las coordenadas anteriores
-            GMapOverlay polygonsOverlay = new GMapOverlay();
-            polygonsOverlay.Clear();
-            var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
-            {
-                Stroke = new Pen(Color.Magenta, 2),
-                Fill = new SolidBrush(Color.Magenta)
-            };
-            polygonsOverlay.Polygons.Add(polygonA);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonC = new GMapPolygon(polygonCpoints, "PolygonC")
-            {
-                Stroke = new Pen(Color.Magenta, 2),
-                Fill = new SolidBrush(Color.Magenta)
-            };
-            polygonsOverlay.Polygons.Add(polygonC);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonD = new GMapPolygon(polygonDpoints, "PolygonD")
-            {
-                Stroke = new Pen(Color.Magenta, 2),
-                Fill = new SolidBrush(Color.Magenta)
-            };
-            polygonsOverlay.Polygons.Add(polygonD);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonE = new GMapPolygon(polygonEpoints, "PolygonE")
-            {
-                Stroke = new Pen(Color.Magenta, 2),
-                Fill = new SolidBrush(Color.Magenta)
-            };
-            polygonsOverlay.Polygons.Add(polygonE);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonF = new GMapPolygon(polygonFpoints, "PolygonF")
-            {
-                Stroke = new Pen(Color.Yellow, 2),
-                Fill = new SolidBrush(Color.Yellow)
-            };
-            polygonsOverlay.Polygons.Add(polygonF);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonG = new GMapPolygon(polygonGpoints, "PolygonG")
-            {
-                Stroke = new Pen(Color.Yellow, 2),
-                Fill = new SolidBrush(Color.Yellow)
-            };
-            polygonsOverlay.Polygons.Add(polygonG);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonH = new GMapPolygon(polygonHpoints, "PolygonH")
-            {
-                Stroke = new Pen(Color.Yellow, 2),
-                Fill = new SolidBrush(Color.Yellow)
-            };
-            polygonsOverlay.Polygons.Add(polygonH);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonB = new GMapPolygon(polygonBpoints, "PolygonB")
-            {
-                Stroke = new Pen(Color.Magenta, 2),
-                Fill = new SolidBrush(Color.Magenta)
-            };
-            polygonsOverlay.Polygons.Add(polygonB);
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            var polygonI = new GMapPolygon(polygonIpoints, "PolygonI")
-            {
-                Stroke = new Pen(Color.Green, 2),
-                Fill = new SolidBrush(Color.Green)
-            };
-            polygonsOverlay.Polygons.Add(polygonI);
-
-            var polygonJ = new GMapPolygon(polygonJpoints, "PolygonJ")
-            {
-                Stroke = new Pen(Color.Red, 2),
-                Fill = new SolidBrush(Color.Red)
-            };
-
-            var polygonK = new GMapPolygon(polygonKpoints, "PolygonK")
-            {
-                Stroke = new Pen(Color.Blue, 2),
-                Fill = new SolidBrush(Color.Blue)
-            };
-            polygonsOverlay.Polygons.Add(polygonK);
-
-            var polygonL = new GMapPolygon(polygonLpoints, "PolygonL")
-            {
-                Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.LightBlue)
-            };
-            polygonsOverlay.Polygons.Add(polygonL);
-
-            var polygonM = new GMapPolygon(polygonMpoints, "PolygonM")
-            {
-                Stroke = new Pen(Color.Blue, 2),
-                Fill = new SolidBrush(Color.Blue)
-            };
-            polygonsOverlay.Polygons.Add(polygonM);
-
-            var polygonN = new GMapPolygon(polygonNpoints, "PolygonN")
-            {
-                Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.LightBlue)
-            };
-            polygonsOverlay.Polygons.Add(polygonN);
-
-            var polygonO = new GMapPolygon(polygonOpoints, "PolygonO")
-            {
-                Stroke = new Pen(Color.Blue, 2),
-                Fill = new SolidBrush(Color.Blue)
-            };
-            polygonsOverlay.Polygons.Add(polygonO);
-
-            var polygonP = new GMapPolygon(polygonPpoints, "PolygonP")
-            {
-                Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.LightBlue)
-            };
-            polygonsOverlay.Polygons.Add(polygonP);
-
-            var polygonQ = new GMapPolygon(polygonQpoints, "PolygonQ")
-            {
-                Stroke = new Pen(Color.Blue, 2),
-                Fill = new SolidBrush(Color.Blue)
-            };
-            polygonsOverlay.Polygons.Add(polygonQ);
-
-            var polygonR = new GMapPolygon(polygonRpoints, "PolygonR")
-            {
-                Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.LightBlue)
-            };
-            polygonsOverlay.Polygons.Add(polygonR);
-
-            var polygonS = new GMapPolygon(polygonSpoints, "PolygonS")
-            {
-                Stroke = new Pen(Color.Blue, 2),
-                Fill = new SolidBrush(Color.Blue)
-            };
-            polygonsOverlay.Polygons.Add(polygonS);
-
-            var polygonT = new GMapPolygon(polygonTpoints, "PolygonT")
-            {
-                Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.LightBlue)
-            };
-            polygonsOverlay.Polygons.Add(polygonT);
-
-            var polygonU = new GMapPolygon(polygonUpoints, "PolygonU")
-            {
-                Stroke = new Pen(Color.Blue, 2),
-                Fill = new SolidBrush(Color.Blue)
-            };
-            polygonsOverlay.Polygons.Add(polygonU);
-
-            var polygonV = new GMapPolygon(polygonVpoints, "PolygonV")
-            {
-                Stroke = new Pen(Color.LightBlue, 2),
-                Fill = new SolidBrush(Color.LightBlue)
-            };
-            polygonsOverlay.Polygons.Add(polygonV);
-
-            var polygonW = new GMapPolygon(polygonWpoints, "PolygonW")
-            {
-                Stroke = new Pen(Color.White, 2),
-                Fill = new SolidBrush(Color.White)
-            };
-            polygonsOverlay.Polygons.Add(polygonW);
-
-            var polygonX = new GMapPolygon(polygonXpoints, "PolygonX")
-            {
-                Stroke = new Pen(Color.White, 2),
-                Fill = new SolidBrush(Color.White)
-            };
-            polygonsOverlay.Polygons.Add(polygonX);
-
-            var polygonY = new GMapPolygon(polygonYpoints, "PolygonY")
-            {
-                Stroke = new Pen(Color.White, 2),
-                Fill = new SolidBrush(Color.White)
-            };
-            polygonsOverlay.Polygons.Add(polygonY);
-
-            Mapa.Overlays.Add(polygonsOverlay);
-
-            i = 0;
-            while (i < listaMLATmodeS.Count)
-            {
-                double[] coordenadas;
-
-                if ((listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLATmodeS[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
-                {
-                    if (listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tienen posición en coordenadas polares
-                    {
-                        coordenadas = NewCoordinatesMLAT(listaMLATmodeS[i].Rho, listaMLATmodeS[i].Theta);
-                    }
-
-                    else // si tienen posición en coordenadas cartesianas
-                    {
-                        double rho = Math.Sqrt((listaMLATmodeS[i].X_cartesian) * (listaMLATmodeS[i].X_cartesian) + (listaMLATmodeS[i].Y_cartesian) * (listaMLATmodeS[i].Y_cartesian));
-                        double theta = (180 / Math.PI) * Math.Atan2(listaMLATmodeS[i].X_cartesian, listaMLATmodeS[i].Y_cartesian);
-
-                        coordenadas = NewCoordinatesMLAT(rho, theta);
-                    }
-
-                    // Todos los paquetes que pasan por aqui tienen coordenadas convertidas a wgs84 y info de la velocidad en coordenadas polares
-                    // Ahora comprobamos si el paquete de turno esta en alguna zona del aeropuerto
-                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideJ = polygonJ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-
-                    // Separtamos los paquetes según su zona del aeropuerto, diferenciando los que estan volando y los que no
-                    double Vthreshold = 300;
-                    // Zona Stand (A,B,C,D,E)
-                    if ((insideA == true || insideB == true || insideC == true || insideD == true || insideE == true))
-                    {
-                        listaMLAT_Stand.Add(listaMLATmodeS[i]);
-                    }
-
-                    // Zona Apron (F,G,H)
-                    else if ((insideF == true || insideG == true || insideH == true))
-                    {
-                        listaMLAT_Apron.Add(listaMLATmodeS[i]);
-                    }
-
-                    // Zona MA (I)
-                    else if (insideI)
-                    {
-                        double velocity = listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000);
-
-                        //Si la velocidad esta por encima de un valor threshold esta en Zona Aire
-                        if (insideL && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
-                        if (insideN && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
-                        if (insideP && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
-                        if (insideR && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmodeS[i]); }
-                        if (insideT && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
-                        if (insideV && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
-
-                        // Si esta por debajo de un treshold esta en MA. Como esta en MA, filtramos para saber si esta en una runway o en Taxi
-                        if (insideL && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-                        if (insideN && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-                        if (insideP && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-                        if (insideR && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-                        if (insideT && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-                        if (insideV && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-
-                        if (insideI && insideL == false && insideN == false && insideP == false && insideR == false && insideT == false && insideV == false) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
-
-                    }
-                    else if (insideI == false && insideJ == true) // fuera de Apron, Stand, MA pero dentro de Zona aeropuerto
-                    {
-                        double heading = listaMLATmodeS[i].TrackAngle;
-                        if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > Vthreshold || (heading < heading07R + 10 && heading > heading07R - 10) || (heading < heading25L + 10 && heading > heading25L - 10) || (heading < heading25R + 10 && heading > heading25R - 10) || (heading < heading07L + 10 && heading > heading07L - 10) || (heading < heading20 + 10 && heading > heading20 - 10) || (heading < heading02 + 10 && heading > heading02 - 10))
-                        {
-                            listaMLAT_Airborne.Add(listaMLATmodeS[i]);
-
-                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
-                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
-                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
-                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmodeS[i]); }
-                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
-                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
-                        }
-                    }
-                    else // fuera de la zona aeropuerto
-                    {
-                        if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > 110)
-                        {
-                            listaMLAT_Airborne.Add(listaMLATmodeS[i]);
-
-                            if (insideK) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_K.Add(listaMLATmodeS[i]); }
-                            if (insideM) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_M.Add(listaMLATmodeS[i]); }
-                            if (insideO) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_O.Add(listaMLATmodeS[i]); }
-                            if (insideQ) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_Q.Add(listaMLATmodeS[i]); }
-                            if (insideS) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_S.Add(listaMLATmodeS[i]); }
-                            if (insideU) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_U.Add(listaMLATmodeS[i]); }
-
-                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
-                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
-                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
-                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmodeS[i]); }
-                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
-                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
-                        }
-                    }
-                    i = i + 1;
-                }
-            }
+            FilterByAirportZones(listaMLAT);
 
             //////----------------------------------------------------------------------- Ploteamos en el mapa
 
@@ -970,6 +165,7 @@ namespace ASTERIX
 
         private void bt_CalculateUpdateRate_Click(object sender, EventArgs e)
         {
+
             List<string> listaNombresUsados = new List<string>();
             List<List<CAT10>> listadelistasdeavionesconmismonombre = new List<List<CAT10>>();
             List<double> listaAvgDelay = new List<double>();
@@ -1031,6 +227,9 @@ namespace ASTERIX
                 }
                 i = i + 1;
             }
+
+            BarGraphPlot BGP1 = new BarGraphPlot(listBarsUpdateRate);
+            BGP1.Show();
         }
 
         private void pb_ProbabilityofUpdate_Click(object sender, EventArgs e)
@@ -1416,8 +615,19 @@ namespace ASTERIX
                     }
                     rows = rows + 1;
                 }
+                rows = rows + 5;
 
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
+                rows = rows + 2;
 
+                for (int i = 0; i < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
 
                 libros_trabajo.SaveAs(fichero.FileName,
                 Excel.XlFileFormat.xlWorkbookNormal);
@@ -1643,12 +853,242 @@ namespace ASTERIX
             }
         }
 
+        private void bt_ProbabilityoFFalseIdentification_ED117_ASTERIXFile_Click(object sender, EventArgs e)
+        {
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.ColumnCount = 6;
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[1].Name = "Expected Updates";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[2].Name = "Received Updates";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[3].Name = "Missing Updates";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[4].Name = "Probability of Update (%)";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[5].Name = "ED - 117 Value (%)";
+
+            int n = dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Airport Zone", "Expected Updates", "Received Updates", "Missing Updates", "Probability of Update (%)", "ED - 117 Value (%)");
+
+            // Stand
+            List<double> listofProbabilityofIdentification_STAND = CalculateProbabilityofFalseIdentification(listaMLAT_Stand);
+            if (listofProbabilityofIdentification_STAND[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Stand", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // Apron
+            List<double> listofProbabilityofIdentification_APRON = CalculateProbabilityofFalseIdentification(listaMLAT_Apron);
+            if (listofProbabilityofIdentification_APRON[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Apron", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // Taxiway
+            List<double> listofProbabilityofIdentification_TAXI = CalculateProbabilityofFalseIdentification(listaMLAT_Taxiway);
+            if (listofProbabilityofIdentification_TAXI[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Taxiway", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // RWY1
+            List<double> listofProbabilityofIdentification_RWY1 = CalculateProbabilityofFalseIdentification(listaRunway1);
+            if (listofProbabilityofIdentification_RWY1[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Runway 02/20", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // RWY2
+            List<double> listofProbabilityofIdentification_RWY2 = CalculateProbabilityofFalseIdentification(listaRunway2);
+            if (listofProbabilityofIdentification_RWY2[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Runway 07R/25L", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // RWY3
+            List<double> listofProbabilityofIdentification_RWY3 = CalculateProbabilityofFalseIdentification(listaRunway3);
+            if (listofProbabilityofIdentification_RWY3[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("Runway 07L/25R", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // MA
+            List<double> listofProbabilityofIdentification_MA = CalculateProbabilityofFalseIdentification(listaMLAT_MA);
+            if (listofProbabilityofIdentification_MA[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("MANEUVERING AREA", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // AIRBORNE 2.5 NM
+            List<double> listofProbabilityofIdentification_AIRBORNE25 = CalculateProbabilityofFalseIdentification(listaMLAT_Airborne_2coma5NM);
+            if (listofProbabilityofIdentification_AIRBORNE25[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("AIRBORNE 0 - 2.5 NM", total, buenos, diferencia, PU, "99.9");
+            }
+
+            // AIRBORNE 5 NM
+            List<double> listofProbabilityofIdentification_AIRBORNE5 = CalculateProbabilityofFalseIdentification(listaMLAT_Airborne_5NM);
+            if (listofProbabilityofIdentification_AIRBORNE5[1] > 0)
+            {
+                string PU = listofProbabilityofIdentification_STAND[2].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string total = listofProbabilityofIdentification_STAND[1].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string buenos = listofProbabilityofIdentification_STAND[0].ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                string diferencia = (listofProbabilityofIdentification_STAND[1] - listofProbabilityofIdentification_STAND[0]).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add("AIRBORNE 2.5 - 5 NM", total, buenos, diferencia, PU, "99.9");
+            }
+        }
+
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         // Parametros ED-117 de un archivo Calibration Vehicle
+
+        private void pb_ProbabilityofUpdate_ED117_CalibrationVehicle_Click_1(object sender, EventArgs e)
+        {
+            List<CAT10> listaMLAT_Stand = new List<CAT10>();
+            List<CAT10> listaMLAT_Apron = new List<CAT10>();
+            List<CAT10> listaMLAT_MA = new List<CAT10>();
+            List<CAT10> listaMLAT_Taxiway = new List<CAT10>();
+            List<CAT10> listaRunway1 = new List<CAT10>();
+            List<CAT10> listaRunway2 = new List<CAT10>();
+            List<CAT10> listaRunway3 = new List<CAT10>();
+            List<CAT10> listaMLAT_AIRBORNE25_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_AIRBORNE5_CalibrationVehicle = new List<CAT10>();
+
+            List<CAT10> listaVehicluloCalibracionTerrestre = new List<CAT10>();
+            for (int i = 0; i < listaMLATmodeS.Count(); i++) { if (listaMLATmodeS[i].TargetIdentification_decoded == "MLAT01") { listaVehicluloCalibracionTerrestre.Add(listaMLATmodeS[i]); } }
+
+            List<CAT10> listaVehicluloCalibracionAereo = new List<CAT10>();
+            for (int i = 0; i < listaMLATmodeS.Count(); i++) { if (listaMLATmodeS[i].TargetIdentification_decoded == "ECKJQ") { listaVehicluloCalibracionAereo.Add(listaMLATmodeS[i]); } }
+
+            List<CAT10> listaMLAT = new List<CAT10>();
+            if (listaVehicluloCalibracionTerrestre.Count > 0) { listaMLAT.AddRange(listaVehicluloCalibracionTerrestre); }
+            else { listaMLAT.AddRange(listaVehicluloCalibracionAereo); }
+
+            if (listaVehicluloCalibracionAereo.Count() == 0)
+            {
+                List<List<CAT10>> results = FilterByAirportZonesGround(listaMLAT);
+
+                listaMLAT_Stand = results[0];
+                listaMLAT_Apron = results[1];
+                listaMLAT_MA = results[2];
+                listaMLAT_Taxiway = results[3];
+                listaRunway1 = results[4];
+                listaRunway2 = results[5];
+                listaRunway3 = results[6];
+
+                //STAND
+                if (listaMLAT_Stand.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_STAND = CalculateProbabilityofUpdateGROUND(listaMLAT_Stand);
+                    double found_STAND = info_ProbabilityofUpdate_STAND[0];
+                    double expected_STAND = info_ProbabilityofUpdate_STAND[1];
+                    double ProbabilityofUpdate_STAND = info_ProbabilityofUpdate_STAND[2];
+                }
+
+                //APRON
+                if (listaMLAT_Apron.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_APRON = CalculateProbabilityofUpdateGROUND(listaMLAT_Apron);
+                    double found_APRON = info_ProbabilityofUpdate_APRON[0];
+                    double expected_APRON = info_ProbabilityofUpdate_APRON[1];
+                    double ProbabilityofUpdate_APRON = info_ProbabilityofUpdate_APRON[2];
+                }
+
+                //TAXI
+                if (listaMLAT_Taxiway.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_TAXI = CalculateProbabilityofUpdateGROUND(listaMLAT_Taxiway);
+                    double found_TAXI = info_ProbabilityofUpdate_TAXI[0];
+                    double expected_TAXI = info_ProbabilityofUpdate_TAXI[1];
+                    double ProbabilityofUpdate_TAXI = info_ProbabilityofUpdate_TAXI[2];
+                }
+
+                //RWY1
+                if (listaRunway1.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_RWY1 = CalculateProbabilityofUpdateGROUND(listaRunway1);
+                    double found_RWY1 = info_ProbabilityofUpdate_RWY1[0];
+                    double expected_RWY1 = info_ProbabilityofUpdate_RWY1[1];
+                    double ProbabilityofUpdate_RWY1 = info_ProbabilityofUpdate_RWY1[2];
+                }
+
+                //RWY2
+                if (listaRunway2.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_RWY2 = CalculateProbabilityofUpdateGROUND(listaRunway2);
+                    double found_RWY2 = info_ProbabilityofUpdate_RWY2[0];
+                    double expected_RWY2 = info_ProbabilityofUpdate_RWY2[1];
+                    double ProbabilityofUpdate_RWY2 = info_ProbabilityofUpdate_RWY2[2];
+                }
+
+                //RWY3
+                if (listaRunway3.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_RWY3 = CalculateProbabilityofUpdateGROUND(listaRunway3);
+                    double found_RWY3 = info_ProbabilityofUpdate_RWY3[0];
+                    double expected_RWY3 = info_ProbabilityofUpdate_RWY3[1];
+                    double ProbabilityofUpdate_RWY3 = info_ProbabilityofUpdate_RWY3[2];
+                }
+
+                //MA
+                if (listaMLAT_MA.Count() > 0)
+                {
+                    double[] info_ProbabilityofUpdate_MA = CalculateProbabilityofUpdateGROUND(listaMLAT_MA);
+                    double found_MA = info_ProbabilityofUpdate_MA[0];
+                    double expected_MA = info_ProbabilityofUpdate_MA[1];
+                    double ProbabilityofUpdate_MA = info_ProbabilityofUpdate_MA[2];
+                }
+            }
+
+            if (listaVehicluloCalibracionTerrestre.Count() == 0)
+            {
+                List<List<CAT10>> results = FilterByAirportZonesAirborne(listaMLAT);
+
+                List<List<CAT10>> results_Airborne25 = FilterByAirportZonesAirborne(listaMLAT).Skip(0).Take(6).ToList();
+
+                double[] info_ProbabilityofUpdateAirborne__2coma5NM = CalculateProbabilityofUpdateAIRBORNE(results_Airborne25);
+                double found_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[0];
+                double expected_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[1];
+                double ProbabilityofUpdate_Airborne25 = info_ProbabilityofUpdateAirborne__2coma5NM[2];
+
+                List<List<CAT10>> results_Airborne5 = FilterByAirportZonesAirborne(listaMLAT).Skip(6).Take(6).ToList();
+
+                double[] info_ProbabilityofUpdateAirborne_5NM = CalculateProbabilityofUpdateAIRBORNE(results_Airborne5);
+                double found_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[0];
+                double expected_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[1];
+                double ProbabilityofUpdate_Airborne5 = info_ProbabilityofUpdateAirborne_5NM[2];
+            }
+        }
 
         private void pb_ProbabilityofUpdate_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
         {
@@ -2120,6 +1560,433 @@ namespace ASTERIX
 
         public List<CAT21> FilterCAT21packets(List<CAT21> listaCAT21)
         {
+            List<PointLatLng> polygonApoints = new List<PointLatLng>();
+            List<PointLatLng> polygonBpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonCpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonDpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonEpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonFpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonGpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonHpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonIpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonJpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonKpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonLpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonMpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonNpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonOpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonPpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonQpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonRpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonSpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonTpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonUpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonVpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonWpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonXpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonYpoints = new List<PointLatLng>();
+
+            // Creamos los puntos de los Polígonos
+            // Cordenadas de los poligonos/superficies
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+            polygonApoints.Add(new PointLatLng(41.28723009374163, 2.078718953092844));
+            polygonApoints.Add(new PointLatLng(41.28885874916784, 2.077748868970652));
+            polygonApoints.Add(new PointLatLng(41.29065643929236, 2.082995639066103));
+            polygonApoints.Add(new PointLatLng(41.29222850233552, 2.083778238090788));
+            polygonApoints.Add(new PointLatLng(41.29331871109087, 2.083045684310492));
+            polygonApoints.Add(new PointLatLng(41.29106949349184, 2.076476920740631));
+            polygonApoints.Add(new PointLatLng(41.29254944569193, 2.07558284559707));
+            polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+            polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
+            polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
+            polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+            polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
+            polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
+            polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+            polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
+            polygonDpoints.Add(new PointLatLng(41.30000776347889, 2.070917770368974));
+            polygonDpoints.Add(new PointLatLng(41.29967596479406, 2.071688864944305));
+            polygonDpoints.Add(new PointLatLng(41.29959146994269, 2.073228664122788));
+            polygonDpoints.Add(new PointLatLng(41.30345473670611, 2.084537100676138));
+            polygonDpoints.Add(new PointLatLng(41.30290495825957, 2.084875104603385));
+            polygonDpoints.Add(new PointLatLng(41.30427409853728, 2.088851435790822));
+            polygonDpoints.Add(new PointLatLng(41.30590241356465, 2.087869558272031));
+            polygonDpoints.Add(new PointLatLng(41.3066804890744, 2.090125795521962));
+            polygonDpoints.Add(new PointLatLng(41.30814452382673, 2.090862227752639));
+            polygonDpoints.Add(new PointLatLng(41.30909185035398, 2.090291339935599));
+            polygonDpoints.Add(new PointLatLng(41.30793723174423, 2.087009092954473));
+            polygonDpoints.Add(new PointLatLng(41.30723056199035, 2.087458996395015));
+            polygonDpoints.Add(new PointLatLng(41.30537957229418, 2.082053043424263));
+            polygonDpoints.Add(new PointLatLng(41.30456131346386, 2.082557609714792));
+            polygonDpoints.Add(new PointLatLng(41.3008830436416, 2.071957346981628));
+            polygonDpoints.Add(new PointLatLng(41.30108765385491, 2.071574780556449));
+            polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+            polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
+            polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
+            polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+            polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
+            polygonFpoints.Add(new PointLatLng(41.30667782929991, 2.090126725817183));
+            polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
+            polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+            polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
+            polygonGpoints.Add(new PointLatLng(41.29959074400027, 2.073228700331884));
+            polygonGpoints.Add(new PointLatLng(41.29967470998086, 2.071693187872741));
+            polygonGpoints.Add(new PointLatLng(41.30000697053827, 2.070919075000397));
+            polygonGpoints.Add(new PointLatLng(41.30039357167374, 2.070459446529713));
+            polygonGpoints.Add(new PointLatLng(41.30065260460123, 2.070303243523943));
+            polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
+            polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+            polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
+            polygonHpoints.Add(new PointLatLng(41.28902431178173, 2.067520686236));
+            polygonHpoints.Add(new PointLatLng(41.28955440513675, 2.068940144725449));
+            polygonHpoints.Add(new PointLatLng(41.29012143210162, 2.06851590292412));
+            polygonHpoints.Add(new PointLatLng(41.2925490011068, 2.075579761626731));
+            polygonHpoints.Add(new PointLatLng(41.29106910015326, 2.076481303710718));
+            polygonHpoints.Add(new PointLatLng(41.29331848519782, 2.08304615591185));
+            polygonHpoints.Add(new PointLatLng(41.29222983099868, 2.083777753836971));
+            polygonHpoints.Add(new PointLatLng(41.29065712208786, 2.082996332139622));
+            polygonHpoints.Add(new PointLatLng(41.28885798115613, 2.077750786024948));
+            polygonHpoints.Add(new PointLatLng(41.28723092652747, 2.078719350618556));
+            polygonHpoints.Add(new PointLatLng(41.28504511955603, 2.072303471860446));
+            polygonHpoints.Add(new PointLatLng(41.28429457970675, 2.073252038146045));
+            polygonHpoints.Add(new PointLatLng(41.28661860767006, 2.080221795722565));
+            polygonHpoints.Add(new PointLatLng(41.28733664026725, 2.0797506736647));
+            polygonHpoints.Add(new PointLatLng(41.28855512194733, 2.079026526525407));
+            polygonHpoints.Add(new PointLatLng(41.28980251153607, 2.082629487656971));
+            polygonHpoints.Add(new PointLatLng(41.28803492635546, 2.081812539971151));
+            polygonHpoints.Add(new PointLatLng(41.28734153685148, 2.079747588265484));
+            polygonHpoints.Add(new PointLatLng(41.28661855511135, 2.080222823254285));
+            polygonHpoints.Add(new PointLatLng(41.28708936718802, 2.081638558546843));
+            polygonHpoints.Add(new PointLatLng(41.29231849483453, 2.084087751298431));
+            polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
+            polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+            polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
+            polygonIpoints.Add(new PointLatLng(41.29224414586391, 2.061526737006945));
+            polygonIpoints.Add(new PointLatLng(41.29046417484277, 2.062609057585825));
+            polygonIpoints.Add(new PointLatLng(41.28956626644186, 2.065553730733145));
+            polygonIpoints.Add(new PointLatLng(41.29523767718762, 2.082250085220523));
+            polygonIpoints.Add(new PointLatLng(41.29231726437897, 2.084091640755907));
+            polygonIpoints.Add(new PointLatLng(41.28708946239801, 2.081639593866493));
+            polygonIpoints.Add(new PointLatLng(41.28429573389018, 2.073249376619946));
+            polygonIpoints.Add(new PointLatLng(41.28316212451168, 2.072989239047482));
+            polygonIpoints.Add(new PointLatLng(41.28173786975413, 2.073784781912147));
+            polygonIpoints.Add(new PointLatLng(41.29214530239392, 2.104127198089036));
+            polygonIpoints.Add(new PointLatLng(41.29276318268523, 2.103757546620602));
+            polygonIpoints.Add(new PointLatLng(41.29268764126339, 2.103528317911267));
+            polygonIpoints.Add(new PointLatLng(41.29376290078783, 2.102914286073472));
+            polygonIpoints.Add(new PointLatLng(41.29406164912393, 2.101945088686166));
+            polygonIpoints.Add(new PointLatLng(41.28984141121184, 2.089462718011443));
+            polygonIpoints.Add(new PointLatLng(41.29291561892327, 2.087628140011148));
+            polygonIpoints.Add(new PointLatLng(41.29770085373364, 2.089788471416973));
+            polygonIpoints.Add(new PointLatLng(41.30310731952297, 2.105503857052842));
+            polygonIpoints.Add(new PointLatLng(41.3045527080456, 2.106123180658501));
+            polygonIpoints.Add(new PointLatLng(41.30589157106402, 2.105346701864339));
+            polygonIpoints.Add(new PointLatLng(41.30600926520326, 2.105639828306998));
+            polygonIpoints.Add(new PointLatLng(41.30663924753058, 2.105276267770742));
+            polygonIpoints.Add(new PointLatLng(41.30655247146466, 2.104984548921465));
+            polygonIpoints.Add(new PointLatLng(41.30837639640288, 2.103832509588435));
+            polygonIpoints.Add(new PointLatLng(41.30873186529448, 2.10248806583335));
+            polygonIpoints.Add(new PointLatLng(41.30889602389677, 2.102398604206603));
+            polygonIpoints.Add(new PointLatLng(41.30585742852851, 2.093493628556393));
+            polygonIpoints.Add(new PointLatLng(41.30981681400108, 2.095287778329102));
+            polygonIpoints.Add(new PointLatLng(41.31026232364314, 2.09403547590874));
+            polygonIpoints.Add(new PointLatLng(41.30944477429792, 2.091586281567523));
+            polygonIpoints.Add(new PointLatLng(41.30668316969677, 2.090133391519693));
+            polygonIpoints.Add(new PointLatLng(41.30601822928018, 2.090406330589658));
+            polygonIpoints.Add(new PointLatLng(41.3045732877946, 2.089731129076438));
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+            polygonJpoints.Add(new PointLatLng(41.28530469506816, 2.090058251819151));
+            polygonJpoints.Add(new PointLatLng(41.28605447581095, 2.091570242240717));
+            polygonJpoints.Add(new PointLatLng(41.29063812643459, 2.105913970311935));
+            polygonJpoints.Add(new PointLatLng(41.29737362002733, 2.101759523428246));
+            polygonJpoints.Add(new PointLatLng(41.30771845741656, 2.11093540410253));
+            polygonJpoints.Add(new PointLatLng(41.31473140675691, 2.104026880102139));
+            polygonJpoints.Add(new PointLatLng(41.31668145005288, 2.102337915089512));
+            polygonJpoints.Add(new PointLatLng(41.30899903959134, 2.079427650796146));
+            polygonJpoints.Add(new PointLatLng(41.30683929524009, 2.080486992271846));
+            polygonJpoints.Add(new PointLatLng(41.2978989759275, 2.054726075032385));
+            polygonJpoints.Add(new PointLatLng(41.29289249376819, 2.057959899448454));
+            polygonJpoints.Add(new PointLatLng(41.29146706018695, 2.058982856630855));
+            polygonJpoints.Add(new PointLatLng(41.28818507652813, 2.060651401810178));
+            polygonJpoints.Add(new PointLatLng(41.28607411574124, 2.065276741711466));
+            polygonJpoints.Add(new PointLatLng(41.28417467071309, 2.070733183164153));
+            polygonJpoints.Add(new PointLatLng(41.28156789356743, 2.070583348773718));
+            polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+
+            // Superficies pista 07R
+            double[] coordenadas1 = new double[2];
+            coordenadas1[0] = 41.282576;
+            coordenadas1[1] = 2.074278;
+            double[] coordenadas2 = new double[2];
+            coordenadas2[0] = 41.282102;
+            coordenadas2[1] = 2.074562;
+
+            double angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            double angle2 = angle1 + 90;
+            heading07R = angle1 - 90;
+
+            double[] newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
+            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonLpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonLpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonLpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonLpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25L
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.291965;
+            coordenadas2[1] = 2.103366;
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.292440;
+            coordenadas1[1] = 2.103079;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25L = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonNpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 07L
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.295108;
+            coordenadas1[1] = 2.071877;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.294635;
+            coordenadas2[1] = 2.072162;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading07L = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
+            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonPpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonPpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonPpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonPpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25R
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.305946;
+            coordenadas1[1] = 2.103528;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.305473;
+            coordenadas2[1] = 2.103814;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25R = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonRpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 02
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.287878;
+            coordenadas1[1] = 2.084619;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.287752;
+            coordenadas2[1] = 2.085107;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading02 = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
+            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonTpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonTpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonTpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonTpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 20
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.309307;
+            coordenadas1[1] = 2.094396;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.309180;
+            coordenadas2[1] = 2.094881;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading20 = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonVpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // RWY1 (la diagonal)
+            polygonWpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonWpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonWpoints.Add(new PointLatLng(41.309307, 2.094396));
+            polygonWpoints.Add(new PointLatLng(41.309180, 2.094881));
+
+            // RW2(la de abajo))
+            polygonXpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonXpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonXpoints.Add(new PointLatLng(41.291965, 2.103366));
+            polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
+
+
+            // RW3 (la de arriba)
+            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
+            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
+
             List<CAT21> lista_aviones_filtrados = new List<CAT21>();
             lista_aviones_filtrados.Clear();
 
@@ -2442,6 +2309,2276 @@ namespace ASTERIX
             return results;
         }
 
+        public void FilterByAirportZones(List<CAT10> listaMLAT)
+        {
+            List<PointLatLng> polygonApoints = new List<PointLatLng>();
+            List<PointLatLng> polygonBpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonCpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonDpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonEpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonFpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonGpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonHpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonIpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonJpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonKpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonLpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonMpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonNpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonOpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonPpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonQpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonRpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonSpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonTpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonUpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonVpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonWpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonXpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonYpoints = new List<PointLatLng>();
+
+            // Creamos los puntos de los Polígonos
+            // Cordenadas de los poligonos/superficies
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+            polygonApoints.Add(new PointLatLng(41.28723009374163, 2.078718953092844));
+            polygonApoints.Add(new PointLatLng(41.28885874916784, 2.077748868970652));
+            polygonApoints.Add(new PointLatLng(41.29065643929236, 2.082995639066103));
+            polygonApoints.Add(new PointLatLng(41.29222850233552, 2.083778238090788));
+            polygonApoints.Add(new PointLatLng(41.29331871109087, 2.083045684310492));
+            polygonApoints.Add(new PointLatLng(41.29106949349184, 2.076476920740631));
+            polygonApoints.Add(new PointLatLng(41.29254944569193, 2.07558284559707));
+            polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+            polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
+            polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
+            polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+            polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
+            polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
+            polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+            polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
+            polygonDpoints.Add(new PointLatLng(41.30000776347889, 2.070917770368974));
+            polygonDpoints.Add(new PointLatLng(41.29967596479406, 2.071688864944305));
+            polygonDpoints.Add(new PointLatLng(41.29959146994269, 2.073228664122788));
+            polygonDpoints.Add(new PointLatLng(41.30345473670611, 2.084537100676138));
+            polygonDpoints.Add(new PointLatLng(41.30290495825957, 2.084875104603385));
+            polygonDpoints.Add(new PointLatLng(41.30427409853728, 2.088851435790822));
+            polygonDpoints.Add(new PointLatLng(41.30590241356465, 2.087869558272031));
+            polygonDpoints.Add(new PointLatLng(41.3066804890744, 2.090125795521962));
+            polygonDpoints.Add(new PointLatLng(41.30814452382673, 2.090862227752639));
+            polygonDpoints.Add(new PointLatLng(41.30909185035398, 2.090291339935599));
+            polygonDpoints.Add(new PointLatLng(41.30793723174423, 2.087009092954473));
+            polygonDpoints.Add(new PointLatLng(41.30723056199035, 2.087458996395015));
+            polygonDpoints.Add(new PointLatLng(41.30537957229418, 2.082053043424263));
+            polygonDpoints.Add(new PointLatLng(41.30456131346386, 2.082557609714792));
+            polygonDpoints.Add(new PointLatLng(41.3008830436416, 2.071957346981628));
+            polygonDpoints.Add(new PointLatLng(41.30108765385491, 2.071574780556449));
+            polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+            polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
+            polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
+            polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+            polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
+            polygonFpoints.Add(new PointLatLng(41.30667782929991, 2.090126725817183));
+            polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
+            polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+            polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
+            polygonGpoints.Add(new PointLatLng(41.29959074400027, 2.073228700331884));
+            polygonGpoints.Add(new PointLatLng(41.29967470998086, 2.071693187872741));
+            polygonGpoints.Add(new PointLatLng(41.30000697053827, 2.070919075000397));
+            polygonGpoints.Add(new PointLatLng(41.30039357167374, 2.070459446529713));
+            polygonGpoints.Add(new PointLatLng(41.30065260460123, 2.070303243523943));
+            polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
+            polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+            polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
+            polygonHpoints.Add(new PointLatLng(41.28902431178173, 2.067520686236));
+            polygonHpoints.Add(new PointLatLng(41.28955440513675, 2.068940144725449));
+            polygonHpoints.Add(new PointLatLng(41.29012143210162, 2.06851590292412));
+            polygonHpoints.Add(new PointLatLng(41.2925490011068, 2.075579761626731));
+            polygonHpoints.Add(new PointLatLng(41.29106910015326, 2.076481303710718));
+            polygonHpoints.Add(new PointLatLng(41.29331848519782, 2.08304615591185));
+            polygonHpoints.Add(new PointLatLng(41.29222983099868, 2.083777753836971));
+            polygonHpoints.Add(new PointLatLng(41.29065712208786, 2.082996332139622));
+            polygonHpoints.Add(new PointLatLng(41.28885798115613, 2.077750786024948));
+            polygonHpoints.Add(new PointLatLng(41.28723092652747, 2.078719350618556));
+            polygonHpoints.Add(new PointLatLng(41.28504511955603, 2.072303471860446));
+            polygonHpoints.Add(new PointLatLng(41.28429457970675, 2.073252038146045));
+            polygonHpoints.Add(new PointLatLng(41.28661860767006, 2.080221795722565));
+            polygonHpoints.Add(new PointLatLng(41.28733664026725, 2.0797506736647));
+            polygonHpoints.Add(new PointLatLng(41.28855512194733, 2.079026526525407));
+            polygonHpoints.Add(new PointLatLng(41.28980251153607, 2.082629487656971));
+            polygonHpoints.Add(new PointLatLng(41.28803492635546, 2.081812539971151));
+            polygonHpoints.Add(new PointLatLng(41.28734153685148, 2.079747588265484));
+            polygonHpoints.Add(new PointLatLng(41.28661855511135, 2.080222823254285));
+            polygonHpoints.Add(new PointLatLng(41.28708936718802, 2.081638558546843));
+            polygonHpoints.Add(new PointLatLng(41.29231849483453, 2.084087751298431));
+            polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
+            polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+            polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
+            polygonIpoints.Add(new PointLatLng(41.29224414586391, 2.061526737006945));
+            polygonIpoints.Add(new PointLatLng(41.29046417484277, 2.062609057585825));
+            polygonIpoints.Add(new PointLatLng(41.28956626644186, 2.065553730733145));
+            polygonIpoints.Add(new PointLatLng(41.29523767718762, 2.082250085220523));
+            polygonIpoints.Add(new PointLatLng(41.29231726437897, 2.084091640755907));
+            polygonIpoints.Add(new PointLatLng(41.28708946239801, 2.081639593866493));
+            polygonIpoints.Add(new PointLatLng(41.28429573389018, 2.073249376619946));
+            polygonIpoints.Add(new PointLatLng(41.28316212451168, 2.072989239047482));
+            polygonIpoints.Add(new PointLatLng(41.28173786975413, 2.073784781912147));
+            polygonIpoints.Add(new PointLatLng(41.29214530239392, 2.104127198089036));
+            polygonIpoints.Add(new PointLatLng(41.29276318268523, 2.103757546620602));
+            polygonIpoints.Add(new PointLatLng(41.29268764126339, 2.103528317911267));
+            polygonIpoints.Add(new PointLatLng(41.29376290078783, 2.102914286073472));
+            polygonIpoints.Add(new PointLatLng(41.29406164912393, 2.101945088686166));
+            polygonIpoints.Add(new PointLatLng(41.28984141121184, 2.089462718011443));
+            polygonIpoints.Add(new PointLatLng(41.29291561892327, 2.087628140011148));
+            polygonIpoints.Add(new PointLatLng(41.29770085373364, 2.089788471416973));
+            polygonIpoints.Add(new PointLatLng(41.30310731952297, 2.105503857052842));
+            polygonIpoints.Add(new PointLatLng(41.3045527080456, 2.106123180658501));
+            polygonIpoints.Add(new PointLatLng(41.30589157106402, 2.105346701864339));
+            polygonIpoints.Add(new PointLatLng(41.30600926520326, 2.105639828306998));
+            polygonIpoints.Add(new PointLatLng(41.30663924753058, 2.105276267770742));
+            polygonIpoints.Add(new PointLatLng(41.30655247146466, 2.104984548921465));
+            polygonIpoints.Add(new PointLatLng(41.30837639640288, 2.103832509588435));
+            polygonIpoints.Add(new PointLatLng(41.30873186529448, 2.10248806583335));
+            polygonIpoints.Add(new PointLatLng(41.30889602389677, 2.102398604206603));
+            polygonIpoints.Add(new PointLatLng(41.30585742852851, 2.093493628556393));
+            polygonIpoints.Add(new PointLatLng(41.30981681400108, 2.095287778329102));
+            polygonIpoints.Add(new PointLatLng(41.31026232364314, 2.09403547590874));
+            polygonIpoints.Add(new PointLatLng(41.30944477429792, 2.091586281567523));
+            polygonIpoints.Add(new PointLatLng(41.30668316969677, 2.090133391519693));
+            polygonIpoints.Add(new PointLatLng(41.30601822928018, 2.090406330589658));
+            polygonIpoints.Add(new PointLatLng(41.3045732877946, 2.089731129076438));
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+            polygonJpoints.Add(new PointLatLng(41.28530469506816, 2.090058251819151));
+            polygonJpoints.Add(new PointLatLng(41.28605447581095, 2.091570242240717));
+            polygonJpoints.Add(new PointLatLng(41.29063812643459, 2.105913970311935));
+            polygonJpoints.Add(new PointLatLng(41.29737362002733, 2.101759523428246));
+            polygonJpoints.Add(new PointLatLng(41.30771845741656, 2.11093540410253));
+            polygonJpoints.Add(new PointLatLng(41.31473140675691, 2.104026880102139));
+            polygonJpoints.Add(new PointLatLng(41.31668145005288, 2.102337915089512));
+            polygonJpoints.Add(new PointLatLng(41.30899903959134, 2.079427650796146));
+            polygonJpoints.Add(new PointLatLng(41.30683929524009, 2.080486992271846));
+            polygonJpoints.Add(new PointLatLng(41.2978989759275, 2.054726075032385));
+            polygonJpoints.Add(new PointLatLng(41.29289249376819, 2.057959899448454));
+            polygonJpoints.Add(new PointLatLng(41.29146706018695, 2.058982856630855));
+            polygonJpoints.Add(new PointLatLng(41.28818507652813, 2.060651401810178));
+            polygonJpoints.Add(new PointLatLng(41.28607411574124, 2.065276741711466));
+            polygonJpoints.Add(new PointLatLng(41.28417467071309, 2.070733183164153));
+            polygonJpoints.Add(new PointLatLng(41.28156789356743, 2.070583348773718));
+            polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+
+            // Superficies pista 07R
+            double[] coordenadas1 = new double[2];
+            coordenadas1[0] = 41.282576;
+            coordenadas1[1] = 2.074278;
+            double[] coordenadas2 = new double[2];
+            coordenadas2[0] = 41.282102;
+            coordenadas2[1] = 2.074562;
+
+            double angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            double angle2 = angle1 + 90;
+            heading07R = angle1 - 90;
+
+            double[] newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
+            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonLpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonLpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonLpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonLpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25L
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.291965;
+            coordenadas2[1] = 2.103366;
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.292440;
+            coordenadas1[1] = 2.103079;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25L = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonNpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 07L
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.295108;
+            coordenadas1[1] = 2.071877;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.294635;
+            coordenadas2[1] = 2.072162;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading07L = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
+            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonPpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonPpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonPpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonPpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25R
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.305946;
+            coordenadas1[1] = 2.103528;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.305473;
+            coordenadas2[1] = 2.103814;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25R = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonRpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 02
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.287878;
+            coordenadas1[1] = 2.084619;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.287752;
+            coordenadas2[1] = 2.085107;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading02 = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
+            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonTpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonTpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonTpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonTpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 20
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.309307;
+            coordenadas1[1] = 2.094396;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.309180;
+            coordenadas2[1] = 2.094881;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading20 = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonVpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // RWY1 (la diagonal)
+            polygonWpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonWpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonWpoints.Add(new PointLatLng(41.309307, 2.094396));
+            polygonWpoints.Add(new PointLatLng(41.309180, 2.094881));
+
+            // RW2(la de abajo))
+            polygonXpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonXpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonXpoints.Add(new PointLatLng(41.291965, 2.103366));
+            polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
+
+
+            // RW3 (la de arriba)
+            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
+            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
+
+            // Creamosa los poligonos y los añadimos al overlay
+            // Creamos las superficies con las coordenadas anteriores
+            GMapOverlay polygonsOverlay = new GMapOverlay();
+            polygonsOverlay.Clear();
+            var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonA);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonC = new GMapPolygon(polygonCpoints, "PolygonC")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonC);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonD = new GMapPolygon(polygonDpoints, "PolygonD")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonD);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonE = new GMapPolygon(polygonEpoints, "PolygonE")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonE);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonF = new GMapPolygon(polygonFpoints, "PolygonF")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonF);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonG = new GMapPolygon(polygonGpoints, "PolygonG")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonG);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonH = new GMapPolygon(polygonHpoints, "PolygonH")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonH);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonB = new GMapPolygon(polygonBpoints, "PolygonB")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonB);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonI = new GMapPolygon(polygonIpoints, "PolygonI")
+            {
+                Stroke = new Pen(Color.Green, 2),
+                Fill = new SolidBrush(Color.Green)
+            };
+            polygonsOverlay.Polygons.Add(polygonI);
+
+            var polygonJ = new GMapPolygon(polygonJpoints, "PolygonJ")
+            {
+                Stroke = new Pen(Color.Red, 2),
+                Fill = new SolidBrush(Color.Red)
+            };
+
+            var polygonK = new GMapPolygon(polygonKpoints, "PolygonK")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonK);
+
+            var polygonL = new GMapPolygon(polygonLpoints, "PolygonL")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonL);
+
+            var polygonM = new GMapPolygon(polygonMpoints, "PolygonM")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonM);
+
+            var polygonN = new GMapPolygon(polygonNpoints, "PolygonN")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonN);
+
+            var polygonO = new GMapPolygon(polygonOpoints, "PolygonO")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonO);
+
+            var polygonP = new GMapPolygon(polygonPpoints, "PolygonP")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonP);
+
+            var polygonQ = new GMapPolygon(polygonQpoints, "PolygonQ")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonQ);
+
+            var polygonR = new GMapPolygon(polygonRpoints, "PolygonR")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonR);
+
+            var polygonS = new GMapPolygon(polygonSpoints, "PolygonS")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonS);
+
+            var polygonT = new GMapPolygon(polygonTpoints, "PolygonT")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonT);
+
+            var polygonU = new GMapPolygon(polygonUpoints, "PolygonU")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonU);
+
+            var polygonV = new GMapPolygon(polygonVpoints, "PolygonV")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonV);
+
+            var polygonW = new GMapPolygon(polygonWpoints, "PolygonW")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonW);
+
+            var polygonX = new GMapPolygon(polygonXpoints, "PolygonX")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonX);
+
+            var polygonY = new GMapPolygon(polygonYpoints, "PolygonY")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonY);
+
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            // Ahora filtramos la lista de paquetes MLAT en Airport Zones
+
+            // En el load vamos a hacer los filtros y las separaciones que necesitamos para calcular cada performance
+
+            // Separamos los paquetes según son SMR o MLAT
+
+            int i = 0;
+            while (i < listaCAT10.Count)
+            {
+                int SAC = listaCAT10[i].SAC;
+                int SIC = listaCAT10[i].SIC;
+
+                if (SAC == 0 && SIC == 7)
+                {
+                    listaSMR.Add(listaCAT10[i]);
+                }
+                if (SAC == 0 && SIC == 107)
+                {
+                    listaMLAT.Add(listaCAT10[i]);
+                }
+                i = i + 1;
+            }
+
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S) 
+
+            i = 0;
+            while (i < listaMLAT.Count)
+            {
+                if (listaMLAT[i].TYP == "Mode S multilateration." && listaMLAT[i].MessageType_decodified != "Periodic Status Message" && listaMLAT[i].MessageType_decodified != "Start of Update Cycle" && listaMLAT[i].TOT == "Aircraft.")
+                {
+                    listaMLATmodeS.Add(listaMLAT[i]);
+                }
+                i = i + 1;
+            }
+
+            listaCAT21nearAirport = FilterCAT21packets(listaCAT21);
+
+
+            // Separamos por zonas
+
+            i = 0;
+            while (i < listaMLATmodeS.Count)
+            {
+                double[] coordenadas;
+
+                if ((listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLATmodeS[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
+                {
+                    if (listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tienen posición en coordenadas polares
+                    {
+                        coordenadas = NewCoordinatesMLAT(listaMLATmodeS[i].Rho, listaMLATmodeS[i].Theta);
+                    }
+
+                    else // si tienen posición en coordenadas cartesianas
+                    {
+                        double rho = Math.Sqrt((listaMLATmodeS[i].X_cartesian) * (listaMLATmodeS[i].X_cartesian) + (listaMLATmodeS[i].Y_cartesian) * (listaMLATmodeS[i].Y_cartesian));
+                        double theta = (180 / Math.PI) * Math.Atan2(listaMLATmodeS[i].X_cartesian, listaMLATmodeS[i].Y_cartesian);
+
+                        coordenadas = NewCoordinatesMLAT(rho, theta);
+                    }
+
+                    // Todos los paquetes que pasan por aqui tienen coordenadas convertidas a wgs84 y info de la velocidad en coordenadas polares
+                    // Ahora comprobamos si el paquete de turno esta en alguna zona del aeropuerto
+                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideJ = polygonJ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                    // Separtamos los paquetes según su zona del aeropuerto, diferenciando los que estan volando y los que no
+                    double Vthreshold = 300;
+                    // Zona Stand (A,B,C,D,E)
+                    if ((insideA == true || insideB == true || insideC == true || insideD == true || insideE == true))
+                    {
+                        listaMLAT_Stand.Add(listaMLATmodeS[i]);
+                    }
+
+                    // Zona Apron (F,G,H)
+                    else if ((insideF == true || insideG == true || insideH == true))
+                    {
+                        listaMLAT_Apron.Add(listaMLATmodeS[i]);
+                    }
+
+                    // Zona MA (I)
+                    else if (insideI)
+                    {
+                        double velocity = listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000);
+
+                        //Si la velocidad esta por encima de un valor threshold esta en Zona Aire
+                        if (insideL && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
+                        if (insideN && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
+                        if (insideP && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
+                        if (insideR && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmodeS[i]); }
+                        if (insideT && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
+                        if (insideV && velocity > Vthreshold) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
+
+                        // Si esta por debajo de un treshold esta en MA. Como esta en MA, filtramos para saber si esta en una runway o en Taxi
+                        if (insideL && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideN && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideP && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideR && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideT && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+                        if (insideV && velocity < Vthreshold) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+
+                        if (insideI && insideL == false && insideN == false && insideP == false && insideR == false && insideT == false && insideV == false) { listaMLAT_MA.Add(listaMLATmodeS[i]); if (insideW) { listaRunway1.Add(listaMLATmodeS[i]); } else if (insideX) { listaRunway2.Add(listaMLATmodeS[i]); } else if (insideY) { listaRunway3.Add(listaMLATmodeS[i]); } else { listaMLAT_Taxiway.Add(listaMLATmodeS[i]); } }
+
+                    }
+                    else if (insideI == false && insideJ == true) // fuera de Apron, Stand, MA pero dentro de Zona aeropuerto
+                    {
+                        double heading = listaMLATmodeS[i].TrackAngle;
+                        if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > Vthreshold || (heading < heading07R + 10 && heading > heading07R - 10) || (heading < heading25L + 10 && heading > heading25L - 10) || (heading < heading25R + 10 && heading > heading25R - 10) || (heading < heading07L + 10 && heading > heading07L - 10) || (heading < heading20 + 10 && heading > heading20 - 10) || (heading < heading02 + 10 && heading > heading02 - 10))
+                        {
+                            listaMLAT_Airborne.Add(listaMLATmodeS[i]);
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmodeS[i]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
+                        }
+                    }
+                    else // fuera de la zona aeropuerto
+                    {
+                        if (listaMLATmodeS[i].GroundSpeed * (1852 * 3600 / 1000) > 110)
+                        {
+                            listaMLAT_Airborne.Add(listaMLATmodeS[i]);
+
+                            if (insideK) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_K.Add(listaMLATmodeS[i]); }
+                            if (insideM) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_M.Add(listaMLATmodeS[i]); }
+                            if (insideO) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_O.Add(listaMLATmodeS[i]); }
+                            if (insideQ) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_Q.Add(listaMLATmodeS[i]); }
+                            if (insideS) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_S.Add(listaMLATmodeS[i]); }
+                            if (insideU) { listaMLAT_Airborne_5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_5NM_U.Add(listaMLATmodeS[i]); }
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmodeS[i]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmodeS[i]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmodeS[i]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmodeS[i]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmodeS[i]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM.Add(listaMLATmodeS[i]); listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmodeS[i]); }
+                        }
+                    }
+                    i = i + 1;
+                }
+            }
+        }
+
+        public List<List<CAT10>> FilterByAirportZonesGround(List<CAT10> listaMLAT)
+        {
+            List<PointLatLng> polygonApoints = new List<PointLatLng>();
+            List<PointLatLng> polygonBpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonCpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonDpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonEpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonFpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonGpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonHpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonIpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonJpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonKpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonLpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonMpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonNpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonOpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonPpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonQpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonRpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonSpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonTpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonUpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonVpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonWpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonXpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonYpoints = new List<PointLatLng>();
+
+            // Creamos los puntos de los Polígonos
+            // Cordenadas de los poligonos/superficies
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+            polygonApoints.Add(new PointLatLng(41.28723009374163, 2.078718953092844));
+            polygonApoints.Add(new PointLatLng(41.28885874916784, 2.077748868970652));
+            polygonApoints.Add(new PointLatLng(41.29065643929236, 2.082995639066103));
+            polygonApoints.Add(new PointLatLng(41.29222850233552, 2.083778238090788));
+            polygonApoints.Add(new PointLatLng(41.29331871109087, 2.083045684310492));
+            polygonApoints.Add(new PointLatLng(41.29106949349184, 2.076476920740631));
+            polygonApoints.Add(new PointLatLng(41.29254944569193, 2.07558284559707));
+            polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+            polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
+            polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
+            polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+            polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
+            polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
+            polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+            polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
+            polygonDpoints.Add(new PointLatLng(41.30000776347889, 2.070917770368974));
+            polygonDpoints.Add(new PointLatLng(41.29967596479406, 2.071688864944305));
+            polygonDpoints.Add(new PointLatLng(41.29959146994269, 2.073228664122788));
+            polygonDpoints.Add(new PointLatLng(41.30345473670611, 2.084537100676138));
+            polygonDpoints.Add(new PointLatLng(41.30290495825957, 2.084875104603385));
+            polygonDpoints.Add(new PointLatLng(41.30427409853728, 2.088851435790822));
+            polygonDpoints.Add(new PointLatLng(41.30590241356465, 2.087869558272031));
+            polygonDpoints.Add(new PointLatLng(41.3066804890744, 2.090125795521962));
+            polygonDpoints.Add(new PointLatLng(41.30814452382673, 2.090862227752639));
+            polygonDpoints.Add(new PointLatLng(41.30909185035398, 2.090291339935599));
+            polygonDpoints.Add(new PointLatLng(41.30793723174423, 2.087009092954473));
+            polygonDpoints.Add(new PointLatLng(41.30723056199035, 2.087458996395015));
+            polygonDpoints.Add(new PointLatLng(41.30537957229418, 2.082053043424263));
+            polygonDpoints.Add(new PointLatLng(41.30456131346386, 2.082557609714792));
+            polygonDpoints.Add(new PointLatLng(41.3008830436416, 2.071957346981628));
+            polygonDpoints.Add(new PointLatLng(41.30108765385491, 2.071574780556449));
+            polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+            polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
+            polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
+            polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+            polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
+            polygonFpoints.Add(new PointLatLng(41.30667782929991, 2.090126725817183));
+            polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
+            polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+            polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
+            polygonGpoints.Add(new PointLatLng(41.29959074400027, 2.073228700331884));
+            polygonGpoints.Add(new PointLatLng(41.29967470998086, 2.071693187872741));
+            polygonGpoints.Add(new PointLatLng(41.30000697053827, 2.070919075000397));
+            polygonGpoints.Add(new PointLatLng(41.30039357167374, 2.070459446529713));
+            polygonGpoints.Add(new PointLatLng(41.30065260460123, 2.070303243523943));
+            polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
+            polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+            polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
+            polygonHpoints.Add(new PointLatLng(41.28902431178173, 2.067520686236));
+            polygonHpoints.Add(new PointLatLng(41.28955440513675, 2.068940144725449));
+            polygonHpoints.Add(new PointLatLng(41.29012143210162, 2.06851590292412));
+            polygonHpoints.Add(new PointLatLng(41.2925490011068, 2.075579761626731));
+            polygonHpoints.Add(new PointLatLng(41.29106910015326, 2.076481303710718));
+            polygonHpoints.Add(new PointLatLng(41.29331848519782, 2.08304615591185));
+            polygonHpoints.Add(new PointLatLng(41.29222983099868, 2.083777753836971));
+            polygonHpoints.Add(new PointLatLng(41.29065712208786, 2.082996332139622));
+            polygonHpoints.Add(new PointLatLng(41.28885798115613, 2.077750786024948));
+            polygonHpoints.Add(new PointLatLng(41.28723092652747, 2.078719350618556));
+            polygonHpoints.Add(new PointLatLng(41.28504511955603, 2.072303471860446));
+            polygonHpoints.Add(new PointLatLng(41.28429457970675, 2.073252038146045));
+            polygonHpoints.Add(new PointLatLng(41.28661860767006, 2.080221795722565));
+            polygonHpoints.Add(new PointLatLng(41.28733664026725, 2.0797506736647));
+            polygonHpoints.Add(new PointLatLng(41.28855512194733, 2.079026526525407));
+            polygonHpoints.Add(new PointLatLng(41.28980251153607, 2.082629487656971));
+            polygonHpoints.Add(new PointLatLng(41.28803492635546, 2.081812539971151));
+            polygonHpoints.Add(new PointLatLng(41.28734153685148, 2.079747588265484));
+            polygonHpoints.Add(new PointLatLng(41.28661855511135, 2.080222823254285));
+            polygonHpoints.Add(new PointLatLng(41.28708936718802, 2.081638558546843));
+            polygonHpoints.Add(new PointLatLng(41.29231849483453, 2.084087751298431));
+            polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
+            polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+            polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
+            polygonIpoints.Add(new PointLatLng(41.29224414586391, 2.061526737006945));
+            polygonIpoints.Add(new PointLatLng(41.29046417484277, 2.062609057585825));
+            polygonIpoints.Add(new PointLatLng(41.28956626644186, 2.065553730733145));
+            polygonIpoints.Add(new PointLatLng(41.29523767718762, 2.082250085220523));
+            polygonIpoints.Add(new PointLatLng(41.29231726437897, 2.084091640755907));
+            polygonIpoints.Add(new PointLatLng(41.28708946239801, 2.081639593866493));
+            polygonIpoints.Add(new PointLatLng(41.28429573389018, 2.073249376619946));
+            polygonIpoints.Add(new PointLatLng(41.28316212451168, 2.072989239047482));
+            polygonIpoints.Add(new PointLatLng(41.28173786975413, 2.073784781912147));
+            polygonIpoints.Add(new PointLatLng(41.29214530239392, 2.104127198089036));
+            polygonIpoints.Add(new PointLatLng(41.29276318268523, 2.103757546620602));
+            polygonIpoints.Add(new PointLatLng(41.29268764126339, 2.103528317911267));
+            polygonIpoints.Add(new PointLatLng(41.29376290078783, 2.102914286073472));
+            polygonIpoints.Add(new PointLatLng(41.29406164912393, 2.101945088686166));
+            polygonIpoints.Add(new PointLatLng(41.28984141121184, 2.089462718011443));
+            polygonIpoints.Add(new PointLatLng(41.29291561892327, 2.087628140011148));
+            polygonIpoints.Add(new PointLatLng(41.29770085373364, 2.089788471416973));
+            polygonIpoints.Add(new PointLatLng(41.30310731952297, 2.105503857052842));
+            polygonIpoints.Add(new PointLatLng(41.3045527080456, 2.106123180658501));
+            polygonIpoints.Add(new PointLatLng(41.30589157106402, 2.105346701864339));
+            polygonIpoints.Add(new PointLatLng(41.30600926520326, 2.105639828306998));
+            polygonIpoints.Add(new PointLatLng(41.30663924753058, 2.105276267770742));
+            polygonIpoints.Add(new PointLatLng(41.30655247146466, 2.104984548921465));
+            polygonIpoints.Add(new PointLatLng(41.30837639640288, 2.103832509588435));
+            polygonIpoints.Add(new PointLatLng(41.30873186529448, 2.10248806583335));
+            polygonIpoints.Add(new PointLatLng(41.30889602389677, 2.102398604206603));
+            polygonIpoints.Add(new PointLatLng(41.30585742852851, 2.093493628556393));
+            polygonIpoints.Add(new PointLatLng(41.30981681400108, 2.095287778329102));
+            polygonIpoints.Add(new PointLatLng(41.31026232364314, 2.09403547590874));
+            polygonIpoints.Add(new PointLatLng(41.30944477429792, 2.091586281567523));
+            polygonIpoints.Add(new PointLatLng(41.30668316969677, 2.090133391519693));
+            polygonIpoints.Add(new PointLatLng(41.30601822928018, 2.090406330589658));
+            polygonIpoints.Add(new PointLatLng(41.3045732877946, 2.089731129076438));
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+            polygonJpoints.Add(new PointLatLng(41.28530469506816, 2.090058251819151));
+            polygonJpoints.Add(new PointLatLng(41.28605447581095, 2.091570242240717));
+            polygonJpoints.Add(new PointLatLng(41.29063812643459, 2.105913970311935));
+            polygonJpoints.Add(new PointLatLng(41.29737362002733, 2.101759523428246));
+            polygonJpoints.Add(new PointLatLng(41.30771845741656, 2.11093540410253));
+            polygonJpoints.Add(new PointLatLng(41.31473140675691, 2.104026880102139));
+            polygonJpoints.Add(new PointLatLng(41.31668145005288, 2.102337915089512));
+            polygonJpoints.Add(new PointLatLng(41.30899903959134, 2.079427650796146));
+            polygonJpoints.Add(new PointLatLng(41.30683929524009, 2.080486992271846));
+            polygonJpoints.Add(new PointLatLng(41.2978989759275, 2.054726075032385));
+            polygonJpoints.Add(new PointLatLng(41.29289249376819, 2.057959899448454));
+            polygonJpoints.Add(new PointLatLng(41.29146706018695, 2.058982856630855));
+            polygonJpoints.Add(new PointLatLng(41.28818507652813, 2.060651401810178));
+            polygonJpoints.Add(new PointLatLng(41.28607411574124, 2.065276741711466));
+            polygonJpoints.Add(new PointLatLng(41.28417467071309, 2.070733183164153));
+            polygonJpoints.Add(new PointLatLng(41.28156789356743, 2.070583348773718));
+            polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+
+            // Superficies pista 07R
+            double[] coordenadas1 = new double[2];
+            coordenadas1[0] = 41.282576;
+            coordenadas1[1] = 2.074278;
+            double[] coordenadas2 = new double[2];
+            coordenadas2[0] = 41.282102;
+            coordenadas2[1] = 2.074562;
+
+            double angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            double angle2 = angle1 + 90;
+            heading07R = angle1 - 90;
+
+            double[] newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
+            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonLpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonLpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonLpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonLpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25L
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.291965;
+            coordenadas2[1] = 2.103366;
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.292440;
+            coordenadas1[1] = 2.103079;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25L = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonNpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 07L
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.295108;
+            coordenadas1[1] = 2.071877;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.294635;
+            coordenadas2[1] = 2.072162;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading07L = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
+            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonPpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonPpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonPpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonPpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25R
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.305946;
+            coordenadas1[1] = 2.103528;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.305473;
+            coordenadas2[1] = 2.103814;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25R = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonRpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 02
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.287878;
+            coordenadas1[1] = 2.084619;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.287752;
+            coordenadas2[1] = 2.085107;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading02 = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
+            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonTpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonTpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonTpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonTpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 20
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.309307;
+            coordenadas1[1] = 2.094396;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.309180;
+            coordenadas2[1] = 2.094881;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading20 = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonVpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // RWY1 (la diagonal)
+            polygonWpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonWpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonWpoints.Add(new PointLatLng(41.309307, 2.094396));
+            polygonWpoints.Add(new PointLatLng(41.309180, 2.094881));
+
+            // RW2(la de abajo))
+            polygonXpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonXpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonXpoints.Add(new PointLatLng(41.291965, 2.103366));
+            polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
+
+
+            // RW3 (la de arriba)
+            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
+            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
+
+            // Creamosa los poligonos y los añadimos al overlay
+            // Creamos las superficies con las coordenadas anteriores
+            GMapOverlay polygonsOverlay = new GMapOverlay();
+            polygonsOverlay.Clear();
+            var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonA);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonC = new GMapPolygon(polygonCpoints, "PolygonC")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonC);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonD = new GMapPolygon(polygonDpoints, "PolygonD")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonD);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonE = new GMapPolygon(polygonEpoints, "PolygonE")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonE);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonF = new GMapPolygon(polygonFpoints, "PolygonF")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonF);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonG = new GMapPolygon(polygonGpoints, "PolygonG")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonG);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonH = new GMapPolygon(polygonHpoints, "PolygonH")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonH);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonB = new GMapPolygon(polygonBpoints, "PolygonB")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonB);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonI = new GMapPolygon(polygonIpoints, "PolygonI")
+            {
+                Stroke = new Pen(Color.Green, 2),
+                Fill = new SolidBrush(Color.Green)
+            };
+            polygonsOverlay.Polygons.Add(polygonI);
+
+            var polygonJ = new GMapPolygon(polygonJpoints, "PolygonJ")
+            {
+                Stroke = new Pen(Color.Red, 2),
+                Fill = new SolidBrush(Color.Red)
+            };
+
+            var polygonK = new GMapPolygon(polygonKpoints, "PolygonK")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonK);
+
+            var polygonL = new GMapPolygon(polygonLpoints, "PolygonL")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonL);
+
+            var polygonM = new GMapPolygon(polygonMpoints, "PolygonM")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonM);
+
+            var polygonN = new GMapPolygon(polygonNpoints, "PolygonN")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonN);
+
+            var polygonO = new GMapPolygon(polygonOpoints, "PolygonO")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonO);
+
+            var polygonP = new GMapPolygon(polygonPpoints, "PolygonP")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonP);
+
+            var polygonQ = new GMapPolygon(polygonQpoints, "PolygonQ")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonQ);
+
+            var polygonR = new GMapPolygon(polygonRpoints, "PolygonR")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonR);
+
+            var polygonS = new GMapPolygon(polygonSpoints, "PolygonS")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonS);
+
+            var polygonT = new GMapPolygon(polygonTpoints, "PolygonT")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonT);
+
+            var polygonU = new GMapPolygon(polygonUpoints, "PolygonU")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonU);
+
+            var polygonV = new GMapPolygon(polygonVpoints, "PolygonV")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonV);
+
+            var polygonW = new GMapPolygon(polygonWpoints, "PolygonW")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonW);
+
+            var polygonX = new GMapPolygon(polygonXpoints, "PolygonX")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonX);
+
+            var polygonY = new GMapPolygon(polygonYpoints, "PolygonY")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonY);
+
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            // Ahora filtramos la lista de paquetes MLAT en Airport Zones
+
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S) 
+
+            i = 0;
+            listaMLATmodeS.Clear();
+            while (i < listaMLAT.Count)
+            {
+                if (listaMLAT[i].TYP == "Mode S multilateration." && listaMLAT[i].MessageType_decodified != "Periodic Status Message" && listaMLAT[i].MessageType_decodified != "Start of Update Cycle" && listaMLAT[i].TOT == "Aircraft.")
+                {
+                    listaMLATmodeS.Add(listaMLAT[i]);
+                }
+                i = i + 1;
+            }
+
+            listaCAT21nearAirport = FilterCAT21packets(listaCAT21);
+
+
+            // Separamos por zonas
+            List<CAT10> listaMLAT_Stand_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Apron_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_MA_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Taxiway_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaRunway1_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaRunway2_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaRunway3_CalibrationVehicle = new List<CAT10>();
+
+
+            i = 0;
+            while (i < listaMLATmodeS.Count)
+            {
+                double[] coordenadas;
+
+                if ((listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLATmodeS[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
+                {
+                    if (listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tienen posición en coordenadas polares
+                    {
+                        coordenadas = NewCoordinatesMLAT(listaMLATmodeS[i].Rho, listaMLATmodeS[i].Theta);
+                    }
+
+                    else // si tienen posición en coordenadas cartesianas
+                    {
+                        double rho = Math.Sqrt((listaMLATmodeS[i].X_cartesian) * (listaMLATmodeS[i].X_cartesian) + (listaMLATmodeS[i].Y_cartesian) * (listaMLATmodeS[i].Y_cartesian));
+                        double theta = (180 / Math.PI) * Math.Atan2(listaMLATmodeS[i].X_cartesian, listaMLATmodeS[i].Y_cartesian);
+
+                        coordenadas = NewCoordinatesMLAT(rho, theta);
+                    }
+
+                    // Todos los paquetes que pasan por aqui tienen coordenadas convertidas a wgs84 y info de la velocidad en coordenadas polares
+                    // Ahora comprobamos si el paquete de turno esta en alguna zona del aeropuerto
+                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideJ = polygonJ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                    // Zona Stand (A,B,C,D,E)
+                    if ((insideA == true || insideB == true || insideC == true || insideD == true || insideE == true))
+                    {
+                        listaMLAT_Stand_CalibrationVehicle.Add(listaMLATmodeS[i]);
+                    }
+
+                    // Zona Apron (F,G,H)
+                    else if ((insideF == true || insideG == true || insideH == true))
+                    {
+                        listaMLAT_Apron_CalibrationVehicle.Add(listaMLATmodeS[i]);
+                    }
+
+                    // Zona MA (I)
+                    else if (insideI)
+                    {
+                        // Si esta por debajo de un treshold esta en MA. Como esta en MA, filtramos para saber si esta en una runway o en Taxi
+                        listaMLAT_MA_CalibrationVehicle.Add(listaMLATmodeS[i]);
+                        if (insideW) { listaRunway1_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideX) { listaRunway2_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideY) { listaRunway3_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        else { listaMLAT_Taxiway_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                    }
+
+                    i = i + 1;
+                }
+            }
+
+
+            List<List<CAT10>> results = new List<List<CAT10>>();
+            results.Add(listaMLAT_Stand_CalibrationVehicle);
+            results.Add(listaMLAT_Apron_CalibrationVehicle);
+            results.Add(listaMLAT_MA_CalibrationVehicle);
+            results.Add(listaMLAT_Taxiway_CalibrationVehicle);
+            results.Add(listaRunway1_CalibrationVehicle);
+            results.Add(listaRunway2_CalibrationVehicle);
+            results.Add(listaRunway3);
+            return results;
+        }
+
+        public List<List<CAT10>> FilterByAirportZonesAirborne(List<CAT10> listaMLAT)
+        {
+            List<PointLatLng> polygonApoints = new List<PointLatLng>();
+            List<PointLatLng> polygonBpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonCpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonDpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonEpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonFpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonGpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonHpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonIpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonJpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonKpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonLpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonMpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonNpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonOpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonPpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonQpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonRpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonSpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonTpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonUpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonVpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonWpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonXpoints = new List<PointLatLng>();
+            List<PointLatLng> polygonYpoints = new List<PointLatLng>();
+
+            // Creamos los puntos de los Polígonos
+            // Cordenadas de los poligonos/superficies
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+            polygonApoints.Add(new PointLatLng(41.28723009374163, 2.078718953092844));
+            polygonApoints.Add(new PointLatLng(41.28885874916784, 2.077748868970652));
+            polygonApoints.Add(new PointLatLng(41.29065643929236, 2.082995639066103));
+            polygonApoints.Add(new PointLatLng(41.29222850233552, 2.083778238090788));
+            polygonApoints.Add(new PointLatLng(41.29331871109087, 2.083045684310492));
+            polygonApoints.Add(new PointLatLng(41.29106949349184, 2.076476920740631));
+            polygonApoints.Add(new PointLatLng(41.29254944569193, 2.07558284559707));
+            polygonApoints.Add(new PointLatLng(41.29012709275927, 2.06851382450906));
+            polygonApoints.Add(new PointLatLng(41.28504464668583, 2.072303599775964));
+
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+            polygonBpoints.Add(new PointLatLng(41.28800136938792, 2.081802629828544));
+            polygonBpoints.Add(new PointLatLng(41.28977528736695, 2.082630893033546));
+            polygonBpoints.Add(new PointLatLng(41.28853318264134, 2.079046297054801));
+            polygonBpoints.Add(new PointLatLng(41.28731823416347, 2.079764007059928));
+
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+            polygonCpoints.Add(new PointLatLng(41.29195041474841, 2.077077431934582));
+            polygonCpoints.Add(new PointLatLng(41.29399206258152, 2.083029237964267));
+            polygonCpoints.Add(new PointLatLng(41.29523587263329, 2.082249984443576));
+            polygonCpoints.Add(new PointLatLng(41.29321070274573, 2.076320083519241));
+
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+            polygonDpoints.Add(new PointLatLng(41.30039539419548, 2.070456969215939));
+            polygonDpoints.Add(new PointLatLng(41.30000776347889, 2.070917770368974));
+            polygonDpoints.Add(new PointLatLng(41.29967596479406, 2.071688864944305));
+            polygonDpoints.Add(new PointLatLng(41.29959146994269, 2.073228664122788));
+            polygonDpoints.Add(new PointLatLng(41.30345473670611, 2.084537100676138));
+            polygonDpoints.Add(new PointLatLng(41.30290495825957, 2.084875104603385));
+            polygonDpoints.Add(new PointLatLng(41.30427409853728, 2.088851435790822));
+            polygonDpoints.Add(new PointLatLng(41.30590241356465, 2.087869558272031));
+            polygonDpoints.Add(new PointLatLng(41.3066804890744, 2.090125795521962));
+            polygonDpoints.Add(new PointLatLng(41.30814452382673, 2.090862227752639));
+            polygonDpoints.Add(new PointLatLng(41.30909185035398, 2.090291339935599));
+            polygonDpoints.Add(new PointLatLng(41.30793723174423, 2.087009092954473));
+            polygonDpoints.Add(new PointLatLng(41.30723056199035, 2.087458996395015));
+            polygonDpoints.Add(new PointLatLng(41.30537957229418, 2.082053043424263));
+            polygonDpoints.Add(new PointLatLng(41.30456131346386, 2.082557609714792));
+            polygonDpoints.Add(new PointLatLng(41.3008830436416, 2.071957346981628));
+            polygonDpoints.Add(new PointLatLng(41.30108765385491, 2.071574780556449));
+            polygonDpoints.Add(new PointLatLng(41.3009155651295, 2.071091535633292));
+            polygonDpoints.Add(new PointLatLng(41.30065330913252, 2.070303020960496));
+
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+            polygonEpoints.Add(new PointLatLng(41.30048609041909, 2.06980943057711));
+            polygonEpoints.Add(new PointLatLng(41.29660223362265, 2.058475006326426));
+            polygonEpoints.Add(new PointLatLng(41.29432958671836, 2.059839814242947));
+            polygonEpoints.Add(new PointLatLng(41.29823865877675, 2.071231420732036));
+
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+            polygonFpoints.Add(new PointLatLng(41.30601803372394, 2.090395674079863));
+            polygonFpoints.Add(new PointLatLng(41.30667782929991, 2.090126725817183));
+            polygonFpoints.Add(new PointLatLng(41.30590134700933, 2.08787278165617));
+            polygonFpoints.Add(new PointLatLng(41.30427336943613, 2.088855090126935));
+            polygonFpoints.Add(new PointLatLng(41.30457448017142, 2.089729725733855));
+
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+            polygonGpoints.Add(new PointLatLng(41.30345261322027, 2.084533535543849));
+            polygonGpoints.Add(new PointLatLng(41.29959074400027, 2.073228700331884));
+            polygonGpoints.Add(new PointLatLng(41.29967470998086, 2.071693187872741));
+            polygonGpoints.Add(new PointLatLng(41.30000697053827, 2.070919075000397));
+            polygonGpoints.Add(new PointLatLng(41.30039357167374, 2.070459446529713));
+            polygonGpoints.Add(new PointLatLng(41.30065260460123, 2.070303243523943));
+            polygonGpoints.Add(new PointLatLng(41.30048650533456, 2.069808660956183));
+            polygonGpoints.Add(new PointLatLng(41.29824304575094, 2.071236941944723));
+            polygonGpoints.Add(new PointLatLng(41.30290531321184, 2.084874124781602));
+
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+            polygonHpoints.Add(new PointLatLng(41.28956758097301, 2.065554125358897));
+            polygonHpoints.Add(new PointLatLng(41.28902431178173, 2.067520686236));
+            polygonHpoints.Add(new PointLatLng(41.28955440513675, 2.068940144725449));
+            polygonHpoints.Add(new PointLatLng(41.29012143210162, 2.06851590292412));
+            polygonHpoints.Add(new PointLatLng(41.2925490011068, 2.075579761626731));
+            polygonHpoints.Add(new PointLatLng(41.29106910015326, 2.076481303710718));
+            polygonHpoints.Add(new PointLatLng(41.29331848519782, 2.08304615591185));
+            polygonHpoints.Add(new PointLatLng(41.29222983099868, 2.083777753836971));
+            polygonHpoints.Add(new PointLatLng(41.29065712208786, 2.082996332139622));
+            polygonHpoints.Add(new PointLatLng(41.28885798115613, 2.077750786024948));
+            polygonHpoints.Add(new PointLatLng(41.28723092652747, 2.078719350618556));
+            polygonHpoints.Add(new PointLatLng(41.28504511955603, 2.072303471860446));
+            polygonHpoints.Add(new PointLatLng(41.28429457970675, 2.073252038146045));
+            polygonHpoints.Add(new PointLatLng(41.28661860767006, 2.080221795722565));
+            polygonHpoints.Add(new PointLatLng(41.28733664026725, 2.0797506736647));
+            polygonHpoints.Add(new PointLatLng(41.28855512194733, 2.079026526525407));
+            polygonHpoints.Add(new PointLatLng(41.28980251153607, 2.082629487656971));
+            polygonHpoints.Add(new PointLatLng(41.28803492635546, 2.081812539971151));
+            polygonHpoints.Add(new PointLatLng(41.28734153685148, 2.079747588265484));
+            polygonHpoints.Add(new PointLatLng(41.28661855511135, 2.080222823254285));
+            polygonHpoints.Add(new PointLatLng(41.28708936718802, 2.081638558546843));
+            polygonHpoints.Add(new PointLatLng(41.29231849483453, 2.084087751298431));
+            polygonHpoints.Add(new PointLatLng(41.29399278888424, 2.083033619151));
+            polygonHpoints.Add(new PointLatLng(41.29194845323224, 2.077076414636956));
+            polygonHpoints.Add(new PointLatLng(41.29321248629184, 2.076317037912934));
+
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+            polygonIpoints.Add(new PointLatLng(41.29244352372002, 2.061081990705518));
+            polygonIpoints.Add(new PointLatLng(41.29224414586391, 2.061526737006945));
+            polygonIpoints.Add(new PointLatLng(41.29046417484277, 2.062609057585825));
+            polygonIpoints.Add(new PointLatLng(41.28956626644186, 2.065553730733145));
+            polygonIpoints.Add(new PointLatLng(41.29523767718762, 2.082250085220523));
+            polygonIpoints.Add(new PointLatLng(41.29231726437897, 2.084091640755907));
+            polygonIpoints.Add(new PointLatLng(41.28708946239801, 2.081639593866493));
+            polygonIpoints.Add(new PointLatLng(41.28429573389018, 2.073249376619946));
+            polygonIpoints.Add(new PointLatLng(41.28316212451168, 2.072989239047482));
+            polygonIpoints.Add(new PointLatLng(41.28173786975413, 2.073784781912147));
+            polygonIpoints.Add(new PointLatLng(41.29214530239392, 2.104127198089036));
+            polygonIpoints.Add(new PointLatLng(41.29276318268523, 2.103757546620602));
+            polygonIpoints.Add(new PointLatLng(41.29268764126339, 2.103528317911267));
+            polygonIpoints.Add(new PointLatLng(41.29376290078783, 2.102914286073472));
+            polygonIpoints.Add(new PointLatLng(41.29406164912393, 2.101945088686166));
+            polygonIpoints.Add(new PointLatLng(41.28984141121184, 2.089462718011443));
+            polygonIpoints.Add(new PointLatLng(41.29291561892327, 2.087628140011148));
+            polygonIpoints.Add(new PointLatLng(41.29770085373364, 2.089788471416973));
+            polygonIpoints.Add(new PointLatLng(41.30310731952297, 2.105503857052842));
+            polygonIpoints.Add(new PointLatLng(41.3045527080456, 2.106123180658501));
+            polygonIpoints.Add(new PointLatLng(41.30589157106402, 2.105346701864339));
+            polygonIpoints.Add(new PointLatLng(41.30600926520326, 2.105639828306998));
+            polygonIpoints.Add(new PointLatLng(41.30663924753058, 2.105276267770742));
+            polygonIpoints.Add(new PointLatLng(41.30655247146466, 2.104984548921465));
+            polygonIpoints.Add(new PointLatLng(41.30837639640288, 2.103832509588435));
+            polygonIpoints.Add(new PointLatLng(41.30873186529448, 2.10248806583335));
+            polygonIpoints.Add(new PointLatLng(41.30889602389677, 2.102398604206603));
+            polygonIpoints.Add(new PointLatLng(41.30585742852851, 2.093493628556393));
+            polygonIpoints.Add(new PointLatLng(41.30981681400108, 2.095287778329102));
+            polygonIpoints.Add(new PointLatLng(41.31026232364314, 2.09403547590874));
+            polygonIpoints.Add(new PointLatLng(41.30944477429792, 2.091586281567523));
+            polygonIpoints.Add(new PointLatLng(41.30668316969677, 2.090133391519693));
+            polygonIpoints.Add(new PointLatLng(41.30601822928018, 2.090406330589658));
+            polygonIpoints.Add(new PointLatLng(41.3045732877946, 2.089731129076438));
+            polygonIpoints.Add(new PointLatLng(41.29432853911477, 2.059841290590052));
+
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+            polygonJpoints.Add(new PointLatLng(41.28530469506816, 2.090058251819151));
+            polygonJpoints.Add(new PointLatLng(41.28605447581095, 2.091570242240717));
+            polygonJpoints.Add(new PointLatLng(41.29063812643459, 2.105913970311935));
+            polygonJpoints.Add(new PointLatLng(41.29737362002733, 2.101759523428246));
+            polygonJpoints.Add(new PointLatLng(41.30771845741656, 2.11093540410253));
+            polygonJpoints.Add(new PointLatLng(41.31473140675691, 2.104026880102139));
+            polygonJpoints.Add(new PointLatLng(41.31668145005288, 2.102337915089512));
+            polygonJpoints.Add(new PointLatLng(41.30899903959134, 2.079427650796146));
+            polygonJpoints.Add(new PointLatLng(41.30683929524009, 2.080486992271846));
+            polygonJpoints.Add(new PointLatLng(41.2978989759275, 2.054726075032385));
+            polygonJpoints.Add(new PointLatLng(41.29289249376819, 2.057959899448454));
+            polygonJpoints.Add(new PointLatLng(41.29146706018695, 2.058982856630855));
+            polygonJpoints.Add(new PointLatLng(41.28818507652813, 2.060651401810178));
+            polygonJpoints.Add(new PointLatLng(41.28607411574124, 2.065276741711466));
+            polygonJpoints.Add(new PointLatLng(41.28417467071309, 2.070733183164153));
+            polygonJpoints.Add(new PointLatLng(41.28156789356743, 2.070583348773718));
+            polygonJpoints.Add(new PointLatLng(41.27985715658978, 2.072825029809195));
+            polygonJpoints.Add(new PointLatLng(41.28020883952823, 2.074747391943093));
+
+            // Superficies pista 07R
+            double[] coordenadas1 = new double[2];
+            coordenadas1[0] = 41.282576;
+            coordenadas1[1] = 2.074278;
+            double[] coordenadas2 = new double[2];
+            coordenadas2[0] = 41.282102;
+            coordenadas2[1] = 2.074562;
+
+            double angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            double angle2 = angle1 + 90;
+            heading07R = angle1 - 90;
+
+            double[] newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            double[] coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            double[] coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonKpoints.Add(new PointLatLng(41.282576, 2.074278));
+            //polygonKpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonKpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonKpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonLpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonLpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonLpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonLpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25L
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.291965;
+            coordenadas2[1] = 2.103366;
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.292440;
+            coordenadas1[1] = 2.103079;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25L = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonMpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonMpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonMpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonNpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonNpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 07L
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.295108;
+            coordenadas1[1] = 2.071877;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.294635;
+            coordenadas2[1] = 2.072162;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading07L = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonOpoints.Add(new PointLatLng(41.295108, 2.071877));
+            //polygonOpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonOpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonOpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonPpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonPpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonPpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonPpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 25R
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.305946;
+            coordenadas1[1] = 2.103528;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.305473;
+            coordenadas2[1] = 2.103814;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading25R = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonQpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonQpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonQpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonRpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonRpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 02
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.287878;
+            coordenadas1[1] = 2.084619;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.287752;
+            coordenadas2[1] = 2.085107;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 + 90;
+            heading02 = angle1 - 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonSpoints.Add(new PointLatLng(41.287878, 2.084619));
+            //polygonSpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonSpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonSpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonTpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonTpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonTpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonTpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // Superficies pista 20
+            coordenadas1 = new double[2];
+            coordenadas1[0] = 41.309307;
+            coordenadas1[1] = 2.094396;
+            coordenadas2 = new double[2];
+            coordenadas2[0] = 41.309180;
+            coordenadas2[1] = 2.094881;
+
+            angle1 = CalculateHeadingBetweenCoordinates(coordenadas1, coordenadas2);
+            angle2 = angle1 - 90;
+            heading20 = angle1 + 90;
+
+            newcoordinates = new double[2];
+            newcoordinates[0] = (coordenadas1[0] + coordenadas2[0]) / 2;
+            newcoordinates[1] = (coordenadas1[1] + coordenadas2[1]) / 2;
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas3 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas4 = NewCoordinates(newcoordinates, 30 + 2.5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+            newcoordinates = NewCoordinates(newcoordinates, 2.5 * 1852, angle2);
+
+            coordenadas5 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 - 90);
+            coordenadas6 = NewCoordinates(newcoordinates, 30 + 5 * 1852 * Math.Sin(toRadians(10)), angle2 + 90);
+
+
+            //polygonUpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            //polygonUpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas5[0], coordenadas5[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas6[0], coordenadas6[1]));
+            polygonUpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            polygonVpoints.Add(new PointLatLng(coordenadas2[0], coordenadas2[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas1[0], coordenadas1[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas3[0], coordenadas3[1]));
+            polygonVpoints.Add(new PointLatLng(coordenadas4[0], coordenadas4[1]));
+
+            // RWY1 (la diagonal)
+            polygonWpoints.Add(new PointLatLng(41.287752, 2.085107));
+            polygonWpoints.Add(new PointLatLng(41.287878, 2.084619));
+            polygonWpoints.Add(new PointLatLng(41.309307, 2.094396));
+            polygonWpoints.Add(new PointLatLng(41.309180, 2.094881));
+
+            // RW2(la de abajo))
+            polygonXpoints.Add(new PointLatLng(41.282576, 2.074278));
+            polygonXpoints.Add(new PointLatLng(41.282102, 2.074562));
+            polygonXpoints.Add(new PointLatLng(41.291965, 2.103366));
+            polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
+
+
+            // RW3 (la de arriba)
+            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
+            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
+            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
+            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
+
+            // Creamosa los poligonos y los añadimos al overlay
+            // Creamos las superficies con las coordenadas anteriores
+            GMapOverlay polygonsOverlay = new GMapOverlay();
+            polygonsOverlay.Clear();
+            var polygonA = new GMapPolygon(polygonApoints, "PolygonA")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonA);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonC = new GMapPolygon(polygonCpoints, "PolygonC")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonC);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonD = new GMapPolygon(polygonDpoints, "PolygonD")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonD);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonE = new GMapPolygon(polygonEpoints, "PolygonE")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonE);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonF = new GMapPolygon(polygonFpoints, "PolygonF")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonF);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonG = new GMapPolygon(polygonGpoints, "PolygonG")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonG);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonH = new GMapPolygon(polygonHpoints, "PolygonH")
+            {
+                Stroke = new Pen(Color.Yellow, 2),
+                Fill = new SolidBrush(Color.Yellow)
+            };
+            polygonsOverlay.Polygons.Add(polygonH);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonB = new GMapPolygon(polygonBpoints, "PolygonB")
+            {
+                Stroke = new Pen(Color.Magenta, 2),
+                Fill = new SolidBrush(Color.Magenta)
+            };
+            polygonsOverlay.Polygons.Add(polygonB);
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            var polygonI = new GMapPolygon(polygonIpoints, "PolygonI")
+            {
+                Stroke = new Pen(Color.Green, 2),
+                Fill = new SolidBrush(Color.Green)
+            };
+            polygonsOverlay.Polygons.Add(polygonI);
+
+            var polygonJ = new GMapPolygon(polygonJpoints, "PolygonJ")
+            {
+                Stroke = new Pen(Color.Red, 2),
+                Fill = new SolidBrush(Color.Red)
+            };
+
+            var polygonK = new GMapPolygon(polygonKpoints, "PolygonK")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonK);
+
+            var polygonL = new GMapPolygon(polygonLpoints, "PolygonL")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonL);
+
+            var polygonM = new GMapPolygon(polygonMpoints, "PolygonM")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonM);
+
+            var polygonN = new GMapPolygon(polygonNpoints, "PolygonN")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonN);
+
+            var polygonO = new GMapPolygon(polygonOpoints, "PolygonO")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonO);
+
+            var polygonP = new GMapPolygon(polygonPpoints, "PolygonP")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonP);
+
+            var polygonQ = new GMapPolygon(polygonQpoints, "PolygonQ")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonQ);
+
+            var polygonR = new GMapPolygon(polygonRpoints, "PolygonR")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonR);
+
+            var polygonS = new GMapPolygon(polygonSpoints, "PolygonS")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonS);
+
+            var polygonT = new GMapPolygon(polygonTpoints, "PolygonT")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonT);
+
+            var polygonU = new GMapPolygon(polygonUpoints, "PolygonU")
+            {
+                Stroke = new Pen(Color.Blue, 2),
+                Fill = new SolidBrush(Color.Blue)
+            };
+            polygonsOverlay.Polygons.Add(polygonU);
+
+            var polygonV = new GMapPolygon(polygonVpoints, "PolygonV")
+            {
+                Stroke = new Pen(Color.LightBlue, 2),
+                Fill = new SolidBrush(Color.LightBlue)
+            };
+            polygonsOverlay.Polygons.Add(polygonV);
+
+            var polygonW = new GMapPolygon(polygonWpoints, "PolygonW")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonW);
+
+            var polygonX = new GMapPolygon(polygonXpoints, "PolygonX")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonX);
+
+            var polygonY = new GMapPolygon(polygonYpoints, "PolygonY")
+            {
+                Stroke = new Pen(Color.White, 2),
+                Fill = new SolidBrush(Color.White)
+            };
+            polygonsOverlay.Polygons.Add(polygonY);
+
+            Mapa.Overlays.Add(polygonsOverlay);
+
+            // Ahora filtramos la lista de paquetes MLAT en Airport Zones
+
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            // Update Rate: based on the squitter rate of Mode S transponders) (hay que hacer una lista solo con paquetes de Transponder mode S) 
+
+            i = 0;
+            listaMLATmodeS.Clear();
+            while (i < listaMLAT.Count)
+            {
+                if (listaMLAT[i].TYP == "Mode S multilateration." && listaMLAT[i].MessageType_decodified != "Periodic Status Message" && listaMLAT[i].MessageType_decodified != "Start of Update Cycle" && listaMLAT[i].TOT == "Aircraft.")
+                {
+                    listaMLATmodeS.Add(listaMLAT[i]);
+                }
+                i = i + 1;
+            }
+
+            listaCAT21nearAirport = FilterCAT21packets(listaCAT21);
+
+            // Separamos por zonas
+            List<CAT10> listaMLAT_AIRBORNE25_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_AIRBORNE5_CalibrationVehicle = new List<CAT10>();
+
+            List<CAT10> listaMLAT_Airborne_2coma5NM_L_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_2coma5NM_N_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_2coma5NM_P_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_2coma5NM_R_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_2coma5NM_T_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_2coma5NM_V_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_5NM_K_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_5NM_M_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_5NM_O_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_5NM_Q_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_5NM_S_CalibrationVehicle = new List<CAT10>();
+            List<CAT10> listaMLAT_Airborne_5NM_U_CalibrationVehicle = new List<CAT10>();
+
+
+            i = 0;
+            while (i < listaMLATmodeS.Count)
+            {
+                double[] coordenadas;
+
+                if ((listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0) || (listaMLATmodeS[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmodeS[i].CalculatedTrackVelocityinPolarCoordinates.Length > 0)) // cojemos solo los paquetes con info de posición y velocidad en radianes
+                {
+                    if (listaMLATmodeS[i].MeasuredPositioninPolarCoordinates.Length > 0) // si tienen posición en coordenadas polares
+                    {
+                        coordenadas = NewCoordinatesMLAT(listaMLATmodeS[i].Rho, listaMLATmodeS[i].Theta);
+                    }
+
+                    else // si tienen posición en coordenadas cartesianas
+                    {
+                        double rho = Math.Sqrt((listaMLATmodeS[i].X_cartesian) * (listaMLATmodeS[i].X_cartesian) + (listaMLATmodeS[i].Y_cartesian) * (listaMLATmodeS[i].Y_cartesian));
+                        double theta = (180 / Math.PI) * Math.Atan2(listaMLATmodeS[i].X_cartesian, listaMLATmodeS[i].Y_cartesian);
+
+                        coordenadas = NewCoordinatesMLAT(rho, theta);
+                    }
+
+                    // Todos los paquetes que pasan por aqui tienen coordenadas convertidas a wgs84 y info de la velocidad en coordenadas polares
+                    // Ahora comprobamos si el paquete de turno esta en alguna zona del aeropuerto
+                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideJ = polygonJ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                    if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0) 
+                    {
+                        listaMLAT_AIRBORNE25_CalibrationVehicle.Add(listaMLATmodeS[i]);
+
+                        if (insideL) { listaMLAT_Airborne_2coma5NM_L_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideN) { listaMLAT_Airborne_2coma5NM_N_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideP) { listaMLAT_Airborne_2coma5NM_P_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideR) { listaMLAT_Airborne_2coma5NM_R_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideT) { listaMLAT_Airborne_2coma5NM_T_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideV) { listaMLAT_Airborne_2coma5NM_V_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                    }
+
+                    if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0) 
+                    {
+                        listaMLAT_AIRBORNE5_CalibrationVehicle.Add(listaMLATmodeS[i]);
+
+                        if (insideK) { listaMLAT_Airborne_5NM_K_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideM) { listaMLAT_Airborne_5NM_M_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideO) { listaMLAT_Airborne_5NM_O_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideQ) { listaMLAT_Airborne_5NM_Q_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideS) { listaMLAT_Airborne_5NM_S_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                        if (insideU) { listaMLAT_Airborne_5NM_U_CalibrationVehicle.Add(listaMLATmodeS[i]); }
+                    }
+
+                    i = i + 1;
+                }
+            }
+
+
+            List<List<CAT10>> results = new List<List<CAT10>>();
+            results.Add(listaMLAT_Airborne_2coma5NM_L_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_2coma5NM_N_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_2coma5NM_P_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_2coma5NM_R_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_2coma5NM_T_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_2coma5NM_V_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_5NM_K_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_5NM_M_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_5NM_O_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_5NM_Q_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_5NM_S_CalibrationVehicle);
+            results.Add(listaMLAT_Airborne_5NM_U_CalibrationVehicle);
+            return results;
+        }
+
 
 
         public double[] CalculateProbabilityofUpdateGROUND(List<CAT10> listaMLAT_Apron)
@@ -2502,7 +4639,10 @@ namespace ASTERIX
                 }
             }
 
-            double[] values = new double[3] { contadorTrue, contadorTotal, listaaverages111.Average() * 100 };
+            double average = 0;
+            if (listaaverages111.Count() > 0) { average = listaaverages111.Average() * 100; }
+
+            double[] values = new double[3] { contadorTrue, contadorTotal, average};
             return values;
         }
 
@@ -2650,7 +4790,11 @@ namespace ASTERIX
                     }
                 }
             }
-            double[] values = new double[3] { contadorTrue, contadorTotal, listaaverages111.Average() * 100 };
+
+            double average = 0;
+            if (listaaverages111.Count() > 0) { average = listaaverages111.Average() * 100; }
+
+            double[] values = new double[3] { contadorTrue, contadorTotal, average };
             return values;
         }
 
@@ -3573,7 +5717,12 @@ namespace ASTERIX
             double contadorTrue = 0;
             double contadorTotal = 0;
 
-            ListaMLAT.AddRange(listaMLAT_Apron);
+            // Filtramos los paquetes que no tienen posicion
+            for(int q = 0; q< listaMLAT_Apron.Count; q++) 
+            { 
+                if ((listaMLAT_Apron[q].PositioninCartesianCoordinates.Length > 0 && listaMLAT_Apron[q].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLAT_Apron[q].PositioninCartesianCoordinates.Length > 0) || (listaMLAT_Apron[q].MeasuredPositioninPolarCoordinates.Length > 0)) 
+                { ListaMLAT.Add(listaMLAT_Apron[q]); }
+            }
 
             for (int s = 0; s < ListaMLAT.Count(); s++)
             {
@@ -3766,6 +5915,100 @@ namespace ASTERIX
             return listResults;
         }
 
+        public List<double> CalculateProbabilityofFalseIdentification(List<CAT10> listaMLAT)
+        {
+            // Nos entra una lista MLAT y la tenemos que dividir en listas de paquetes en intervalos de 5s
+            List<List<CAT10>> listof_5sinterval_lists = new List<List<CAT10>>();
+            double time = listaMLAT.First().TimeofDay_seconds;
+            int k = 0;
+            while (k < listaMLAT.Count())
+            {
+                List<CAT10> list1 = new List<CAT10>();
+                    while (k < listaMLAT.Count() && listaMLAT[k].TimeofDay_seconds < time + 5)
+                    {
+                        list1.Add(listaMLAT[k]);
+                        k = k + 1;
+                    }
+                time = time + 5;
+                listof_5sinterval_lists.Add(list1);
+            }
+
+            List<double> list_counterTrue = new List<double>();
+            List<double> list_counterTotal = new List<double>();
+            List<double> list_probability = new List<double>();
+            List<double> listResults = new List<double>();
+
+            for (int q = 0; q < listof_5sinterval_lists.Count; q++)
+            {
+                var listaMLATmodeS = listof_5sinterval_lists[q];
+
+                string TrackNumber;
+                List<string> listaTrackNumbers = new List<string>();
+                List<double> listofProbabilityofIdentification = new List<double>();
+
+                double counter_true = 0;
+                double counter_total = 0;
+
+                for (int i = 0; i < listaMLATmodeS.Count; i++)
+                {
+                    if (listaMLATmodeS[i].TrackNumber.Length > 0 && listaTrackNumbers.Contains(listaMLATmodeS[i].TrackNumber) == false)
+                    {
+                        TrackNumber = listaMLATmodeS[i].TrackNumber;
+                        listaTrackNumbers.Add(listaMLATmodeS[i].TrackNumber);
+
+                        List<CAT10> listapaquetesmismonombre = new List<CAT10>();
+
+                        // Ahora buscamos todos los paquetes con ese track number y los metemos en una lista
+
+                        for (int j = 0; j < listaMLATmodeS.Count; j++)
+                        {
+                            if (listaMLATmodeS[j].TrackNumber == TrackNumber) { listapaquetesmismonombre.Add(listaMLATmodeS[j]); }
+                        }
+
+                        // Ahora recorremos esa lista comprobando que todos los paquetes tengan el mismo Target Address
+                        // Contamos cuantos nombres hay y cuantas veces aparece cada uno, luego el Address que mas veces aparezca es el bueno y el resto son errores
+
+                        // 1- Contamos cuantos nombres diferentes hay
+                        List<string> listadenombres = new List<string>();
+                        for (int s = 0; s < listapaquetesmismonombre.Count(); s++)
+                        {
+                            if (listadenombres.Contains(listapaquetesmismonombre[s].TargetAdress) == false) { listadenombres.Add(listapaquetesmismonombre[s].TargetAdress); }
+                        }
+
+                        // 2- Cuantos paquetes hay con cada nombre?
+                        List<int> listadecontadores = new List<int>();
+                        for (int m = 0; m < listadenombres.Count; m++)
+                        {
+                            int counter = 0;
+                            for (int n = 0; n < listapaquetesmismonombre.Count; n++)
+                            {
+                                if (listadenombres[m] == listapaquetesmismonombre[n].TargetAdress) { counter = counter + 1; }
+                            }
+                            listadecontadores.Add(counter);
+                        }
+
+                        // 3- Calculamos porcentaje de aciertos/errores
+
+                        double casosbuenos = listadecontadores.Max();
+                        double casostotales = listapaquetesmismonombre.Count();
+
+                        counter_true = counter_true + casosbuenos;
+                        counter_total = counter_total + casostotales;
+                    }
+                }
+
+                list_counterTrue.Add(counter_true);
+                list_counterTotal.Add(counter_total);
+                list_probability.Add((counter_true / counter_total) * 100);
+            }
+            listResults.Add(list_counterTrue.Average());
+            listResults.Add(list_counterTotal.Average());
+            if(Double.IsNaN(list_probability.Average()) ) { listResults.Add(0); }
+            else { listResults.Add(list_probability.Average()); }
+
+            return listResults;
+        }
+
 
 
         public class PaqueteADSByTiempo
@@ -3789,7 +6032,5 @@ namespace ASTERIX
         {
 
         }
-
-
     }
 }
