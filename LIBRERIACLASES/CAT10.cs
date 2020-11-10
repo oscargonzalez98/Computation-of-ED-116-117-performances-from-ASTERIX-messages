@@ -1205,7 +1205,7 @@ namespace LIBRERIACLASES
                             string1 = Convert.ToString(Convert.ToInt32(string1, 16), 2);
                             string1 = AddZeros(string1);
 
-                            string string2 = Convert.ToString(paquete[data_position]);
+                            string string2 = Convert.ToString(paquete[data_position + 1]);
                             string2 = Convert.ToString(Convert.ToInt32(string2, 16), 2);
                             string2 = AddZeros(string2);
 
