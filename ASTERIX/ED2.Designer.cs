@@ -32,6 +32,12 @@
             this.Mapa = new GMap.NET.WindowsForms.GMapControl();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile = new System.Windows.Forms.Button();
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile = new System.Windows.Forms.Button();
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -84,6 +90,12 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile);
+            this.panel1.Controls.Add(this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile);
+            this.panel1.Controls.Add(this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile);
+            this.panel1.Controls.Add(this.pb_ProbabilityofUpdate_ED117_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_CalculateUpdateRate_ED117_ASTERIXfile);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
@@ -100,6 +112,65 @@
             this.label1.Size = new System.Drawing.Size(391, 18);
             this.label1.TabIndex = 11;
             this.label1.Text = "Calculated ED-117 Parameters from ASTERIX File:";
+            // 
+            // bt_CalculateUpdateRate_ED117_ASTERIXfile
+            // 
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.Location = new System.Drawing.Point(44, 87);
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.Name = "bt_CalculateUpdateRate_ED117_ASTERIXfile";
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.Size = new System.Drawing.Size(223, 33);
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.TabIndex = 12;
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.Text = "Calculate Update Rate";
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_CalculateUpdateRate_ED117_ASTERIXfile.Click += new System.EventHandler(this.bt_CalculateUpdateRate_ED117_ASTERIXfile_Click);
+            // 
+            // pb_ProbabilityofUpdate_ED117_ASTERIXfile
+            // 
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.Location = new System.Drawing.Point(44, 126);
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.Name = "pb_ProbabilityofUpdate_ED117_ASTERIXfile";
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.Size = new System.Drawing.Size(223, 33);
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.TabIndex = 13;
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.Text = "Calculate Probability of Update";
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.pb_ProbabilityofUpdate_ED117_ASTERIXfile.Click += new System.EventHandler(this.pb_ProbabilityofUpdate_ED117_ASTERIXfile_Click);
+            // 
+            // bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile
+            // 
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.Location = new System.Drawing.Point(44, 165);
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.Name = "bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile";
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.Size = new System.Drawing.Size(223, 33);
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.TabIndex = 14;
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.Text = "Calculate Precission Accuracy";
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile.Click += new System.EventHandler(this.bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile_Click);
+            // 
+            // bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile
+            // 
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.Location = new System.Drawing.Point(44, 204);
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.Name = "bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile";
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.Size = new System.Drawing.Size(223, 33);
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.TabIndex = 15;
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.Text = "Calculate Probability of MLAT Detection";
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile.Click += new System.EventHandler(this.bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile_Click);
+            // 
+            // bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile
+            // 
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile.Location = new System.Drawing.Point(44, 243);
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile.Name = "bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile";
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile.Size = new System.Drawing.Size(223, 33);
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile.TabIndex = 16;
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile.Text = "Calculate Probability of Identification";
+            this.bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile.UseVisualStyleBackColor = true;
+            // 
+            // bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile
+            // 
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.Location = new System.Drawing.Point(44, 282);
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.Name = "bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile";
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.Size = new System.Drawing.Size(223, 33);
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.TabIndex = 17;
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.Text = "Calculate Probability of Identification";
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile.Click += new System.EventHandler(this.bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile_Click);
             // 
             // ED2
             // 
@@ -123,5 +194,11 @@
         private GMap.NET.WindowsForms.GMapControl Mapa;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bt_CalculateUpdateRate_ED117_ASTERIXfile;
+        private System.Windows.Forms.Button pb_ProbabilityofUpdate_ED117_ASTERIXfile;
+        private System.Windows.Forms.Button bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile;
+        private System.Windows.Forms.Button bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile;
+        private System.Windows.Forms.Button bt_ProbabilityofMLATIdentification_ED117_ASTERIXFile;
+        private System.Windows.Forms.Button bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile;
     }
 }

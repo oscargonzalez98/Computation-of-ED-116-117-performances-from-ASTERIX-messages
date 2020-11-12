@@ -802,7 +802,7 @@ namespace ASTERIX
                 if (listaCAT10[i].SAC == 0 && listaCAT10[i].SIC == 107) { listaMLAT.Add(listaCAT10[i]); }
             }
 
-            //////----------------------------------------------------------------------- Filtramos paquetes MLAT y ADSB (Quitamos periodic updates, ground vehicles, paquetes muy lejanos, etc...)
+            //////----------------------------------------------------------------------- Filtramos paquetes MLAT y ADSB (Quitamos periodic updates, ground vehicles, paquetes muy lejanos, paquetes con version MOPS != 2 etc...)
 
             FilterCAT21messages(listaCAT21);
             CalculateARP_MLAT_SMR_coordinates();
@@ -814,9 +814,486 @@ namespace ASTERIX
             FilterByAirportZones(listaMLAT);
         }
 
+        #region Buttons to calculate ED-117 performances from ASTERIX file
+
+        private void bt_CalculateUpdateRate_ED117_ASTERIXfile_Click(object sender, EventArgs e)
+        {
+            List<IndividualBar> listBarsUpdateRate = new List<IndividualBar>();
+            List<string> listaNombresUsados = new List<string>();
+            List<List<CAT10>> listadelistasdeavionesconmismonombre = new List<List<CAT10>>();
+            List<double> listaAvgDelay = new List<double>();
+
+            int i = 0;
+            while (i < listaMLAT.Count)
+            {
+                string TargetIdentification;
+                string TargetAddress;
+
+                if ((listaMLAT[i].TargetIdentification.Length > 0 && listaMLAT[i].TargetAdress.Length > 0) || (listaMLAT[i].TargetIdentification.Length > 0) || (listaMLAT[i].TargetAdress.Length > 0)) // cojemos los paquetes que tienen Target Address y/o Target Identification
+                {
+                    TargetIdentification = listaMLAT[i].TargetIdentification_decoded;
+                    TargetAddress = listaMLAT[i].TargetAdress_decoded;
+
+                    if ((listaNombresUsados.Contains(TargetIdentification) && listaNombresUsados.Contains(TargetAddress)) || (listaNombresUsados.Contains(TargetIdentification)) || (listaNombresUsados.Contains(TargetAddress))) // si Target Address y/o Target Identification estan en la lista de paquetes ya calculados no hacemos nada
+                    { }
+                    else
+                    {
+                        int j = i + 1;
+                        List<CAT10> ListaPlanesMismoNombre = new List<CAT10>();
+                        ListaPlanesMismoNombre.Add(listaMLAT[i]);
+                        while (j < listaMLAT.Count)
+                        {
+                            if (listaMLAT[j].TargetIdentification_decoded == TargetIdentification && listaMLAT[j].TargetIdentification_decoded != "")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLAT[j]);
+                                listaNombresUsados.Add(TargetIdentification);
+                            }
+
+                            else if (listaMLAT[j].TargetAdress_decoded == TargetAddress && listaMLAT[j].TargetAdress_decoded != "")
+                            {
+                                ListaPlanesMismoNombre.Add(listaMLAT[j]);
+                                listaNombresUsados.Add(TargetAddress);
+                            }
+                            j = j + 1;
+                        }
+
+                        listadelistasdeavionesconmismonombre.Add(ListaPlanesMismoNombre);
+
+                        int k = 0;
+                        double AvgSeconds = 0;
+                        int counter = 0;
+                        while (k < ListaPlanesMismoNombre.Count - 1)
+                        {
+                            if (Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds) < 30) // si entre un report y otro hay +10s de diferencia asumimos que el vehiculo ha dejado de emitir y por tanto no cuenta como tiempo entre mensaje y mensaje
+                            {
+                                AvgSeconds = AvgSeconds + Math.Abs(ListaPlanesMismoNombre[k + 1].TimeofDay_seconds - ListaPlanesMismoNombre[k].TimeofDay_seconds);
+                                counter = counter + 1;
+                            }
+                            k = k + 1;
+                        }
+                        AvgSeconds = AvgSeconds / counter;
+                        listaAvgDelay.Add(AvgSeconds);
+
+                        IndividualBar bar1 = new IndividualBar(TargetIdentification, TargetAddress, AvgSeconds);
+                        listBarsUpdateRate.Add(bar1);
+                    }
+                }
+                i = i + 1;
+            }
+
+            BarGraphPlot BGP1 = new BarGraphPlot(listBarsUpdateRate);
+            BGP1.Show();
+        }
+
+        private void pb_ProbabilityofUpdate_ED117_ASTERIXfile_Click(object sender, EventArgs e)
+        {
+            List<double> results = CalculateProbabilityofUpdate(listaMLAT);
+            List<double> results1 = CalculateProbabilityofUpdate(listaMLAT_Stand);
+            List<double> results2 = CalculateProbabilityofUpdate(listaMLAT_Apron);
+            List<double> results3 = CalculateProbabilityofUpdate(listaMLAT_MA);
+            List<double> results4 = CalculateProbabilityofUpdate(listaMLAT_Airborne_2coma5NM);
+            List<double> results5 = CalculateProbabilityofUpdate(listaMLAT_Airborne_5NM);
+        }
+
+        private void bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile_Click(object sender, EventArgs e)
+        {
+            List<double> listadistancesSTAND = CalculatePrecissionAccuracy(listaMLAT_Stand, listaCAT21_NearAirport);
+            listadistancesSTAND.Sort();
+
+            List<double> listadistancesAPRON = CalculatePrecissionAccuracy(listaMLAT_Apron, listaCAT21_NearAirport);
+            listadistancesAPRON.Sort();
+
+            List<double> listadistancesMA = CalculatePrecissionAccuracy(listaMLAT_MA, listaCAT21_NearAirport);
+            listadistancesMA.Sort();
+
+            List<double> listadistancesAirborne25 = CalculatePrecissionAccuracy(listaMLAT_Airborne_2coma5NM, listaCAT21_NearAirport);
+            listadistancesAirborne25.Sort();
+
+            List<double> listadistancesAirborne5 = CalculatePrecissionAccuracy(listaMLAT_Airborne_5NM, listaCAT21_NearAirport);
+            listadistancesAirborne5.Sort();
+        }
+
+        private void bt_CalculateProbabilityofMLATDetection_ED117_ASTERIXfile_Click(object sender, EventArgs e)
+        {
+            List<double> results1 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand, 5);
+            List<double> results2 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron, 2);
+            List<double> results3 = CalculatePRobabilityofMLATDetection(listaMLAT_MA, 2);
+            List<double> results4 = CalculatePRobabilityofMLATDetection(listaMLAT_Airborne_2coma5NM, 1);
+            List<double> results5 = CalculatePRobabilityofMLATDetection(listaMLAT_Airborne_5NM, 1);
+        }
+
+        private void bt_ProbabilityofMLATIdentification_ED117_fromASTERIXfile_Click(object sender, EventArgs e)
+        {
+            List<double> results = CalculatePRobabilityofIdentification(listaMLAT);
+            List<double> results1 = CalculatePRobabilityofIdentification(listaMLAT_Stand);
+            List<double> results2 = CalculatePRobabilityofIdentification(listaMLAT_Apron);
+            List<double> results3 = CalculatePRobabilityofIdentification(listaMLAT_MA);
+            List<double> results4 = CalculatePRobabilityofIdentification(listaMLAT_Airborne_2coma5NM);
+            List<double> results5 = CalculatePRobabilityofIdentification(listaMLAT_Airborne_5NM);
+        }
+
+        #endregion
+
+        #region Functions to calculate ED-117 performances from ASTERIX file
+
+        public List<double> CalculateProbabilityofUpdate(List<CAT10> lista)
+        {
+            List<CAT10> listaMLATmessages = new List<CAT10>();
+            listaMLATmessages.AddRange(lista);
+
+            // Separamos mensajes por Track Number
+
+            List<double> list_of_TrackNumbers = new List<double>();
+            for(int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                double tracknumber = listaMLATmessages[i].Tracknumber_value;
+                if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
+            }
+
+            // Agrupamos los paquetes por Track Number
+
+            List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+            for(int i = 0; i < list_of_TrackNumbers.Count(); i++)
+            {
+                List<CAT10> list_of_planes = new List<CAT10>();
+                for(int j = 0; j < listaMLATmessages.Count(); j++)
+                {
+                    if(listaMLATmessages[j].Tracknumber_value == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                }
+                list_of_list_of_planes.Add(list_of_planes);
+            }
+
+            // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+
+            double found_messages = 0;
+            double expected_messages = 0;
+
+            for (int i = 0; i < list_of_list_of_planes.Count(); i++)
+            {
+                List<CAT10> listplanes = list_of_list_of_planes[i];
+
+                if(listplanes.Count() > 1)
+                {
+                    for(int j = 0; j < listplanes.Count() - 1; j++)
+                    {
+                        double timedelay = listplanes[j + 1].TimeofDay_seconds - listplanes[j].TimeofDay_seconds;
+                        if(timedelay <= 1) { found_messages++; }
+                        expected_messages++;
+                    }
+                }
+            }
+
+            double probabilityofupdate;
+            try
+            {
+                probabilityofupdate = found_messages / expected_messages;
+            }
+            catch
+            {
+                probabilityofupdate = 0;
+            }
+
+            List<double> results = new List<double>() {found_messages, expected_messages, probabilityofupdate };
+            return results;
+        }
+
+        public List<double> CalculatePrecissionAccuracy(List<CAT10> list1, List<CAT21> list2)
+        {
+            List<CAT10> listaMLATmessages = new List<CAT10>();
+            listaMLATmessages.AddRange(list1);
+
+            List<CAT21> listaCAT21messages = new List<CAT21>();
+            listaCAT21messages.AddRange(list2);
+
+            List<double> listadistances = new List<double>();
+
+            // Recorremos listaMLAT
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                int index_i = 1000000;
+                int index_j = 1000000;
+                double distance = 1e8;
+                string TargetAddressMLAT = listaMLATmessages[i].TargetAdress_decoded;
+
+                // Recorremos listaCAT21 y guardamos los paquetes con mismo Target Address
+                List<CAT21> listaavionesCAT21mismonombre = new List<CAT21>();
+                for (int j = 0; j < listaCAT21messages.Count(); j++) { if (listaCAT21messages[j].TargetAdress_real == TargetAddressMLAT) { listaavionesCAT21mismonombre.Add(listaCAT21messages[j]); } }
+
+                if (listaavionesCAT21mismonombre.Count > 1)
+                {
+                    //Vamos a hacer una lista de objetos donde cada objeto tiene un cat21 y un tiempo
+                    List<PaqueteADSByTiempo> listaavionesCAT21mismonombre1 = new List<PaqueteADSByTiempo>();
+                    for (int s = 0; s < listaavionesCAT21mismonombre.Count(); s++)
+                    {
+                        PaqueteADSByTiempo datosytiepo1;
+                        if (listaavionesCAT21mismonombre[s].TimeofApplicability_Position.Length > 0)
+                        {
+                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofApplicability_Position_seconds, listaavionesCAT21mismonombre[s]);
+                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
+                        }
+                        else if (listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition.Length > 0)
+                        {
+                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition_seconds, listaavionesCAT21mismonombre[s]);
+                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
+                        }
+                        else
+                        {
+                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_Position_seconds, listaavionesCAT21mismonombre[s]);
+                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
+                        }
+                    }
+
+                    // Ordenamos lista por tiempo
+                    List<PaqueteADSByTiempo> ListaPlanesMismoNombre1 = listaavionesCAT21mismonombre1.OrderBy(o => o.time).ToList();
+
+                    // Calculamos una linea entre el paquete ADSB anterior y posterior al tMLAT
+                    int indexj_anterior = 1000000;
+                    int indexj_posterior = 1000000;
+
+                    double timeMLAT = listaMLATmessages[i].TimeofDay_seconds;
+
+                    // 1. Buscamos posicion paquete inmediatamente anterior
+                    for (int t = 0; t < ListaPlanesMismoNombre1.Count(); t++)
+                    {
+                        if (ListaPlanesMismoNombre1[t].time < timeMLAT) { indexj_anterior = t; }
+                    }
+
+                    // 2. Buscamos posicion paquete inmediatamente posterior
+                    for (int r = ListaPlanesMismoNombre1.Count() - 1; r >= 0; r--)
+                    {
+                        if (ListaPlanesMismoNombre1[r].time > timeMLAT) { indexj_posterior = r; }
+                    }
+
+                    // Si hemos encontrado un index anterior y posterior (es decir si los valores iniciales de index anterior y posterior han cambiado)
+                    if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && Math.Abs(indexj_anterior - indexj_posterior) <= 1)
+                    {
+                        CoordinatesWGS84 newCcoordinatesADSB = new CoordinatesWGS84();
+
+                        //Interpolamos para encontrar Lat
+                        double x0 = ListaPlanesMismoNombre1[indexj_anterior].time;
+                        double x1 = ListaPlanesMismoNombre1[indexj_posterior].time;
+                        double x = timeMLAT;
+
+                        double y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordGeodesic.Lat;
+                        double y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordGeodesic.Lat;
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCcoordinatesADSB.Lat = (y0 + y1) / 2;
+                        }
+                        newCcoordinatesADSB.Lat = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                        // Interpolamos para encontrar Lon
+                        y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordGeodesic.Lon;
+                        y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordGeodesic.Lon;
+                        //x = timeMLAT;
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCcoordinatesADSB.Lon = (y0 + y1) / 2;
+                        }
+                        newCcoordinatesADSB.Lon = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                        // Interpolamos para encontrar Alt
+                        y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordGeodesic.Height * GeoUtils.FEET2METERS;
+                        y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordGeodesic.Height * GeoUtils.FEET2METERS;
+                        //x = timeMLAT;
+
+                        if ((x1 - x0) == 0)
+                        {
+                            newCcoordinatesADSB.Height = (y0 + y1) / 2;
+                        }
+                        newCcoordinatesADSB.Height = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                        // Calculamos distancia entre la newCoordinatesADSB inteprolada y las coordenadas del paquete MLAT de turno
+                        
+                        // 1. Pasamos las newCoordinatesADSB de Geodescas a Stereograficas
+
+                        CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(newCcoordinatesADSB);
+                        CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+                        CoordinatesUVH newCoordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+
+                        // 2. Calculamos distancia
+
+                        double U1 = listaMLATmessages[i].coordStereographic.U;
+                        double V1 = listaMLATmessages[i].coordStereographic.V;
+
+                        double U2 = newCoordStereographic.U;
+                        double V2 = newCoordStereographic.V;
+
+                        double distances = Math.Sqrt((U2 - U1) * (U2 - U1) + (V2 - V1) * (V2 - V1));
+                        listadistances.Add(distances);
+                    }
+                }
+            }
+
+            return listadistances;
+        }
+
+        public List<double> CalculatePRobabilityofMLATDetection(List<CAT10> list, double interval)
+        {
+            List<CAT10> listaMLATmessages = new List<CAT10>();
+            listaMLATmessages.AddRange(list);
+
+            // Filtramos paquetes sin info de posicion
+            List<CAT10> list1 = new List<CAT10>();
+            for(int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                if ((listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0) || (listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0))
+                {
+                    list1.Add(listaMLATmessages[i]);
+                }
+            }
+            listaMLATmessages.Clear();
+            listaMLATmessages.AddRange(list1);
+
+            // Separamos mensajes por Track Number
+
+            List<double> list_of_TrackNumbers = new List<double>();
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                double tracknumber = listaMLATmessages[i].Tracknumber_value;
+                if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
+            }
+
+            // Agrupamos los paquetes por Track Number
+
+            List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+            for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
+            {
+                List<CAT10> list_of_planes = new List<CAT10>();
+                for (int j = 0; j < listaMLATmessages.Count(); j++)
+                {
+                    if (listaMLATmessages[j].Tracknumber_value == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                }
+                list_of_list_of_planes.Add(list_of_planes);
+            }
+
+            // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+
+            double found_messages = 0;
+            double expected_messages = 0;
+
+            for (int i = 0; i < list_of_list_of_planes.Count(); i++)
+            {
+                List<CAT10> listplanes = list_of_list_of_planes[i];
+
+                if (listplanes.Count() > 1)
+                {
+                    for (int j = 0; j < listplanes.Count() - 1; j++)
+                    {
+                        double timedelay = listplanes[j + 1].TimeofDay_seconds - listplanes[j].TimeofDay_seconds;
+                        if (timedelay <= interval) { found_messages++; }
+                        expected_messages++;
+                    }
+                }
+            }
+
+            double probabilityofupdate;
+            try
+            {
+                probabilityofupdate = found_messages / expected_messages;
+            }
+            catch
+            {
+                probabilityofupdate = 0;
+            }
+
+            List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate };
+            return results;
+        }
+
+        public List<double> CalculatePRobabilityofIdentification(List<CAT10> list)
+        {
+            List<CAT10> listaMLATmessages = new List<CAT10>();
+            listaMLATmessages.AddRange(list);
+
+            // Separamos mensajes por Track Number
+
+            List<double> list_of_TrackNumbers = new List<double>();
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                double tracknumber = listaMLATmessages[i].Tracknumber_value;
+                if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
+            }
+
+            // Agrupamos los paquetes por Track Number
+
+            List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+            for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
+            {
+                List<CAT10> list_of_planes = new List<CAT10>();
+                for (int j = 0; j < listaMLATmessages.Count(); j++)
+                {
+                    if (listaMLATmessages[j].Tracknumber_value == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                }
+                list_of_list_of_planes.Add(list_of_planes);
+            }
+
+            // Vamos lista por lista comprobando cuantos paquetes estan bien y cuantos mal
+            double found_messages = 0;
+            double expected_messages = 0;
+
+            for (int i = 0; i < list_of_list_of_planes.Count(); i++)
+            {
+                List<CAT10> listplanes = list_of_list_of_planes[i];
+
+                // Ahora buscamos cuantos Target Address diferentes hay dento de la lista listplanes
+                List<string> listaTargetAddress = new List<string>();
+                List<double> listaCounters = new List<double>();
+                for(int j = 0; j < listplanes.Count(); j++)
+                {
+                    if(listaTargetAddress.Contains(listplanes[j].TargetAdress_decoded) == false)
+                    {
+                        listaTargetAddress.Add(listplanes[j].TargetAdress_decoded);
+                        int counter = 0;
+                        for(int k = 0; k < listplanes.Count(); k++)
+                        {
+                            if (listplanes[k].TargetAdress_decoded == listplanes[j].TargetAdress_decoded) { counter++; }
+                        }
+                        listaCounters.Add(counter);
+                    }
+                }
+
+                found_messages = found_messages + listaCounters.Max();
+                expected_messages = expected_messages + listaCounters.Sum();
+            }
+
+            double probabilityofidentification;
+            try
+            {
+                probabilityofidentification = found_messages / expected_messages;
+            }
+            catch
+            {
+                probabilityofidentification = 0;
+            }
+
+            List<double> results = new List<double>() { found_messages, expected_messages, probabilityofidentification };
+            return results;
+        }
+
+        #endregion
+
+        #region Classes to calculate ED-117 performances from ASTERIX file
+
+        public class PaqueteADSByTiempo
+        {
+            public double time;
+            public CAT21 cat21;
+
+            public PaqueteADSByTiempo(double time, CAT21 cat21)
+            {
+                this.cat21 = cat21;
+                this.time = time;
+            }
+        }
+
+        #endregion
+
         #region Filtering Functions
 
-            public void FilterByAirportZones(List<CAT10> listaMLATmessages1)
+        public void FilterByAirportZones(List<CAT10> listaMLATmessages1)
             {
                 List<CAT10> listaMLATmessages = new List<CAT10>();
                 listaMLATmessages.AddRange(listaMLATmessages1);
@@ -1533,32 +2010,42 @@ namespace ASTERIX
                 }
             } // Separamos los paquetes MLAT por zonas del Aeropuerto
 
-            public void FilterMLATmessages(List<CAT10> listaMLATmessages)
+        public void FilterMLATmessages(List<CAT10> listaMLATmessages)
+        {
+            List<CAT10> list = new List<CAT10>();
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
             {
-                List<CAT10> list = new List<CAT10>();
-                for (int i = 0; i < listaMLATmessages.Count(); i++)
-                {
-                    if (listaMLATmessages[i].TOT == "Aircraft.") { list.Add(listaMLATmessages[i]); }
-                }
-                listaMLATmessages.Clear();
-                listaMLATmessages.AddRange(list);
-            } // Filtramos paquetes MLAT (Quitamos periodic updates, ground vehicles, etc...)
+                if (listaMLATmessages[i].TOT == "Aircraft.") { list.Add(listaMLATmessages[i]); }
+            }
+            listaMLATmessages.Clear();
+            listaMLATmessages.AddRange(list);
+        } // Filtramos paquetes MLAT (Quitamos periodic updates, ground vehicles, etc...)
 
-            public void FilterCAT21messages(List<CAT21> listaCAT21messages)
-            {// Filtramos paquetes ADSB (Quitamos periodic updates, ground vehicles, etc...)
-                List<CAT21> list1 = new List<CAT21>();
-                for (int i = 0; i < listaCAT21messages.Count(); i++)
-                {
-                    string ECAT = listaCAT21messages[i].ECAT;
+        public void FilterCAT21messages(List<CAT21> listaCAT21messages)
+        {// Filtramos paquetes ADSB (Quitamos periodic updates, ground vehicles, etc...)
+            List<CAT21> list1 = new List<CAT21>();
+            for (int i = 0; i < listaCAT21messages.Count(); i++)
+            {
+                string ECAT = listaCAT21messages[i].ECAT;
 
-                    if (ECAT != "Line obstacle." && ECAT != "Cluster obstacle." && ECAT != "Fixed ground or tethered obstruction." && ECAT != "Surface service vehicle." && ECAT != "Surface emergency vehicle" && ECAT != "Parachutist/Skydiver." && ECAT != "No ADS-B Emitter Category Information.")
-                    {
-                        list1.Add(listaCAT21messages[i]);
-                    }
+                if (ECAT != "Line obstacle." && ECAT != "Cluster obstacle." && ECAT != "Fixed ground or tethered obstruction." && ECAT != "Surface service vehicle." && ECAT != "Surface emergency vehicle" && ECAT != "Parachutist/Skydiver." && ECAT != "No ADS-B Emitter Category Information.")
+                {
+                    list1.Add(listaCAT21messages[i]);
                 }
-                listaCAT21messages.Clear();
-                listaCAT21messages.AddRange(list1);
-            } // Filtramos paquetes ADSB (Quitamos periodic updates, ground vehicles, etc...)
+            }
+            listaCAT21messages.Clear();
+            listaCAT21messages.AddRange(list1);
+
+            List<CAT21> list2 = new List<CAT21>();
+            for(int i = 0; i< listaCAT21messages.Count(); i++)
+            {
+                if (listaCAT21messages[i].VN == "ED102A/DO-260B [Ref. 11].")
+                {
+                    list2.Add(listaCAT21messages[i]);
+                }
+            }
+
+        } // Filtramos paquetes ADSB (Quitamos periodic updates, ground vehicles, etc...)
 
             public void CalculateARP_MLAT_SMR_coordinates()
             {
@@ -1627,7 +2114,7 @@ namespace ASTERIX
         # endregion
 
         #region Vincenty Equations & Related
-        public double toRadians(double grados)
+            public double toRadians(double grados)
             {
                 return grados * Math.PI / 180;
             }
@@ -1844,6 +2331,11 @@ namespace ASTERIX
                 return listaCoordenadas;
             }
 
+
+
+
         #endregion
+
+
     }
 }
