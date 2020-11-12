@@ -10,8 +10,22 @@ namespace LIBRERIACLASES
 {
     public class CAT21
     {
-        public double LatARP = 41.297063;
-        public double LonARP = 2.078447;
+        // Centro de coordenadas SMR
+        double LatSMR = 41 + (17.0 / 60.0) + (44.226 / 3600);
+        double LonSMR = 02 + (05.0 / 60.0) + (42.411 / 3600);
+
+        // Centro de coordenadas MLAT
+        double LatMLAT = 41 + (17.0 / 60.0) + (49.426 / 3600);
+        double LonMLAT = 02 + (04.0 / 60.0) + (42.410 / 3600);
+        //double LatMLAT = 41.297063;
+        //double LonMLAT = 2.078447;
+
+        // Coordenadas ARP
+        double LatARP = 41 + (17.0 / 60.0) + (49.426 / 3600);
+        double LonARP = 02 + (04.0 / 60.0) + (42.410 / 3600);
+
+        double E = Math.Sqrt(0.00669437999013);
+        double A = 6378137.0;
 
         GeoUtils GeoUtils1;
 
@@ -60,8 +74,9 @@ namespace LIBRERIACLASES
         public double latWGS84_HR = 0;
         public double lonWGS84_HR = 0;
 
-        public CoordinatesWGS84 coordinatesWGS84;
-        public CoordinatesUVH coordinatesUVH;
+        public CoordinatesWGS84 coordGeodesic;
+        public CoordinatesUVH coordStereographic;
+        public CoordinatesXYZ coordSystemCartesian;
 
         public string TimeofApplicability_Velocity = "";
         public double TimeofApplicability_Velocity_seconds;
@@ -2036,7 +2051,7 @@ namespace LIBRERIACLASES
 
         public void Calculate_FSPEC(string[] paquete)
         {
-            GeoUtils1 = new GeoUtils(Math.Sqrt(0.00669437999013), 6378137.0, new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS));
+            GeoUtils1 = new GeoUtils( E , A , new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS));
 
             int j = 3;
             bool found = false;
@@ -2216,10 +2231,10 @@ namespace LIBRERIACLASES
 
                     CalculatePositionWGS84_coordinates(PositioninWGS_coordinates);
 
-                    coordinatesWGS84 = new CoordinatesWGS84(latWGS84*GeoUtils.DEGS2RADS, lonWGS84*GeoUtils.DEGS2RADS);
-                    CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordinatesWGS84);
-                    CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
-                    coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+                    //coordinatesWGS84 = new CoordinatesWGS84(latWGS84*GeoUtils.DEGS2RADS, lonWGS84*GeoUtils.DEGS2RADS);
+                    //CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordinatesWGS84);
+                    //CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+                    //coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
 
                 }// 6 I021/130 Position in WGS-84 coordinates
@@ -2265,10 +2280,10 @@ namespace LIBRERIACLASES
 
                     CalculatePositionWGS84_HRcoordinates(PositioninWGS_HRcoordinates);
 
-                    coordinatesWGS84 = new CoordinatesWGS84(latWGS84_HR * GeoUtils.DEGS2RADS, lonWGS84_HR * GeoUtils.DEGS2RADS);
-                    CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordinatesWGS84);
-                    CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
-                    coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+                    //coordinatesWGS84 = new CoordinatesWGS84(latWGS84_HR * GeoUtils.DEGS2RADS, lonWGS84_HR * GeoUtils.DEGS2RADS);
+                    //CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordinatesWGS84);
+                    //CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+                    //coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
                 } // 7 I021/131 Position in WGS-84 co-ordinates, high res
 
@@ -3023,6 +3038,23 @@ namespace LIBRERIACLASES
                     }
                 }
             }
+
+            // Pasamos a Geodesic
+            if (this.PositioninWGS_HRcoordinates.Length > 0)
+            {
+                coordGeodesic = new CoordinatesWGS84(this.latWGS84_HR * GeoUtils.DEGS2RADS, this.lonWGS84_HR * GeoUtils.DEGS2RADS, this.GeometricHeight_feet * GeoUtils.FEET2METERS);
+            }
+            else
+            {
+                coordGeodesic = new CoordinatesWGS84(this.latWGS84 * GeoUtils.DEGS2RADS, this.lonWGS84 * GeoUtils.DEGS2RADS, this.GeometricHeight_feet * GeoUtils.FEET2METERS);
+            }
+
+            // Calculamos coordenadas System Cartesian
+            CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordGeodesic);
+            coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+
+            // Calculamos coordenadas Stereograficas
+            coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
         }
     }
 }

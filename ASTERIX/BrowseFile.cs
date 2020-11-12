@@ -25,6 +25,9 @@ namespace ASTERIX
         public bool forASTERIX;
         public bool forMULTI;
 
+        int SAC = 0;
+        int SIC = 0;
+
 
         public BrowseFile(bool forASTERIX, bool forMULTI)
         {
@@ -98,12 +101,89 @@ namespace ASTERIX
                     {
                         string path = tbDirection.Text;
                         Fichero newfichero = new Fichero(path);
-                        newfichero.leer();
+                        List<string[]> listahex = newfichero.leer();
 
-                        listaCAT21v23 = newfichero.GetListCAT21v23();
-                        listaCAT21 = newfichero.GetListCAT21(); // devuelve lista de clases CAT21, cada una con un paquete
-                        listaCAT20 = newfichero.GetListCAT20();
-                        listaCAT10 = newfichero.getListCAT10();
+                        progressBar1.Visible = true;
+                        progressBar1.Value = 0;
+                        progressBar1.Maximum = listahex.Count();
+
+                        for (int q = 0; q < listahex.Count; q++)
+                        {
+                            string[] arraystring = listahex[q];
+                            int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
+
+                            if (CAT == 10)
+                            {
+                                CAT10 newcat10 = new CAT10(arraystring);
+                                newcat10.Calculate_FSPEC(newcat10.paquete);
+                                listaCAT10.Add(newcat10);
+                            }
+
+
+                            if (CAT == 21)
+                            {
+
+                                string FSPEC = "";
+
+                                int j = 3;
+                                bool found = false;
+
+                                while (found == false)
+                                {
+                                    FSPEC = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);// Convertir de hex a binario paquete [3]
+                                    FSPEC = AddZeros(FSPEC);
+
+                                    if (Char.ToString(FSPEC[FSPEC.Length - 1]) == "1")
+                                    {
+                                        while (Char.ToString(FSPEC[FSPEC.Length - 1]) != "0")
+                                        {
+                                            j = j + 1;
+                                            string parte2 = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);
+                                            parte2 = AddZeros(parte2);
+
+                                            FSPEC = String.Concat(FSPEC, parte2);
+                                        }
+
+                                        found = true;
+                                    }
+
+                                    found = true;
+                                }
+
+                                int data_position = 1 + 2 + ((FSPEC.Length) / 8);
+
+                                string string1 = Convert.ToString(arraystring[data_position]);
+                                string1 = Convert.ToString(Convert.ToInt32(string1, 16), 2);
+                                string1 = AddZeros(string1);
+
+                                string string2 = Convert.ToString(arraystring[data_position + 1]);
+                                string2 = Convert.ToString(Convert.ToInt32(string2, 16), 2);
+                                string2 = AddZeros(string2);
+
+                                data_position = data_position + 2;
+
+                                string DataSourceIdentification = String.Concat(string1, string2);
+
+                                Calculate_DataSourceIdentification(DataSourceIdentification);
+
+                                // ahora que sabemos que version es cada paquete los metemos en su lista correspondiente.
+
+                                if (SAC == 20 && SIC == 219)
+                                {
+                                    CAT21 newcat21 = new CAT21(arraystring);
+                                    newcat21.Calculate_FSPEC(newcat21.paquete);
+                                    listaCAT21.Add(newcat21);
+                                }
+
+                                if (SAC == 0 && SIC == 107)
+                                {
+                                    CAT21v23 newcat21v23 = new CAT21v23(arraystring);
+                                    newcat21v23.Calculate_FSPEC(newcat21v23.paquete);
+                                    listaCAT21v23.Add(newcat21v23);
+                                }
+                            }
+                            progressBar1.Value = progressBar1.Value + 1;
+                        }
 
                         this.Close();
                     }
@@ -165,6 +245,63 @@ namespace ASTERIX
 
                 this.Close();
             }
+        }
+
+        public double Calculate_ComplementoA2(string bits)
+        {
+            if (bits == "1")
+                return -1;
+            if (bits == "0")
+                return 0;
+            else
+            {
+                if (Convert.ToString(bits[0]) == "0")
+                {
+                    int num = Convert.ToInt32(bits, 2);
+                    return Convert.ToSingle(num);
+                }
+                else
+                {
+                    //elimino primer bit
+                    string bitss = bits.Substring(1, bits.Length - 1);
+
+                    //creo nuevo string cambiando 0s por 1s y viceversa
+                    string newbits = "";
+                    int i = 0;
+                    while (i < bitss.Length)
+                    {
+                        if (Convert.ToString(bitss[i]) == "1")
+                            newbits = newbits + "0";
+                        if (Convert.ToString(bitss[i]) == "0")
+                            newbits = newbits + "1";
+                        i++;
+                    }
+
+                    //convertimos a int
+                    double num = Convert.ToInt32(newbits, 2);
+
+                    return -(num + 1);
+                }
+            }
+        }
+
+        public string AddZeros(string octeto)
+        {
+            while (octeto.Length < 8)
+            {
+                octeto = octeto.Insert(0, "0");
+            }
+
+            return octeto;
+        }
+
+        public void Calculate_DataSourceIdentification(string paquete)
+        {
+            string string1 = paquete.Substring(0, 8);
+            string string2 = paquete.Substring(8, 8);
+
+            SAC = Convert.ToInt32(string1, 2);
+            SIC = Convert.ToInt32(string2, 2);
         }
 
         private void tbDirection_TextChanged(object sender, EventArgs e)

@@ -131,5 +131,10 @@ namespace ASTERIX
             listaCalibrationDataVehicle = browsefile1.listaMLATCalibrationVehicleData;
         }
 
+        private void btn_ED2_Click(object sender, EventArgs e)
+        {
+            ED2 ED2 = new ED2(listaCAT10, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
+            ED2.Show();
+        }
     }
 }

@@ -61,3 +61,12 @@ C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad As
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.deps.json
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\bin\Debug\netstandard2.0\LIBRERIACLASES.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csprojAssemblyReference.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfoInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.AssemblyInfo.cs
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.csproj.CoreCompileInputs.cache
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\LIBRERIACLASES\obj\Debug\netstandard2.0\LIBRERIACLASES.pdb

@@ -146,6 +146,12 @@
     <Compile Include="ED1.Designer.cs">
       <DependentUpon>ED1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ED2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ED2.Designer.cs">
+      <DependentUpon>ED2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Export.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -363,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ED1.resx">
       <DependentUpon>ED1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ED2.resx">
+      <DependentUpon>ED2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Export.resx">
       <DependentUpon>Export.cs</DependentUpon>

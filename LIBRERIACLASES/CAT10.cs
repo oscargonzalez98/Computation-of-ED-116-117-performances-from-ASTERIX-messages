@@ -13,16 +13,22 @@ namespace LIBRERIACLASES
 {
     public class CAT10
     {
-        //public double LatARP = 41 + (17 / 60) + (49.426 / 3600);
-        //public double LonARP = 002 + (04 / 60) + (42.410 / 3600);
+        // Centro de coordenadas SMR
+        double LatSMR = 41 + (17.0 / 60.0) + (44.226 / 3600);
+        double LonSMR = 02 + (05.0 / 60.0) + (42.411 / 3600);
 
-        // CoordenadasSMR
-        double LatSMR = 41.295618;
-        double LonSMR = 2.095114;
+        // Centro de coordenadas MLAT
+        double LatMLAT = 41 + (17.0 / 60.0) + (49.426 / 3600);
+        double LonMLAT = 02 + (04.0 / 60.0) + (42.410 / 3600);
+        //double LatMLAT = 41.297063;
+        //double LonMLAT = 2.078447;
 
-        // Coordenadas MLAT
-        double LatARP = 41.297063;
-        double LonARP = 2.078447;
+        // Coordenadas ARP
+        double LatARP = 41 + (17.0 / 60.0) + (49.426 / 3600);
+        double LonARP = 02 + (04.0 / 60.0) + (42.410 / 3600);
+
+        double E = Math.Sqrt(0.00669437999013);
+        double A = 6378137.0;
 
         GeoUtils GeoUtils1;
 
@@ -73,8 +79,9 @@ namespace LIBRERIACLASES
         public double GroundSpeed;
         public double TrackAngle;
 
-        public CoordinatesWGS84 coordinatesWGS84;
-        public CoordinatesUVH coordinatesUVH;
+        public CoordinatesWGS84 coordGeodesic;
+        public CoordinatesUVH coordStereographic;
+        public CoordinatesXYZ coordSystemCartesian;
 
         public string CalculatedTrackVelocityinCartesianCoordinates = "";
         public double Vx_cartesian;
@@ -711,7 +718,7 @@ namespace LIBRERIACLASES
 
         public void Calculate_FSPEC(string[] paquete)
         {
-            GeoUtils1 = new GeoUtils(Math.Sqrt(0.00669437999013), 6378137.0, new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS));
+            GeoUtils1 = new GeoUtils( E, A, new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS, 0));
 
             int j = 3;
             bool found = false;
@@ -918,15 +925,15 @@ namespace LIBRERIACLASES
                     Rho = Convert.ToInt32(rho1, 2);
                     Theta = Convert.ToInt32(theta1, 2) * 360 / (Math.Pow(2, 16));
 
-                    // Calculamos Coordenadas WGS84
-                    CoordinatesPolar coordRadarSpherical = new CoordinatesPolar(Rho, Theta*GeoUtils.DEGS2RADS,0);
-                    CoordinatesXYZ coordRadarCartesian = GeoUtils1.change_radar_spherical2radar_cartesian(coordRadarSpherical);
-                    CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatSMR * GeoUtils.DEGS2RADS, LonSMR * GeoUtils.DEGS2RADS), coordRadarCartesian);
-                    coordinatesWGS84 = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
+                    //// Calculamos Coordenadas WGS84
+                    //CoordinatesPolar coordRadarSpherical = new CoordinatesPolar(Rho, Theta*GeoUtils.DEGS2RADS,0);
+                    //CoordinatesXYZ coordRadarCartesian = GeoUtils1.change_radar_spherical2radar_cartesian(coordRadarSpherical);
+                    //CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatSMR * GeoUtils.DEGS2RADS, LonSMR * GeoUtils.DEGS2RADS), coordRadarCartesian);
+                    //coordinatesWGS84 = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
 
-                    // Calculamos Coordenadas Stereograficas
-                    CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_radar_cartesian2system_cartesian(new CoordinatesWGS84(LatSMR * GeoUtils.DEGS2RADS, LonSMR * GeoUtils.DEGS2RADS), coordRadarCartesian);
-                    coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+                    //// Calculamos Coordenadas Stereograficas
+                    //CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_radar_cartesian2system_cartesian(new CoordinatesWGS84(LatSMR * GeoUtils.DEGS2RADS, LonSMR * GeoUtils.DEGS2RADS), coordRadarCartesian);
+                    //coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
                 }// 6 I010/040  Measured Position in Polar Co-ordinates 
 
@@ -958,14 +965,14 @@ namespace LIBRERIACLASES
                     X_cartesian = Calculate_ComplementoA2(xcartesian);
                     Y_cartesian = Calculate_ComplementoA2(ycartesian);
 
-                    // Calculamos Coordenadas WGS84
-                    CoordinatesXYZ coordRadarCartesian = new CoordinatesXYZ(X_cartesian, Y_cartesian, 0);
-                    CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatARP*GeoUtils.DEGS2RADS, LonARP*GeoUtils.DEGS2RADS), coordRadarCartesian);
-                    coordinatesWGS84 = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
+                    //// Calculamos Coordenadas WGS84
+                    //CoordinatesXYZ coordRadarCartesian = new CoordinatesXYZ(X_cartesian, Y_cartesian, 0);
+                    //CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatARP*GeoUtils.DEGS2RADS, LonARP*GeoUtils.DEGS2RADS), coordRadarCartesian);
+                    //coordinatesWGS84 = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
 
-                    // Calculamos Coordenadas Stereograficas
-                    CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_radar_cartesian2system_cartesian(new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS), coordRadarCartesian);
-                    coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+                    //// Calculamos Coordenadas Stereograficas
+                    //CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_radar_cartesian2system_cartesian(new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS), coordRadarCartesian);
+                    //coordinatesUVH = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
                 }// 7 I010/042  Position in Cartesian Co-ordinates
 
@@ -1391,6 +1398,39 @@ namespace LIBRERIACLASES
                         }
                     }
                 }
+            }
+
+            // Una vez calculados todos los parametros calculamos las coordenadas en los diferentes sistemas de Referencia
+
+            // SMR
+            if(this.SAC == 0 && this.SIC == 7)
+            {
+                // Calculamos Coordenadas Geodesic
+                CoordinatesPolar coordRadarSpherical = new CoordinatesPolar(Rho, Theta * GeoUtils.DEGS2RADS, 0);
+                CoordinatesXYZ coordRadarCartesian = GeoUtils1.change_radar_spherical2radar_cartesian(coordRadarSpherical);
+                CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatSMR * GeoUtils.DEGS2RADS, LonSMR * GeoUtils.DEGS2RADS, 0), coordRadarCartesian);
+                coordGeodesic = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
+
+                // Calculamos Coordenadas System Cartesian
+                coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+
+                // Calculamos Coordenadas Stereographic
+                coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+            }
+
+            // MLAT
+            if (this.SAC == 0 && this.SIC == 107)
+            {
+                // Calculamos Coordenadas Geodesic
+                CoordinatesXYZ coordRadarCartesian = new CoordinatesXYZ(X_cartesian, Y_cartesian, this.FlightLevel * 100 * GeoUtils.FEET2METERS);
+                CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS), coordRadarCartesian);
+                coordGeodesic = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
+
+                // Calculamos Coordenadas System Cartesian
+                coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+
+                // Calculamos Coordenadas Stereographic
+                coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
             }
         }
     }

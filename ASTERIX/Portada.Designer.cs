@@ -41,6 +41,7 @@
             this.button5 = new System.Windows.Forms.Button();
             this.btn_ED1 = new System.Windows.Forms.Button();
             this.bt_ReaddCalibrationVehicleData = new System.Windows.Forms.Button();
+            this.btn_ED2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lb_Title
@@ -95,7 +96,7 @@
             this.lbErrores.AutoSize = true;
             this.lbErrores.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
             this.lbErrores.ForeColor = System.Drawing.Color.Red;
-            this.lbErrores.Location = new System.Drawing.Point(404, 444);
+            this.lbErrores.Location = new System.Drawing.Point(404, 464);
             this.lbErrores.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbErrores.Name = "lbErrores";
             this.lbErrores.Size = new System.Drawing.Size(46, 18);
@@ -124,7 +125,7 @@
             // 
             // bt_ED
             // 
-            this.bt_ED.Location = new System.Drawing.Point(364, 378);
+            this.bt_ED.Location = new System.Drawing.Point(364, 408);
             this.bt_ED.Name = "bt_ED";
             this.bt_ED.Size = new System.Drawing.Size(95, 35);
             this.bt_ED.TabIndex = 11;
@@ -152,7 +153,7 @@
             // 
             // btn_ED1
             // 
-            this.btn_ED1.Location = new System.Drawing.Point(437, 281);
+            this.btn_ED1.Location = new System.Drawing.Point(365, 355);
             this.btn_ED1.Name = "btn_ED1";
             this.btn_ED1.Size = new System.Drawing.Size(94, 47);
             this.btn_ED1.TabIndex = 14;
@@ -169,11 +170,22 @@
             this.bt_ReaddCalibrationVehicleData.Text = "Browse & Decode Calibration Vehicle File";
             this.bt_ReaddCalibrationVehicleData.Click += new System.EventHandler(this.bt_ReaddCalibrationVehicleData_Click);
             // 
+            // btn_ED2
+            // 
+            this.btn_ED2.Location = new System.Drawing.Point(441, 279);
+            this.btn_ED2.Name = "btn_ED2";
+            this.btn_ED2.Size = new System.Drawing.Size(94, 47);
+            this.btn_ED2.TabIndex = 16;
+            this.btn_ED2.Text = "Calculate ED2";
+            this.btn_ED2.UseVisualStyleBackColor = true;
+            this.btn_ED2.Click += new System.EventHandler(this.btn_ED2_Click);
+            // 
             // Portada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(873, 517);
+            this.Controls.Add(this.btn_ED2);
             this.Controls.Add(this.bt_ReaddCalibrationVehicleData);
             this.Controls.Add(this.btn_ED1);
             this.Controls.Add(this.button5);
@@ -209,6 +221,7 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btn_ED1;
         private System.Windows.Forms.Button bt_ReaddCalibrationVehicleData;
+        private System.Windows.Forms.Button btn_ED2;
     }
 }
 

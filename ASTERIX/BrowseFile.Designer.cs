@@ -36,6 +36,7 @@
             this.lblError = new System.Windows.Forms.Label();
             this.lbTitle = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +80,7 @@
             this.lblError.AutoSize = true;
             this.lblError.BackColor = System.Drawing.Color.White;
             this.lblError.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.lblError.Location = new System.Drawing.Point(273, 58);
+            this.lblError.Location = new System.Drawing.Point(267, 56);
             this.lblError.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblError.Name = "lblError";
             this.lblError.Size = new System.Drawing.Size(86, 31);
@@ -101,11 +102,20 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(148, 111);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(327, 28);
+            this.progressBar1.TabIndex = 4;
+            this.progressBar1.Visible = false;
+            // 
             // BrowseFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 193);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lblError);
             this.Controls.Add(this.bt_Decode);
             this.Controls.Add(this.tbDirection);
@@ -129,5 +139,6 @@
         private System.Windows.Forms.Label lblError;
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
