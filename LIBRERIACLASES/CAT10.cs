@@ -1392,8 +1392,8 @@ namespace LIBRERIACLASES
 
                                 data_position = data_position + 2;
 
-                                CalculatedAcceleration_X = Calculate_ComplementoA2(CalculatedAcceleration.Substring(0, 8));
-                                CalculatedAcceleration_Y = Calculate_ComplementoA2(CalculatedAcceleration.Substring(8, 8));
+                                CalculatedAcceleration_X = Calculate_ComplementoA2(CalculatedAcceleration.Substring(0, 8)) * 0.25;
+                                CalculatedAcceleration_Y = Calculate_ComplementoA2(CalculatedAcceleration.Substring(8, 8)) * 0.25;
                             } // 25  I010/210  Calculated Acceleration 
                         }
                     }
