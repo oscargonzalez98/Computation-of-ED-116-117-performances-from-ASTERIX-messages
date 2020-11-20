@@ -54,7 +54,7 @@ namespace ASTERIX
             for(int i=0; i<listaMLATCalibrationVehicle.Count(); i++)
             {
                 GMapMarker marker = new GMarkerGoogle(new PointLatLng(listaMLATCalibrationVehicle[i].Lat, listaMLATCalibrationVehicle[i].Lon), green_pushback);
-                marker.ToolTipText = listaMLATCalibrationVehicle[i].time1.ToString();
+                marker.ToolTipText = listaMLATCalibrationVehicle[i].Hour.ToString() + " : " + listaMLATCalibrationVehicle[i].Min.ToString() + " : " + listaMLATCalibrationVehicle[i].Sec.ToString();
 
                 overlayLoad.Markers.Add(marker);
             }

@@ -31,6 +31,14 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.Mapa = new GMap.NET.WindowsForms.GMapControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile = new System.Windows.Forms.Button();
+            this.bt_Export_UpdateRate_ASTERIXfile = new System.Windows.Forms.Button();
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle = new System.Windows.Forms.Button();
             this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle = new System.Windows.Forms.Button();
             this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle = new System.Windows.Forms.Button();
@@ -112,6 +120,14 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.comboBox1);
+            this.panel1.Controls.Add(this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_Export_ProbabilityofIdentification_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_Export_PrecissionAccuracy_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_Export_ProbabilityofUpdate_ASTERIXfile);
+            this.panel1.Controls.Add(this.bt_Export_UpdateRate_ASTERIXfile);
             this.panel1.Controls.Add(this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle);
             this.panel1.Controls.Add(this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle);
             this.panel1.Controls.Add(this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle);
@@ -134,9 +150,104 @@
             this.panel1.Size = new System.Drawing.Size(558, 1011);
             this.panel1.TabIndex = 1;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "0 (or > 20 NM)",
+            "1 (or < 20 NM)",
+            "2 (or < 10 NM)",
+            "3 (or < 8 NM)",
+            "4 (or < 4 NM)",
+            "5 (or < 2 NM)",
+            "6 (or < 1 NM)",
+            "7 (or < 0.6 NM)",
+            "8 (or < 0.5 NM)",
+            "9 (or > 0.3 NM)",
+            "10 (or < 0.2 NM)",
+            "11 (or < 0.1 NM)",
+            "12 (or < 0.04 NM)",
+            "13 (or < 0.013 NM)",
+            "14 (or < 0.004 NM)"});
+            this.comboBox1.Location = new System.Drawing.Point(261, 149);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(113, 21);
+            this.comboBox1.TabIndex = 41;
+            this.comboBox1.Text = "0 (or > 20 NM)";
+            // 
+            // bt_Export_ProbabilityofFalseIdentification_ASTERIXfile
+            // 
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.Location = new System.Drawing.Point(387, 298);
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.Name = "bt_Export_ProbabilityofFalseIdentification_ASTERIXfile";
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.TabIndex = 40;
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.Text = "Export";
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_ProbabilityofFalseIdentification_ASTERIXfile_Click);
+            // 
+            // bt_Export_ProbabilityofFalseDetection_ASTERIXfile
+            // 
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.Location = new System.Drawing.Point(387, 259);
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.Name = "bt_Export_ProbabilityofFalseDetection_ASTERIXfile";
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.TabIndex = 39;
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.Text = "Export";
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_ProbabilityofFalseDetection_ASTERIXfile_Click);
+            // 
+            // bt_Export_ProbabilityofIdentification_ASTERIXfile
+            // 
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.Location = new System.Drawing.Point(387, 220);
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.Name = "bt_Export_ProbabilityofIdentification_ASTERIXfile";
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.TabIndex = 38;
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.Text = "Export";
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofIdentification_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_ProbabilityofIdentification_ASTERIXfile_Click);
+            // 
+            // bt_Export_ProbabilityofMLATDetection_ASTERIXfile
+            // 
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.Location = new System.Drawing.Point(387, 181);
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.Name = "bt_Export_ProbabilityofMLATDetection_ASTERIXfile";
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.TabIndex = 37;
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.Text = "Export";
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_ProbabilityofMLATDetection_ASTERIXfile_Click);
+            // 
+            // bt_Export_PrecissionAccuracy_ASTERIXfile
+            // 
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.Location = new System.Drawing.Point(387, 142);
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.Name = "bt_Export_PrecissionAccuracy_ASTERIXfile";
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.TabIndex = 36;
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.Text = "Export";
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_PrecissionAccuracy_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_PrecissionAccuracy_ASTERIXfile_Click);
+            // 
+            // bt_Export_ProbabilityofUpdate_ASTERIXfile
+            // 
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.Location = new System.Drawing.Point(387, 103);
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.Name = "bt_Export_ProbabilityofUpdate_ASTERIXfile";
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.TabIndex = 35;
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.Text = "Export";
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofUpdate_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_ProbabilityofUpdate_ASTERIXfile_Click);
+            // 
+            // bt_Export_UpdateRate_ASTERIXfile
+            // 
+            this.bt_Export_UpdateRate_ASTERIXfile.Location = new System.Drawing.Point(387, 64);
+            this.bt_Export_UpdateRate_ASTERIXfile.Name = "bt_Export_UpdateRate_ASTERIXfile";
+            this.bt_Export_UpdateRate_ASTERIXfile.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_UpdateRate_ASTERIXfile.TabIndex = 34;
+            this.bt_Export_UpdateRate_ASTERIXfile.Text = "Export";
+            this.bt_Export_UpdateRate_ASTERIXfile.UseVisualStyleBackColor = true;
+            this.bt_Export_UpdateRate_ASTERIXfile.Click += new System.EventHandler(this.bt_Export_UpdateRate_ASTERIXfile_Click);
+            // 
             // bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle
             // 
-            this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 429);
+            this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 503);
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Name = "bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle";
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.TabIndex = 33;
@@ -146,7 +257,7 @@
             // 
             // bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle
             // 
-            this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 585);
+            this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 659);
             this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle.Name = "bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle";
             this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle.TabIndex = 32;
@@ -156,7 +267,7 @@
             // 
             // bt_CalculateProbabilityofFalseDetection_CalibrationVehicle
             // 
-            this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle.Location = new System.Drawing.Point(32, 546);
+            this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle.Location = new System.Drawing.Point(32, 620);
             this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle.Name = "bt_CalculateProbabilityofFalseDetection_CalibrationVehicle";
             this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_CalculateProbabilityofFalseDetection_CalibrationVehicle.TabIndex = 31;
@@ -166,7 +277,7 @@
             // 
             // bt_ProbabilityofIdentification_ED117_CalibrationVehicle
             // 
-            this.bt_ProbabilityofIdentification_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 507);
+            this.bt_ProbabilityofIdentification_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 581);
             this.bt_ProbabilityofIdentification_ED117_CalibrationVehicle.Name = "bt_ProbabilityofIdentification_ED117_CalibrationVehicle";
             this.bt_ProbabilityofIdentification_ED117_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_ProbabilityofIdentification_ED117_CalibrationVehicle.TabIndex = 30;
@@ -176,7 +287,7 @@
             // 
             // bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle
             // 
-            this.bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 468);
+            this.bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 542);
             this.bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle.Name = "bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle";
             this.bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle.TabIndex = 29;
@@ -186,7 +297,7 @@
             // 
             // bt_CalculateUpdateRate_ED117_CalibrationVehicle
             // 
-            this.bt_CalculateUpdateRate_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 391);
+            this.bt_CalculateUpdateRate_ED117_CalibrationVehicle.Location = new System.Drawing.Point(32, 465);
             this.bt_CalculateUpdateRate_ED117_CalibrationVehicle.Name = "bt_CalculateUpdateRate_ED117_CalibrationVehicle";
             this.bt_CalculateUpdateRate_ED117_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_CalculateUpdateRate_ED117_CalibrationVehicle.TabIndex = 28;
@@ -198,7 +309,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(29, 353);
+            this.label2.Location = new System.Drawing.Point(29, 427);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(462, 18);
             this.label2.TabIndex = 27;
@@ -331,5 +442,13 @@
         private System.Windows.Forms.Button bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle;
         private GMap.NET.WindowsForms.GMapControl Mapa;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button bt_Export_UpdateRate_ASTERIXfile;
+        private System.Windows.Forms.Button bt_Export_ProbabilityofUpdate_ASTERIXfile;
+        private System.Windows.Forms.Button bt_Export_PrecissionAccuracy_ASTERIXfile;
+        private System.Windows.Forms.Button bt_Export_ProbabilityofMLATDetection_ASTERIXfile;
+        private System.Windows.Forms.Button bt_Export_ProbabilityofIdentification_ASTERIXfile;
+        private System.Windows.Forms.Button bt_Export_ProbabilityofFalseDetection_ASTERIXfile;
+        private System.Windows.Forms.Button bt_Export_ProbabilityofFalseIdentification_ASTERIXfile;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

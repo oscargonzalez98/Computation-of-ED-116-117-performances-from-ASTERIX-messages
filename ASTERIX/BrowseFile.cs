@@ -19,8 +19,10 @@ namespace ASTERIX
         public List<CAT20> listaCAT20 = new List<CAT20>();
         public List<CAT21> listaCAT21 = new List<CAT21>();
         public List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
-
         public List<MLATCalibrationData> listaMLATCalibrationVehicleData = new List<MLATCalibrationData>();
+
+        string[] list_paths;
+        List<string> list_filepaths = new List<string>();
 
         public bool forASTERIX;
         public bool forMULTI;
@@ -65,29 +67,34 @@ namespace ASTERIX
 
         private void bt_SelectFile_Click(object sender, EventArgs e)
         {
-
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string direccion = openFileDialog1.FileName;
-                char char1;
-                int i = 0;
-                bool bool1 = false;
-                while (i < direccion.Length && direccion[i] != Convert.ToChar(":") && bool1 == false)
-                {
-                    try
-                    {
-                        char1 = Convert.ToChar(direccion[i]);
-                    }
-                    catch
-                    {
-                        bool1 = true;
-                    }
-                    i = i + 1;
-                }
-                char1 = Convert.ToChar(direccion[i + 1]);
-                char char2 = Convert.ToChar("/");
+                // Guardamos los path de todos los archivos en la lista
+                string[] list_paths = openFileDialog1.FileNames;
 
-                tbDirection.Text = direccion.Replace(char1, char2);
+                foreach (string direccion in list_paths)
+                {
+                    char char1;
+                    int i = 0;
+                    bool bool1 = false;
+                    while (i < direccion.Length && direccion[i] != Convert.ToChar(":") && bool1 == false)
+                    {
+                        try
+                        {
+                            char1 = Convert.ToChar(direccion[i]);
+                        }
+                        catch
+                        {
+                            bool1 = true;
+                        }
+                        i = i + 1;
+                    }
+                    char1 = Convert.ToChar(direccion[i + 1]);
+                    char char2 = Convert.ToChar("/");
+
+                    tbDirection.Text = direccion.Replace(char1, char2);
+                    list_filepaths.Add(tbDirection.Text);
+                }
             }
         }
 
@@ -99,90 +106,102 @@ namespace ASTERIX
                 {
                     try
                     {
-                        string path = tbDirection.Text;
-                        Fichero newfichero = new Fichero(path);
-                        List<string[]> listahex = newfichero.leer();
-
+                        // Recorremos cada fichero y calculamos el num de paquetes en cada uno
+                        int sum = 0;
+                        foreach(string path in list_filepaths)
+                        {
+                            Fichero newfichero = new Fichero(path);
+                            List<string[]> listahex = newfichero.leer();
+                            sum = sum + listahex.Count();
+                        }
                         progressBar1.Visible = true;
                         progressBar1.Value = 0;
-                        progressBar1.Maximum = listahex.Count();
+                        progressBar1.Maximum = sum;
 
-                        for (int q = 0; q < listahex.Count; q++)
+                        // Ahora lo recorremos decodificando los paquetes y separandolos en listas
+
+                        foreach (string path in list_filepaths)
                         {
-                            string[] arraystring = listahex[q];
-                            int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
+                            Fichero newfichero = new Fichero(path);
+                            List<string[]> listahex = newfichero.leer();
 
-                            if (CAT == 10)
+                            for (int q = 0; q < listahex.Count; q++)
                             {
-                                CAT10 newcat10 = new CAT10(arraystring);
-                                newcat10.Calculate_FSPEC(newcat10.paquete);
-                                listaCAT10.Add(newcat10);
-                            }
+                                string[] arraystring = listahex[q];
+                                int CAT = int.Parse(arraystring[0], System.Globalization.NumberStyles.HexNumber);
 
-
-                            if (CAT == 21)
-                            {
-
-                                string FSPEC = "";
-
-                                int j = 3;
-                                bool found = false;
-
-                                while (found == false)
+                                if (CAT == 10)
                                 {
-                                    FSPEC = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);// Convertir de hex a binario paquete [3]
-                                    FSPEC = AddZeros(FSPEC);
+                                    CAT10 newcat10 = new CAT10(arraystring);
+                                    newcat10.Calculate_FSPEC(newcat10.paquete);
+                                    listaCAT10.Add(newcat10);
+                                }
 
-                                    if (Char.ToString(FSPEC[FSPEC.Length - 1]) == "1")
+
+                                if (CAT == 21)
+                                {
+
+                                    string FSPEC = "";
+
+                                    int j = 3;
+                                    bool found = false;
+
+                                    while (found == false)
                                     {
-                                        while (Char.ToString(FSPEC[FSPEC.Length - 1]) != "0")
-                                        {
-                                            j = j + 1;
-                                            string parte2 = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);
-                                            parte2 = AddZeros(parte2);
+                                        FSPEC = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);// Convertir de hex a binario paquete [3]
+                                        FSPEC = AddZeros(FSPEC);
 
-                                            FSPEC = String.Concat(FSPEC, parte2);
+                                        if (Char.ToString(FSPEC[FSPEC.Length - 1]) == "1")
+                                        {
+                                            while (Char.ToString(FSPEC[FSPEC.Length - 1]) != "0")
+                                            {
+                                                j = j + 1;
+                                                string parte2 = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);
+                                                parte2 = AddZeros(parte2);
+
+                                                FSPEC = String.Concat(FSPEC, parte2);
+                                            }
+
+                                            found = true;
                                         }
 
                                         found = true;
                                     }
 
-                                    found = true;
+                                    int data_position = 1 + 2 + ((FSPEC.Length) / 8);
+
+                                    string string1 = Convert.ToString(arraystring[data_position]);
+                                    string1 = Convert.ToString(Convert.ToInt32(string1, 16), 2);
+                                    string1 = AddZeros(string1);
+
+                                    string string2 = Convert.ToString(arraystring[data_position + 1]);
+                                    string2 = Convert.ToString(Convert.ToInt32(string2, 16), 2);
+                                    string2 = AddZeros(string2);
+
+                                    data_position = data_position + 2;
+
+                                    string DataSourceIdentification = String.Concat(string1, string2);
+
+                                    Calculate_DataSourceIdentification(DataSourceIdentification);
+
+                                    // ahora que sabemos que version es cada paquete los metemos en su lista correspondiente.
+
+                                    if (SAC == 20 && SIC == 219)
+                                    {
+                                        CAT21 newcat21 = new CAT21(arraystring);
+                                        newcat21.Calculate_FSPEC(newcat21.paquete);
+                                        listaCAT21.Add(newcat21);
+                                    }
+
+                                    if (SAC == 0 && SIC == 107)
+                                    {
+                                        CAT21v23 newcat21v23 = new CAT21v23(arraystring);
+                                        newcat21v23.Calculate_FSPEC(newcat21v23.paquete);
+                                        listaCAT21v23.Add(newcat21v23);
+                                    }
                                 }
-
-                                int data_position = 1 + 2 + ((FSPEC.Length) / 8);
-
-                                string string1 = Convert.ToString(arraystring[data_position]);
-                                string1 = Convert.ToString(Convert.ToInt32(string1, 16), 2);
-                                string1 = AddZeros(string1);
-
-                                string string2 = Convert.ToString(arraystring[data_position + 1]);
-                                string2 = Convert.ToString(Convert.ToInt32(string2, 16), 2);
-                                string2 = AddZeros(string2);
-
-                                data_position = data_position + 2;
-
-                                string DataSourceIdentification = String.Concat(string1, string2);
-
-                                Calculate_DataSourceIdentification(DataSourceIdentification);
-
-                                // ahora que sabemos que version es cada paquete los metemos en su lista correspondiente.
-
-                                if (SAC == 20 && SIC == 219)
-                                {
-                                    CAT21 newcat21 = new CAT21(arraystring);
-                                    newcat21.Calculate_FSPEC(newcat21.paquete);
-                                    listaCAT21.Add(newcat21);
-                                }
-
-                                if (SAC == 0 && SIC == 107)
-                                {
-                                    CAT21v23 newcat21v23 = new CAT21v23(arraystring);
-                                    newcat21v23.Calculate_FSPEC(newcat21v23.paquete);
-                                    listaCAT21v23.Add(newcat21v23);
-                                }
+                                progressBar1.Value = progressBar1.Value + 1;
                             }
-                            progressBar1.Value = progressBar1.Value + 1;
                         }
 
                         this.Close();
