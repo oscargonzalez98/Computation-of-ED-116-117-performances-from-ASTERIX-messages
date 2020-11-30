@@ -168,7 +168,8 @@
             "11 (or < 0.1 NM)",
             "12 (or < 0.04 NM)",
             "13 (or < 0.013 NM)",
-            "14 (or < 0.004 NM)"});
+            "14 (or < 0.004 NM)",
+            "Auto"});
             this.comboBox1.Location = new System.Drawing.Point(261, 149);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(113, 21);

@@ -79,5 +79,10 @@ namespace LIBRERIACLASES
             coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
         }
+
+        public MLATCalibrationData()
+        {
+
+        }
     }
 }

@@ -699,7 +699,7 @@ namespace ASTERIX
                 Stroke = new Pen(Color.Green, 2),
                 Fill = new SolidBrush(Color.Green)
             };
-            //polygonsOverlay.Polygons.Add(polygonI);
+            polygonsOverlay.Polygons.Add(polygonI);
 
             polygonK = new GMapPolygon(polygonKpoints, "PolygonK")
             {
@@ -835,10 +835,23 @@ namespace ASTERIX
 
             //////----------------------------------------------------------------------- Filtramos paquetes MLAT y ADSB (Quitamos periodic updates, ground vehicles, paquetes muy lejanos, paquetes con version MOPS != 2 etc...)
 
+
+            Mapa.Overlays.Clear();
+            GMapOverlay overlay1 = new GMapOverlay();
+
+            //for (int i = 0; i < listaCAT21.Count(); i++)
+            //{
+            //    GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaCAT21[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaCAT21[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), red_circle);
+            //    overlay1.Markers.Add(marker);
+            //}
+
+
             FilterCAT21messages(listaCAT21); // eliminamos paquetes ground vehicle, periodic updates, MOPS != 2, etc...
             CalculateARP_MLAT_SMR_coordinates(); // Calculamos las cooreenadas Geodesicas, Estereograficas y ÇSystem Cartesian del centro de coordenadas ARP, SMR, MLAT
-            listaCAT21_NearAirport = FilterCAT21messagesAwayfromAirport(listaCAT21, 15000); // Limpiamos vuelos lejnos al aeropuerto para acelerar calculos
+            listaCAT21_NearAirport = FilterCAT21messagesAwayfromAirport(listaCAT21, 15000); // Limpiamos vuelos lejnos al aeropuerto para acelerar calculo
             FilterMLATmessages(listaMLAT); // eliminamos paquetes ground vehicle, periodic updates, etc...
+
+
 
             //////----------------------------------------------------------------------- Pruebas y cosas
             ///
@@ -873,85 +886,47 @@ namespace ASTERIX
 
 
 
-            SelectAllplanesinsideAirpotZone(listaMLAT);
-            FilterByAirportZones1(listaMLAT);
-            int suma = listaMLAT_Stand.Count() + listaMLAT_Apron.Count() + listaMLAT_MA.Count() + listaMLAT_Airborne_2coma5NM.Count() + listaMLAT_Airborne_5NM.Count();
+            //SelectAllplanesinsideAirpotZone(listaMLAT);
+            //FilterByAirportZones1(listaMLAT);
 
-            //List<CAT10> lista1234 = new List<CAT10>();
-            //lista1234.AddRange(listaMLAT_Stand);
-            //lista1234.AddRange(listaMLAT_Apron);
-            //lista1234.AddRange(listaMLAT_MA);
-            //lista1234.AddRange(listaMLAT_Airborne_2coma5NM);
-            //lista1234.AddRange(listaMLAT_Airborne_5NM);
-            //listaMLAT.Clear();
-            //listaMLAT.AddRange(lista1234);
+            //FilterCalibrationVehicleByAirportZones(listaMLAT);
 
-            //int ground_planes = listaMLAT_Stand.Count() + listaMLAT_Apron.Count() + listaMLAT_MA.Count() + listaMLAT_Airborne_2coma5NM.Count() + listaMLAT_Airborne_5NM.Count();
-
-            //List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
-            //FilterByAirportZones(lista11);
+            List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
+            FilterByAirportZones(lista11);
 
 
-            Mapa.Overlays.Clear();
-            GMapOverlay overlay1 = new GMapOverlay();
-
-            //for (int i = 0; i < listaMLAT.Count(); i++)
-            //{
-            //    GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), red_circle);
-            //    marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-            //    marker.ToolTipText = listaMLAT[i].TargetAdress_decoded.ToString();
-            //    overlay1.Markers.Add(marker);
-            //}
-
-            for (int i = 0; i < listaMLAT.Count(); i++)
-            {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), red_circle);
-                overlay1.Markers.Add(marker);
-            }
+            //Mapa.Overlays.Clear();
+            //GMapOverlay overlay1 = new GMapOverlay();
 
             for (int i = 0; i < listaMLAT_Stand.Count(); i++)
             {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Stand[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Stand[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Stand[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Stand[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), blue_circle);
                 overlay1.Markers.Add(marker);
             }
 
             for (int i = 0; i < listaMLAT_Apron.Count(); i++)
             {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Apron[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Apron[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), blue_circle);
                 overlay1.Markers.Add(marker);
             }
 
             for (int i = 0; i < listaMLAT_MA.Count(); i++)
             {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_MA[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_MA[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_MA[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_MA[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), red_circle);
                 overlay1.Markers.Add(marker);
             }
 
             for (int i = 0; i < listaMLAT_Airborne_2coma5NM.Count(); i++)
             {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), white_circle);
                 overlay1.Markers.Add(marker);
             }
 
             for (int i = 0; i < listaMLAT_Airborne_5NM.Count(); i++)
             {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Airborne_5NM[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Airborne_5NM[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Airborne_5NM[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Airborne_5NM[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), white_circle);
                 overlay1.Markers.Add(marker);
             }
-
-            //for (int i = 0; i < listaMLAT_Airborne_2coma5NM.Count(); i++)
-            //{
-            //    if (listaMLAT_Airborne_2coma5NM[i].GBS == "Transponder Ground bit not set.")
-            //    {
-            //        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), white_circle);
-            //        overlay1.Markers.Add(marker);
-            //    }
-            //    else if (listaMLAT_Airborne[i].GBS == "Transponder Ground bit set.")
-            //    {
-            //        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Airborne_2coma5NM[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), red_circle);
-            //        overlay1.Markers.Add(marker);
-            //    }
-            //}
 
             //for (int i = 0; i < listaMLAT_MA.Count(); i++)
             //{
@@ -1174,23 +1149,39 @@ namespace ASTERIX
             string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
             string[] properties = comboBox1.Text.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
 
-            double PIC = Convert.ToInt32(properties[0]);
+            double PIC;
+            try
+            {
+                PIC = Convert.ToInt32(properties[0]);
+            }
+            catch
+            {
+                // Buscamos todos los PIC
+                List<double> listPIC = new List<double>();
+                for(int i = 0; i<listaCAT21.Count(); i++)
+                {
+                    listPIC.Add(listaCAT21[i].PIC);
+                }
 
-            var results1 = CalculatePrecissionAccuracy1(listaMLAT_Stand, listaCAT21_NearAirport, PIC);
-            var results2 = CalculatePrecissionAccuracy1(listaMLAT_Stand_T1, listaCAT21_NearAirport, PIC);
-            var results3 = CalculatePrecissionAccuracy1(listaMLAT_Stand_T2, listaCAT21_NearAirport, PIC);
-            var results4 = CalculatePrecissionAccuracy1(listaMLAT_Apron, listaCAT21_NearAirport, PIC);
-            var results5 = CalculatePrecissionAccuracy1(listaMLAT_Apron_T1, listaCAT21_NearAirport, PIC);
-            var results6 = CalculatePrecissionAccuracy1(listaMLAT_Apron_T2, listaCAT21_NearAirport, PIC);
-            var results7 = CalculatePrecissionAccuracy1(listaMLAT_MA, listaCAT21_NearAirport, PIC);
-            var results71 = CalculatePrecissionAccuracy1(listaMLAT_MA, listaCAT21_NearAirport, PIC);
-            var results8 = CalculatePrecissionAccuracy1(listaMLAT_RWY1, listaCAT21_NearAirport, PIC);
-            var results9 = CalculatePrecissionAccuracy1(listaMLAT_RWY2, listaCAT21_NearAirport, PIC);
-            var results10 = CalculatePrecissionAccuracy1(listaMLAT_RWY3, listaCAT21_NearAirport, PIC);
-            var results11 = CalculatePrecissionAccuracy1(listaMLAT_Taxiway, listaCAT21_NearAirport, PIC);
-            var results12 = CalculatePrecissionAccuracy1(listaMLAT_Airborne_2coma5NM, listaCAT21_NearAirport, PIC);
-            var results13 = CalculatePrecissionAccuracy1(listaMLAT_Airborne_5NM, listaCAT21_NearAirport, PIC);
-            var results14 = CalculatePrecissionAccuracy1(listaMLAT, listaCAT21_NearAirport, PIC);
+                listPIC.Sort();
+                PIC = Percentile(listPIC, 0.75);
+            }
+
+            var results1 = CalculatePrecissionAccuracy(listaMLAT_Stand, listaCAT21_NearAirport, PIC);
+            var results2 = CalculatePrecissionAccuracy(listaMLAT_Stand_T1, listaCAT21_NearAirport, PIC);
+            var results3 = CalculatePrecissionAccuracy(listaMLAT_Stand_T2, listaCAT21_NearAirport, PIC);
+            var results4 = CalculatePrecissionAccuracy(listaMLAT_Apron, listaCAT21_NearAirport, PIC);
+            var results5 = CalculatePrecissionAccuracy(listaMLAT_Apron_T1, listaCAT21_NearAirport, PIC);
+            var results6 = CalculatePrecissionAccuracy(listaMLAT_Apron_T2, listaCAT21_NearAirport, PIC);
+            var results7 = CalculatePrecissionAccuracy(listaMLAT_MA, listaCAT21_NearAirport, PIC);
+            var results71 = CalculatePrecissionAccuracy(listaMLAT_MA, listaCAT21_NearAirport, PIC);
+            var results8 = CalculatePrecissionAccuracy(listaMLAT_RWY1, listaCAT21_NearAirport, PIC);
+            var results9 = CalculatePrecissionAccuracy(listaMLAT_RWY2, listaCAT21_NearAirport, PIC);
+            var results10 = CalculatePrecissionAccuracy(listaMLAT_RWY3, listaCAT21_NearAirport, PIC);
+            var results11 = CalculatePrecissionAccuracy(listaMLAT_Taxiway, listaCAT21_NearAirport, PIC);
+            var results12 = CalculatePrecissionAccuracy(listaMLAT_Airborne_2coma5NM, listaCAT21_NearAirport, PIC);
+            var results13 = CalculatePrecissionAccuracy(listaMLAT_Airborne_5NM, listaCAT21_NearAirport, PIC);
+            var results14 = CalculatePrecissionAccuracy(listaMLAT, listaCAT21_NearAirport, PIC);
 
             // Creamos DGV y columnas
             dataGridView1.Rows.Clear();
@@ -1340,7 +1331,7 @@ namespace ASTERIX
             {
                 string Xerror = Math.Round(results1[1][j], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
                 string Yerror = Math.Round(results1[2][j], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows.Add( Xerror, Yerror);
+                n = dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows.Add(Xerror, Yerror);
             }
 
             dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows.Clear();
@@ -1423,19 +1414,19 @@ namespace ASTERIX
         {
             FilterByAirportZones(listaMLAT);
 
-            List<double> results1 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand, 5);
-            List<double> results2 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand_T1, 5);
-            List<double> results3 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand_T2, 5);
-            List<double> results4 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron, 2);
-            List<double> results5 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron_T1, 2);
-            List<double> results6 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron_T2, 2);
-            List<double> results7 = CalculatePRobabilityofMLATDetection(listaMLAT_MA, 2);
-            List<double> results8 = CalculatePRobabilityofMLATDetection(listaMLAT_RWY1, 2);
-            List<double> results9 = CalculatePRobabilityofMLATDetection(listaMLAT_RWY2, 2);
-            List<double> results10 = CalculatePRobabilityofMLATDetection(listaMLAT_RWY3, 2);
-            List<double> results11 = CalculatePRobabilityofMLATDetection(listaMLAT_Taxiway, 2);
-            List<double> results12 = CalculatePRobabilityofMLATDetection(listaMLAT_Airborne_2coma5NM, 1);
-            List<double> results13 = CalculatePRobabilityofMLATDetection(listaMLAT_Airborne_5NM, 1);
+            List<double> results1 = CalculatePRobabilityofMLATDetection1(listaMLAT_Stand, 5);
+            List<double> results2 = CalculatePRobabilityofMLATDetection1(listaMLAT_Stand_T1, 5);
+            List<double> results3 = CalculatePRobabilityofMLATDetection1(listaMLAT_Stand_T2, 5);
+            List<double> results4 = CalculatePRobabilityofMLATDetection1(listaMLAT_Apron, 2);
+            List<double> results5 = CalculatePRobabilityofMLATDetection1(listaMLAT_Apron_T1, 2);
+            List<double> results6 = CalculatePRobabilityofMLATDetection1(listaMLAT_Apron_T2, 2);
+            List<double> results7 = CalculatePRobabilityofMLATDetection1(listaMLAT_MA, 2);
+            List<double> results8 = CalculatePRobabilityofMLATDetection1(listaMLAT_RWY1, 2);
+            List<double> results9 = CalculatePRobabilityofMLATDetection1(listaMLAT_RWY2, 2);
+            List<double> results10 = CalculatePRobabilityofMLATDetection1(listaMLAT_RWY3, 2);
+            List<double> results11 = CalculatePRobabilityofMLATDetection1(listaMLAT_Taxiway, 2);
+            List<double> results12 = CalculatePRobabilityofMLATDetection1(listaMLAT_Airborne_2coma5NM, 1);
+            List<double> results13 = CalculatePRobabilityofMLATDetection1(listaMLAT_Airborne_5NM, 1);
 
             dataGridView1.Rows.Clear();
             dataGridView1.ColumnCount = 5;
@@ -1697,10 +1688,10 @@ namespace ASTERIX
             dataGridView1.Columns[0].Name = "Airport Zone";
             dataGridView1.Columns[1].Name = "Number of times PI > 10e-6";
             dataGridView1.Columns[2].Name = "Total 5s intervals";
-            dataGridView1.Columns[3].Name = "Probability (%)";
+            dataGridView1.Columns[3].Name = "Probability of False Identification (%)";
             dataGridView1.Columns[4].Name = "ED - 117 Value (%)";
 
-            int n = dataGridView1.Rows.Add("Airport Zone", "Number of times PI > 10e-6", "Total 5s intervals", "Probability (%)", "ED - 117 Value (%)");
+            int n = dataGridView1.Rows.Add("Airport Zone", "Number of times PI > 10e-6", "Total 5s intervals", "Probability of False Identification(%)", "ED - 117 Value (%)");
 
             string PI1 = Math.Round(results1[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string PI2 = Math.Round(results2[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
@@ -1767,6 +1758,8 @@ namespace ASTERIX
         {
             List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
             FilterByAirportZones(lista11);
+
+            //FilterCalibrationVehicleByAirportZones(listaMLAT);
 
             List<double> results1 = CalculateProbabilityofUpdate(listaMLAT_Stand);
             List<double> results2 = CalculateProbabilityofUpdate(listaMLAT_Stand_T1);
@@ -1854,8 +1847,12 @@ namespace ASTERIX
 
         private void bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
         {
+            Mapa.Overlays.Clear();
+
             List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
             FilterByAirportZones(lista11);
+
+            //FilterCalibrationVehicleByAirportZones(listaMLAT);
 
             var results1 = CalculatePrecissionAccuracyCalibrationVehicle1(listaMLAT_Stand, listaCalibrationDataVehicle);
             var results2 = CalculatePrecissionAccuracyCalibrationVehicle1(listaMLAT_Stand_T1, listaCalibrationDataVehicle);
@@ -1870,7 +1867,9 @@ namespace ASTERIX
             var results11 = CalculatePrecissionAccuracyCalibrationVehicle1(listaMLAT_Taxiway, listaCalibrationDataVehicle);
             var results12 = CalculatePrecissionAccuracyCalibrationVehicle1(listaMLAT_Airborne_2coma5NM, listaCalibrationDataVehicle);
             var results13 = CalculatePrecissionAccuracyCalibrationVehicle1(listaMLAT_Airborne_5NM, listaCalibrationDataVehicle);
-            var results14 = CalculatePrecissionAccuracyCalibrationVehicle1(lista11, listaCalibrationDataVehicle);
+            //var results14 = CalculatePrecissionAccuracyCalibrationVehicle1(lista11, listaCalibrationDataVehicle);
+
+
 
             // Creamos DGV y columnas
             dataGridView1.Rows.Clear();
@@ -1896,7 +1895,7 @@ namespace ASTERIX
             string P991 = Math.Round(Percentile(results1[0], 0.99), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string STD1 = Math.Round(CalculateStandardDeviation(results1[0]), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string AVG1 = "0";
-            if(results1[0].Count() != 0) { AVG1 = Math.Round(results1[0].Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
+            if (results1[0].Count() != 0) { AVG1 = Math.Round(results1[0].Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
             n = dataGridView1.Rows.Add("STAND", P951, "20", P991, "-----", AVG1, STD1, results1[0].Count().ToString());
 
             string P952 = Math.Round(Percentile(results2[0], 0.95), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
@@ -1938,7 +1937,7 @@ namespace ASTERIX
             string P997 = Math.Round(Percentile(results7[0], 0.99), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string STD7 = Math.Round(CalculateStandardDeviation(results7[0]), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string AVG7 = "0";
-            if (results1[0].Count() != 0) { AVG7 = Math.Round(results1[0].Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
+            if (results7[0].Count() != 0) { AVG7 = Math.Round(results7[0].Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
             n = dataGridView1.Rows.Add("MANEUVERING AREA", P957, "7.5 m", P997, "12 m", AVG7, STD7, results7[0].Count().ToString());
 
             string P958 = Math.Round(Percentile(results8[0], 0.95), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
@@ -2005,17 +2004,21 @@ namespace ASTERIX
             List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
             FilterByAirportZones(lista11);
 
-            List<double> results1 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand, 5);
-            List<double> results2 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand_T1, 5);
-            List<double> results3 = CalculatePRobabilityofMLATDetection(listaMLAT_Stand_T2, 5);
-            List<double> results4 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron, 2);
-            List<double> results5 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron_T1, 2);
-            List<double> results6 = CalculatePRobabilityofMLATDetection(listaMLAT_Apron_T2, 2);
-            List<double> results7 = CalculatePRobabilityofMLATDetection(listaMLAT_MA, 2);
-            List<double> results8 = CalculatePRobabilityofMLATDetection(listaMLAT_RWY1, 2);
-            List<double> results9 = CalculatePRobabilityofMLATDetection(listaMLAT_RWY2, 2);
-            List<double> results10 = CalculatePRobabilityofMLATDetection(listaMLAT_RWY3, 2);
-            List<double> results11 = CalculatePRobabilityofMLATDetection(listaMLAT_Taxiway, 2);
+            //FilterCalibrationVehicleByAirportZones(listaMLAT);
+
+            List<double> results1 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Stand, 5);
+            List<double> results2 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Stand_T1, 5);
+            List<double> results3 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Stand_T2, 5);
+            List<double> results4 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Apron, 2);
+            List<double> results5 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Apron_T1, 2);
+            List<double> results6 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Apron_T2, 2);
+            List<double> results7 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_MA, 2);
+            List<double> results8 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_RWY1, 2);
+            List<double> results9 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_RWY2, 2);
+            List<double> results10 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_RWY3, 2);
+            List<double> results11 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Taxiway, 2);
+            List<double> results12 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Airborne_2coma5NM, 1);
+            List<double> results13 = CalculatePRobabilityofMLATDetection_CalibrationVehicle(listaMLAT_Airborne_5NM, 1);
 
             dataGridView1.Rows.Clear();
             dataGridView1.ColumnCount = 5;
@@ -2055,6 +2058,11 @@ namespace ASTERIX
             n = dataGridView1.Rows.Add("RUNWAY 07L / 25R", results10[0], results10[1], PU10, "----");
             string PU11 = Math.Round(results11[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             n = dataGridView1.Rows.Add("TAXIWAY", results11[0], results11[1], PU11, "----");
+            n = dataGridView1.Rows.Add("TAXIWAY", results11[0], results11[1], PU11, "----");
+            string PU12 = Math.Round(results12[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            n = dataGridView1.Rows.Add("AIRBORNE 0 - 2.5 NM", results12[0], results12[1], PU12, "----");
+            string PU13 = Math.Round(results13[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            n = dataGridView1.Rows.Add("AIRBORNE 2.5 - 5 NM", results13[0], results13[1], PU13, "----");
 
             double received_messages = results1[0] + results4[0] + results7[0];
             double expected_messages = results1[1] + results4[1] + results7[1];
@@ -2080,6 +2088,8 @@ namespace ASTERIX
         {
             List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
             FilterByAirportZones(lista11);
+
+            //FilterCalibrationVehicleByAirportZones(listaMLAT);
 
             List<double> results1 = CalculatePRobabilityofIdentification(listaMLAT_Stand);
             List<double> results2 = CalculatePRobabilityofIdentification(listaMLAT_Stand_T1);
@@ -2169,6 +2179,8 @@ namespace ASTERIX
             List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
             FilterByAirportZones(lista11);
 
+            //FilterCalibrationVehicleByAirportZones(listaMLAT);
+
             List<double> results1 = CalculatePRobabilityofFalseDetection(listaMLAT_Stand, 50);
             List<double> results2 = CalculatePRobabilityofFalseDetection(listaMLAT_Stand_T1, 50);
             List<double> results3 = CalculatePRobabilityofFalseDetection(listaMLAT_Stand_T2, 50);
@@ -2252,7 +2264,8 @@ namespace ASTERIX
 
         private void bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            FilterByAirportZones(listaMLAT);
+            List<CAT10> lista11 = FilterMLATifCalibrationVehiclePresent(listaMLAT);
+            FilterByAirportZones(lista11);
 
             List<double> results1 = CalculatePRobabilityofFalseIdentification(listaMLAT_Stand);
             List<double> results2 = CalculatePRobabilityofFalseIdentification(listaMLAT_Stand_T1);
@@ -2273,10 +2286,10 @@ namespace ASTERIX
             dataGridView1.Columns[0].Name = "Airport Zone";
             dataGridView1.Columns[1].Name = "Total 5s intervals";
             dataGridView1.Columns[2].Name = "Number of times PI > 10e-6";
-            dataGridView1.Columns[3].Name = "Probability (%)";
+            dataGridView1.Columns[3].Name = "Probability of False Identification (%)";
             dataGridView1.Columns[4].Name = "ED - 117 Value (%)";
 
-            int n = dataGridView1.Rows.Add("Airport Zone", "Total 5s intervals", "Number of times PI > 10e-6", "Probability (%)", "ED - 117 Value (%)");
+            int n = dataGridView1.Rows.Add("Airport Zone", "Total 5s intervals", "Number of times PI > 10e-6", "Probability of False Identification (%)", "ED - 117 Value (%)");
 
             string PI1 = Math.Round(results1[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string PI2 = Math.Round(results2[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
@@ -2668,7 +2681,7 @@ namespace ASTERIX
 
         #region Functions to calculate ED-117 performances from ASTERIX file
 
-            public List<double> CalculateProbabilityofUpdate(List<CAT10> lista)
+        public List<double> CalculateProbabilityofUpdate(List<CAT10> lista)
         { 
             List<CAT10> listaMLATmessages = new List<CAT10>();
             listaMLATmessages.AddRange(lista);
@@ -2749,162 +2762,29 @@ namespace ASTERIX
             listaCAT21messages.Clear();
             listaCAT21messages.AddRange(list3);
 
-            List<double> lista_distances = new List<double>();
-            List<double> lista_errorhorizontal = new List<double>();
-            List<double> lista_errorvertical = new List<double>();
+            // Organizamos loos paquetes ADSB por listas segun su TargetAddress
+            // Separamos mensajes por Track Number
 
-            // Recorremos listaMLAT
-            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            List<string> list_of_TargetAddress = new List<string>();
+            for (int i = 0; i < listaCAT21messages.Count(); i++)
             {
-                int index_i = 1000000;
-                int index_j = 1000000;
-                double distance = 1e8;
-                string TargetAddressMLAT = listaMLATmessages[i].TargetAdress_decoded;
-
-                // Recorremos listaCAT21 y guardamos los paquetes con mismo Target Address
-                List<CAT21> listaavionesCAT21mismonombre = new List<CAT21>();
-                for (int j = 0; j < listaCAT21messages.Count(); j++) { if (listaCAT21messages[j].TargetAdress_real == TargetAddressMLAT) { listaavionesCAT21mismonombre.Add(listaCAT21messages[j]); } }
-
-                if (listaavionesCAT21mismonombre.Count > 1)
-                {
-                    //Vamos a hacer una lista de objetos donde cada objeto tiene un cat21 y un tiempo
-                    List<PaqueteADSByTiempo> listaavionesCAT21mismonombre1 = new List<PaqueteADSByTiempo>();
-                    for (int s = 0; s < listaavionesCAT21mismonombre.Count(); s++)
-                    {
-                        PaqueteADSByTiempo datosytiepo1;
-                        if (listaavionesCAT21mismonombre[s].TimeofApplicability_Position.Length > 0)
-                        {
-                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofApplicability_Position_seconds, listaavionesCAT21mismonombre[s]);
-                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
-                        }
-                        else if (listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition.Length > 0)
-                        {
-                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition_seconds, listaavionesCAT21mismonombre[s]);
-                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
-                        }
-                        else
-                        {
-                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_Position_seconds, listaavionesCAT21mismonombre[s]);
-                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
-                        }
-                    }
-
-                    // Ordenamos lista por tiempo
-                    List<PaqueteADSByTiempo> ListaPlanesMismoNombre1 = listaavionesCAT21mismonombre1.OrderBy(o => o.time).ToList();
-
-                    // Calculamos una linea entre el paquete ADSB anterior y posterior al tMLAT
-                    int indexj_anterior = 1000000;
-                    int indexj_posterior = 1000000;
-
-                    double timeMLAT = listaMLATmessages[i].TimeofDay_seconds;
-
-                    // 1. Buscamos posicion paquete inmediatamente anterior
-                    bool found = false;
-                    for (int t = 0; t < ListaPlanesMismoNombre1.Count() && found == false; t++)
-                    {
-                        if (ListaPlanesMismoNombre1[t].time < timeMLAT) { indexj_anterior = t; }
-                        else{ found = true; }
-                    }
-
-                    // 2. Buscamos posicion paquete inmediatamente posterior
-                    found = false;
-                    for (int r = ListaPlanesMismoNombre1.Count() - 1; r >= 0; r--)
-                    {
-                        if (ListaPlanesMismoNombre1[r].time > timeMLAT && found == false) { indexj_posterior = r; }
-                        else { found = true; }
-                    }
-
-                    // Si hemos encontrado un index anterior y posterior (es decir si los valores iniciales de index anterior y posterior han cambiado)
-                    if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && Math.Abs(indexj_anterior - indexj_posterior) <= 1)
-                    {
-                        CoordinatesWGS84 newCcoordinatesADSB = new CoordinatesWGS84();
-
-                        //Interpolamos para encontrar Lat
-                        double x0 = ListaPlanesMismoNombre1[indexj_anterior].time;
-                        double x1 = ListaPlanesMismoNombre1[indexj_posterior].time;
-                        double x = timeMLAT;
-
-                        double y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordGeodesic.Lat;
-                        double y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordGeodesic.Lat;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCcoordinatesADSB.Lat = (y0 + y1) / 2;
-                        }
-                        newCcoordinatesADSB.Lat = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Interpolamos para encontrar Lon
-                        y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordGeodesic.Lon;
-                        y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordGeodesic.Lon;
-                        //x = timeMLAT;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCcoordinatesADSB.Lon = (y0 + y1) / 2;
-                        }
-                        newCcoordinatesADSB.Lon = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Interpolamos para encontrar Alt
-                        y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordGeodesic.Height * GeoUtils.FEET2METERS;
-                        y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordGeodesic.Height * GeoUtils.FEET2METERS;
-                        //x = timeMLAT;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCcoordinatesADSB.Height = (y0 + y1) / 2;
-                        }
-                        newCcoordinatesADSB.Height = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Calculamos distancia entre la newCoordinatesADSB inteprolada y las coordenadas del paquete MLAT de turno
-
-                        // 1. Pasamos las newCoordinatesADSB de Geodescas a Stereograficas
-
-                        CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(newCcoordinatesADSB);
-                        CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
-                        CoordinatesUVH newCoordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
-
-                        // 2. Calculamos distancia
-
-                        double U1 = listaMLATmessages[i].coordStereographic.U;
-                        double V1 = listaMLATmessages[i].coordStereographic.V;
-
-                        double U2 = newCoordStereographic.U;
-                        double V2 = newCoordStereographic.V;
-
-                        double distances = Math.Sqrt((U2 - U1) * (U2 - U1) + (V2 - V1) * (V2 - V1));
-                        lista_distances.Add(distances);
-                        lista_errorhorizontal.Add(U2 - U1);
-                        lista_errorvertical.Add(V2 - V1);
-
-
-                    }
-                }
+                string targetaddress = listaCAT21messages[i].TargetAdress_real;
+                if (list_of_TargetAddress.Contains(targetaddress) == false) { list_of_TargetAddress.Add(targetaddress); }
             }
 
-            List<List<double>> results = new List<List<double>>() { lista_distances, lista_errorhorizontal, lista_errorvertical };
+            // Agrupamos los paquetes por Target Address
 
-            return results;
-        }
-
-        public List<List<double>> CalculatePrecissionAccuracy1(List<CAT10> list1, List<CAT21> list2, double PIC)
-        {
-            List<CAT10> listaMLATmessages = new List<CAT10>();
-            listaMLATmessages.AddRange(list1);
-
-            List<CAT21> listaCAT21messages = new List<CAT21>();
-            listaCAT21messages.AddRange(list2);
-
-            // Filtramos por PIC
-            List<CAT21> list3 = new List<CAT21>();
-            for (int i = 0; i < listaCAT21messages.Count; i++)
+            List<List<CAT21>> list_of_list_of_planes = new List<List<CAT21>>();
+            for (int i = 0; i < list_of_TargetAddress.Count(); i++)
             {
-                if (listaCAT21messages[i].PIC >= PIC)
+                List<CAT21> list_of_planes = new List<CAT21>();
+                for (int j = 0; j < listaCAT21messages.Count(); j++)
                 {
-                    list3.Add(listaCAT21messages[i]);
+                    if (listaCAT21messages[j].TargetAdress_real == list_of_TargetAddress[i]) { list_of_planes.Add(listaCAT21messages[j]); }
                 }
+                list_of_list_of_planes.Add(list_of_planes);
             }
-            listaCAT21messages.Clear();
-            listaCAT21messages.AddRange(list3);
+
 
             List<double> lista_distances = new List<double>();
             List<double> lista_errorhorizontal = new List<double>();
@@ -2918,115 +2798,123 @@ namespace ASTERIX
                 double distance = 1e8;
                 string TargetAddressMLAT = listaMLATmessages[i].TargetAdress_decoded;
 
-                // Recorremos listaCAT21 y guardamos los paquetes con mismo Target Address
+                // Buscamos, en la lista de listas CAT21, que lista tiene el mismo Target Address
+
                 List<CAT21> listaavionesCAT21mismonombre = new List<CAT21>();
-                for (int j = 0; j < listaCAT21messages.Count(); j++) { if (listaCAT21messages[j].TargetAdress_real == TargetAddressMLAT) { listaavionesCAT21mismonombre.Add(listaCAT21messages[j]); } }
-
-                if (listaavionesCAT21mismonombre.Count > 1)
+                bool found = false;
+                for (int j = 0; j<list_of_list_of_planes.Count() && found == false; j++)
                 {
-                    //Vamos a hacer una lista de objetos donde cada objeto tiene un cat21 y un tiempo
-                    List<PaqueteADSByTiempo> listaavionesCAT21mismonombre1 = new List<PaqueteADSByTiempo>();
-                    for (int s = 0; s < listaavionesCAT21mismonombre.Count(); s++)
+                    var list = list_of_list_of_planes[j];
+                    if(list.First().TargetAdress_real == TargetAddressMLAT)
                     {
-                        PaqueteADSByTiempo datosytiepo1;
-                        if (listaavionesCAT21mismonombre[s].TimeofApplicability_Position.Length > 0)
-                        {
-                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofApplicability_Position_seconds, listaavionesCAT21mismonombre[s]);
-                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
-                        }
-                        else if (listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition.Length > 0)
-                        {
-                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition_seconds, listaavionesCAT21mismonombre[s]);
-                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
-                        }
-                        else
-                        {
-                            datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_Position_seconds, listaavionesCAT21mismonombre[s]);
-                            listaavionesCAT21mismonombre1.Add(datosytiepo1);
-                        }
+                        listaavionesCAT21mismonombre = list;
+                        found = true;
                     }
+                }
 
-                    // Ordenamos lista por tiempo
-                    List<PaqueteADSByTiempo> ListaPlanesMismoNombre1 = listaavionesCAT21mismonombre1.OrderBy(o => o.time).ToList();
-
-                    // Calculamos una linea entre el paquete ADSB anterior y posterior al tMLAT
-                    int indexj_anterior = 1000000;
-                    int indexj_posterior = 1000000;
-
-                    double timeMLAT = listaMLATmessages[i].TimeofDay_seconds;
-
-                    // 1. Buscamos posicion paquete inmediatamente anterior
-                    bool found = false;
-                    for (int t = 0; t < ListaPlanesMismoNombre1.Count() && found == false; t++)
+                //Vamos a hacer una lista de objetos donde cada objeto tiene un cat21 y un tiempo
+                List<PaqueteADSByTiempo> listaavionesCAT21mismonombre1 = new List<PaqueteADSByTiempo>();
+                listaavionesCAT21mismonombre1.Clear();
+                for (int s = 0; s < listaavionesCAT21mismonombre.Count(); s++)
+                {
+                    PaqueteADSByTiempo datosytiepo1;
+                    if (listaavionesCAT21mismonombre[s].TimeofApplicability_Position.Length > 0)
                     {
-                        if (ListaPlanesMismoNombre1[t].time < timeMLAT) { indexj_anterior = t; }
-                        else { found = true; }
+                        datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofApplicability_Position_seconds, listaavionesCAT21mismonombre[s]);
+                        listaavionesCAT21mismonombre1.Add(datosytiepo1);
                     }
-
-                    // 2. Buscamos posicion paquete inmediatamente posterior
-                    found = false;
-                    for (int r = ListaPlanesMismoNombre1.Count() - 1; r >= 0; r--)
+                    else if (listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition.Length > 0)
                     {
-                        if (ListaPlanesMismoNombre1[r].time > timeMLAT && found == false) { indexj_posterior = r; }
-                        else { found = true; }
+                        datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_HRPosition_seconds, listaavionesCAT21mismonombre[s]);
+                        listaavionesCAT21mismonombre1.Add(datosytiepo1);
                     }
-
-                    // Si hemos encontrado un index anterior y posterior (es decir si los valores iniciales de index anterior y posterior han cambiado)
-                    if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && Math.Abs(indexj_anterior - indexj_posterior) <= 1)
+                    else
                     {
-                        CoordinatesXYZ newCcoordinatesADSB = new CoordinatesXYZ();
-
-                        //Interpolamos para encontrar Lat
-                        double x0 = ListaPlanesMismoNombre1[indexj_anterior].time;
-                        double x1 = ListaPlanesMismoNombre1[indexj_posterior].time;
-                        double x = timeMLAT;
-
-                        double y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordSystemCartesian.Y;
-                        double y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordSystemCartesian.Y;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCcoordinatesADSB.Y = (y0 + y1) / 2;
-                        }
-                        newCcoordinatesADSB.Y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Interpolamos para encontrar Lon
-                        y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordSystemCartesian.X;
-                        y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordSystemCartesian.X;
-                        //x = timeMLAT;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCcoordinatesADSB.X = (y0 + y1) / 2;
-                        }
-                        newCcoordinatesADSB.X = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Interpolamos para encontrar Alt
-                        y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordSystemCartesian.Z;
-                        y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordSystemCartesian.Z;
-                        //x = timeMLAT;
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCcoordinatesADSB.Z = (y0 + y1) / 2;
-                        }
-                        newCcoordinatesADSB.Z = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        // Calculamos distancia entre la newCoordinatesADSB inteprolada y las coordenadas del paquete MLAT de turno
-
-                        // 2. Calculamos distancia
-
-                        double X1 = listaMLATmessages[i].coordSystemCartesian.X;
-                        double Y1 = listaMLATmessages[i].coordSystemCartesian.Y;
-
-                        double X2 = newCcoordinatesADSB.X;
-                        double Y2 = newCcoordinatesADSB.Y;
-
-                        double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
-                        lista_distances.Add(distances);
-                        lista_errorhorizontal.Add(X2 - X1);
-                        lista_errorvertical.Add(Y2 - Y1);
+                        datosytiepo1 = new PaqueteADSByTiempo(listaavionesCAT21mismonombre[s].TimeofMessageReception_Position_seconds, listaavionesCAT21mismonombre[s]);
+                        listaavionesCAT21mismonombre1.Add(datosytiepo1);
                     }
+                }
+
+                // Ordenamos lista por tiempo
+                List<PaqueteADSByTiempo> ListaPlanesMismoNombre1 = listaavionesCAT21mismonombre1.OrderBy(o => o.time).ToList();
+
+                // Calculamos una linea entre el paquete ADSB anterior y posterior al tMLAT
+                int indexj_anterior = 1000000;
+                int indexj_posterior = 1000000;
+
+                double timeMLAT = listaMLATmessages[i].timetotal;
+
+                // 1. Buscamos posicion paquete inmediatamente anterior
+                for (int t = 0; t < ListaPlanesMismoNombre1.Count(); t++)
+                {
+                    if (ListaPlanesMismoNombre1[t].time < timeMLAT) { indexj_anterior = t; }
+                }
+
+                // 2. Buscamos posicion paquete inmediatamente posterior
+                for (int r = ListaPlanesMismoNombre1.Count() - 1; r >= 0; r--)
+                {
+                    if (ListaPlanesMismoNombre1[r].time > timeMLAT) { indexj_posterior = r; }
+                }
+
+                // Si hemos encontrado un index anterior y posterior (es decir si los valores iniciales de index anterior y posterior han cambiado)
+                if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && Math.Abs(indexj_anterior - indexj_posterior) <= 2)
+                {
+                    CoordinatesXYZ newCcoordinatesADSB = new CoordinatesXYZ();
+
+                    //Interpolamos para encontrar Lat
+                    double x0 = ListaPlanesMismoNombre1[indexj_anterior].time;
+                    double x1 = ListaPlanesMismoNombre1[indexj_posterior].time;
+                    double x = timeMLAT;
+
+                    double y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordSystemCartesian.Y;
+                    double y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordSystemCartesian.Y;
+
+                    if ((x1 - x0) == 0)
+                    {
+                        newCcoordinatesADSB.Y = (y0 + y1) / 2;
+                    }
+                    newCcoordinatesADSB.Y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                    // Interpolamos para encontrar Lon
+                    y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordSystemCartesian.X;
+                    y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordSystemCartesian.X;
+                    //x = timeMLAT;
+
+                    if ((x1 - x0) == 0)
+                    {
+                        newCcoordinatesADSB.X = (y0 + y1) / 2;
+                    }
+                    newCcoordinatesADSB.X = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                    // Interpolamos para encontrar Alt
+                    y0 = ListaPlanesMismoNombre1[indexj_anterior].cat21.coordSystemCartesian.Z;
+                    y1 = ListaPlanesMismoNombre1[indexj_posterior].cat21.coordSystemCartesian.Z;
+                    //x = timeMLAT;
+
+                    if ((x1 - x0) == 0)
+                    {
+                        newCcoordinatesADSB.Z = (y0 + y1) / 2;
+                    }
+                    newCcoordinatesADSB.Z = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                    // Calculamos distancia entre la newCoordinatesADSB inteprolada y las coordenadas del paquete MLAT de turno
+
+                    // 2. Calculamos distancia
+
+                    double X1 = listaMLATmessages[i].coordSystemCartesian.X;
+                    double Y1 = listaMLATmessages[i].coordSystemCartesian.Y;
+
+                    double X2 = newCcoordinatesADSB.X;
+                    double Y2 = newCcoordinatesADSB.Y;
+
+                    double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
+                    lista_distances.Add(distances);
+                    lista_errorhorizontal.Add(X2 - X1);
+                    lista_errorvertical.Add(Y2 - Y1);
+                }
+                else
+                {
+
                 }
             }
 
@@ -3051,16 +2939,38 @@ namespace ASTERIX
             listaMLATmessages.Clear();
             listaMLATmessages.AddRange(list1);
 
-            // Separamos mensajes por Track Number
+            //// Separamos mensajes por Track Number
 
-            List<double> list_of_TrackNumbers = new List<double>();
+            //List<double> list_of_TrackNumbers = new List<double>();
+            //for (int i = 0; i < listaMLATmessages.Count(); i++)
+            //{
+            //    double tracknumber = listaMLATmessages[i].Tracknumber_value;
+            //    if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
+            //}
+
+            // Separamos mensajes por Target Address
+
+            List<string> list_of_TrackNumbers = new List<string>();
             for (int i = 0; i < listaMLATmessages.Count(); i++)
             {
-                double tracknumber = listaMLATmessages[i].Tracknumber_value;
+                string tracknumber = listaMLATmessages[i].TargetAdress_decoded;
                 if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
             }
 
-            // Agrupamos los paquetes por Track Number
+            //// Agrupamos los paquetes por Track Number
+
+            //List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+            //for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
+            //{
+            //    List<CAT10> list_of_planes = new List<CAT10>();
+            //    for (int j = 0; j < listaMLATmessages.Count(); j++)
+            //    {
+            //        if (listaMLATmessages[j].Tracknumber_value == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+            //    }
+            //    list_of_list_of_planes.Add(list_of_planes);
+            //}
+
+            // Agrupamos los paquetes por Target Address
 
             List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
             for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
@@ -3068,7 +2978,7 @@ namespace ASTERIX
                 List<CAT10> list_of_planes = new List<CAT10>();
                 for (int j = 0; j < listaMLATmessages.Count(); j++)
                 {
-                    if (listaMLATmessages[j].Tracknumber_value == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                    if (listaMLATmessages[j].TargetAdress_decoded == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
                 }
                 list_of_list_of_planes.Add(list_of_planes);
             }
@@ -3081,14 +2991,168 @@ namespace ASTERIX
             for (int i = 0; i < list_of_list_of_planes.Count(); i++)
             {
                 List<CAT10> listplanes = list_of_list_of_planes[i];
+                
+                // Buscamos timepo incial y timepo final de la trayectoria
 
-                if (listplanes.Count() > 1)
+                double time = listplanes.First().timetotal;
+                double time_final = listplanes.Last().timetotal;
+
+                // Buscle que vaya creando una ventana de tiempo de x segundos y vaya aumentando el tiempo incial de esa ventana un segundo a cada iteración
+
+                while(time + interval < time_final)
                 {
-                    for (int j = 0; j < listplanes.Count() - 1; j++)
+                    if(time >= 86030)
                     {
-                        double timedelay = listplanes[j + 1].TimeofDay_seconds - listplanes[j].TimeofDay_seconds;
-                        if (timedelay <= interval) { found_messages++; }
+
+                    }
+
+                    // Bucle para buscar cuantos paquetes hay en esa ventana de tiempo
+                    List<CAT10> listplanesinterval = new List<CAT10>();
+                    listplanesinterval.Clear();
+
+                    for (int j = 0; j < listplanes.Count(); j++)
+                    {
+                        if(listplanes[j].timetotal>= time && listplanes[j].timetotal < time + interval)
+                        {
+                            listplanesinterval.Add(listplanes[j]);
+                        }
+                    }
+
+                    // Ahora buscamos cuantos paquetes hay en esa ventana de tiempo
+                    int messages = listplanesinterval.Count();
+
+                    if (messages > 0)
+                    {
+                        found_messages++;
+                    }
+                    expected_messages++;
+
+                    time++;
+                }
+            }
+
+            double probabilityofupdate;
+            if (found_messages == 0 && expected_messages == 0)
+            {
+                probabilityofupdate = 0;
+            }
+            else
+            {
+                probabilityofupdate = found_messages / expected_messages;
+            }
+
+            List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate * 100 };
+            return results;
+        }
+
+        public List<double> CalculatePRobabilityofMLATDetection1(List<CAT10> list, double interval)
+        {
+            List<CAT10> listaMLATmessages = new List<CAT10>();
+            listaMLATmessages.AddRange(list);
+
+            // Filtramos paquetes sin info de posicion
+            List<CAT10> list1 = new List<CAT10>();
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                if ((listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0) || (listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0))
+                {
+                    list1.Add(listaMLATmessages[i]);
+                }
+            }
+            listaMLATmessages.Clear();
+            listaMLATmessages.AddRange(list1);
+
+            List<string> list_of_TrackNumbers = new List<string>();
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                string tracknumber = listaMLATmessages[i].TargetAdress_decoded;
+                if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
+            }
+
+            // Agrupamos los paquetes por Target Address
+
+            List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+            for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
+            {
+                List<CAT10> list_of_planes = new List<CAT10>();
+                for (int j = 0; j < listaMLATmessages.Count(); j++)
+                {
+                    if (listaMLATmessages[j].TargetAdress_decoded == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                }
+                list_of_list_of_planes.Add(list_of_planes);
+            }
+
+            // ahora separamos los paquetes por los i ntervalos en los que estan en una zona (para que, una vez salgan de una zona, aunque luego se vuelvan a menter contarlos como 2 trayectorias diferentes)
+
+            List<List<CAT10>> list_of_subzones = new List<List<CAT10>>();
+            List<CAT10> list111 = new List<CAT10>();
+
+            for(int j = 0; j < list_of_list_of_planes.Count(); j++)
+            {
+                List<CAT10> list11 = list_of_list_of_planes[j];
+
+                for (int i = 0; i < list11.Count() - 1; i++)
+                {
+                    if (list11[i + 1].timetotal - list11[i].timetotal < 20)
+                    {
+                        list111.Add(list11[i]);
+                    }
+                    else
+                    {
+                        list111.Add(list11[i]);
+                        list_of_subzones.Add(list111);
+                        list111 = new List<CAT10>();
+                    }
+                }
+                if (list11.Count > 0)
+                {
+                    list111.Add(list11.Last());
+                }
+                list_of_subzones.Add(list111);
+            }
+
+            // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+
+            double found_messages = 0;
+            double expected_messages = 0;
+
+            for (int i = 0; i < list_of_subzones.Count(); i++)
+            {
+                if (list_of_subzones[i].Count() > 0)
+                {
+                    List<CAT10> listplanes = list_of_subzones[i];
+
+                    // Buscamos timepo incial y timepo final de la trayectoria
+
+                    double time = listplanes.First().timetotal;
+                    double time_final = listplanes.Last().timetotal;
+
+                    // Buscle que vaya creando una ventana de tiempo de x segundos y vaya aumentando el tiempo incial de esa ventana un segundo a cada iteración
+
+                    while (time + interval < time_final)
+                    {
+                        // Bucle para buscar cuantos paquetes hay en esa ventana de tiempo
+                        List<CAT10> listplanesinterval = new List<CAT10>();
+                        listplanesinterval.Clear();
+
+                        for (int j = 0; j < listplanes.Count(); j++)
+                        {
+                            if (listplanes[j].timetotal >= time && listplanes[j].timetotal < time + interval)
+                            {
+                                listplanesinterval.Add(listplanes[j]);
+                            }
+                        }
+
+                        // Ahora buscamos cuantos paquetes hay en esa ventana de tiempo
+                        int messages = listplanesinterval.Count();
+
+                        if (messages > 0)
+                        {
+                            found_messages++;
+                        }
                         expected_messages++;
+
+                        time++;
                     }
                 }
             }
@@ -3439,11 +3503,6 @@ namespace ASTERIX
                 int indexj_posterior = 1000000;
                 double distance = 1000000;
 
-                if(listaMLATmessages[i].timetotal >= 13*3600 + 18*60 + 21.459)
-                {
-
-                }
-
                 // buacamos paquete Vehiculo de calibracion mas cercano en tiempo por debajo
                 for (int j = 0; j < listaADSB.Count(); j++)
                 {
@@ -3537,28 +3596,15 @@ namespace ASTERIX
 
         public List<List<double>> CalculatePrecissionAccuracyCalibrationVehicle1(List<CAT10> list, List<MLATCalibrationData> list2)
         {
-            GMapOverlay overlay = new GMapOverlay();
-            overlay.Clear();
+            GMapOverlay overlay_lines = new GMapOverlay();
+            overlay_lines.Clear();
+            GMapOverlay overlay_MarkersMLAT = new GMapOverlay();
+            overlay_MarkersMLAT.Clear();
+            GMapOverlay overlay_MarkersADSB = new GMapOverlay();
+            overlay_MarkersADSB.Clear();
 
             List<CAT10> listaMLATmessages = new List<CAT10>();
             listaMLATmessages.AddRange(list);
-
-            // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
-            // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
-
-            for (int i = 0; i < listaMLATmessages.Count() - 1; i++)
-            {
-                if (Math.Abs(listaMLATmessages[i + 1].TimeofDay_seconds - listaMLATmessages[i].TimeofDay_seconds) > 12 * 3600)
-                {
-                    i = i + 1;
-                    while (i < listaMLATmessages.Count())
-                    {
-                        listaMLATmessages[i].timetotal = listaMLATmessages[i].TimeofDay_seconds + 24 * 3600;
-                        i = i + 1;
-                    }
-                    break;
-                }
-            }
 
             List<MLATCalibrationData> listaADSB = new List<MLATCalibrationData>();
             listaADSB.AddRange(list2);
@@ -3577,8 +3623,6 @@ namespace ASTERIX
             List<double> listadistances = new List<double>();
             List<double> listaDeltaX = new List<double>();
             List<double> listaDeltaY = new List<double>();
-
-            List<double> listacoordenadasvehiculocalibracion = new List<double>();
 
             for (int i = 0; i < listaMLATmessages.Count(); i++) // recorrem la lista MLAT
             {
@@ -3602,96 +3646,187 @@ namespace ASTERIX
                     if (timedelay <= tupdate && listaADSB[j].timetotal > timeMLAT) { indexj_posterior = j; }
                 }
 
-                if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && indexj_posterior - indexj_anterior <= tupdate)
+                if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && indexj_posterior - indexj_anterior <=2)
                 {
-                    //double timedistancewith_posterior = listaADSB[indexj_posterior].timetotal - timeMLAT;
-                    //double timedistancewith_anterior = timeMLAT - listaADSB[indexj_anterior].timetotal;
+                    //Interpolamos para encontrar Lat
+                    double x0 = listaADSB[indexj_anterior].timetotal;
+                    double x1 = listaADSB[indexj_posterior].timetotal;
+                    double x = timeMLAT;
 
-                    //if (timedistancewith_posterior + timedistancewith_anterior <= 2)
+                    double y0 = (listaADSB[indexj_anterior].coordSystemCartesian.Y);
+                    double y1 = (listaADSB[indexj_posterior].coordSystemCartesian.Y);
 
-                    double timedistancewith_posterior = listaADSB[indexj_posterior].timetotal - listaADSB[indexj_anterior].timetotal;
-                    double timedistancewithMLAT = (listaADSB[indexj_posterior].timetotal - timeMLAT) - (timeMLAT - listaADSB[indexj_anterior].timetotal);
-
-                    if (timedistancewith_posterior <= tupdate && timedistancewithMLAT <= 1)
+                    if ((x1 - x0) == 0)
                     {
-                        //Interpolamos para encontrar Lat
-                        double x0 = listaADSB[indexj_anterior].timetotal;
-                        double x1 = listaADSB[indexj_posterior].timetotal;
-                        double x = timeMLAT;
-
-                        double y0 = (listaADSB[indexj_anterior].coordSystemCartesian.Y);
-                        double y1 = (listaADSB[indexj_posterior].coordSystemCartesian.Y);
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCoordinatesADSB.Y = (y0 + y1) / 2;
-                        }
-                        newCoordinatesADSB.Y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-                        //Interpolamos para encontrar Lat
-                        x0 = listaADSB[indexj_anterior].timetotal;
-                        x1 = listaADSB[indexj_posterior].timetotal;
-                        x = timeMLAT;
-
-                        y0 = (listaADSB[indexj_anterior].coordSystemCartesian.X);
-                        y1 = (listaADSB[indexj_posterior].coordSystemCartesian.X);
-
-                        if ((x1 - x0) == 0)
-                        {
-                            newCoordinatesADSB.X = (y0 + y1) / 2;
-                        }
-                        newCoordinatesADSB.X = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
-
-
-                        double X1 = listaMLATmessages[i].coordSystemCartesian.X;
-                        double Y1 = listaMLATmessages[i].coordSystemCartesian.Y;
-
-                        double X2 = newCoordinatesADSB.X;
-                        double Y2 = newCoordinatesADSB.Y;
-
-                        double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
-                        listadistances.Add(distances);
-                        listaDeltaX.Add(X2 - X1);
-                        listaDeltaY.Add(Y2 - Y1);
-
-                        // Ahora añadimos poligonos al mapa.
-                        CoordinatesXYZ coordGeocentric = GeoUtils1.change_system_cartesian2geocentric(newCoordinatesADSB);
-                        CoordinatesWGS84 coordGeodesic = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
-                        List<PointLatLng> polygonpoints = new List<PointLatLng>() { new PointLatLng(coordGeodesic.Lat * GeoUtils.RADS2DEGS, coordGeodesic.Lon * GeoUtils.RADS2DEGS), new PointLatLng(listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS) };
-
-                        GMapPolygon polygon = new GMapPolygon(polygonpoints, "Polygon")
-                        {
-                            Stroke = new Pen(Color.Red, 2),
-                            Fill = new SolidBrush(Color.Red)
-                        };
-                        overlay.Polygons.Add(polygon);
-
-                        GMarkerGoogle marker1 = new GMarkerGoogle(new PointLatLng(coordGeodesic.Lat * GeoUtils.RADS2DEGS, coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
-                        GMarkerGoogle marker2 = new GMarkerGoogle(new PointLatLng(listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), blue_circle);
-
-                        marker1.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                        TimeSpan timespan1 = TimeSpan.FromSeconds(x);
-                        marker1.ToolTipText = timespan1.Hours.ToString() + ":" + timespan1.Minutes.ToString() + ":"  + timespan1.Seconds.ToString();
-
-                        marker2.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                        TimeSpan timespan2 = TimeSpan.FromSeconds(listaMLATmessages[i].timetotal);
-                        marker2.ToolTipText = timespan2.Hours.ToString() + ":" + timespan2.Minutes.ToString() + ":" + timespan2.Seconds.ToString();
-
-                        overlay.Markers.Add(marker1);
-                        overlay.Markers.Add(marker2);
-
-                        listacoordenadasvehiculocalibracion.Add(listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS);
-                        listacoordenadasvehiculocalibracion.Add(listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS);
+                        newCoordinatesADSB.Y = (y0 + y1) / 2;
                     }
+                    newCoordinatesADSB.Y = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+                    //Interpolamos para encontrar Lat
+                    x0 = listaADSB[indexj_anterior].timetotal;
+                    x1 = listaADSB[indexj_posterior].timetotal;
+                    x = timeMLAT;
+
+                    y0 = (listaADSB[indexj_anterior].coordSystemCartesian.X);
+                    y1 = (listaADSB[indexj_posterior].coordSystemCartesian.X);
+
+                    if ((x1 - x0) == 0)
+                    {
+                        newCoordinatesADSB.X = (y0 + y1) / 2;
+                    }
+                    newCoordinatesADSB.X = y0 + (x - x0) * (y1 - y0) / (x1 - x0);
+
+
+                    double X1 = listaMLATmessages[i].coordSystemCartesian.X;
+                    double Y1 = listaMLATmessages[i].coordSystemCartesian.Y;
+
+                    double X2 = newCoordinatesADSB.X;
+                    double Y2 = newCoordinatesADSB.Y;
+
+                    double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
+                    listadistances.Add(distances);
+                    listaDeltaX.Add(X2 - X1);
+                    listaDeltaY.Add(Y2 - Y1);
+
+                    // Ahora añadimos poligonos al mapa.
+                    CoordinatesXYZ coordGeocentric = GeoUtils1.change_system_cartesian2geocentric(newCoordinatesADSB);
+                    CoordinatesWGS84 coordGeodesic = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
+                    List<PointLatLng> polygonpoints = new List<PointLatLng>() { new PointLatLng(coordGeodesic.Lat * GeoUtils.RADS2DEGS, coordGeodesic.Lon * GeoUtils.RADS2DEGS), new PointLatLng(listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS) };
+
+                    GMapPolygon polygon = new GMapPolygon(polygonpoints, "Polygon")
+                    {
+                        Stroke = new Pen(Color.Red, 2),
+                        Fill = new SolidBrush(Color.Red)
+                    };
+                    overlay_lines.Polygons.Add(polygon);
+
+                    GMarkerGoogle marker1 = new GMarkerGoogle(new PointLatLng(coordGeodesic.Lat * GeoUtils.RADS2DEGS, coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
+                    GMarkerGoogle marker2 = new GMarkerGoogle(new PointLatLng(listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), blue_circle);
+
+                    marker1.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                    TimeSpan timespan1 = TimeSpan.FromSeconds(x);
+                    //marker1.ToolTipText = timespan1.Hours.ToString() + ":" + timespan1.Minutes.ToString() + ":"  + timespan1.Seconds.ToString();
+                    marker1.ToolTipText = timespan1.TotalSeconds.ToString();
+
+                    marker2.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                    TimeSpan timespan2 = TimeSpan.FromSeconds(listaMLATmessages[i].timetotal);
+                    //marker2.ToolTipText = timespan2.Hours.ToString() + ":" + timespan2.Minutes.ToString() + ":" + timespan2.Seconds.ToString();
+                    marker2.ToolTipText = timespan2.TotalSeconds.ToString();
+
+                    overlay_MarkersADSB.Markers.Add(marker1);
+                    overlay_MarkersMLAT.Markers.Add(marker2);
                 }
             }
 
-            Mapa.Overlays.Clear();
-            Mapa.Overlays.Add(overlay);
+            //Mapa.Overlays.Clear();
+            Mapa.Overlays.Add(overlay_lines);
+            Mapa.Overlays.Add(overlay_MarkersADSB);
+            Mapa.Overlays.Add(overlay_MarkersMLAT);
 
             List<List<double>> results1 = new List<List<double>>() { listadistances, listaDeltaX, listaDeltaY };
 
             return results1;
+        }
+
+        public List<double> CalculatePRobabilityofMLATDetection_CalibrationVehicle(List<CAT10> list, double interval)
+        {
+            List<CAT10> listaMLATmessages = new List<CAT10>();
+            listaMLATmessages.AddRange(list);
+
+            // Filtramos paquetes sin info de posicion
+            List<CAT10> list1 = new List<CAT10>();
+            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            {
+                if ((listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0) || (listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0))
+                {
+                    list1.Add(listaMLATmessages[i]);
+                }
+            }
+            listaMLATmessages.Clear();
+            listaMLATmessages.AddRange(list1);
+
+            // ahora separamos los paquetes por los i ntervalos en los que estan en una zona (para que, una vez salgan de una zona, aunque luego se vuelvan a menter contarlos como 2 trayectorias diferentes)
+
+            List<List<CAT10>> list_of_subzones = new List<List<CAT10>>();
+            List<CAT10> list111 = new List<CAT10>();
+            for (int i = 0; i< listaMLATmessages.Count()-1; i++)
+            {
+                if (listaMLATmessages[i + 1].timetotal - listaMLATmessages[i].timetotal < 20)
+                {
+                    list111.Add(listaMLATmessages[i]);
+                }
+                else
+                {
+                    list111.Add(listaMLATmessages[i]);
+                    list_of_subzones.Add(list111);
+                    list111 = new List<CAT10>();
+                }
+            }
+            if (listaMLATmessages.Count > 0)
+            {
+                list111.Add(listaMLATmessages.Last());
+            }
+            list_of_subzones.Add(list111);
+
+
+            // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+
+            double found_messages = 0;
+            double expected_messages = 0;
+
+            for (int i = 0; i < list_of_subzones.Count(); i++)
+            {
+                if(list_of_subzones[i].Count() > 0)
+                {
+                    List<CAT10> listplanes = list_of_subzones[i];
+
+                    // Buscamos timepo incial y timepo final de la trayectoria
+
+                    double time = listplanes.First().timetotal;
+                    double time_final = listplanes.Last().timetotal;
+
+                    // Buscle que vaya creando una ventana de tiempo de x segundos y vaya aumentando el tiempo incial de esa ventana un segundo a cada iteración
+
+                    while (time + interval < time_final)
+                    {
+                        // Bucle para buscar cuantos paquetes hay en esa ventana de tiempo
+                        List<CAT10> listplanesinterval = new List<CAT10>();
+                        listplanesinterval.Clear();
+
+                        for (int j = 0; j < listplanes.Count(); j++)
+                        {
+                            if (listplanes[j].timetotal >= time && listplanes[j].timetotal < time + interval)
+                            {
+                                listplanesinterval.Add(listplanes[j]);
+                            }
+                        }
+
+                        // Ahora buscamos cuantos paquetes hay en esa ventana de tiempo
+                        int messages = listplanesinterval.Count();
+
+                        if (messages > 0)
+                        {
+                            found_messages++;
+                        }
+                        expected_messages++;
+
+                        time++;
+                    }
+                }
+            }
+
+            double probabilityofupdate;
+            if (found_messages == 0 && expected_messages == 0)
+            {
+                probabilityofupdate = 0;
+            }
+            else
+            {
+                probabilityofupdate = found_messages / expected_messages;
+            }
+
+            List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate * 100 };
+            return results;
         }
 
         public double Percentile(List<double> sequence, double excelPercentile)
@@ -5332,6 +5467,990 @@ namespace ASTERIX
             }
         } // Separamos los paquetes MLAT por zonas del Aeropuerto
 
+        public void FilterbyAirportZones_CalibrationVehicle(List<CAT10> list)
+        {
+            listaMLAT_Stand.Clear();
+            listaMLAT_Stand_T1.Clear();
+            listaMLAT_Stand_T2.Clear();
+            listaMLAT_Apron.Clear();
+            listaMLAT_Apron_T1.Clear();
+            listaMLAT_Apron_T2.Clear();
+            listaMLAT_MA.Clear();
+            listaMLAT_Ground.Clear();
+            listaMLAT_Airborne.Clear();
+            listaMLAT_RWY1.Clear();
+            listaMLAT_RWY2.Clear();
+            listaMLAT_RWY3.Clear();
+            listaMLAT_Taxiway.Clear();
+            listaMLAT_Airborne_2coma5NM.Clear();
+            listaMLAT_Airborne_5NM.Clear();
+            listaMLAT_Airborne_2coma5NM_L.Clear();
+            listaMLAT_Airborne_2coma5NM_N.Clear();
+            listaMLAT_Airborne_2coma5NM_P.Clear();
+            listaMLAT_Airborne_2coma5NM_R.Clear();
+            listaMLAT_Airborne_2coma5NM_T.Clear();
+            listaMLAT_Airborne_2coma5NM_V.Clear();
+            listaMLAT_Airborne_5NM_K.Clear();
+            listaMLAT_Airborne_5NM_M.Clear();
+            listaMLAT_Airborne_5NM_O.Clear();
+            listaMLAT_Airborne_5NM_Q.Clear();
+            listaMLAT_Airborne_5NM_S.Clear();
+            listaMLAT_Airborne_5NM_U.Clear();
+
+            List<CAT10> listplanes = new List<CAT10>();
+            listplanes.AddRange(list);
+
+            // Buscamos si la pimera posición esta volando o en el suelo
+            string GBS_on = "Transponder Ground bit set.";
+            string GBS_off = "Transponder Ground bit not set.";
+
+            // Si empezamos en el aire 
+            if (listplanes.First().GBS == GBS_off)
+            {
+                // Buscamos en que indice de la lista pasa el ground bit de 0 a 1;
+                int index_j = 0;
+                for (int j = 0; j < listplanes.Count(); j++)
+                {
+                    if (listplanes[j].GBS == "Transponder Ground bit not set.") { index_j = j; }
+                }
+
+                // Buscamos en que runway estamos
+                bool inside_RWY1_CambioGBS = polygonW.IsInside(new PointLatLng(listplanes[index_j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[index_j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                bool inside_RWY2_CambioGBS = polygonX.IsInside(new PointLatLng(listplanes[index_j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[index_j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                bool inside_RWY3_CambioGBS = polygonY.IsInside(new PointLatLng(listplanes[index_j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[index_j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+
+                // Buscamos si, antes de estar en las pistas que dice estar, ha pasado por una zona aire de esa pista o ha pasado ppor esa pista de casualidad
+
+                if (inside_RWY1_CambioGBS == true)
+                {
+                    bool bool1 = false;
+                    for (int j = 0; j < index_j && bool1 == false; j++)
+                    {
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if (insideT || insideV)
+                        {
+                            inside_RWY1_CambioGBS = true;
+                            bool1 = true;
+                        }
+                    }
+                    if (bool1 == false) { inside_RWY1_CambioGBS = false; }
+                }
+
+                else if (inside_RWY2_CambioGBS == true)
+                {
+                    bool bool1 = false;
+                    for (int j = 0; j < index_j && bool1 == false; j++)
+                    {
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if (insideL || insideN)
+                        {
+                            inside_RWY2_CambioGBS = true;
+                            bool1 = true;
+                        }
+                    }
+                    if (bool1 == false) { inside_RWY2_CambioGBS = false; }
+                }
+
+                else if (inside_RWY3_CambioGBS == true)
+                {
+                    bool bool1 = false;
+                    for (int j = 0; j < index_j && bool1 == false; j++)
+                    {
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if (insideP || insideR)
+                        {
+                            inside_RWY3_CambioGBS = true;
+                            bool1 = true;
+                        }
+                    }
+                    if (bool1 == false) { inside_RWY3_CambioGBS = false; }
+                }
+
+                // Ahora ya hemos filtrado las pistas por las que hemos pasado de casualidad
+
+                // Ahora, por cada pista separamos entre zona aire y MA
+                if (inside_RWY1_CambioGBS)
+                {
+                    int j = 0;
+                    while (j < listplanes.Count() && polygonW.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS)) == false)
+                    {
+                        listaMLAT_Airborne.Add(listplanes[j]);
+
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if ((insideK ? 1 : 0) + (insideL ? 1 : 0) + (insideM ? 1 : 0) + (insideN ? 1 : 0) + (insideO ? 1 : 0) + (insideP ? 1 : 0) + (insideQ ? 1 : 0) + (insideR ? 1 : 0) + (insideS ? 1 : 0) + (insideT ? 1 : 0) + (insideU ? 1 : 0) + (insideV ? 1 : 0) == 0)
+                        {
+                        }
+
+                        if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Airborne.Add(listplanes[j]);
+                            listaMLAT_Airborne_2coma5NM.Add(listplanes[j]);
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listplanes[j]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listplanes[j]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listplanes[j]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listplanes[j]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listplanes[j]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listplanes[j]); }
+                        }
+                        else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Airborne.Add(listplanes[j]);
+                            listaMLAT_Airborne_5NM.Add(listplanes[j]);
+
+                            if (insideK) { listaMLAT_Airborne_5NM_K.Add(listplanes[j]); }
+                            if (insideM) { listaMLAT_Airborne_5NM_M.Add(listplanes[j]); }
+                            if (insideO) { listaMLAT_Airborne_5NM_O.Add(listplanes[j]); }
+                            if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listplanes[j]); }
+                            if (insideS) { listaMLAT_Airborne_5NM_S.Add(listplanes[j]); }
+                            if (insideU) { listaMLAT_Airborne_5NM_U.Add(listplanes[j]); }
+                        }
+                        j++;
+                    }
+                    while (j < listplanes.Count())
+                    {
+                        listaMLAT_Ground.Add(listplanes[j]);
+
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) + (insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) + (insideI ? 1 : 0) + (insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) == 0)
+                        {
+                        }
+
+                        // STAND
+                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Stand.Add(listplanes[j]);
+
+                            if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                            else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                        }
+
+                        // APRON
+                        else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Apron.Add(listplanes[j]);
+
+                            if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                            else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                        }
+
+                        // MA
+                        else if (insideI)
+                        {
+                            listaMLAT_MA.Add(listplanes[j]);
+
+                            if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                            {
+                                if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                            }
+                            else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                        }
+                        j++;
+                    }
+                }
+
+                else if (inside_RWY2_CambioGBS)
+                {
+                    int j = 0;
+                    while (j < listplanes.Count() && polygonX.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS)) == false)
+                    {
+                        listaMLAT_Airborne.Add(listplanes[j]);
+
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Airborne_2coma5NM.Add(listplanes[j]);
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listplanes[j]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listplanes[j]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listplanes[j]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listplanes[j]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listplanes[j]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listplanes[j]); }
+                        }
+                        else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Airborne_5NM.Add(listplanes[j]);
+
+                            if (insideK) { listaMLAT_Airborne_5NM_K.Add(listplanes[j]); }
+                            if (insideM) { listaMLAT_Airborne_5NM_M.Add(listplanes[j]); }
+                            if (insideO) { listaMLAT_Airborne_5NM_O.Add(listplanes[j]); }
+                            if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listplanes[j]); }
+                            if (insideS) { listaMLAT_Airborne_5NM_S.Add(listplanes[j]); }
+                            if (insideU) { listaMLAT_Airborne_5NM_U.Add(listplanes[j]); }
+                        }
+                        j++;
+                    }
+                    while (j < listplanes.Count())
+                    {
+                        listaMLAT_Ground.Add(listplanes[j]);
+
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        // STAND
+                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Stand.Add(listplanes[j]);
+
+                            if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                            else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                        }
+
+                        // APRON
+                        else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Apron.Add(listplanes[j]);
+
+                            if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                            else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                        }
+
+                        // MA
+                        else if (insideI)
+                        {
+                            listaMLAT_MA.Add(listplanes[j]);
+
+                            if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                            {
+                                if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                            }
+                            else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                        }
+                        j++;
+                    }
+                }
+
+                else if (inside_RWY3_CambioGBS)
+                {
+                    int j = 0;
+                    while (j < listplanes.Count() && polygonY.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS)) == false)
+                    {
+                        listaMLAT_Airborne.Add(listplanes[j]);
+
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Airborne_2coma5NM.Add(listplanes[j]);
+
+                            if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listplanes[j]); }
+                            if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listplanes[j]); }
+                            if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listplanes[j]); }
+                            if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listplanes[j]); }
+                            if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listplanes[j]); }
+                            if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listplanes[j]); }
+                        }
+                        else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Airborne_5NM.Add(listplanes[j]);
+
+                            if (insideK) { listaMLAT_Airborne_5NM_K.Add(listplanes[j]); }
+                            if (insideM) { listaMLAT_Airborne_5NM_M.Add(listplanes[j]); }
+                            if (insideO) { listaMLAT_Airborne_5NM_O.Add(listplanes[j]); }
+                            if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listplanes[j]); }
+                            if (insideS) { listaMLAT_Airborne_5NM_S.Add(listplanes[j]); }
+                            if (insideU) { listaMLAT_Airborne_5NM_U.Add(listplanes[j]); }
+                        }
+                        j++;
+                    }
+                    while (j < listplanes.Count())
+                    {
+                        listaMLAT_Ground.Add(listplanes[j]);
+
+                        double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                        bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                        bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                        // STAND
+                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Stand.Add(listplanes[j]);
+
+                            if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                            else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                        }
+
+                        // APRON
+                        else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                        {
+                            listaMLAT_Apron.Add(listplanes[j]);
+
+                            if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                            else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                        }
+
+                        // MA
+                        else if (insideI)
+                        {
+                            listaMLAT_MA.Add(listplanes[j]);
+
+                            if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                            {
+                                if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                            }
+                            else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                        }
+                        j++;
+                    }
+                }
+
+            }
+
+            // si empezamos en tierra
+            if(listplanes.First().GBS == GBS_on)
+            {
+                // Guardamos los vuelos con ground bit = 1 en lista MA
+                int j = 0;
+                int counter = 0;
+                while (j < listplanes.Count() && listplanes[j].GBS == "Transponder Ground bit set.")
+                {
+                    listaMLAT_Ground.Add(listplanes[j]);
+
+                    double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) + (insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0)
+                 + (insideI ? 1 : 0) + (insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) == 0)
+                    {
+
+                    }
+
+                    if (j == 23)
+                    {
+
+                    }
+
+                    // STAND
+                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                    {
+                        listaMLAT_Stand.Add(listplanes[j]);
+                        counter++;
+
+                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                        else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                    }
+
+                    // APRON
+                    else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                    {
+                        listaMLAT_Apron.Add(listplanes[j]);
+                        counter++;
+
+                        if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                        else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                    }
+
+                    // MA
+                    else if (insideI)
+                    {
+                        listaMLAT_MA.Add(listplanes[j]);
+                        counter++;
+
+                        if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                        {
+                            if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                            if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                            if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                        }
+                        else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                    }
+                    j++;
+
+                    if (counter != j)
+                    {
+
+                    }
+                }
+
+                // Si no tienen ground  bit = 1 pero siguen encima de la pista de despegue también los consideramos como que estan en tierra
+
+                // Guardamos en que pista estaba la ultima vez que tenia un ground bit = 1
+                bool inside_RWY1_CambioGBS = polygonW.IsInside(new PointLatLng(listplanes[j - 1].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j - 1].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                bool inside_RWY2_CambioGBS = polygonX.IsInside(new PointLatLng(listplanes[j - 1].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j - 1].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                bool inside_RWY3_CambioGBS = polygonY.IsInside(new PointLatLng(listplanes[j - 1].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j - 1].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+
+                if (j < listplanes.Count())
+                {
+                    // Mientras sigamos en la misma pista del ultimo ground bit set = 1 guardamos los paquetes en lista MA
+                    bool is_grounded = true;
+                    while (j < listplanes.Count() && is_grounded == true)
+                    {
+                        if (j == 421)
+                        {
+
+                        }
+
+                        if (counter == 420)
+                        {
+
+                        }
+
+                        bool inside_RWY1 = polygonW.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                        bool inside_RWY2 = polygonX.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                        bool inside_RWY3 = polygonY.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+
+                        if (inside_RWY1_CambioGBS == inside_RWY1 && inside_RWY2_CambioGBS == inside_RWY2 && inside_RWY3_CambioGBS == inside_RWY3)
+                        {
+                            listaMLAT_Ground.Add(listplanes[j]);
+
+                            double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                            bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                            bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                            // STAND
+                            if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                            {
+                                listaMLAT_Stand.Add(listplanes[j]);
+                                counter++;
+
+                                if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                                else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                            }
+
+                            // APRON
+                            else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                            {
+                                listaMLAT_Apron.Add(listplanes[j]);
+                                counter++;
+
+                                if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                                else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                            }
+
+                            // MA
+                            else if (insideI)
+                            {
+                                listaMLAT_MA.Add(listplanes[j]);
+                                counter++;
+
+                                if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                                {
+                                    if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                    if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                    if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                                }
+                                else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                            }
+                        }
+
+                        // Si no estan encima de la pista del ultimo GB = 1 es que han acabado la pista y estan en zona aire -> Salimos del codigo de despegue
+                        else
+                        {
+                            is_grounded = false;
+                        }
+                        j++;
+                    }
+
+                    // empezamos con el codigo de aterrizaje
+
+                    while (j < listplanes.Count())
+                    {
+                        // Buscamos en que indice de la lista pasa el ground bit de 0 a 1;
+                        int index_j = 0;
+                        for (int k = j; k < listplanes.Count(); k++)
+                        {
+                            if (listplanes[k].GBS == "Transponder Ground bit not set.") { index_j = k; }
+                        }
+
+                        // Buscamos en que runway estamos
+                        inside_RWY1_CambioGBS = polygonW.IsInside(new PointLatLng(listplanes[index_j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[index_j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                        inside_RWY2_CambioGBS = polygonX.IsInside(new PointLatLng(listplanes[index_j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[index_j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+                        inside_RWY3_CambioGBS = polygonY.IsInside(new PointLatLng(listplanes[index_j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[index_j].coordGeodesic.Lon * GeoUtils.RADS2DEGS));
+
+                        // Buscamos si, antes de estar en las pistas que dice estar, ha pasado por una zona aire de esa pista o ha pasado ppor esa pista de casualidad
+
+                        if (inside_RWY1_CambioGBS == true)
+                        {
+                            bool bool1 = false;
+                            for (int k = 0; k < index_j && bool1 == false; k++)
+                            {
+                                double[] coordenadas = new double[] { listplanes[k].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[k].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if (insideT || insideV)
+                                {
+                                    inside_RWY1_CambioGBS = true;
+                                    bool1 = true;
+                                }
+                            }
+                            if (bool1 == false) { inside_RWY1_CambioGBS = false; }
+                        }
+
+                        else if (inside_RWY2_CambioGBS == true)
+                        {
+                            bool bool1 = false;
+                            for (int k = 0; k < index_j && bool1 == false; k++)
+                            {
+                                double[] coordenadas = new double[] { listplanes[k].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[k].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if (insideL || insideN)
+                                {
+                                    inside_RWY2_CambioGBS = true;
+                                    bool1 = true;
+                                }
+                            }
+                            if (bool1 == false) { inside_RWY2_CambioGBS = false; }
+                        }
+
+                        else if (inside_RWY3_CambioGBS == true)
+                        {
+                            bool bool1 = false;
+                            for (int k = 0; k < index_j && bool1 == false; k++)
+                            {
+                                double[] coordenadas = new double[] { listplanes[k].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[k].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if (insideP || insideR)
+                                {
+                                    inside_RWY3_CambioGBS = true;
+                                    bool1 = true;
+                                }
+                            }
+                            if (bool1 == false) { inside_RWY3_CambioGBS = false; }
+                        }
+
+                        // Ahora ya hemos filtrado las pistas por las que hemos pasado de casualidad
+
+                        // Ahora, por cada pista separamos entre zona aire y MA
+                        if (inside_RWY1_CambioGBS)
+                        {
+                            while (j < listplanes.Count() && polygonW.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS)) == false)
+                            {
+                                listaMLAT_Airborne.Add(listplanes[j]);
+
+                                double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if ((insideK ? 1 : 0) + (insideL ? 1 : 0) + (insideM ? 1 : 0) + (insideN ? 1 : 0) + (insideO ? 1 : 0) + (insideP ? 1 : 0) + (insideQ ? 1 : 0) + (insideR ? 1 : 0) + (insideS ? 1 : 0) + (insideT ? 1 : 0) + (insideU ? 1 : 0) + (insideV ? 1 : 0) == 0)
+                                {
+                                }
+
+                                if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Airborne.Add(listplanes[j]);
+                                    listaMLAT_Airborne_2coma5NM.Add(listplanes[j]);
+
+                                    if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listplanes[j]); }
+                                    if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listplanes[j]); }
+                                    if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listplanes[j]); }
+                                    if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listplanes[j]); }
+                                    if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listplanes[j]); }
+                                    if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listplanes[j]); }
+                                }
+                                else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Airborne.Add(listplanes[j]);
+                                    listaMLAT_Airborne_5NM.Add(listplanes[j]);
+
+                                    if (insideK) { listaMLAT_Airborne_5NM_K.Add(listplanes[j]); }
+                                    if (insideM) { listaMLAT_Airborne_5NM_M.Add(listplanes[j]); }
+                                    if (insideO) { listaMLAT_Airborne_5NM_O.Add(listplanes[j]); }
+                                    if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listplanes[j]); }
+                                    if (insideS) { listaMLAT_Airborne_5NM_S.Add(listplanes[j]); }
+                                    if (insideU) { listaMLAT_Airborne_5NM_U.Add(listplanes[j]); }
+                                }
+                                j++;
+                            }
+                            while (j < listplanes.Count())
+                            {
+                                listaMLAT_Ground.Add(listplanes[j]);
+
+                                double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) + (insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) + (insideI ? 1 : 0) + (insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) == 0)
+                                {
+                                }
+
+                                // STAND
+                                if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Stand.Add(listplanes[j]);
+
+                                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                                    else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                                }
+
+                                // APRON
+                                else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Apron.Add(listplanes[j]);
+
+                                    if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                                    else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                                }
+
+                                // MA
+                                else if (insideI)
+                                {
+                                    listaMLAT_MA.Add(listplanes[j]);
+
+                                    if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                                    {
+                                        if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                        if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                        if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                                    }
+                                    else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                                }
+                                j++;
+                            }
+                        }
+
+                        else if (inside_RWY2_CambioGBS)
+                        {
+                            while (j < listplanes.Count() && polygonX.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS)) == false)
+                            {
+                                listaMLAT_Airborne.Add(listplanes[j]);
+
+                                double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Airborne_2coma5NM.Add(listplanes[j]);
+
+                                    if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listplanes[j]); }
+                                    if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listplanes[j]); }
+                                    if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listplanes[j]); }
+                                    if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listplanes[j]); }
+                                    if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listplanes[j]); }
+                                    if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listplanes[j]); }
+                                }
+                                else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Airborne_5NM.Add(listplanes[j]);
+
+                                    if (insideK) { listaMLAT_Airborne_5NM_K.Add(listplanes[j]); }
+                                    if (insideM) { listaMLAT_Airborne_5NM_M.Add(listplanes[j]); }
+                                    if (insideO) { listaMLAT_Airborne_5NM_O.Add(listplanes[j]); }
+                                    if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listplanes[j]); }
+                                    if (insideS) { listaMLAT_Airborne_5NM_S.Add(listplanes[j]); }
+                                    if (insideU) { listaMLAT_Airborne_5NM_U.Add(listplanes[j]); }
+                                }
+                                j++;
+                            }
+                            while (j < listplanes.Count())
+                            {
+                                listaMLAT_Ground.Add(listplanes[j]);
+
+                                double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                // STAND
+                                if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Stand.Add(listplanes[j]);
+
+                                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                                    else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                                }
+
+                                // APRON
+                                else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Apron.Add(listplanes[j]);
+
+                                    if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                                    else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                                }
+
+                                // MA
+                                else if (insideI)
+                                {
+                                    listaMLAT_MA.Add(listplanes[j]);
+
+                                    if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                                    {
+                                        if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                        if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                        if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                                    }
+                                    else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                                }
+                                j++;
+                            }
+                        }
+
+                        else if (inside_RWY3_CambioGBS)
+                        {
+                            while (j < listplanes.Count() && polygonY.IsInside(new PointLatLng(listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS)) == false)
+                            {
+                                listaMLAT_Airborne.Add(listplanes[j]);
+
+                                double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Airborne_2coma5NM.Add(listplanes[j]);
+
+                                    if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listplanes[j]); }
+                                    if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listplanes[j]); }
+                                    if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listplanes[j]); }
+                                    if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listplanes[j]); }
+                                    if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listplanes[j]); }
+                                    if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listplanes[j]); }
+                                }
+                                else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Airborne_5NM.Add(listplanes[j]);
+
+                                    if (insideK) { listaMLAT_Airborne_5NM_K.Add(listplanes[j]); }
+                                    if (insideM) { listaMLAT_Airborne_5NM_M.Add(listplanes[j]); }
+                                    if (insideO) { listaMLAT_Airborne_5NM_O.Add(listplanes[j]); }
+                                    if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listplanes[j]); }
+                                    if (insideS) { listaMLAT_Airborne_5NM_S.Add(listplanes[j]); }
+                                    if (insideU) { listaMLAT_Airborne_5NM_U.Add(listplanes[j]); }
+                                }
+                                j++;
+                            }
+                            while (j < listplanes.Count())
+                            {
+                                listaMLAT_Ground.Add(listplanes[j]);
+
+                                double[] coordenadas = new double[] { listplanes[j].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listplanes[j].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                                bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                                bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                                // STAND
+                                if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Stand.Add(listplanes[j]);
+
+                                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listplanes[j]); }
+                                    else { listaMLAT_Stand_T2.Add(listplanes[j]); }
+                                }
+
+                                // APRON
+                                else if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                                {
+                                    listaMLAT_Apron.Add(listplanes[j]);
+
+                                    if (insideH) { listaMLAT_Apron_T1.Add(listplanes[j]); }
+                                    else { listaMLAT_Apron_T2.Add(listplanes[j]); }
+                                }
+
+                                // MA
+                                else if (insideI)
+                                {
+                                    listaMLAT_MA.Add(listplanes[j]);
+
+                                    if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                                    {
+                                        if (insideW) { listaMLAT_RWY1.Add(listplanes[j]); }
+                                        if (insideX) { listaMLAT_RWY2.Add(listplanes[j]); }
+                                        if (insideY) { listaMLAT_RWY3.Add(listplanes[j]); }
+                                    }
+                                    else { listaMLAT_Taxiway.Add(listplanes[j]); }
+                                }
+                                j++;
+                            }
+                        }
+                    }
+                }
+            }
+
+        } // Separamos los paquetes MLAT por zonas del Aeropuerto para vehiculo de calibracion
+
         public void FilterMLATmessages(List<CAT10> listaMLATmessages)
         {
             List<CAT10> list = new List<CAT10>();
@@ -5608,226 +6727,221 @@ namespace ASTERIX
 
         #region Vincenty Equations & Related
         public double toRadians(double grados)
+        {
+            return grados * Math.PI / 180;
+        }
+
+        public double toDegrees(double radians)
+        {
+            return radians * 180 / (Math.PI);
+        }
+
+        public double CalculateHeadingBetweenCoordinates(double[] initial_coordinates, double[] final_coordinates)
+        {
+            double φ1 = toRadians(initial_coordinates[0]);
+            double φ2 = toRadians(final_coordinates[0]);
+            double λ1 = toRadians(initial_coordinates[1]);
+            double λ2 = toRadians(final_coordinates[1]);
+
+            double lat1 = φ1;
+            double lon1 = λ1;
+            double lat2 = φ2;
+            double lon2 = λ2;
+
+            double a = 6378137.0;
+            double b = 6356752.314245;
+            double f = 1 / 298.257223563;
+
+            double L = (lon2 - lon1);
+            double U1 = Math.Atan((1 - f) * Math.Tan(lat1));
+            double U2 = Math.Atan((1 - f) * Math.Tan(lat2));
+            double sinU1 = Math.Sin(U1),
+            cosU1 = Math.Cos(U1);
+            double sinU2 = Math.Sin(U2),
+            cosU2 = Math.Cos(U2);
+
+            double lambda = L, lambdaP, iterLimit = 100;
+
+            double cosSqAlpha;
+            double sinSigma;
+            double cos2SigmaM;
+            double cosSigma;
+            double sigma;
+
+            do
             {
-                return grados * Math.PI / 180;
-            }
+                double sinLambda = Math.Sin(lambda),
+                cosLambda = Math.Cos(lambda);
+                sinSigma = Math.Sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
+                if (sinSigma == 0) return 0; // co-incident points
+                cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda;
+                sigma = Math.Atan2(sinSigma, cosSigma);
+                double sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma;
+                cosSqAlpha = 1 - sinAlpha * sinAlpha;
+                cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cosSqAlpha;
+                double C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
+                lambdaP = lambda;
+                lambda = L + (1 - C) * f * sinAlpha * (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
+            } while (Math.Abs(lambda - lambdaP) > 1e-12 && --iterLimit > 0);
 
-            public double toDegrees(double radians)
+            var uSq = cosSqAlpha * (a * a - b * b) / (b * b);
+            var A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+            var B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+            var deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) - B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
+            var s = b * A * (sigma - deltaSigma);
+            var α1 = Math.Atan2(cosU2 * Math.Sin(L), cosU1 * sinU2 - sinU1 * cosU2 * Math.Cos(L));
+            var α2 = Math.Atan2(cosU1 * Math.Sin(L), -1 * sinU1 * cosU2 + cosU1 * sinU2 * Math.Cos(L));
+
+            double heading_btw_points = toDegrees(α2);
+
+            return heading_btw_points;
+        }
+
+        public double[] NewCoordinates(double[] coordinates, double distance, double initialBearing)
+        {
+            double[] listaCoordenadas = new double[2];
+
+            double φ1 = toRadians(coordinates[0]);
+            double λ1 = toRadians(coordinates[1]);
+            double α1 = toRadians(initialBearing);
+            double s = distance;
+
+            // allow alternative ellipsoid to be specified
+            double a = 6378137.0;
+            double b = 6356752.314245;
+            double f = 1 / 298.257223563;
+
+            double sinα1 = Math.Sin(α1);
+            double cosα1 = Math.Cos(α1);
+
+            double tanU1 = (1 - f) * Math.Tan(φ1), cosU1 = 1 / Math.Sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
+            double σ1 = Math.Atan2(tanU1, cosα1); // σ1 = angular distance on the sphere from the equator to P1
+            double sinα = cosU1 * sinα1;          // α = azimuth of the geodesic at the equator
+            double cosSqα = 1 - sinα * sinα;
+            double uSq = cosSqα * (a * a - b * b) / (b * b);
+            double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+            double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+
+            double σ = s / (b * A);
+            double sinσ;
+            double cosσ;
+            double Δσ; // σ = angular distance P₁ P₂ on the sphere
+            double cos2σₘ; // σₘ = angular distance on the sphere from the equator to the midpoint of the line
+
+            double σ_prima; int iterations = 0;
+            do
             {
-                return radians * 180 / (Math.PI);
-            }
+                cos2σₘ = Math.Cos(2 * σ1 + σ);
+                sinσ = Math.Sin(σ);
+                cosσ = Math.Cos(σ);
+                Δσ = B * sinσ * (cos2σₘ + B / 4 * (cosσ * (-1 + 2 * cos2σₘ * cos2σₘ) -
+                    B / 6 * cos2σₘ * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σₘ * cos2σₘ)));
+                σ_prima = σ;
+                σ = s / (b * A) + Δσ;
+            } while (Math.Abs(σ - σ_prima) > 1e-12 && ++iterations < 100);
+            //if (iterations >= 100) throw new EvalError('Vincenty formula failed to converge'); // not possible?
 
-            public double CalculateHeadingBetweenCoordinates(double[] initial_coordinates, double[] final_coordinates)
+            double x = sinU1 * sinσ - cosU1 * cosσ * cosα1;
+            double φ2 = Math.Atan2(sinU1 * cosσ + cosU1 * sinσ * cosα1, (1 - f) * Math.Sqrt(sinα * sinα + x * x));
+            double λ = Math.Atan2(sinσ * sinα1, cosU1 * cosσ - sinU1 * sinσ * cosα1);
+            double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
+            double L = λ - (1 - C) * f * sinα * (σ + C * sinσ * (cos2σₘ + C * cosσ * (-1 + 2 * cos2σₘ * cos2σₘ)));
+            double λ2 = λ1 + L;
+
+            double α2 = Math.Atan2(sinα, -x);
+
+            listaCoordenadas[0] = toDegrees(φ2);
+            listaCoordenadas[1] = toDegrees(λ2);
+
+            double coord1 = φ2;
+            int sec1 = (int)Math.Round(coord1 * 3600);
+            int deg1 = sec1 / 3600;
+            sec1 = Math.Abs(sec1 % 3600);
+            int min1 = sec1 / 60;
+            sec1 %= 60;
+
+            double coord2 = λ2;
+            int sec2 = (int)Math.Round(coord2 * 3600);
+            int deg2 = sec2 / 3600;
+            sec2 = Math.Abs(sec2 % 3600);
+            int min2 = sec2 / 60;
+            sec2 %= 60;
+
+            return listaCoordenadas;
+        }
+
+        public double[] NewCoordinatesMLAT(double distance, double initialBearing)
+        {
+            double[] listaCoordenadas = new double[2];
+
+            double φ1 = toRadians(LatMLAT);
+            double λ1 = toRadians(LonMLAT);
+            double α1 = toRadians(initialBearing);
+            double s = distance;
+
+            // allow alternative ellipsoid to be specified
+            double a = 6378137.0;
+            double b = 6356752.314245;
+            double f = 1 / 298.257223563;
+
+            double sinα1 = Math.Sin(α1);
+            double cosα1 = Math.Cos(α1);
+
+            double tanU1 = (1 - f) * Math.Tan(φ1), cosU1 = 1 / Math.Sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
+            double σ1 = Math.Atan2(tanU1, cosα1); // σ1 = angular distance on the sphere from the equator to P1
+            double sinα = cosU1 * sinα1;          // α = azimuth of the geodesic at the equator
+            double cosSqα = 1 - sinα * sinα;
+            double uSq = cosSqα * (a * a - b * b) / (b * b);
+            double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
+            double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
+
+            double σ = s / (b * A);
+            double sinσ;
+            double cosσ;
+            double Δσ; // σ = angular distance P₁ P₂ on the sphere
+            double cos2σₘ; // σₘ = angular distance on the sphere from the equator to the midpoint of the line
+
+            double σ_prima; int iterations = 0;
+            do
             {
-                double φ1 = toRadians(initial_coordinates[0]);
-                double φ2 = toRadians(final_coordinates[0]);
-                double λ1 = toRadians(initial_coordinates[1]);
-                double λ2 = toRadians(final_coordinates[1]);
+                cos2σₘ = Math.Cos(2 * σ1 + σ);
+                sinσ = Math.Sin(σ);
+                cosσ = Math.Cos(σ);
+                Δσ = B * sinσ * (cos2σₘ + B / 4 * (cosσ * (-1 + 2 * cos2σₘ * cos2σₘ) -
+                    B / 6 * cos2σₘ * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σₘ * cos2σₘ)));
+                σ_prima = σ;
+                σ = s / (b * A) + Δσ;
+            } while (Math.Abs(σ - σ_prima) > 1e-12 && ++iterations < 100);
+            //if (iterations >= 100) throw new EvalError('Vincenty formula failed to converge'); // not possible?
 
-                double lat1 = φ1;
-                double lon1 = λ1;
-                double lat2 = φ2;
-                double lon2 = λ2;
+            double x = sinU1 * sinσ - cosU1 * cosσ * cosα1;
+            double φ2 = Math.Atan2(sinU1 * cosσ + cosU1 * sinσ * cosα1, (1 - f) * Math.Sqrt(sinα * sinα + x * x));
+            double λ = Math.Atan2(sinσ * sinα1, cosU1 * cosσ - sinU1 * sinσ * cosα1);
+            double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
+            double L = λ - (1 - C) * f * sinα * (σ + C * sinσ * (cos2σₘ + C * cosσ * (-1 + 2 * cos2σₘ * cos2σₘ)));
+            double λ2 = λ1 + L;
 
-                double a = 6378137.0;
-                double b = 6356752.314245;
-                double f = 1 / 298.257223563;
+            double α2 = Math.Atan2(sinα, -x);
 
-                double L = (lon2 - lon1);
-                double U1 = Math.Atan((1 - f) * Math.Tan(lat1));
-                double U2 = Math.Atan((1 - f) * Math.Tan(lat2));
-                double sinU1 = Math.Sin(U1),
-                cosU1 = Math.Cos(U1);
-                double sinU2 = Math.Sin(U2),
-                cosU2 = Math.Cos(U2);
+            listaCoordenadas[0] = toDegrees(φ2);
+            listaCoordenadas[1] = toDegrees(λ2);
 
-                double lambda = L, lambdaP, iterLimit = 100;
+            double coord1 = φ2;
+            int sec1 = (int)Math.Round(coord1 * 3600);
+            int deg1 = sec1 / 3600;
+            sec1 = Math.Abs(sec1 % 3600);
+            int min1 = sec1 / 60;
+            sec1 %= 60;
 
-                double cosSqAlpha;
-                double sinSigma;
-                double cos2SigmaM;
-                double cosSigma;
-                double sigma;
+            double coord2 = λ2;
+            int sec2 = (int)Math.Round(coord2 * 3600);
+            int deg2 = sec2 / 3600;
+            sec2 = Math.Abs(sec2 % 3600);
+            int min2 = sec2 / 60;
+            sec2 %= 60;
 
-                do
-                {
-                    double sinLambda = Math.Sin(lambda),
-                    cosLambda = Math.Cos(lambda);
-                    sinSigma = Math.Sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
-                    if (sinSigma == 0) return 0; // co-incident points
-                    cosSigma = sinU1 * sinU2 + cosU1 * cosU2 * cosLambda;
-                    sigma = Math.Atan2(sinSigma, cosSigma);
-                    double sinAlpha = cosU1 * cosU2 * sinLambda / sinSigma;
-                    cosSqAlpha = 1 - sinAlpha * sinAlpha;
-                    cos2SigmaM = cosSigma - 2 * sinU1 * sinU2 / cosSqAlpha;
-                    double C = f / 16 * cosSqAlpha * (4 + f * (4 - 3 * cosSqAlpha));
-                    lambdaP = lambda;
-                    lambda = L + (1 - C) * f * sinAlpha * (sigma + C * sinSigma * (cos2SigmaM + C * cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM)));
-                } while (Math.Abs(lambda - lambdaP) > 1e-12 && --iterLimit > 0);
-
-                var uSq = cosSqAlpha * (a * a - b * b) / (b * b);
-                var A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
-                var B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
-                var deltaSigma = B * sinSigma * (cos2SigmaM + B / 4 * (cosSigma * (-1 + 2 * cos2SigmaM * cos2SigmaM) - B / 6 * cos2SigmaM * (-3 + 4 * sinSigma * sinSigma) * (-3 + 4 * cos2SigmaM * cos2SigmaM)));
-                var s = b * A * (sigma - deltaSigma);
-                var α1 = Math.Atan2(cosU2 * Math.Sin(L), cosU1 * sinU2 - sinU1 * cosU2 * Math.Cos(L));
-                var α2 = Math.Atan2(cosU1 * Math.Sin(L), -1 * sinU1 * cosU2 + cosU1 * sinU2 * Math.Cos(L));
-
-                double heading_btw_points = toDegrees(α2);
-
-                return heading_btw_points;
-            }
-
-            public double[] NewCoordinates(double[] coordinates, double distance, double initialBearing)
-            {
-                double[] listaCoordenadas = new double[2];
-
-                double φ1 = toRadians(coordinates[0]);
-                double λ1 = toRadians(coordinates[1]);
-                double α1 = toRadians(initialBearing);
-                double s = distance;
-
-                // allow alternative ellipsoid to be specified
-                double a = 6378137.0;
-                double b = 6356752.314245;
-                double f = 1 / 298.257223563;
-
-                double sinα1 = Math.Sin(α1);
-                double cosα1 = Math.Cos(α1);
-
-                double tanU1 = (1 - f) * Math.Tan(φ1), cosU1 = 1 / Math.Sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
-                double σ1 = Math.Atan2(tanU1, cosα1); // σ1 = angular distance on the sphere from the equator to P1
-                double sinα = cosU1 * sinα1;          // α = azimuth of the geodesic at the equator
-                double cosSqα = 1 - sinα * sinα;
-                double uSq = cosSqα * (a * a - b * b) / (b * b);
-                double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
-                double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
-
-                double σ = s / (b * A);
-                double sinσ;
-                double cosσ;
-                double Δσ; // σ = angular distance P₁ P₂ on the sphere
-                double cos2σₘ; // σₘ = angular distance on the sphere from the equator to the midpoint of the line
-
-                double σ_prima; int iterations = 0;
-                do
-                {
-                    cos2σₘ = Math.Cos(2 * σ1 + σ);
-                    sinσ = Math.Sin(σ);
-                    cosσ = Math.Cos(σ);
-                    Δσ = B * sinσ * (cos2σₘ + B / 4 * (cosσ * (-1 + 2 * cos2σₘ * cos2σₘ) -
-                        B / 6 * cos2σₘ * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σₘ * cos2σₘ)));
-                    σ_prima = σ;
-                    σ = s / (b * A) + Δσ;
-                } while (Math.Abs(σ - σ_prima) > 1e-12 && ++iterations < 100);
-                //if (iterations >= 100) throw new EvalError('Vincenty formula failed to converge'); // not possible?
-
-                double x = sinU1 * sinσ - cosU1 * cosσ * cosα1;
-                double φ2 = Math.Atan2(sinU1 * cosσ + cosU1 * sinσ * cosα1, (1 - f) * Math.Sqrt(sinα * sinα + x * x));
-                double λ = Math.Atan2(sinσ * sinα1, cosU1 * cosσ - sinU1 * sinσ * cosα1);
-                double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
-                double L = λ - (1 - C) * f * sinα * (σ + C * sinσ * (cos2σₘ + C * cosσ * (-1 + 2 * cos2σₘ * cos2σₘ)));
-                double λ2 = λ1 + L;
-
-                double α2 = Math.Atan2(sinα, -x);
-
-                listaCoordenadas[0] = toDegrees(φ2);
-                listaCoordenadas[1] = toDegrees(λ2);
-
-                double coord1 = φ2;
-                int sec1 = (int)Math.Round(coord1 * 3600);
-                int deg1 = sec1 / 3600;
-                sec1 = Math.Abs(sec1 % 3600);
-                int min1 = sec1 / 60;
-                sec1 %= 60;
-
-                double coord2 = λ2;
-                int sec2 = (int)Math.Round(coord2 * 3600);
-                int deg2 = sec2 / 3600;
-                sec2 = Math.Abs(sec2 % 3600);
-                int min2 = sec2 / 60;
-                sec2 %= 60;
-
-                return listaCoordenadas;
-            }
-
-            public double[] NewCoordinatesMLAT(double distance, double initialBearing)
-            {
-                double[] listaCoordenadas = new double[2];
-
-                double φ1 = toRadians(LatMLAT);
-                double λ1 = toRadians(LonMLAT);
-                double α1 = toRadians(initialBearing);
-                double s = distance;
-
-                // allow alternative ellipsoid to be specified
-                double a = 6378137.0;
-                double b = 6356752.314245;
-                double f = 1 / 298.257223563;
-
-                double sinα1 = Math.Sin(α1);
-                double cosα1 = Math.Cos(α1);
-
-                double tanU1 = (1 - f) * Math.Tan(φ1), cosU1 = 1 / Math.Sqrt((1 + tanU1 * tanU1)), sinU1 = tanU1 * cosU1;
-                double σ1 = Math.Atan2(tanU1, cosα1); // σ1 = angular distance on the sphere from the equator to P1
-                double sinα = cosU1 * sinα1;          // α = azimuth of the geodesic at the equator
-                double cosSqα = 1 - sinα * sinα;
-                double uSq = cosSqα * (a * a - b * b) / (b * b);
-                double A = 1 + uSq / 16384 * (4096 + uSq * (-768 + uSq * (320 - 175 * uSq)));
-                double B = uSq / 1024 * (256 + uSq * (-128 + uSq * (74 - 47 * uSq)));
-
-                double σ = s / (b * A);
-                double sinσ;
-                double cosσ;
-                double Δσ; // σ = angular distance P₁ P₂ on the sphere
-                double cos2σₘ; // σₘ = angular distance on the sphere from the equator to the midpoint of the line
-
-                double σ_prima; int iterations = 0;
-                do
-                {
-                    cos2σₘ = Math.Cos(2 * σ1 + σ);
-                    sinσ = Math.Sin(σ);
-                    cosσ = Math.Cos(σ);
-                    Δσ = B * sinσ * (cos2σₘ + B / 4 * (cosσ * (-1 + 2 * cos2σₘ * cos2σₘ) -
-                        B / 6 * cos2σₘ * (-3 + 4 * sinσ * sinσ) * (-3 + 4 * cos2σₘ * cos2σₘ)));
-                    σ_prima = σ;
-                    σ = s / (b * A) + Δσ;
-                } while (Math.Abs(σ - σ_prima) > 1e-12 && ++iterations < 100);
-                //if (iterations >= 100) throw new EvalError('Vincenty formula failed to converge'); // not possible?
-
-                double x = sinU1 * sinσ - cosU1 * cosσ * cosα1;
-                double φ2 = Math.Atan2(sinU1 * cosσ + cosU1 * sinσ * cosα1, (1 - f) * Math.Sqrt(sinα * sinα + x * x));
-                double λ = Math.Atan2(sinσ * sinα1, cosU1 * cosσ - sinU1 * sinσ * cosα1);
-                double C = f / 16 * cosSqα * (4 + f * (4 - 3 * cosSqα));
-                double L = λ - (1 - C) * f * sinα * (σ + C * sinσ * (cos2σₘ + C * cosσ * (-1 + 2 * cos2σₘ * cos2σₘ)));
-                double λ2 = λ1 + L;
-
-                double α2 = Math.Atan2(sinα, -x);
-
-                listaCoordenadas[0] = toDegrees(φ2);
-                listaCoordenadas[1] = toDegrees(λ2);
-
-                double coord1 = φ2;
-                int sec1 = (int)Math.Round(coord1 * 3600);
-                int deg1 = sec1 / 3600;
-                sec1 = Math.Abs(sec1 % 3600);
-                int min1 = sec1 / 60;
-                sec1 %= 60;
-
-                double coord2 = λ2;
-                int sec2 = (int)Math.Round(coord2 * 3600);
-                int deg2 = sec2 / 3600;
-                sec2 = Math.Abs(sec2 % 3600);
-                int min2 = sec2 / 60;
-                sec2 %= 60;
-
-                return listaCoordenadas;
-            }
-
-
-
-
-
+            return listaCoordenadas;
+        }
 
         #endregion
 
