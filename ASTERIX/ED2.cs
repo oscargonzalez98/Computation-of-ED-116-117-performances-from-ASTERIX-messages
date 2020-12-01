@@ -198,8 +198,6 @@ namespace ASTERIX
         // Centro de coordenadas MLAT
         double LatMLAT = 41 + (17.0 / 60.0) + (49.426 / 3600);
         double LonMLAT = 02 + (04.0 / 60.0) + (42.410 / 3600);
-        //double LatMLAT = 41.297063;
-        //double LonMLAT = 2.078447;
 
         // Coordenadas ARP
         double LatARP = 41 + (17.0 / 60.0) + (49.426 / 3600);
@@ -611,11 +609,13 @@ namespace ASTERIX
             polygonXpoints.Add(new PointLatLng(41.292440, 2.103079));
 
 
-            // RW3 (la de arriba)
-            polygonYpoints.Add(new PointLatLng(41.295108, 2.071877));
-            polygonYpoints.Add(new PointLatLng(41.294635, 2.072162));
-            polygonYpoints.Add(new PointLatLng(41.305473, 2.103814));
-            polygonYpoints.Add(new PointLatLng(41.305946, 2.103528));
+            //// RW3 (la de arriba)
+            polygonYpoints.Add(new PointLatLng(41.29297049468716, 2.065622392172579));
+            polygonYpoints.Add(new PointLatLng(41.29248193489276, 2.065916364393845));
+            polygonYpoints.Add(new PointLatLng(41.30547193468261, 2.103816950027875));
+            polygonYpoints.Add(new PointLatLng(41.30594777193178, 2.103529206755665));
+            polygonYpoints.Add(new PointLatLng(41.29297049468716, 2.065622392172579));
+
 
             #endregion //  Class variables
 
@@ -836,8 +836,8 @@ namespace ASTERIX
             //////----------------------------------------------------------------------- Filtramos paquetes MLAT y ADSB (Quitamos periodic updates, ground vehicles, paquetes muy lejanos, paquetes con version MOPS != 2 etc...)
 
 
-            Mapa.Overlays.Clear();
-            GMapOverlay overlay1 = new GMapOverlay();
+            //Mapa.Overlays.Clear();
+            //GMapOverlay overlay1 = new GMapOverlay();
 
             //for (int i = 0; i < listaCAT21.Count(); i++)
             //{
@@ -896,7 +896,7 @@ namespace ASTERIX
 
 
             //Mapa.Overlays.Clear();
-            //GMapOverlay overlay1 = new GMapOverlay();
+            GMapOverlay overlay1 = new GMapOverlay();
 
             for (int i = 0; i < listaMLAT_Stand.Count(); i++)
             {
@@ -3087,7 +3087,7 @@ namespace ASTERIX
             List<List<CAT10>> list_of_subzones = new List<List<CAT10>>();
             List<CAT10> list111 = new List<CAT10>();
 
-            for(int j = 0; j < list_of_list_of_planes.Count(); j++)
+            for (int j = 0; j < list_of_list_of_planes.Count(); j++)
             {
                 List<CAT10> list11 = list_of_list_of_planes[j];
 
@@ -3109,6 +3109,7 @@ namespace ASTERIX
                     list111.Add(list11.Last());
                 }
                 list_of_subzones.Add(list111);
+                list111 = new List<CAT10>();
             }
 
             // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
@@ -6948,7 +6949,5 @@ namespace ASTERIX
         #region Basura
 
         #endregion
-
-
     }
 }
