@@ -906,7 +906,7 @@ namespace ASTERIX
 
             for (int i = 0; i < listaMLAT_Apron.Count(); i++)
             {
-                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Apron[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), blue_circle);
+                GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(listaMLAT_Apron[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLAT_Apron[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), green_circle);
                 overlay1.Markers.Add(marker);
             }
 
@@ -2064,8 +2064,8 @@ namespace ASTERIX
             string PU13 = Math.Round(results13[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             n = dataGridView1.Rows.Add("AIRBORNE 2.5 - 5 NM", results13[0], results13[1], PU13, "----");
 
-            double received_messages = results1[0] + results4[0] + results7[0];
-            double expected_messages = results1[1] + results4[1] + results7[1];
+            double received_messages = results1[0] + results4[0] + results7[0] + results12[0] + results13[0];
+            double expected_messages = results1[1] + results4[1] + results7[1] + results12[1] + results13[1];
             string PU14 = Math.Round((received_messages / expected_messages) * 100, 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             n = dataGridView1.Rows.Add("TOTAL", received_messages, expected_messages, PU14, "99.9");
 
@@ -6568,115 +6568,6 @@ namespace ASTERIX
 
             return result;
         } // Devuelve lista con los paquetes MLAT del vehiculo / aeronave de calibración
-
-        public void FilterCalibrationVehicleByAirportZones(List<CAT10> list)
-        {
-            List<CAT10> listaMLATmessages = new List<CAT10>();
-            listaMLATmessages.AddRange(list);
-
-            string TargetAddress = listaMLATmessages[0].TargetIdentification_decoded;
-
-            if (TargetAddress == "MLAT01")
-            {
-                for (int i = 0; i < listaMLATmessages.Count(); i++)
-                {
-                    listaMLAT_Ground.Add(listaMLATmessages[i]);
-
-                    double[] coordenadas = new double[] { listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
-
-                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-
-                    // STAND
-                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
-                    {
-                        listaMLAT_Stand.Add(listaMLATmessages[i]);
-
-                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) { listaMLAT_Stand_T1.Add(listaMLATmessages[i]); }
-                        else { listaMLAT_Stand_T2.Add(listaMLATmessages[i]); }
-                    }
-
-                    // APRON
-                    if ((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
-                    {
-                        listaMLAT_Apron.Add(listaMLATmessages[i]);
-
-                        if (insideH) { listaMLAT_Apron_T1.Add(listaMLATmessages[i]); }
-                        else { listaMLAT_Apron_T2.Add(listaMLATmessages[i]); }
-                    }
-
-                    // MA
-                    if (insideI)
-                    {
-                        listaMLAT_MA.Add(listaMLATmessages[i]);
-
-                        if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
-                        {
-                            if (insideW) { listaMLAT_RWY1.Add(listaMLATmessages[i]); }
-                            if (insideX) { listaMLAT_RWY2.Add(listaMLATmessages[i]); }
-                            if (insideY) { listaMLAT_RWY3.Add(listaMLATmessages[i]); }
-                        }
-                        else { listaMLAT_Taxiway.Add(listaMLATmessages[i]); }
-                    }
-                }
-            }
-
-            if (TargetAddress == "ECKJQ")
-            {
-                for (int i = 0; i < listaMLATmessages.Count(); i++)
-                {
-                    listaMLAT_Airborne.Add(listaMLATmessages[i]);
-
-                    double[] coordenadas = new double[] { listaMLATmessages[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, listaMLATmessages[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS };
-
-                    bool insideK = polygonK.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideL = polygonL.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideM = polygonM.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideN = polygonN.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideO = polygonO.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideP = polygonP.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideQ = polygonQ.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideR = polygonR.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideS = polygonS.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideT = polygonT.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideU = polygonU.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-                    bool insideV = polygonV.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
-
-                    if ((insideL ? 1 : 0) + (insideN ? 1 : 0) + (insideP ? 1 : 0) + (insideR ? 1 : 0) + (insideT ? 1 : 0) + (insideV ? 1 : 0) > 0)
-                    {
-                        listaMLAT_Airborne_2coma5NM.Add(listaMLATmessages[i]);
-
-                        if (insideL) { listaMLAT_Airborne_2coma5NM_L.Add(listaMLATmessages[i]); }
-                        if (insideN) { listaMLAT_Airborne_2coma5NM_N.Add(listaMLATmessages[i]); }
-                        if (insideP) { listaMLAT_Airborne_2coma5NM_P.Add(listaMLATmessages[i]); }
-                        if (insideR) { listaMLAT_Airborne_2coma5NM_R.Add(listaMLATmessages[i]); }
-                        if (insideT) { listaMLAT_Airborne_2coma5NM_T.Add(listaMLATmessages[i]); }
-                        if (insideV) { listaMLAT_Airborne_2coma5NM_V.Add(listaMLATmessages[i]); }
-                    }
-                    else if ((insideK ? 1 : 0) + (insideM ? 1 : 0) + (insideO ? 1 : 0) + (insideQ ? 1 : 0) + (insideS ? 1 : 0) + (insideU ? 1 : 0) > 0)
-                    {
-                        listaMLAT_Airborne_5NM.Add(listaMLATmessages[i]);
-
-                        if (insideK) { listaMLAT_Airborne_5NM_K.Add(listaMLATmessages[i]); }
-                        if (insideM) { listaMLAT_Airborne_5NM_M.Add(listaMLATmessages[i]); }
-                        if (insideO) { listaMLAT_Airborne_5NM_O.Add(listaMLATmessages[i]); }
-                        if (insideQ) { listaMLAT_Airborne_5NM_Q.Add(listaMLATmessages[i]); }
-                        if (insideS) { listaMLAT_Airborne_5NM_S.Add(listaMLATmessages[i]); }
-                        if (insideU) { listaMLAT_Airborne_5NM_U.Add(listaMLATmessages[i]); }
-                    }
-                }
-            }
-        } // Filtramos por zonas los paquetes de un vehiculo / aeronave de calibracion (no la uso creo)
 
         public void SelectAllplanesinsideAirpotZone(List<CAT10> list)
         {
