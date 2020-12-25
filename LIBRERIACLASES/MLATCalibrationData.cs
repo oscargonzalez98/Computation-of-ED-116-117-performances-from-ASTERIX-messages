@@ -18,7 +18,7 @@ namespace LIBRERIACLASES
         //double LatMLAT = 41.297063;
         //double LonMLAT = 2.078447;
 
-        // Coordenadas ARP
+        //// Coordenadas ARP
         double LatARP = 41 + (17.0 / 60.0) + (49.426 / 3600);
         double LonARP = 02 + (04.0 / 60.0) + (42.410 / 3600);
 

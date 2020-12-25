@@ -143,14 +143,23 @@ namespace ASTERIX
             Mapa.Zoom = 8;
             Mapa.AutoScroll = true;
 
-            GMapOverlay overlayMA = PlotListadePaquetesenOverlayMLAT(listaMLAT_Stand, red_circle);
+            GMapOverlay overlayMA = PlotListadePaquetesenOverlayMLAT(listaMLAT_Stand, blue_circle);
             Mapa.Overlays.Add(overlayMA);
 
-            GMapOverlay overlayAIRBORNE25 = PlotListadePaquetesenOverlayMLAT(listaMLAT_Apron, white_circle);
+            GMapOverlay overlayAIRBORNE25 = PlotListadePaquetesenOverlayMLAT(listaMLAT_Apron, green_circle);
             Mapa.Overlays.Add(overlayAIRBORNE25);
 
-            GMapOverlay overlayAIRBORNE5 = PlotListadePaquetesenOverlayMLAT(listaMLAT_MA, blue_circle);
+            GMapOverlay overlayAIRBORNE5 = PlotListadePaquetesenOverlayMLAT(listaMLAT_MA, red_circle);
             Mapa.Overlays.Add(overlayAIRBORNE5);
+
+            GMapOverlay overlay = PlotListadePaquetesenOverlayMLAT(listaMLAT_Airborne_2coma5NM, white_circle);
+            Mapa.Overlays.Add(overlayAIRBORNE5);
+
+            Mapa.Overlays.Clear();
+            Mapa.Overlays.Add(overlayMA);
+            Mapa.Overlays.Add(overlayAIRBORNE25);
+            Mapa.Overlays.Add(overlayAIRBORNE5);
+            Mapa.Overlays.Add(overlay);
 
             //GMapOverlay overlayCAT21 = new GMapOverlay();
             //for (i = 0; i < listaCAT21nearAirport.Count(); i++) { overlayCAT21.Markers.Add(new GMarkerGoogle(new PointLatLng(CoordinatesADSB_WGS84(listaCAT21nearAirport[i])[0], CoordinatesADSB_WGS84(listaCAT21nearAirport[i])[1]), green_circle)); }
@@ -3018,7 +3027,7 @@ namespace ASTERIX
                     bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
 
                     // Separtamos los paquetes según su zona del aeropuerto, diferenciando los que estan volando y los que no
-                    double Vthreshold = 300;
+                    double Vthreshold = 250;
                     // Zona Stand (A,B,C,D,E)
                     if ((insideA == true || insideB == true || insideC == true || insideD == true || insideE == true))
                     {

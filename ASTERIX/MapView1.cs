@@ -90,7 +90,7 @@ namespace ASTERIX
 
             Mapa.DragButton = MouseButtons.Left;
             Mapa.CanDragMap = true;
-            Mapa.MapProvider = GMapProviders.GoogleSatelliteMap;
+            Mapa.MapProvider = GMapProviders.OpenCycleLandscapeMap;
             Mapa.Position = new PointLatLng(LatInicial, LongInicial);
             Mapa.MinZoom = 6;
             Mapa.MaxZoom = 24;

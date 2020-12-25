@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Portada));
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.panelMenu = new System.Windows.Forms.Panel();
-            this.btn_export = new System.Windows.Forms.Button();
+            this.btn_ED_SMR = new System.Windows.Forms.Button();
             this.btn_ed = new System.Windows.Forms.Button();
             this.btn_mapsimulation = new System.Windows.Forms.Button();
             this.btn_Tables = new System.Windows.Forms.Button();
@@ -48,7 +48,7 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.panelMenu.Controls.Add(this.btn_export);
+            this.panelMenu.Controls.Add(this.btn_ED_SMR);
             this.panelMenu.Controls.Add(this.btn_ed);
             this.panelMenu.Controls.Add(this.btn_mapsimulation);
             this.panelMenu.Controls.Add(this.btn_Tables);
@@ -61,23 +61,23 @@
             this.panelMenu.Size = new System.Drawing.Size(243, 1041);
             this.panelMenu.TabIndex = 17;
             // 
-            // btn_export
+            // btn_ED_SMR
             // 
-            this.btn_export.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_export.FlatAppearance.BorderSize = 0;
-            this.btn_export.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_export.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_export.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btn_export.Image = ((System.Drawing.Image)(resources.GetObject("btn_export.Image")));
-            this.btn_export.Location = new System.Drawing.Point(0, 453);
-            this.btn_export.Name = "btn_export";
-            this.btn_export.Size = new System.Drawing.Size(243, 50);
-            this.btn_export.TabIndex = 9;
-            this.btn_export.Text = "Export";
-            this.btn_export.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_export.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btn_export.UseVisualStyleBackColor = true;
-            this.btn_export.Click += new System.EventHandler(this.btn_export_Click);
+            this.btn_ED_SMR.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_ED_SMR.FlatAppearance.BorderSize = 0;
+            this.btn_ED_SMR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_ED_SMR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ED_SMR.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btn_ED_SMR.Image = ((System.Drawing.Image)(resources.GetObject("btn_ED_SMR.Image")));
+            this.btn_ED_SMR.Location = new System.Drawing.Point(0, 453);
+            this.btn_ED_SMR.Name = "btn_ED_SMR";
+            this.btn_ED_SMR.Size = new System.Drawing.Size(243, 50);
+            this.btn_ED_SMR.TabIndex = 9;
+            this.btn_ED_SMR.Text = "ED-116 Performances";
+            this.btn_ED_SMR.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_ED_SMR.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_ED_SMR.UseVisualStyleBackColor = true;
+            this.btn_ED_SMR.Click += new System.EventHandler(this.btn_ED_SMR_Click);
             // 
             // btn_ed
             // 
@@ -91,7 +91,7 @@
             this.btn_ed.Name = "btn_ed";
             this.btn_ed.Size = new System.Drawing.Size(243, 50);
             this.btn_ed.TabIndex = 8;
-            this.btn_ed.Text = "ED Performances";
+            this.btn_ed.Text = "ED-117 Performances";
             this.btn_ed.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_ed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_ed.UseVisualStyleBackColor = true;
@@ -238,10 +238,10 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelDesktopPanel;
-        private System.Windows.Forms.Button btn_export;
         private System.Windows.Forms.Button btn_ed;
         private System.Windows.Forms.Button btn_mapsimulation;
         private System.Windows.Forms.Button btn_Tables;
+        private System.Windows.Forms.Button btn_ED_SMR;
     }
 }
 

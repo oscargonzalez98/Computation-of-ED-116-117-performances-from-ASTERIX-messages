@@ -40,6 +40,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.pb_ASTERIXfile = new System.Windows.Forms.PictureBox();
             this.pb_CalibrationVehicle = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ASTERIXfile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_CalibrationVehicle)).BeginInit();
@@ -136,11 +138,33 @@
             this.pb_CalibrationVehicle.TabStop = false;
             this.pb_CalibrationVehicle.Click += new System.EventHandler(this.pb_CalibrationVehicle_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(176, 621);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(327, 25);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Click To search for ASTERIX file";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(808, 621);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(416, 25);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Click To search for Calibration Vehicle file";
+            // 
             // BrowseFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1472, 940);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pb_CalibrationVehicle);
             this.Controls.Add(this.pb_ASTERIXfile);
             this.Controls.Add(this.progressBar1);
@@ -172,5 +196,7 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.PictureBox pb_ASTERIXfile;
         private System.Windows.Forms.PictureBox pb_CalibrationVehicle;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

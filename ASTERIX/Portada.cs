@@ -179,7 +179,7 @@ namespace ASTERIX
 
         private void btn_ed_Click(object sender, EventArgs e)
         {
-            ED2 ED2 = new ED2(listaCAT10, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
+            ED2_MLAT ED2 = new ED2_MLAT(listaCAT10, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
             OpenChildForm(ED2, sender);
         }
 
@@ -187,6 +187,12 @@ namespace ASTERIX
         {
             Export export1 = new Export(listaCAT10, listaCAT21, listaCAT21v23);
             OpenChildForm(export1, sender);
+        }
+
+        private void btn_ED_SMR_Click(object sender, EventArgs e)
+        {
+            ED_SMR ED = new ED_SMR(listaCAT10, listaCAT21, listaCalibrationDataVehicle);
+            OpenChildForm(ED, sender);
         }
     }
 }

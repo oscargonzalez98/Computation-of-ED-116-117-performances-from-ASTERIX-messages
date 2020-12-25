@@ -685,7 +685,6 @@ C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad As
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\ASTERIX\bin\Debug\LIBRERIACLASES.pdb
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\ASTERIX\obj\Debug\ASTERIX.csproj.CopyComplete
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder 1\ASTERIX\obj\Debug\ASTERIX.ED2.resources
-C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.ED2.resources
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\ASTERIX.exe.config
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\ASTERIX.exe
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\ASTERIX.pdb
@@ -842,3 +841,5 @@ C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messa
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.csproj.CopyComplete
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.exe
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.ED2_MLAT.resources
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.ED_SMR.resources

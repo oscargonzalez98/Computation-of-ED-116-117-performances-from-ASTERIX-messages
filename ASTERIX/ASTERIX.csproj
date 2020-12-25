@@ -68,21 +68,21 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="ScottPlot, Version=4.0.42.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ScottPlot.4.0.42\lib\netstandard2.0\ScottPlot.dll</HintPath>
+    <Reference Include="ScottPlot, Version=4.1.2.0, Culture=neutral, PublicKeyToken=86698dc10387c39e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.4.1.2-beta\lib\netstandard2.0\ScottPlot.dll</HintPath>
     </Reference>
-    <Reference Include="ScottPlot.WinForms, Version=4.0.42.0, Culture=neutral, PublicKeyToken=5df1dfa5321e734b, processorArchitecture=MSIL">
-      <HintPath>..\packages\ScottPlot.WinForms.4.0.42\lib\net461\ScottPlot.WinForms.dll</HintPath>
+    <Reference Include="ScottPlot.WinForms, Version=4.1.2.0, Culture=neutral, PublicKeyToken=5df1dfa5321e734b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ScottPlot.WinForms.4.1.2-beta\lib\net461\ScottPlot.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0-rc.2.20475.5\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing.Common, Version=4.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.5.0.0-rc.2.20475.5\lib\net461\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\packages\System.Drawing.Common.5.0.0\lib\net461\System.Drawing.Common.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks" />
@@ -96,6 +96,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ACASResolutionAdvisoryCAT21.cs">
@@ -146,11 +147,17 @@
     <Compile Include="ED1.Designer.cs">
       <DependentUpon>ED1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ED2.cs">
+    <Compile Include="ED2_MLAT.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ED2.Designer.cs">
-      <DependentUpon>ED2.cs</DependentUpon>
+    <Compile Include="ED2_MLAT.Designer.cs">
+      <DependentUpon>ED2_MLAT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ED_SMR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ED_SMR.Designer.cs">
+      <DependentUpon>ED_SMR.cs</DependentUpon>
     </Compile>
     <Compile Include="Export.cs">
       <SubType>Form</SubType>
@@ -370,8 +377,11 @@
     <EmbeddedResource Include="ED1.resx">
       <DependentUpon>ED1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ED2.resx">
-      <DependentUpon>ED2.cs</DependentUpon>
+    <EmbeddedResource Include="ED2_MLAT.resx">
+      <DependentUpon>ED2_MLAT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ED_SMR.resx">
+      <DependentUpon>ED_SMR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Export.resx">
       <DependentUpon>Export.cs</DependentUpon>

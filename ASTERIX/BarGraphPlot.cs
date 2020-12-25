@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using LIBRERIACLASES;
 
 namespace ASTERIX
@@ -26,7 +27,7 @@ namespace ASTERIX
         {
             List<IndividualBar> listbars1 = listbars.OrderBy(o => o.AverageTime).ToList();
             chart1.ChartAreas["ChartArea1"].AxisX.Interval = 1;
-            chart1.Series["Series1"].IsValueShownAsLabel = true;
+            //chart1.Series["Series1"].IsValueShownAsLabel = true;
 
             for (int i =0; i< listbars1.Count(); i++)
             {
