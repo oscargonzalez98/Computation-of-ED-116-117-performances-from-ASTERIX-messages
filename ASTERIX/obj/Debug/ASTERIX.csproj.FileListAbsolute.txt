@@ -843,3 +843,10 @@ C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messa
 C:\Users\oscar\Desktop\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.pdb
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.ED2_MLAT.resources
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\obj\Debug\ASTERIX.ED_SMR.resources
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.dll.config
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.Math.Core.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.Math.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.xml
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.Math.xml
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Accord.Math.Core.xml

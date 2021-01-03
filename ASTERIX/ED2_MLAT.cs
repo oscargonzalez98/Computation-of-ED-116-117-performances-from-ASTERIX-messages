@@ -809,6 +809,7 @@ namespace ASTERIX
 
             #endregion //  Class variables
 
+            CalculateARP_MLAT_SMR_coordinates(); // Calculamos las cooreenadas Geodesicas, Estereograficas y ÇSystem Cartesian del centro de coordenadas ARP, SMR, MLAT
         }
 
         private void bt_Performances_Click(object sender, EventArgs e)
@@ -1027,7 +1028,7 @@ namespace ASTERIX
             Mapa.DragButton = MouseButtons.Left;
             Mapa.CanDragMap = true;
             Mapa.MapProvider = GMapProviders.OpenCycleLandscapeMap;
-            //Mapa.Position = new PointLatLng(LatInicial, LongInicial);
+            Mapa.Position = new PointLatLng(LatInicial, LongInicial);
             Mapa.MinZoom = 1;
             Mapa.MaxZoom = 30;
             Mapa.Zoom = 8;
@@ -1042,8 +1043,6 @@ namespace ASTERIX
             }
 
             //////----------------------------------------------------------------------- Filtramos paquetes MLAT y ADSB (Quitamos periodic updates, ground vehicles, paquetes muy lejanos, paquetes con version MOPS != 2 etc...)
-
-            CalculateARP_MLAT_SMR_coordinates(); // Calculamos las cooreenadas Geodesicas, Estereograficas y ÇSystem Cartesian del centro de coordenadas ARP, SMR, MLAT
 
             FilterCAT21messages(listaCAT21); // eliminamos paquetes ground vehicle, periodic updates, MOPS != 2, etc...
             listaCAT21_NearAirport = FilterCAT21messagesAwayfromAirport(listaCAT21, 15000); // Limpiamos vuelos lejnos al aeropuerto para acelerar calculo
@@ -1129,36 +1128,36 @@ namespace ASTERIX
             // Primero escribimos resultados en DGV del form
 
             dataGridView1.Rows.Clear();
-            dataGridView1.ColumnCount = 3;
-            dataGridView1.Columns[0].Name = "Target Identification";
-            dataGridView1.Columns[1].Name = "Target Address";
-            dataGridView1.Columns[2].Name = "Average Update Rate";
+            dataGridView1.ColumnCount = 2;
+            dataGridView1.Columns[0].Name = "Target Address";
+            dataGridView1.Columns[1].Name = "Average Update Rate";
 
-            int n = dataGridView1.Rows.Add("Target Identification", "Target Address", "Average Update Rate");
+            int n = dataGridView1.Rows.Add("Target Address", "Average Update Rate");
 
             for(int j = 0; j < listBarsUpdateRate.Count(); j++)
             {
                 string UR = listBarsUpdateRate[j].AverageTime.ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dataGridView1.Rows.Add(listBarsUpdateRate[j].TargetIdentification, listBarsUpdateRate[j].TargetAddress, UR);
+                n = dataGridView1.Rows.Add(listBarsUpdateRate[j].TargetAddress, UR);
             }
 
             // Luego escribimos resultados en el DGV del UpdateRate
 
             dgv_UpdateRate_fromASTERIXfile.Rows.Clear();
-            dgv_UpdateRate_fromASTERIXfile.ColumnCount = 3;
-            dgv_UpdateRate_fromASTERIXfile.Columns[0].Name = "Target Identification";
-            dgv_UpdateRate_fromASTERIXfile.Columns[1].Name = "Target Address";
-            dgv_UpdateRate_fromASTERIXfile.Columns[2].Name = "Average Update Rate";
+            dgv_UpdateRate_fromASTERIXfile.ColumnCount = 2;
+            dgv_UpdateRate_fromASTERIXfile.Columns[0].Name = "Target Address";
+            dgv_UpdateRate_fromASTERIXfile.Columns[1].Name = "Average Update Rate";
 
-            n = dgv_UpdateRate_fromASTERIXfile.Rows.Add("Target Identification", "Target Address", "Average Update Rate");
-
-            for (int j = 0; j < listBarsUpdateRate.Count(); j++)
+            for (i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                string UR = Math.Round(listBarsUpdateRate[j].AverageTime, 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-                n = dgv_UpdateRate_fromASTERIXfile.Rows.Add(listBarsUpdateRate[j].TargetIdentification.ToString(), listBarsUpdateRate[j].TargetAddress.ToString(), UR);
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_UpdateRate_fromASTERIXfile.Rows.Add(dataRow);
             }
-
-            dgv_UpdateRate_fromASTERIXfile = dataGridView1;
         }
 
         private void pb_ProbabilityofUpdate_ED117_ASTERIXfile_Click(object sender, EventArgs e)
@@ -1247,8 +1246,27 @@ namespace ASTERIX
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
 
-            dgv_ProbabilityofUpdate_fromASTERIXfile = dataGridView1;
+            // Luego escribimos resultados en el DGV del probability of update
 
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Clear();
+            dgv_ProbabilityofUpdate_fromASTERIXfile.ColumnCount = 5;
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[1].Name = "Received Updates";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[2].Name = "Expected Updates";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[3].Name = "Probability of Update (%)";
+            dgv_ProbabilityofUpdate_fromASTERIXfile.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Add(dataRow);
+            }
         }
 
         private void bt_CalculatePrecissionAccuracy_ED117_ASTERIXfile_Click(object sender, EventArgs e)
@@ -1361,13 +1379,6 @@ namespace ASTERIX
             if (results1[0].Count() != 0) { AVG7 = Math.Round(results1[0].Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
             n = dataGridView1.Rows.Add("MANEUVERING AREA", P957, "7.5 m", P997, "12 m", AVG7, STD7, results7[0].Count().ToString());
 
-            string P9571 = Math.Round(Percentile(results71[0], 0.95), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-            string P9971 = Math.Round(Percentile(results71[0], 0.99), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-            string STD71 = Math.Round(CalculateStandardDeviation(results71[0]), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
-            string AVG71 = "0";
-            if (results1[0].Count() != 0) { AVG71 = Math.Round(results1[0].Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
-            n = dataGridView1.Rows.Add("MANEUVERING AREA1", P9571, "7.5 m", P9971, "12 m", AVG71, STD71, results71[0].Count().ToString());
-
             string P958 = Math.Round(Percentile(results8[0], 0.95), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string P998 = Math.Round(Percentile(results8[0], 0.99), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
             string STD8 = Math.Round(CalculateStandardDeviation(results8[0]), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
@@ -1424,7 +1435,28 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_PrecissionAccuracy_fromASTERIXfile = dataGridView1;
+            dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Clear();
+            dgv_PrecissionAccuracy_fromASTERIXfile.ColumnCount = 8;
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[1].Name = "95th Percentile (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[2].Name = "ED-117 Value (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[3].Name = "99th Percentile (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[4].Name = "ED-117 Value (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[5].Name = "Mean (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[6].Name = "STD Deviation (m)";
+            dgv_PrecissionAccuracy_fromASTERIXfile.Columns[7].Name = "Samples";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Add(dataRow);
+            }
 
             // Luego escribimos resultados en el DGV del UpdateRate
 
@@ -1598,8 +1630,28 @@ namespace ASTERIX
             dataGridView1.Rows[4].DefaultCellStyle = style1;
             dataGridView1.Rows[7].DefaultCellStyle = style1;
             dataGridView1.Rows[12].DefaultCellStyle = style1;
+            dataGridView1.Rows[13].DefaultCellStyle = style1;
+            dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofMLATDetection_fromASTERIXfile = dataGridView1;
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Clear();
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.ColumnCount = 5;
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[1].Name = "Received Updates";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[2].Name = "Expected Updates";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[3].Name = "Probability of MLAT Detection (%)";
+            dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Add(dataRow);
+            }
         }
 
         private void bt_ProbabilityofIdentification_ED117_ASTERIXfile_Click(object sender, EventArgs e)
@@ -1684,9 +1736,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofIdentification_fromASTERIXfile = dataGridView1;
+            dgv_ProbabilityofIdentification_fromASTERIXfile.Rows.Clear();
+            dgv_ProbabilityofIdentification_fromASTERIXfile.ColumnCount = 5;
+            dgv_ProbabilityofIdentification_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofIdentification_fromASTERIXfile.Columns[1].Name = "Expected Updates";
+            dgv_ProbabilityofIdentification_fromASTERIXfile.Columns[2].Name = "Received Updates";
+            dgv_ProbabilityofIdentification_fromASTERIXfile.Columns[3].Name = "Probability of Identification (%)";
+            dgv_ProbabilityofIdentification_fromASTERIXfile.Columns[4].Name = "ED - 117 Value (%)";
 
-
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofIdentification_fromASTERIXfile.Rows.Add(dataRow);
+            }
         }
 
         private void bt_CalculateProbabilityofFalseDetection_Click(object sender, EventArgs e)
@@ -1771,7 +1839,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofFalseDetection_fromASTERIXfile = dataGridView1;
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows.Clear();
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.ColumnCount = 5;
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns[1].Name = "False Detections";
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns[2].Name = "Received Detections";
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns[3].Name = "Probability of False Detection (%)";
+            dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows.Add(dataRow);
+            }
         }
 
         private void bt_ProbabilityofFalseIdentification_ED117_ASTERIXfile_Click(object sender, EventArgs e)
@@ -1856,7 +1942,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofFalseIdentification_fromASTERIXfile = dataGridView1;
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Clear();
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.ColumnCount = 5;
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[1].Name = "Number of times PI > 10e-6";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[2].Name = "Total 5s intervals";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[3].Name = "Probability of False Identification (%)";
+            dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Add(dataRow);
+            }
         }
 
         #endregion
@@ -1950,8 +2054,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
+            dgv_ProbabilityofUpdate_CalibrationVehicle.Rows.Clear();
+            dgv_ProbabilityofUpdate_CalibrationVehicle.ColumnCount = 5;
+            dgv_ProbabilityofUpdate_CalibrationVehicle.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofUpdate_CalibrationVehicle.Columns[1].Name = "Received Updates";
+            dgv_ProbabilityofUpdate_CalibrationVehicle.Columns[2].Name = "Expected Updates";
+            dgv_ProbabilityofUpdate_CalibrationVehicle.Columns[3].Name = "Probability of Update (%)";
+            dgv_ProbabilityofUpdate_CalibrationVehicle.Columns[4].Name = "ED - 117 Value (%)";
 
-            dgv_ProbabilityofUpdate_CalibrationVehicle = dataGridView1;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofUpdate_CalibrationVehicle.Rows.Add(dataRow);
+            }
         }
 
         private void bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
@@ -2105,7 +2226,28 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_PrecissionAccuracy_CalibrationVehicle = dataGridView1;
+            dgv_PrecissionAccuracy_CalibrationVehicle.Rows.Clear();
+            dgv_PrecissionAccuracy_CalibrationVehicle.ColumnCount = 8;
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[0].Name = "Airport Zone";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[1].Name = "95th Percentile (m)";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[2].Name = "ED-117 Value (m)";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[3].Name = "99th Percentile (m)";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[4].Name = "ED-117 Value (m)";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[5].Name = "Mean (m)";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[6].Name = "STD Deviation (m)";
+            dgv_PrecissionAccuracy_CalibrationVehicle.Columns[7].Name = "Samples";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_PrecissionAccuracy_CalibrationVehicle.Rows.Add(dataRow);
+            }
         }
 
         private void bt_CalculateProbabilityofMLATDetection_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
@@ -2188,9 +2330,29 @@ namespace ASTERIX
             dataGridView1.Rows[1].DefaultCellStyle = style1;
             dataGridView1.Rows[4].DefaultCellStyle = style1;
             dataGridView1.Rows[7].DefaultCellStyle = style1;
-            dataGridView1.Rows[12].DefaultCellStyle = style1;
+            dataGridView1.Rows[13].DefaultCellStyle = style1;
+            dataGridView1.Rows[14].DefaultCellStyle = style1;
+            dataGridView1.Rows[15].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofMLATDetection_CalibrationVehicle = dataGridView1;
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows.Clear();
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.ColumnCount = 5;
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns[1].Name = "Received Updates";
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns[2].Name = "Expected Updates";
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns[3].Name = "Probability of MLAT Detection (%)";
+            dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows.Add(dataRow);
+            }
         }
 
         private void bt_ProbabilityofIdentification_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
@@ -2280,7 +2442,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofIdentification_CalibrationVehicle = dataGridView1;
+            dgv_ProbabilityofIdentification_CalibrationVehicle.Rows.Clear();
+            dgv_ProbabilityofIdentification_CalibrationVehicle.ColumnCount = 5;
+            dgv_ProbabilityofIdentification_CalibrationVehicle.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofIdentification_CalibrationVehicle.Columns[1].Name = "Expected Updates";
+            dgv_ProbabilityofIdentification_CalibrationVehicle.Columns[2].Name = "Received Updates";
+            dgv_ProbabilityofIdentification_CalibrationVehicle.Columns[3].Name = "Probability of Identification (%)";
+            dgv_ProbabilityofIdentification_CalibrationVehicle.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofIdentification_CalibrationVehicle.Rows.Add(dataRow);
+            }
         }
 
         private void bt_CalculateProbabilityofFalseDetection_CalibrationVehicle_Click(object sender, EventArgs e)
@@ -2368,7 +2548,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofFalseDetection_CalibrationVehicle = dataGridView1;
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows.Clear();
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.ColumnCount = 5;
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns[1].Name = "False Detections";
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns[2].Name = "Received Detections";
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns[3].Name = "Probability of False Detection (%)";
+            dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows.Add(dataRow);
+            }
         }
 
         private void bt_ProbabilityofFalseIdentification_ED117_CalibrationVehicle_Click(object sender, EventArgs e)
@@ -2454,7 +2652,25 @@ namespace ASTERIX
             dataGridView1.Rows[13].DefaultCellStyle = style1;
             dataGridView1.Rows[14].DefaultCellStyle = style1;
 
-            dgv_ProbabilityofFalseIdentification_CalibrationVehicle = dataGridView1;
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows.Clear();
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.ColumnCount = 5;
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns[0].Name = "Airport Zone";
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns[1].Name = "Total 5s intervals";
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns[2].Name = "Number of times PI > 10e-6";
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns[3].Name = "Probability of False Identification (%)";
+            dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns[4].Name = "ED - 117 Value (%)";
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow dataRow = (DataGridViewRow)dataGridView1.Rows[i].Clone();
+                int Index = 0;
+                foreach (DataGridViewCell cell in dataGridView1.Rows[i].Cells)
+                {
+                    dataRow.Cells[Index].Value = cell.Value;
+                    Index++;
+                }
+                dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows.Add(dataRow);
+            }
         }
 
         #endregion
@@ -2480,7 +2696,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_UpdateRate_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_UpdateRate_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_UpdateRate_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2516,7 +2732,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF UPDATE:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofUpdate_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2552,7 +2768,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "PRECISSION ACCURACY:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracy_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2661,7 +2877,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT DETECTION:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2697,7 +2913,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF IDENTIFICATION:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_ProbabilityofIdentification_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_ProbabilityofIdentification_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofIdentification_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2733,7 +2949,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE DETECTION:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2769,7 +2985,7 @@ namespace ASTERIX
                 hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
                 rows = rows + 2;
 
-                for (int i = 0; i < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Count - 1; i++)
+                for (int i = 0; i < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Count - 2; i++)
                 {
                     for (int j = 0; j < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns.Count; j++)
                     {
@@ -2786,7 +3002,228 @@ namespace ASTERIX
             }
         }
 
-            #endregion
+        #endregion
+
+        #region Buttons to Export performances from Calibration Vehicle
+
+        private void bt_Export_ProbabilityofUpdate_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_ProbabilityofUpdate_CalibrationVehicle.Rows.Count - 2; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofUpdate_CalibrationVehicle.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofUpdate_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+        }
+
+        private void bt_Export_PrecissionAccuracy_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_PrecissionAccuracy_CalibrationVehicle.Rows.Count - 2; i++)
+                {
+                    for (int j = 0; j < dgv_PrecissionAccuracy_CalibrationVehicle.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+        }
+
+        private void bt_Export_ProbabilityofMLATDetection_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows.Count - 2; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+        }
+
+        private void bt_Export_ProbabilityofIdentification_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_ProbabilityofIdentification_CalibrationVehicle.Rows.Count - 2; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofIdentification_CalibrationVehicle.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofIdentification_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+        }
+
+        private void bt_Export_ProbabilityofFalseDetection_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows.Count - 2; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+        }
+
+        private void bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                Excel.Application aplicacion;
+                Excel.Workbook libros_trabajo;
+                Excel.Worksheet hoja_trabajo;
+                aplicacion = new Excel.Application();
+                libros_trabajo = aplicacion.Workbooks.Add();
+                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                int rows = 0;
+
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                rows = rows + 2;
+
+                for (int i = 0; i < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows.Count - 2; i++)
+                {
+                    for (int j = 0; j < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns.Count; j++)
+                    {
+                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+                    }
+                    rows = rows + 1;
+                }
+                rows = rows + 5;
+
+                libros_trabajo.SaveAs(fichero.FileName,
+                Excel.XlFileFormat.xlWorkbookNormal);
+                libros_trabajo.Close(true);
+                aplicacion.Quit();
+            }
+        }
+
+
+        #endregion
 
         #region Functions to calculate ED-117 performances from ASTERIX file
 
