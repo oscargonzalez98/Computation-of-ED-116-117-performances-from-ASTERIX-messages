@@ -24,6 +24,13 @@ namespace ASTERIX
         private Button currentButton;
         private Form activeForm;
 
+        Tables Tables1;
+        BrowseFile BrowseFile1;
+        MapView1 MapView1;
+        ED2_MLAT ED2_MLAT1;
+        Export Export1;
+        ED_SMR ED_SMR1;
+
         public Portada()
         {
             InitializeComponent();
@@ -62,22 +69,15 @@ namespace ASTERIX
 
         public void OpenChildForm(Form childForm, object btnSender)
         {
-            if(childForm != null)
-            {
-
-            }
-
-            {
-                ActivateButton(btnSender);
-                activeForm = childForm;
-                childForm.TopLevel = false;
-                childForm.FormBorderStyle = FormBorderStyle.None;
-                childForm.Dock = DockStyle.Fill;
-                this.panelDesktopPanel.Controls.Add(childForm);
-                this.panelDesktopPanel.Tag = childForm;
-                childForm.BringToFront();
-                childForm.Show();
-            }
+            ActivateButton(btnSender);
+            activeForm = childForm;
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            this.panelDesktopPanel.Controls.Add(childForm);
+            this.panelDesktopPanel.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
         }
 
 
@@ -155,44 +155,55 @@ namespace ASTERIX
 
         private void btn_Tables_Click(object sender, EventArgs e)
         {
-            Tables Tables1 = new Tables(listaCAT10, listaCAT20, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
+            if (Tables1 != null){}
+            else {Tables1 = new Tables(listaCAT10, listaCAT20, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);}
+
             OpenChildForm(Tables1, sender);
         }
 
         private void btn_browsefiles_Click(object sender, EventArgs e)
         {
-            BrowseFile bf1 = new BrowseFile(true, false);
-            OpenChildForm(bf1, sender);
+            if (BrowseFile1 != null) { }
+            else { BrowseFile1 = new BrowseFile(true, false); }
 
-            listaCAT10 = bf1.ListaCAT10;
-            listaCAT20 = bf1.ListaCAT20;
-            listaCAT21 = bf1.ListaCAT21;
-            listaCAT21v23 = bf1.ListaCAT21v23;
-            listaCalibrationDataVehicle = bf1.listaMLATCalibrationVehicleData;
+            OpenChildForm(BrowseFile1, sender);
+
+            listaCAT10 = BrowseFile1.listaCAT10;
+            listaCAT21 = BrowseFile1.listaCAT21;
+            listaCAT21v23 = BrowseFile1.ListaCAT21v23;
+            listaCalibrationDataVehicle = BrowseFile1.listaMLATCalibrationVehicleData;
         }
 
         private void btn_mapsimulation_Click(object sender, EventArgs e)
         {
-            MapView1 MapView = new MapView1(listaCAT10, listaCAT21, listaCAT21v23);
-            OpenChildForm(MapView, sender);
+            if (MapView1 != null) { }
+            else { MapView1 = new MapView1(listaCAT10, listaCAT21, listaCAT21v23); }
+
+            OpenChildForm(MapView1, sender);
         }
 
         private void btn_ed_Click(object sender, EventArgs e)
         {
-            ED2_MLAT ED2 = new ED2_MLAT(listaCAT10, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle);
-            OpenChildForm(ED2, sender);
+            if (ED2_MLAT1 != null) { }
+            else { ED2_MLAT1 = new ED2_MLAT(listaCAT10, listaCAT21, listaCAT21v23, listaCalibrationDataVehicle); }
+
+            OpenChildForm(ED2_MLAT1, sender);
         }
 
         private void btn_export_Click(object sender, EventArgs e)
         {
-            Export export1 = new Export(listaCAT10, listaCAT21, listaCAT21v23);
-            OpenChildForm(export1, sender);
+            if (Export1 != null) { }
+            else { Export1 = new Export(listaCAT10, listaCAT21, listaCAT21v23); }
+
+            OpenChildForm(Export1, sender);
         }
 
         private void btn_ED_SMR_Click(object sender, EventArgs e)
         {
-            ED_SMR ED = new ED_SMR(listaCAT10, listaCAT21, listaCalibrationDataVehicle);
-            OpenChildForm(ED, sender);
+            if (ED_SMR1 != null) { }
+            else{ ED_SMR1 = new ED_SMR(listaCAT10, listaCAT21, listaCalibrationDataVehicle); }
+
+            OpenChildForm(ED_SMR1, sender);
         }
     }
 }
