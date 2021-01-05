@@ -69,15 +69,15 @@
             this.rb_PlotCalVehiclefromASTfile = new System.Windows.Forms.RadioButton();
             this.rb_PlotAllfromASTERIXfile = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.bt_Map = new System.Windows.Forms.Button();
-            this.bt_Performances = new System.Windows.Forms.Button();
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle = new System.Windows.Forms.Button();
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle = new System.Windows.Forms.Button();
             this.bt_Export_PrecissionAccuracy_CalibrationVehicle = new System.Windows.Forms.Button();
             this.bt_Export_ProbabilityofIdentification_CalibrationVehicle = new System.Windows.Forms.Button();
             this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle = new System.Windows.Forms.Button();
             this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle = new System.Windows.Forms.Button();
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle = new System.Windows.Forms.Button();
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.bt_Map = new System.Windows.Forms.Button();
+            this.bt_Performances = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -221,7 +221,7 @@
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Name = "bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle";
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Size = new System.Drawing.Size(223, 33);
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.TabIndex = 33;
-            this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Text = "Calculate Precission Accuracy";
+            this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Text = "Calculate Position Accuracy";
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.UseVisualStyleBackColor = true;
             this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle.Click += new System.EventHandler(this.bt_CalculatePrecissionAccuracy_ED117_CalibrationVehicle_Click);
             // 
@@ -585,6 +585,66 @@
             this.panel2.Size = new System.Drawing.Size(549, 951);
             this.panel2.TabIndex = 0;
             // 
+            // bt_Export_ProbabilityofMLATDetection_CalibrationVehicle
+            // 
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Location = new System.Drawing.Point(358, 461);
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Name = "bt_Export_ProbabilityofMLATDetection_CalibrationVehicle";
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.TabIndex = 49;
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Text = "Export";
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle_Click);
+            // 
+            // bt_Export_ProbabilityofUpdate_CalibrationVehicle
+            // 
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Location = new System.Drawing.Point(358, 383);
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Name = "bt_Export_ProbabilityofUpdate_CalibrationVehicle";
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.TabIndex = 48;
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Text = "Export";
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofUpdate_CalibrationVehicle_Click);
+            // 
+            // bt_Export_PrecissionAccuracy_CalibrationVehicle
+            // 
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Location = new System.Drawing.Point(358, 422);
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Name = "bt_Export_PrecissionAccuracy_CalibrationVehicle";
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.TabIndex = 43;
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Text = "Export";
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_PrecissionAccuracy_CalibrationVehicle_Click);
+            // 
+            // bt_Export_ProbabilityofIdentification_CalibrationVehicle
+            // 
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Location = new System.Drawing.Point(358, 500);
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Name = "bt_Export_ProbabilityofIdentification_CalibrationVehicle";
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.TabIndex = 45;
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Text = "Export";
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofIdentification_CalibrationVehicle_Click);
+            // 
+            // bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle
+            // 
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Location = new System.Drawing.Point(358, 578);
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Name = "bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle";
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.TabIndex = 47;
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Text = "Export";
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle_Click);
+            // 
+            // bt_Export_ProbabilityofFalseDetection_CalibrationVehicle
+            // 
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Location = new System.Drawing.Point(358, 539);
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Name = "bt_Export_ProbabilityofFalseDetection_CalibrationVehicle";
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.TabIndex = 46;
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Text = "Export";
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.UseVisualStyleBackColor = true;
+            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle_Click);
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -630,66 +690,6 @@
             this.bt_Performances.Text = "Performances";
             this.bt_Performances.UseVisualStyleBackColor = true;
             this.bt_Performances.Click += new System.EventHandler(this.bt_Performances_Click);
-            // 
-            // bt_Export_PrecissionAccuracy_CalibrationVehicle
-            // 
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Location = new System.Drawing.Point(358, 422);
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Name = "bt_Export_PrecissionAccuracy_CalibrationVehicle";
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.TabIndex = 43;
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Text = "Export";
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.UseVisualStyleBackColor = true;
-            this.bt_Export_PrecissionAccuracy_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_PrecissionAccuracy_CalibrationVehicle_Click);
-            // 
-            // bt_Export_ProbabilityofIdentification_CalibrationVehicle
-            // 
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Location = new System.Drawing.Point(358, 500);
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Name = "bt_Export_ProbabilityofIdentification_CalibrationVehicle";
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.TabIndex = 45;
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Text = "Export";
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.UseVisualStyleBackColor = true;
-            this.bt_Export_ProbabilityofIdentification_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofIdentification_CalibrationVehicle_Click);
-            // 
-            // bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle
-            // 
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Location = new System.Drawing.Point(358, 578);
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Name = "bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle";
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.TabIndex = 47;
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Text = "Export";
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.UseVisualStyleBackColor = true;
-            this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle_Click);
-            // 
-            // bt_Export_ProbabilityofFalseDetection_CalibrationVehicle
-            // 
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Location = new System.Drawing.Point(358, 539);
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Name = "bt_Export_ProbabilityofFalseDetection_CalibrationVehicle";
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.TabIndex = 46;
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Text = "Export";
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.UseVisualStyleBackColor = true;
-            this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofFalseDetection_CalibrationVehicle_Click);
-            // 
-            // bt_Export_ProbabilityofUpdate_CalibrationVehicle
-            // 
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Location = new System.Drawing.Point(358, 383);
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Name = "bt_Export_ProbabilityofUpdate_CalibrationVehicle";
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.TabIndex = 48;
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Text = "Export";
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.UseVisualStyleBackColor = true;
-            this.bt_Export_ProbabilityofUpdate_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofUpdate_CalibrationVehicle_Click);
-            // 
-            // bt_Export_ProbabilityofMLATDetection_CalibrationVehicle
-            // 
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Location = new System.Drawing.Point(358, 461);
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Name = "bt_Export_ProbabilityofMLATDetection_CalibrationVehicle";
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Size = new System.Drawing.Size(104, 33);
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.TabIndex = 49;
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Text = "Export";
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.UseVisualStyleBackColor = true;
-            this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle.Click += new System.EventHandler(this.bt_Export_ProbabilityofMLATDetection_CalibrationVehicle_Click);
             // 
             // ED2_MLAT
             // 

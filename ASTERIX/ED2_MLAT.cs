@@ -3022,7 +3022,7 @@ namespace ASTERIX
 
                 int rows = 0;
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF UPDATE:";
                 rows = rows + 2;
 
                 for (int i = 0; i < dgv_ProbabilityofUpdate_CalibrationVehicle.Rows.Count - 2; i++)
@@ -3058,7 +3058,7 @@ namespace ASTERIX
 
                 int rows = 0;
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "POSITION ACCURACY:";
                 rows = rows + 2;
 
                 for (int i = 0; i < dgv_PrecissionAccuracy_CalibrationVehicle.Rows.Count - 2; i++)
@@ -3094,7 +3094,7 @@ namespace ASTERIX
 
                 int rows = 0;
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT DETECTION:";
                 rows = rows + 2;
 
                 for (int i = 0; i < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows.Count - 2; i++)
@@ -3130,7 +3130,7 @@ namespace ASTERIX
 
                 int rows = 0;
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF IDENTIFICATION:";
                 rows = rows + 2;
 
                 for (int i = 0; i < dgv_ProbabilityofIdentification_CalibrationVehicle.Rows.Count - 2; i++)
@@ -3166,7 +3166,7 @@ namespace ASTERIX
 
                 int rows = 0;
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE DETECTION:";
                 rows = rows + 2;
 
                 for (int i = 0; i < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows.Count - 2; i++)
@@ -3202,7 +3202,7 @@ namespace ASTERIX
 
                 int rows = 0;
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
+                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
                 rows = rows + 2;
 
                 for (int i = 0; i < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows.Count - 2; i++)
