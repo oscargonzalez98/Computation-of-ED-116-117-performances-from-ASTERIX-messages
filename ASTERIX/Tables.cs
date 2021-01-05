@@ -15,6 +15,7 @@ namespace ASTERIX
 {
     public partial class Tables : Form
     {
+        public bool actualizado = true;
 
         public List<CAT10> listaCAT10 = new List<CAT10>();
         public List<CAT20> listaCAT20 = new List<CAT20>();

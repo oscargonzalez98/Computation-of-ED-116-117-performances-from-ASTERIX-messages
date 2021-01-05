@@ -19,6 +19,8 @@ namespace ASTERIX
 {
     public partial class MapView1 : Form
     {
+        public bool actualizado = true;
+
         List<CAT10> listaCAT10 = new List<CAT10>();
         List<CAT20> listaCAT20 = new List<CAT20>();
         List<CAT21> listaCAT21 = new List<CAT21>();
