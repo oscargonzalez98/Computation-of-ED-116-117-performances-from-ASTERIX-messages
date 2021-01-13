@@ -15,6 +15,10 @@ namespace LIBRERIACLASES
         public List<CAT10> listaSMR = new List<CAT10>();
         public List<CAT10> lista_MLAT = new List<CAT10>();
 
+        //public List<List<double>> lista_distancias_SMR = new List<List<double>>();
+        //public List<double> lista_distancias_min = new List<double>();
+        public List<Pack> lista_Packs = new List<Pack>();
+
         public Double[,] A = new Double[4, 4];
         public Double[,] B = new Double[4, 2];
         public Double[,] H = new Double[2, 4];
@@ -45,6 +49,11 @@ namespace LIBRERIACLASES
         public CoordinatesWGS84 coordGeodesic_SMR;
         public CoordinatesUVH coordStereographic_SMR;
         public CoordinatesXYZ coordSystemCartesian_SMR;
+
+        public Trayectoria()
+        {
+
+        }
 
         public Trayectoria(int id, CAT10 paquete)
         {

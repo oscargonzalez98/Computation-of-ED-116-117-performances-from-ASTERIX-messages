@@ -1043,6 +1043,7 @@ namespace ASTERIX
             }
 
             //////----------------------------------------------------------------------- Filtramos paquetes MLAT y ADSB (Quitamos periodic updates, ground vehicles, paquetes muy lejanos, paquetes con version MOPS != 2 etc...)
+            ///
 
             FilterCAT21messages(listaCAT21); // eliminamos paquetes ground vehicle, periodic updates, MOPS != 2, etc...
             listaCAT21_NearAirport = FilterCAT21messagesAwayfromAirport(listaCAT21, 15000); // Limpiamos vuelos lejnos al aeropuerto para acelerar calculo
@@ -2774,80 +2775,86 @@ namespace ASTERIX
                     {
                         hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
-                    rows = rows + 1;
+                    rows++;
                 }
 
                 rows = rows + 5;
                 int columns = 0;
 
                 hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Stand:";
-
+                int k = 0;
                 for (int i = 0; i < dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Columns.Count; j++)
                     {
-                        hoja_trabajo.Cells[rows +3 + i, columns + 1 +j] = dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
+                    k++;
                 }
 
                 columns = columns + 5;
 
                 hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Apron:";
-
+                k = 0;
                 for (int i = 0; i < dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Columns.Count; j++)
                     {
-                        hoja_trabajo.Cells[rows + 3 + i, columns + 1 + j] = dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
+                    k++;
                 }
 
                 columns = columns + 5;
 
                 hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Maneuvering Area:";
-
+                k = 0;
                 for (int i = 0; i < dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Columns.Count; j++)
                     {
-                        hoja_trabajo.Cells[rows + 3 + i, columns + 1 + j] = dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
+                    k++;
                 }
 
                 columns = columns + 5;
 
                 hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Airborne 0 - 2.5 NM:";
-
+                k = 0;
                 for (int i = 0; i < dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Columns.Count; j++)
                     {
-                        hoja_trabajo.Cells[rows + 3 + i, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
+                    k++;
                 }
 
                 columns = columns + 5;
 
                 hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Airborne 2.5 - 5 NM:";
-
+                k = 0;
                 for (int i = 0; i < dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows.Count - 1; i++)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Columns.Count; j++)
                     {
-                        hoja_trabajo.Cells[rows + 3 + i, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
+                    k++;
                 }
 
-                columns = columns + 5;
+                //columns = columns + 5;
 
                 hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Total:";
-
-                for (int i = 0; i < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows.Count - 1; i++)
+                k = 0;
+                for (int i = 0; i < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows.Count - 1; i=i+100)
                 {
                     for (int j = 0; j < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Columns.Count; j++)
                     {
-                        hoja_trabajo.Cells[rows + 3 + i, columns + 1 + j] = dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
                     }
+                    k++;
                 }
 
 

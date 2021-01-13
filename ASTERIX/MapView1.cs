@@ -141,53 +141,53 @@ namespace ASTERIX
                 overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 2, overlay);
                 Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 2.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 2.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 3, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 3, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 3.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 3.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 4, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 4, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 4.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 4.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 5.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 5.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 6, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 6, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 6.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 6.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 7, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 7, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 7.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 7.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 8, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 8, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 8.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 8.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 9, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 9, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 9.5, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 9.5, overlay);
+                //Mapa.Overlays.Add(overlay);
 
-                overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 10, overlay);
-                Mapa.Overlays.Add(overlay);
+                //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 10, overlay);
+                //Mapa.Overlays.Add(overlay);
 
                 //overlay = CalcularNuevosPuntos_DiubujarBola(secondCounter - 10.5, overlay);
                 //Mapa.Overlays.Add(overlay);
