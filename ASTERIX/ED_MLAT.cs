@@ -2217,32 +2217,58 @@ namespace ASTERIX
             progressbar.Value = 0;
             progressbar.Maximum = 13;
 
-            List<double> results1 = CalculateProbabilityofUpdate(listaMLAT_Stand);
+            //List<double> results1 = CalculateProbabilityofUpdate(listaMLAT_Stand);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results2 = CalculateProbabilityofUpdate(listaMLAT_Stand_T1);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results3 = CalculateProbabilityofUpdate(listaMLAT_Stand_T2);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results4 = CalculateProbabilityofUpdate(listaMLAT_Apron);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results5 = CalculateProbabilityofUpdate(listaMLAT_Apron_T1);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results6 = CalculateProbabilityofUpdate(listaMLAT_Apron_T2);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results7 = CalculateProbabilityofUpdate(listaMLAT_MA);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results8 = CalculateProbabilityofUpdate(listaMLAT_RWY1);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results9 = CalculateProbabilityofUpdate(listaMLAT_RWY2);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results10 = CalculateProbabilityofUpdate(listaMLAT_RWY3);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results11 = CalculateProbabilityofUpdate(listaMLAT_Taxiway);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results12 = CalculateProbabilityofUpdate(listaMLAT_Airborne_2coma5NM);
+            //progressbar.Value = progressbar.Value + 1;
+            //List<double> results13 = CalculateProbabilityofUpdate(listaMLAT_Airborne_5NM);
+            //progressbar.Value = progressbar.Value + 1;
+
+            List<double> results1 = CalculateProbabilityofUpdate1(listaMLAT_Stand);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results2 = CalculateProbabilityofUpdate(listaMLAT_Stand_T1);
+            List<double> results2 = CalculateProbabilityofUpdate1(listaMLAT_Stand_T1);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results3 = CalculateProbabilityofUpdate(listaMLAT_Stand_T2);
+            List<double> results3 = CalculateProbabilityofUpdate1(listaMLAT_Stand_T2);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results4 = CalculateProbabilityofUpdate(listaMLAT_Apron);
+            List<double> results4 = CalculateProbabilityofUpdate1(listaMLAT_Apron);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results5 = CalculateProbabilityofUpdate(listaMLAT_Apron_T1);
+            List<double> results5 = CalculateProbabilityofUpdate1(listaMLAT_Apron_T1);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results6 = CalculateProbabilityofUpdate(listaMLAT_Apron_T2);
+            List<double> results6 = CalculateProbabilityofUpdate1(listaMLAT_Apron_T2);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results7 = CalculateProbabilityofUpdate(listaMLAT_MA);
+            List<double> results7 = CalculateProbabilityofUpdate1(listaMLAT_MA);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results8 = CalculateProbabilityofUpdate(listaMLAT_RWY1);
+            List<double> results8 = CalculateProbabilityofUpdate1(listaMLAT_RWY1);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results9 = CalculateProbabilityofUpdate(listaMLAT_RWY2);
+            List<double> results9 = CalculateProbabilityofUpdate1(listaMLAT_RWY2);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results10 = CalculateProbabilityofUpdate(listaMLAT_RWY3);
+            List<double> results10 = CalculateProbabilityofUpdate1(listaMLAT_RWY3);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results11 = CalculateProbabilityofUpdate(listaMLAT_Taxiway);
+            List<double> results11 = CalculateProbabilityofUpdate1(listaMLAT_Taxiway);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results12 = CalculateProbabilityofUpdate(listaMLAT_Airborne_2coma5NM);
+            List<double> results12 = CalculateProbabilityofUpdate1(listaMLAT_Airborne_2coma5NM);
             progressbar.Value = progressbar.Value + 1;
-            List<double> results13 = CalculateProbabilityofUpdate(listaMLAT_Airborne_5NM);
-            progressbar.Value = progressbar.Value + 1;
+            List<double> results13 = CalculateProbabilityofUpdate1(listaMLAT_Airborne_5NM);
 
             progressbar.Visible = false;
             progressbar.Value = 0;
@@ -3045,333 +3071,248 @@ namespace ASTERIX
 
         private void bt_Export_UpdateRate_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
-
-                int rows = 0;
-
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "UPDATE RATE:";
-                rows = rows + 2;
-
-                for (int i = 0; i < dgv_UpdateRate_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_UpdateRate_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_UpdateRate_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
-
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            ExportDataGridView(dgv_UpdateRate_fromASTERIXfile, "UPDATE RATE:");
         }
 
         private void bt_Export_ProbabilityofUpdate_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
-
-                int rows = 0;
-
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF UPDATE:";
-                rows = rows + 2;
-
-                for (int i = 0; i < dgv_ProbabilityofUpdate_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofUpdate_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofUpdate_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
-
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            ExportDataGridView(dgv_ProbabilityofUpdate_fromASTERIXfile, "PROBABILITY OF UPDATE:");
         }
 
         private void bt_Export_PrecissionAccuracy_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_PrecissionAccuracy_fromASTERIXfile, "PRECISSION ACCURACY:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PRECISSION ACCURACY:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracy_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows++;
-                }
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PRECISSION ACCURACY:";
+            //    rows = rows + 2;
 
-                rows = rows + 5;
-                int columns = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracy_fromASTERIXfile.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracy_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows++;
+            //    }
 
-                hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Stand:";
-                int k = 0;
-                for (int i = 0; i < dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    k++;
-                }
+            //    rows = rows + 5;
+            //    int columns = 0;
 
-                columns = columns + 5;
+            //    hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Stand:";
+            //    int k = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Stand_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        k++;
+            //    }
 
-                hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Apron:";
-                k = 0;
-                for (int i = 0; i < dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    k++;
-                }
+            //    columns = columns + 5;
 
-                columns = columns + 5;
+            //    hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Apron:";
+            //    k = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Apron_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        k++;
+            //    }
 
-                hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Maneuvering Area:";
-                k = 0;
-                for (int i = 0; i < dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    k++;
-                }
+            //    columns = columns + 5;
 
-                columns = columns + 5;
+            //    hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Maneuvering Area:";
+            //    k = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_MA_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        k++;
+            //    }
 
-                hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Airborne 0 - 2.5 NM:";
-                k = 0;
-                for (int i = 0; i < dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    k++;
-                }
+            //    columns = columns + 5;
 
-                columns = columns + 5;
+            //    hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Airborne 0 - 2.5 NM:";
+            //    k = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne25_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        k++;
+            //    }
 
-                hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Airborne 2.5 - 5 NM:";
-                k = 0;
-                for (int i = 0; i < dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows.Count - 1; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    k++;
-                }
+            //    columns = columns + 5;
 
-                //columns = columns + 5;
+            //    hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Airborne 2.5 - 5 NM:";
+            //    k = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows.Count - 1; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Airborne5_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        k++;
+            //    }
 
-                hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Total:";
-                k = 0;
-                for (int i = 0; i < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows.Count - 1; i=i+100)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    k++;
-                }
+            //    //columns = columns + 5;
+
+            //    hoja_trabajo.Cells[rows + 1, columns + 1] = "Distance Error Total:";
+            //    k = 0;
+            //    for (int i = 0; i < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows.Count - 1; i=i+100)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 3 + k, columns + 1 + j] = dgv_PrecissionAccuracyError_Total_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        k++;
+            //    }
 
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofMLATDetection_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
-
-                int rows = 0;
-
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT DETECTION:";
-                rows = rows + 2;
-
-                for (int i = 0; i < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofMLATDetection_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATDetection_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
-
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            ExportDataGridView(dgv_ProbabilityofMLATDetection_fromASTERIXfile, "PROBABILITY OF MLAT DETECTION:");
         }
 
         private void bt_Export_ProbabilityofIdentification_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofIdentification_fromASTERIXfile, "PROBABILITY OF IDENTIFICATION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF IDENTIFICATION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofIdentification_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofIdentification_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofIdentification_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF IDENTIFICATION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofIdentification_fromASTERIXfile.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofIdentification_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofIdentification_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofFalseDetection_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofFalseDetection_fromASTERIXfile, "PROBABILITY OF FALSE DETECTION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE DETECTION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE DETECTION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofFalseDetection_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseDetection_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofFalseIdentification_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofFalseIdentification_fromASTERIXfile, "PROBABILITY OF FALSE IDENTIFICATION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseIdentification_fromASTERIXfile.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         #endregion
@@ -3380,218 +3321,230 @@ namespace ASTERIX
 
         private void bt_Export_ProbabilityofUpdate_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofUpdate_CalibrationVehicle, "PROBABILITY OF UPDATE:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF UPDATE:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofUpdate_CalibrationVehicle.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofUpdate_CalibrationVehicle.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofUpdate_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF UPDATE:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofUpdate_CalibrationVehicle.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofUpdate_CalibrationVehicle.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofUpdate_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_PrecissionAccuracy_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_PrecissionAccuracy_CalibrationVehicle, "POSITION ACCURACY:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "POSITION ACCURACY:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_PrecissionAccuracy_CalibrationVehicle.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_PrecissionAccuracy_CalibrationVehicle.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "POSITION ACCURACY:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_PrecissionAccuracy_CalibrationVehicle.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_PrecissionAccuracy_CalibrationVehicle.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_PrecissionAccuracy_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofMLATDetection_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofMLATDetection_CalibrationVehicle, "PROBABILITY OF MLAT DETECTION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT DETECTION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF MLAT DETECTION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofMLATDetection_CalibrationVehicle.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofMLATDetection_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofIdentification_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofIdentification_CalibrationVehicle, "PROBABILITY OF IDENTIFICATION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF IDENTIFICATION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofIdentification_CalibrationVehicle.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofIdentification_CalibrationVehicle.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofIdentification_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF IDENTIFICATION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofIdentification_CalibrationVehicle.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofIdentification_CalibrationVehicle.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofIdentification_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofFalseDetection_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofFalseIdentification_CalibrationVehicle, "PROBABILITY OF FALSE DETECTION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE DETECTION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE DETECTION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseIdentification_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
         private void bt_Export_ProbabilityofFalseIdentification_CalibrationVehicle_Click(object sender, EventArgs e)
         {
-            SaveFileDialog fichero = new SaveFileDialog();
-            fichero.Filter = "Excel (*.xls)|*.xls";
-            if (fichero.ShowDialog() == DialogResult.OK)
-            {
-                Excel.Application aplicacion;
-                Excel.Workbook libros_trabajo;
-                Excel.Worksheet hoja_trabajo;
-                aplicacion = new Excel.Application();
-                libros_trabajo = aplicacion.Workbooks.Add();
-                hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
-                //Recorremos el DataGridView rellenando la hoja de trabajo
+            ExportDataGridView(dgv_ProbabilityofFalseDetection_CalibrationVehicle, "PROBABILITY OF FALSE IDENTIFICATION:");
 
-                int rows = 0;
+            //SaveFileDialog fichero = new SaveFileDialog();
+            //fichero.Filter = "Excel (*.xls)|*.xls";
+            //if (fichero.ShowDialog() == DialogResult.OK)
+            //{
+            //    Excel.Application aplicacion;
+            //    Excel.Workbook libros_trabajo;
+            //    Excel.Worksheet hoja_trabajo;
+            //    aplicacion = new Excel.Application();
+            //    libros_trabajo = aplicacion.Workbooks.Add();
+            //    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+            //    //Recorremos el DataGridView rellenando la hoja de trabajo
 
-                hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
-                rows = rows + 2;
+            //    int rows = 0;
 
-                for (int i = 0; i < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows.Count - 2; i++)
-                {
-                    for (int j = 0; j < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns.Count; j++)
-                    {
-                        hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
-                    }
-                    rows = rows + 1;
-                }
-                rows = rows + 5;
+            //    hoja_trabajo.Cells[rows + 1, 0 + 1] = "PROBABILITY OF FALSE IDENTIFICATION:";
+            //    rows = rows + 2;
 
-                libros_trabajo.SaveAs(fichero.FileName,
-                Excel.XlFileFormat.xlWorkbookNormal);
-                libros_trabajo.Close(true);
-                aplicacion.Quit();
-            }
+            //    for (int i = 0; i < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows.Count - 2; i++)
+            //    {
+            //        for (int j = 0; j < dgv_ProbabilityofFalseDetection_CalibrationVehicle.Columns.Count; j++)
+            //        {
+            //            hoja_trabajo.Cells[rows + 1, j + 1] = dgv_ProbabilityofFalseDetection_CalibrationVehicle.Rows[i].Cells[j].Value.ToString();
+            //        }
+            //        rows = rows + 1;
+            //    }
+            //    rows = rows + 5;
+
+            //    libros_trabajo.SaveAs(fichero.FileName,
+            //    Excel.XlFileFormat.xlWorkbookNormal);
+            //    libros_trabajo.Close(true);
+            //    aplicacion.Quit();
+            //}
         }
 
 
@@ -3709,91 +3662,101 @@ namespace ASTERIX
 
         public List<double> CalculateProbabilityofUpdate1(List<CAT10> lista)
         {
-            List<CAT10> listaMLATmessages = new List<CAT10>();
-            listaMLATmessages.AddRange(lista);
-
-            // Separamos mensajes por Track Number
-
-            List<string> list_of_TargetAddress = new List<string>();
-            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            if (lista.Count() > 0)
             {
-                string tracknumber = listaMLATmessages[i].TargetAdress_decoded;
-                if (list_of_TargetAddress.Contains(tracknumber) == false) { list_of_TargetAddress.Add(tracknumber); }
-            }
+                List<CAT10> listaMLATmessages = new List<CAT10>();
+                listaMLATmessages.AddRange(lista);
 
-            // Agrupamos los paquetes por Target Address
+                // Separamos mensajes por Track Number
 
-            List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
-            for (int i = 0; i < list_of_TargetAddress.Count(); i++)
-            {
-                List<CAT10> list_of_planes = new List<CAT10>();
-                for (int j = 0; j < listaMLATmessages.Count(); j++)
+                List<string> list_of_TargetAddress = new List<string>();
+                for (int i = 0; i < listaMLATmessages.Count(); i++)
                 {
-                    if (listaMLATmessages[j].TargetAdress_decoded == list_of_TargetAddress[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                    string tracknumber = listaMLATmessages[i].TargetAdress_decoded;
+                    if (list_of_TargetAddress.Contains(tracknumber) == false) { list_of_TargetAddress.Add(tracknumber); }
                 }
-                list_of_list_of_planes.Add(list_of_planes);
-            }
 
-            // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
-            List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
-            foreach (List<CAT10> lista_MLAT in list_of_list_of_planes)
-            {
-                List<CAT10> list_1 = new List<CAT10>();
-                int i = 0;
-                while(i < lista_MLAT.Count() - 1)
+                // Agrupamos los paquetes por Target Address
+
+                List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+                for (int i = 0; i < list_of_TargetAddress.Count(); i++)
                 {
-                    double timedelay = Math.Abs(lista_MLAT[i].timetotal - lista_MLAT[i + 1].timetotal);
-                    if (timedelay <= 30)
+                    List<CAT10> list_of_planes = new List<CAT10>();
+                    for (int j = 0; j < listaMLATmessages.Count(); j++)
                     {
-                        list_1.Add(lista_MLAT[i]);
+                        if (listaMLATmessages[j].TargetAdress_decoded == list_of_TargetAddress[i]) { list_of_planes.Add(listaMLATmessages[j]); }
                     }
-                    else
+                    list_of_list_of_planes.Add(list_of_planes);
+                }
+
+                // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+                List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+                foreach (List<CAT10> lista_MLAT in list_of_list_of_planes)
+                {
+                    List<CAT10> list_1 = new List<CAT10>();
+                    int i = 0;
+                    while (i < lista_MLAT.Count() - 1)
                     {
-                        list_1.Add(lista_MLAT[i]);
-                        list_of_list_of_planes1.Add(list_1);
-                        list_1 = new List<CAT10>();
+                        double timedelay = Math.Abs(lista_MLAT[i].timetotal - lista_MLAT[i + 1].timetotal);
+                        if (timedelay <= 30)
+                        {
+                            list_1.Add(lista_MLAT[i]);
+                        }
+                        else
+                        {
+                            list_1.Add(lista_MLAT[i]);
+                            list_of_list_of_planes1.Add(list_1);
+                            list_1 = new List<CAT10>();
+                        }
+                        i++;
                     }
-                    i++;
+                    list_of_list_of_planes1.Add(list_1);
                 }
-                list_of_list_of_planes1.Add(list_1);
-            }
 
-            for(int i = list_of_list_of_planes1.Count(); i<=0; i--)
-            {
-                if (list_of_list_of_planes1[i].Count == 0)
+                for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
                 {
-                    list_of_list_of_planes1.RemoveAt(i);
+                    if (list_of_list_of_planes1[i].Count == 0)
+                    {
+                        list_of_list_of_planes1.RemoveAt(i);
+                    }
                 }
-            }
 
-            // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+                // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
 
-            double found_messages = 0;
-            double expected_messages = 0;
+                double found_messages = 0;
+                double expected_messages = 0;
 
-            for (int i = 0; i < list_of_list_of_planes1.Count(); i++)
-            {
-                List<CAT10> listplanes = list_of_list_of_planes1[i];
-
-                if (listplanes.Count() > 1)
+                for (int i = 0; i < list_of_list_of_planes1.Count(); i++)
                 {
-                    found_messages = found_messages + listplanes.Count();
-                    expected_messages = expected_messages + Math.Floor(listplanes.Last().timetotal - listplanes.First().timetotal + 1) ;
-                }
-            }
+                    List<CAT10> listplanes = list_of_list_of_planes1[i];
 
-            double probabilityofupdate;
-            if (found_messages == 0 && expected_messages == 0)
-            {
-                probabilityofupdate = 0;
+                    if (listplanes.Count() > 1)
+                    {
+                        found_messages = found_messages + listplanes.Count();
+                        expected_messages = expected_messages + Math.Floor(listplanes.Last().timetotal - listplanes.First().timetotal + 1);
+                    }
+                }
+
+                double probabilityofupdate;
+                if (found_messages == 0 && expected_messages == 0)
+                {
+                    probabilityofupdate = 0;
+                }
+                else
+                {
+                    probabilityofupdate = found_messages / expected_messages;
+                }
+
+                List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate * 100 };
+                return results;
             }
             else
             {
-                probabilityofupdate = found_messages / expected_messages;
+                List<double> results = new List<double>() { 0, 0, 0 * 100 };
+                return results;
             }
 
-            List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate * 100 };
-            return results;
+            
         }
 
         public List<List<double>> CalculatePrecissionAccuracy(List<CAT10> list1, List<CAT21> list2, double PIC)
@@ -4015,6 +3978,38 @@ namespace ASTERIX
                 list_of_list_of_planes.Add(list_of_planes);
             }
 
+            // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+            List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+            foreach (List<CAT10> lista_MLAT in list_of_list_of_planes)
+            {
+                List<CAT10> list_1 = new List<CAT10>();
+                int i = 0;
+                while (i < lista_MLAT.Count() - 1)
+                {
+                    double timedelay = Math.Abs(lista_MLAT[i].timetotal - lista_MLAT[i + 1].timetotal);
+                    if (timedelay <= 30)
+                    {
+                        list_1.Add(lista_MLAT[i]);
+                    }
+                    else
+                    {
+                        list_1.Add(lista_MLAT[i]);
+                        list_of_list_of_planes1.Add(list_1);
+                        list_1 = new List<CAT10>();
+                    }
+                    i++;
+                }
+                list_of_list_of_planes1.Add(list_1);
+            }
+
+            for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
+            {
+                if (list_of_list_of_planes1[i].Count == 0)
+                {
+                    list_of_list_of_planes1.RemoveAt(i);
+                }
+            }
+
             // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
 
             double found_messages = 0;
@@ -4022,7 +4017,7 @@ namespace ASTERIX
 
             for (int i = 0; i < list_of_list_of_planes.Count(); i++)
             {
-                List<CAT10> listplanes = list_of_list_of_planes[i];
+                List<CAT10> listplanes = list_of_list_of_planes1[i];
                 
                 // Buscamos timepo incial y timepo final de la trayectoria
 
@@ -4082,126 +4077,168 @@ namespace ASTERIX
             List<CAT10> listaMLATmessages = new List<CAT10>();
             listaMLATmessages.AddRange(list);
 
-            // Filtramos paquetes sin info de posicion
-            List<CAT10> list1 = new List<CAT10>();
-            for (int i = 0; i < listaMLATmessages.Count(); i++)
+            if (list.Count() > 0)
             {
-                if ((listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0) || (listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0))
+                // Filtramos paquetes sin info de posicion
+                List<CAT10> list1 = new List<CAT10>();
+                for (int i = 0; i < listaMLATmessages.Count(); i++)
                 {
-                    list1.Add(listaMLATmessages[i]);
-                }
-            }
-            listaMLATmessages.Clear();
-            listaMLATmessages.AddRange(list1);
-
-            List<string> list_of_TrackNumbers = new List<string>();
-            for (int i = 0; i < listaMLATmessages.Count(); i++)
-            {
-                string tracknumber = listaMLATmessages[i].TargetAdress_decoded;
-                if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
-            }
-
-            // Agrupamos los paquetes por Target Address
-
-            List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
-            for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
-            {
-                List<CAT10> list_of_planes = new List<CAT10>();
-                for (int j = 0; j < listaMLATmessages.Count(); j++)
-                {
-                    if (listaMLATmessages[j].TargetAdress_decoded == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
-                }
-                list_of_list_of_planes.Add(list_of_planes);
-            }
-
-            // ahora separamos los paquetes por los i ntervalos en los que estan en una zona (para que, una vez salgan de una zona, aunque luego se vuelvan a menter contarlos como 2 trayectorias diferentes)
-
-            List<List<CAT10>> list_of_subzones = new List<List<CAT10>>();
-            List<CAT10> list111 = new List<CAT10>();
-
-            for (int j = 0; j < list_of_list_of_planes.Count(); j++)
-            {
-                List<CAT10> list11 = list_of_list_of_planes[j];
-
-                for (int i = 0; i < list11.Count() - 1; i++)
-                {
-                    if (list11[i + 1].timetotal - list11[i].timetotal < 20)
+                    if ((listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0 && listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0) || (listaMLATmessages[i].PositioninCartesianCoordinates.Length > 0) || (listaMLATmessages[i].MeasuredPositioninPolarCoordinates.Length > 0))
                     {
-                        list111.Add(list11[i]);
-                    }
-                    else
-                    {
-                        list111.Add(list11[i]);
-                        list_of_subzones.Add(list111);
-                        list111 = new List<CAT10>();
+                        list1.Add(listaMLATmessages[i]);
                     }
                 }
-                if (list11.Count > 0)
+                listaMLATmessages.Clear();
+                listaMLATmessages.AddRange(list1);
+
+                List<string> list_of_TrackNumbers = new List<string>();
+                for (int i = 0; i < listaMLATmessages.Count(); i++)
                 {
-                    list111.Add(list11.Last());
+                    string tracknumber = listaMLATmessages[i].TargetAdress_decoded;
+                    if (list_of_TrackNumbers.Contains(tracknumber) == false) { list_of_TrackNumbers.Add(tracknumber); }
                 }
-                list_of_subzones.Add(list111);
-                list111 = new List<CAT10>();
-            }
 
-            // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+                // Agrupamos los paquetes por Target Address
 
-            double found_messages = 0;
-            double expected_messages = 0;
-
-            for (int i = 0; i < list_of_subzones.Count(); i++)
-            {
-                if (list_of_subzones[i].Count() > 0)
+                List<List<CAT10>> list_of_list_of_planes = new List<List<CAT10>>();
+                for (int i = 0; i < list_of_TrackNumbers.Count(); i++)
                 {
-                    List<CAT10> listplanes = list_of_subzones[i];
-
-                    // Buscamos timepo incial y timepo final de la trayectoria
-
-                    double time = listplanes.First().timetotal;
-                    double time_final = listplanes.Last().timetotal;
-
-                    // Buscle que vaya creando una ventana de tiempo de x segundos y vaya aumentando el tiempo incial de esa ventana un segundo a cada iteración
-
-                    while (time + interval < time_final)
+                    List<CAT10> list_of_planes = new List<CAT10>();
+                    for (int j = 0; j < listaMLATmessages.Count(); j++)
                     {
-                        // Bucle para buscar cuantos paquetes hay en esa ventana de tiempo
-                        List<CAT10> listplanesinterval = new List<CAT10>();
-                        listplanesinterval.Clear();
+                        if (listaMLATmessages[j].TargetAdress_decoded == list_of_TrackNumbers[i]) { list_of_planes.Add(listaMLATmessages[j]); }
+                    }
+                    list_of_list_of_planes.Add(list_of_planes);
+                }
 
-                        for (int j = 0; j < listplanes.Count(); j++)
+                // ahora separamos los paquetes por los i ntervalos en los que estan en una zona (para que, una vez salgan de una zona, aunque luego se vuelvan a menter contarlos como 2 trayectorias diferentes)
+
+                List<List<CAT10>> list_of_subzones = new List<List<CAT10>>();
+                List<CAT10> list111 = new List<CAT10>();
+
+                for (int j = 0; j < list_of_list_of_planes.Count(); j++)
+                {
+                    List<CAT10> list11 = list_of_list_of_planes[j];
+
+                    for (int i = 0; i < list11.Count() - 1; i++)
+                    {
+                        if (list11[i + 1].timetotal - list11[i].timetotal < 20)
                         {
-                            if (listplanes[j].timetotal >= time && listplanes[j].timetotal < time + interval)
+                            list111.Add(list11[i]);
+                        }
+                        else
+                        {
+                            list111.Add(list11[i]);
+                            list_of_subzones.Add(list111);
+                            list111 = new List<CAT10>();
+                        }
+                    }
+                    if (list11.Count > 0)
+                    {
+                        list111.Add(list11.Last());
+                    }
+                    list_of_subzones.Add(list111);
+                    list111 = new List<CAT10>();
+                }
+
+                // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+                List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+                foreach (List<CAT10> lista_MLAT in list_of_subzones)
+                {
+                    List<CAT10> list_1 = new List<CAT10>();
+                    int i = 0;
+                    while (i < lista_MLAT.Count() - 1)
+                    {
+                        double timedelay = Math.Abs(lista_MLAT[i].timetotal - lista_MLAT[i + 1].timetotal);
+                        if (timedelay <= 30)
+                        {
+                            list_1.Add(lista_MLAT[i]);
+                        }
+                        else
+                        {
+                            list_1.Add(lista_MLAT[i]);
+                            list_of_list_of_planes1.Add(list_1);
+                            list_1 = new List<CAT10>();
+                        }
+                        i++;
+                    }
+                    list_of_list_of_planes1.Add(list_1);
+                }
+
+                for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
+                {
+                    if (list_of_list_of_planes1[i].Count == 0)
+                    {
+                        list_of_list_of_planes1.RemoveAt(i);
+                    }
+                }
+
+                // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
+
+                double found_messages = 0;
+                double expected_messages = 0;
+
+                for (int i = 0; i < list_of_subzones.Count(); i++)
+                {
+                    if (list_of_subzones[i].Count() > 0)
+                    {
+                        List<CAT10> listplanes = list_of_list_of_planes1[i];
+
+                        // Buscamos timepo incial y timepo final de la trayectoria
+                        if (listplanes.Count() > 0)
+                        {
+                            double time = listplanes.First().timetotal;
+                            double time_final = listplanes.Last().timetotal;
+
+                            // Buscle que vaya creando una ventana de tiempo de x segundos y vaya aumentando el tiempo incial de esa ventana un segundo a cada iteración
+
+                            while (time + interval < time_final)
                             {
-                                listplanesinterval.Add(listplanes[j]);
+                                // Bucle para buscar cuantos paquetes hay en esa ventana de tiempo
+                                List<CAT10> listplanesinterval = new List<CAT10>();
+                                listplanesinterval.Clear();
+
+                                for (int j = 0; j < listplanes.Count(); j++)
+                                {
+                                    if (listplanes[j].timetotal >= time && listplanes[j].timetotal < time + interval)
+                                    {
+                                        listplanesinterval.Add(listplanes[j]);
+                                    }
+                                }
+
+                                // Ahora buscamos cuantos paquetes hay en esa ventana de tiempo
+                                int messages = listplanesinterval.Count();
+
+                                if (messages > 0)
+                                {
+                                    found_messages++;
+                                }
+                                expected_messages++;
+
+                                time++;
                             }
                         }
-
-                        // Ahora buscamos cuantos paquetes hay en esa ventana de tiempo
-                        int messages = listplanesinterval.Count();
-
-                        if (messages > 0)
-                        {
-                            found_messages++;
-                        }
-                        expected_messages++;
-
-                        time++;
                     }
                 }
-            }
 
-            double probabilityofupdate;
-            if (found_messages == 0 && expected_messages == 0)
-            {
-                probabilityofupdate = 0;
+                double probabilityofupdate;
+                if (found_messages == 0 && expected_messages == 0)
+                {
+                    probabilityofupdate = 0;
+                }
+                else
+                {
+                    probabilityofupdate = found_messages / expected_messages;
+                }
+
+                List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate * 100 };
+                return results;
             }
             else
             {
-                probabilityofupdate = found_messages / expected_messages;
+                List<double> results = new List<double>() { 0, 0, 0 * 100 };
+                return results;
             }
-
-            List<double> results = new List<double>() { found_messages, expected_messages, probabilityofupdate * 100 };
-            return results;
         }
 
         public List<double> CalculatePRobabilityofIdentification(List<CAT10> list)
@@ -4714,7 +4751,7 @@ namespace ASTERIX
                     if (timedelay <= tupdate && listaADSB[j].timetotal > timeMLAT) { indexj_posterior = j; }
                 }
 
-                if (indexj_anterior != 1000000 && indexj_posterior != 1000000 && indexj_posterior - indexj_anterior <=2)
+                if (indexj_anterior != 1000000 && indexj_anterior != 1000000 && indexj_posterior - indexj_anterior <=2)
                 {
                     //Interpolamos para encontrar Lat
                     double x0 = listaADSB[indexj_anterior].timetotal;
@@ -4761,18 +4798,19 @@ namespace ASTERIX
                     // Ahora convertimos las coordenadas geodesicas a system cartesian
                     var coordGeocentric = GeoUtils1.change_geodesic2geocentric(newCoordinatesADSB);
                     var coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+                    var coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
 
-                    double X1 = listaMLATmessages[i].coordSystemCartesian.X;
-                    double Y1 = listaMLATmessages[i].coordSystemCartesian.Y;
+                    double U1 = listaMLATmessages[i].coordStereographic.U;
+                    double V1 = listaMLATmessages[i].coordStereographic.V;
 
-                    double X2 = coordSystemCartesian.X;
-                    double Y2 = coordSystemCartesian.Y;
+                    double U2 = coordStereographic.U;
+                    double V2 = coordStereographic.V;
 
-                    double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
+                    double distances = Math.Sqrt((U2 - U1) * (U2 - U1) + (V2 - V1) * (V2 - V1));
                     listadistances.Add(distances);
-                    listaDeltaX.Add(X2 - X1);
-                    listaDeltaY.Add(Y2 - Y1);
+                    listaDeltaX.Add(U2 - U1);
+                    listaDeltaY.Add(V2 - V1);
 
                     // Ahora añadimos poligonos al mapa.
                     //CoordinatesXYZ coordGeocentric = GeoUtils1.change_system_cartesian2geocentric(newCoordinatesADSB);
@@ -4854,6 +4892,38 @@ namespace ASTERIX
             }
             list_of_subzones.Add(list111);
 
+            // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+            List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+            foreach (List<CAT10> lista_MLAT in list_of_subzones)
+            {
+                List<CAT10> list_1 = new List<CAT10>();
+                int i = 0;
+                while (i < lista_MLAT.Count() - 1)
+                {
+                    double timedelay = Math.Abs(lista_MLAT[i].timetotal - lista_MLAT[i + 1].timetotal);
+                    if (timedelay <= 30)
+                    {
+                        list_1.Add(lista_MLAT[i]);
+                    }
+                    else
+                    {
+                        list_1.Add(lista_MLAT[i]);
+                        list_of_list_of_planes1.Add(list_1);
+                        list_1 = new List<CAT10>();
+                    }
+                    i++;
+                }
+                list_of_list_of_planes1.Add(list_1);
+            }
+
+            for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
+            {
+                if (list_of_list_of_planes1[i].Count == 0)
+                {
+                    list_of_list_of_planes1.RemoveAt(i);
+                }
+            }
+
 
             // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
 
@@ -4864,7 +4934,7 @@ namespace ASTERIX
             {
                 if(list_of_subzones[i].Count() > 0)
                 {
-                    List<CAT10> listplanes = list_of_subzones[i];
+                    List<CAT10> listplanes = list_of_list_of_planes1[i];
 
                     // Buscamos timepo incial y timepo final de la trayectoria
 
@@ -4952,6 +5022,110 @@ namespace ASTERIX
             }
 
             return standardDeviation;
+        }
+
+        #endregion
+
+        #region Functions to Export Performances
+
+        public void ExportDataGridView(DataGridView dgv, string title)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = "Excel (*.xls)|*.xls | CSV(*.csv) | *.csv";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                if (fichero.FileName.Contains(".xls"))
+                {
+                    Excel.Application aplicacion;
+                    Excel.Workbook libros_trabajo;
+                    Excel.Worksheet hoja_trabajo;
+                    aplicacion = new Excel.Application();
+                    libros_trabajo = aplicacion.Workbooks.Add();
+                    hoja_trabajo = (Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+                    //Recorremos el DataGridView rellenando la hoja de trabajo
+
+                    int rows = 0;
+
+                    hoja_trabajo.Cells[rows + 1, 0 + 1] = title;
+                    rows = rows + 2;
+
+                    for (int i = 0; i < dgv.Rows.Count - 2; i++)
+                    {
+                        for (int j = 0; j < dgv.Columns.Count; j++)
+                        {
+                            hoja_trabajo.Cells[rows + 1, j + 1] = dgv.Rows[i].Cells[j].Value.ToString();
+                        }
+                        rows = rows + 1;
+                    }
+                    rows = rows + 5;
+
+                    libros_trabajo.SaveAs(fichero.FileName,
+                    Excel.XlFileFormat.xlWorkbookNormal);
+                    libros_trabajo.Close(true);
+                    aplicacion.Quit();
+                }
+                else if (fichero.FileName.Contains(".csv"))
+                {
+                    int columnCount = dgv.Columns.Count;
+                    string columnNames = "";
+                    List<string> outputCsv = new List<string>();
+
+                    outputCsv.Add(";");
+                    outputCsv.Add(title);
+
+                    for (int i = 0; i < columnCount; i++)
+                    {
+                        columnNames += dgv.Columns[i].HeaderText.ToString() + ";";
+                    }
+                    outputCsv.Add(columnNames);
+
+                    for (int i = 1; (i - 1) < dgv.Rows.Count - 2; i++)
+                    {
+                        string row = "";
+                        for (int j = 0; j < columnCount; j++)
+                        {
+                            row = row + (dgv.Rows[i - 1].Cells[j].Value.ToString().Replace(Convert.ToChar("."), Convert.ToChar(",")) + ";");
+                        }
+                        outputCsv.Add(row);
+                    }
+                    File.WriteAllLines(fichero.FileName, outputCsv.ToArray(), System.Text.Encoding.UTF8);
+
+                    //-----------------------------------------------------------------------------------------------------------------------------------------
+
+                    //MessageBox.Show("Data will be exported and you will be notified when it is ready.");
+                    //if (File.Exists(fichero.FileName))
+                    //{
+                    //    try
+                    //    {
+                    //        File.Delete(fichero.FileName);
+                    //    }
+                    //    catch (IOException ex)
+                    //    {
+                    //        MessageBox.Show("It wasn't possible to write the data to the disk." + ex.Message);
+                    //    }
+                    //}
+                    //int columnCount = dgv_UpdateRate_fromASTERIXfile.ColumnCount;
+                    //string columnNames = "";
+                    //string[] output = new string[dgv_UpdateRate_fromASTERIXfile.RowCount + 1];
+                    //for (int i = 0; i < columnCount; i++)
+                    //{
+                    //    columnNames += dgv_UpdateRate_fromASTERIXfile.Columns[i].Name.ToString() + ",";
+                    //}
+                    //output[0] += columnNames;
+                    //for (int i = 2; (i - 1) < dgv_UpdateRate_fromASTERIXfile.RowCount - 1; i++)
+                    //{
+                    //    for (int j = 0; j < columnCount; j++)
+                    //    {
+                    //        output[i] += dgv_UpdateRate_fromASTERIXfile.Rows[i - 1].Cells[j].Value.ToString() + ",";
+                    //    }
+                    //}
+                    //System.IO.File.WriteAllLines(fichero.FileName, output, System.Text.Encoding.UTF8);
+
+
+                }
+
+                MessageBox.Show("Data Exported Successfully !!!", "Info");
+            }
         }
 
         #endregion
@@ -7112,7 +7286,6 @@ namespace ASTERIX
 
 
         #endregion
-
 
     }
 }

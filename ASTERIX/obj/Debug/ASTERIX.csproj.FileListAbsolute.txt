@@ -960,3 +960,6 @@ C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad As
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\ASTERIX\bin\Debug\AjaxMin.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\ASTERIX\bin\Debug\Gmap.net.dll
 C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Copia de seguridad Asterix Decoder\ASTERIX\bin\Debug\Gmap.net.pdb
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\AjaxMin.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Gmap.net.dll
+C:\Users\oscar\Dropbox\Oscar\Sistemes Aeroespacials\4B\TFG\Computation-of-ED-116-117-performances-from-ASTERIX-messages\ASTERIX\bin\Debug\Gmap.net.pdb

@@ -41,13 +41,6 @@ namespace ASTERIX
         double E = Math.Sqrt(0.00669437999013);
         double A = 6378137.0;
 
-
-        int SAC = 0;
-        int SIC = 0;
-
-
-
-
         public BrowseFile()
         {
             InitializeComponent();
@@ -114,63 +107,6 @@ namespace ASTERIX
             }
         }
 
-        public double Calculate_ComplementoA2(string bits)
-        {
-            if (bits == "1")
-                return -1;
-            if (bits == "0")
-                return 0;
-            else
-            {
-                if (Convert.ToString(bits[0]) == "0")
-                {
-                    int num = Convert.ToInt32(bits, 2);
-                    return Convert.ToSingle(num);
-                }
-                else
-                {
-                    //elimino primer bit
-                    string bitss = bits.Substring(1, bits.Length - 1);
-
-                    //creo nuevo string cambiando 0s por 1s y viceversa
-                    string newbits = "";
-                    int i = 0;
-                    while (i < bitss.Length)
-                    {
-                        if (Convert.ToString(bitss[i]) == "1")
-                            newbits = newbits + "0";
-                        if (Convert.ToString(bitss[i]) == "0")
-                            newbits = newbits + "1";
-                        i++;
-                    }
-
-                    //convertimos a int
-                    double num = Convert.ToInt32(newbits, 2);
-
-                    return -(num + 1);
-                }
-            }
-        }
-
-        public string AddZeros(string octeto)
-        {
-            while (octeto.Length < 8)
-            {
-                octeto = octeto.Insert(0, "0");
-            }
-
-            return octeto;
-        }
-
-        public void Calculate_DataSourceIdentification(string paquete)
-        {
-            string string1 = paquete.Substring(0, 8);
-            string string2 = paquete.Substring(8, 8);
-
-            SAC = Convert.ToInt32(string1, 2);
-            SIC = Convert.ToInt32(string2, 2);
-        }
-
         private void BrowseFile_Load(object sender, EventArgs e)
         {
 
@@ -233,60 +169,14 @@ namespace ASTERIX
 
                                 if (CAT == 21)
                                 {
-
-                                    string FSPEC = "";
-
-                                    int j = 3;
-                                    bool found = false;
-
-                                    while (found == false)
-                                    {
-                                        FSPEC = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);// Convertir de hex a binario paquete [3]
-                                        FSPEC = AddZeros(FSPEC);
-
-                                        if (Char.ToString(FSPEC[FSPEC.Length - 1]) == "1")
-                                        {
-                                            while (Char.ToString(FSPEC[FSPEC.Length - 1]) != "0")
-                                            {
-                                                j = j + 1;
-                                                string parte2 = Convert.ToString(Convert.ToInt32(arraystring[j], 16), 2);
-                                                parte2 = AddZeros(parte2);
-
-                                                FSPEC = String.Concat(FSPEC, parte2);
-                                            }
-
-                                            found = true;
-                                        }
-
-                                        found = true;
-                                    }
-
-                                    int data_position = 1 + 2 + ((FSPEC.Length) / 8);
-
-                                    string string1 = Convert.ToString(arraystring[data_position]);
-                                    string1 = Convert.ToString(Convert.ToInt32(string1, 16), 2);
-                                    string1 = AddZeros(string1);
-
-                                    string string2 = Convert.ToString(arraystring[data_position + 1]);
-                                    string2 = Convert.ToString(Convert.ToInt32(string2, 16), 2);
-                                    string2 = AddZeros(string2);
-
-                                    data_position = data_position + 2;
-
-                                    string DataSourceIdentification = String.Concat(string1, string2);
-
-                                    Calculate_DataSourceIdentification(DataSourceIdentification);
-
-                                    // ahora que sabemos que version es cada paquete los metemos en su lista correspondiente.
-
-                                    if (SAC == 20 && SIC == 219)
+                                    if (this.comboBox1.Text == "CAT 21 v2.1")
                                     {
                                         CAT21 newcat21 = new CAT21(arraystring);
                                         newcat21.Calculate_FSPEC(newcat21.paquete);
                                         listaCAT21.Add(newcat21);
                                     }
 
-                                    if (SAC == 0 && SIC == 107)
+                                    else if (comboBox1.Text == "CAT 21 v0.23")
                                     {
                                         CAT21v23 newcat21v23 = new CAT21v23(arraystring);
                                         newcat21v23.Calculate_FSPEC(newcat21v23.paquete);

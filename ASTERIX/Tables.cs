@@ -491,7 +491,7 @@ namespace ASTERIX
 
                 double distance = listaCAT21.Count-1;
                 double numerode50 =Math.Floor(distance / 50);
-                double numerofinal = ((distance/50)-numerode50)*50;
+                double numerofinal = Math.Floor(((distance/50)-numerode50)*50);
 
                 double valorfinal1 = distance;
                 double valorinicial1 = valorfinal1 - numerofinal;
