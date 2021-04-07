@@ -165,6 +165,12 @@ namespace LIBRERIACLASES
         public double CalculatedAcceleration_X;
         public double CalculatedAcceleration_Y;
 
+        public string zone = "";
+        public double errorX;
+        public double errorY;
+        public double errorXY;
+        public CoordinatesXYZ coordSystemCartesianReference;
+
 
 
         public CAT10(string[] packet)
@@ -1420,10 +1426,10 @@ namespace LIBRERIACLASES
 
             // MLAT
             if (this.SAC == 0 && this.SIC == 107)
-            {
+            { 
                 // Calculamos Coordenadas Geodesic
                 CoordinatesXYZ coordRadarCartesian = new CoordinatesXYZ(X_cartesian, Y_cartesian, this.FlightLevel * 100 * GeoUtils.FEET2METERS);
-                CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatARP * GeoUtils.DEGS2RADS, LonARP * GeoUtils.DEGS2RADS), coordRadarCartesian);
+                CoordinatesXYZ coordGeocentric = GeoUtils1.change_radar_cartesian2geocentric(new CoordinatesWGS84(LatMLAT * GeoUtils.DEGS2RADS, LonMLAT * GeoUtils.DEGS2RADS), coordRadarCartesian);
                 coordGeodesic = GeoUtils1.change_geocentric2geodesic(coordGeocentric);
 
                 // Calculamos Coordenadas System Cartesian

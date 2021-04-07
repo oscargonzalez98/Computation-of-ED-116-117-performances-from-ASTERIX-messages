@@ -1,0 +1,9 @@
+	<Style id="turquesa">
+ 		<LineStyle>
+ 			<color>70ff00ff</color>
+ 			<width>4</width>
+ 		</LineStyle>
+ 		<PolyStyle>
+ 			<color>70ff00ff</color>
+ 		</PolyStyle>
+ 	</Style>

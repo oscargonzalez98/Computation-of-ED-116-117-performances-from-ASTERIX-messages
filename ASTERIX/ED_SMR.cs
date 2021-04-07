@@ -164,6 +164,18 @@ namespace ASTERIX
         List<CAT10> listaMLAT_Airborne_5NM_S = new List<CAT10>();
         List<CAT10> listaMLAT_Airborne_5NM_U = new List<CAT10>();
 
+        List<Trayectoria> listaMLAT_Stand_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_Stand_T1_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_Stand_T2_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_Apron_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_Apron_T1_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_Apron_T2_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_MA_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_RWY1_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_RWY2_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_RWY3_1 = new List<Trayectoria>();
+        List<Trayectoria> listaMLAT_Taxiway_1 = new List<Trayectoria>();
+
         public static List<string> listColors = new List<string>() { "#3F51B5", "#009688", "#FF5722", "#607D8B", "#FF9800", "#9C27B0", "#2196F3", "#EA676C", "#E41A4A", "#5978BB", "#018790", "#0E3441", "#00B0AD", "#721D47", "#EA4833", "#EF937E", "#F37521", "#A12059", "#126881", "#8BC240", "#364D5B", "#C7DC5B", "#0094BC", "#E4126B", "#43B76E", "#7BCFE9", "B71C46" };
 
         double E = Math.Sqrt(0.00669437999013);
@@ -215,6 +227,7 @@ namespace ASTERIX
         List<CAT10> listaSMR = new List<CAT10>();
         List<CAT10> listaMLAT_Aircraft = new List<CAT10>();
         List<CAT10> listaMLAT_GroundVehicle = new List<CAT10>();
+        List<List<CAT10>> SMR_para_GroundVehicles;
         List<CAT21> listaCAT21 = new List<CAT21>();
         List<MLATCalibrationData> listaCalibrationDataVehicle = new List<MLATCalibrationData>();
 
@@ -225,6 +238,16 @@ namespace ASTERIX
         string GBNS_CAT10 = "Transponder Ground bit not set.";
 
         List<Trayectoria> lista_Trayectorias1 = new List<Trayectoria>();
+
+        int counter_CalculateGV = 0;
+
+        GMapOverlay overlay_distances = new GMapOverlay();
+
+        public List<double> lista_distancias_PA_X = new List<double>();
+        public List<double> lista_distancias_PA_Y = new List<double>();
+
+        public List<double> lista_distancias_PA_X_VC = new List<double>();
+        public List<double> lista_distancias_PA_Y_VC = new List<double>();
 
         public ED_SMR(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<MLATCalibrationData> listaCalibrationDataVehicle)
         {
@@ -862,20 +885,20 @@ namespace ASTERIX
             //List<List<CAT10>> listaTrayectorias = CalculateTrajectories(listaSMR); // Funcion que calcula las trayectorias a partir de track number y dikstancia (poco restrictiva)
             //List<List<CAT10>> listaTrayectorias1 = CalculateTrajectories1(listaSMR); // Funcion que calcula las trayectorias a partir de kalman filter
             //List<Trafico> listaTraficos = CalculateTrajectories2(listaSMR, listaMLAT, listaCAT21); // Funcion que calcula el tráfico MLAT, CAT21 equivalente de cada trafico SMR a paritr de la distancia y tiempo
-            var SMR_para_GroundVehicles = CalculateTrajectories3(listaSMR, listaMLAT_Aircraft, listaCAT21); // Funcion que calcula tracking de SMR a partir de la distancia media entre las trayectorias SMR y MLAT
-            CalculateTrajectories4(SMR_para_GroundVehicles, listaMLAT_GroundVehicle);
+            //var SMR_para_GroundVehicles = CalculateTrajectories3(listaSMR, listaMLAT_Aircraft, listaCAT21); // Funcion que calcula tracking de SMR a partir de la distancia media entre las trayectorias SMR y MLAT
+            //CalculateTrajectories4(SMR_para_GroundVehicles, listaMLAT_GroundVehicle);
 
-            List<CAT10> listSMR = new List<CAT10>();
-            for (int i = 0; i < SMR_para_GroundVehicles.Count(); i++)
-            {
-                listSMR.AddRange(SMR_para_GroundVehicles[i]);
-            }
-            var list1 = listSMR.OrderBy(o => o.timetotal).ToList();
-            list1.AddRange(listaMLAT_GroundVehicle);
+            //List<CAT10> listSMR = new List<CAT10>();
+            //for (int i = 0; i < SMR_para_GroundVehicles.Count(); i++)
+            //{
+            //    listSMR.AddRange(SMR_para_GroundVehicles[i]);
+            //}
+            //var list1 = listSMR.OrderBy(o => o.timetotal).ToList();
+            //list1.AddRange(listaMLAT_GroundVehicle);
 
 
-            MapView1 mv1 = new MapView1(list1, listaCAT21, new List<CAT21v23>());
-            mv1.Show();
+            //MapView1 mv1 = new MapView1(list1, listaCAT21, new List<CAT21v23>());
+            //mv1.Show();
 
             // Creamos Mapa
 
@@ -903,9 +926,9 @@ namespace ASTERIX
             //GMapOverlay polygonsoverlay = new GMapOverlay();
             //foreach (List<CAT10> list in SMR_para_GroundVehicles)
             //{
-            //    for(int i = 0; i<list.Count(); i++)
+            //    for (int i = 0; i < list.Count(); i++)
             //    {
-            //        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng( list[i].coordGeodesic.Lat*GeoUtils.RADS2DEGS, list[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS ), red_circle);
+            //        GMarkerGoogle marker = new GMarkerGoogle(new PointLatLng(list[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, list[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS), red_circle);
             //        marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
             //        marker.ToolTipText = list[i].Tracknumber_value.ToString() + "     " + list[i].timetotal.ToString();
             //        polygonsoverlay.Markers.Add(marker);
@@ -987,8 +1010,6 @@ namespace ASTERIX
             {
                 Bitmap image = new Bitmap(this.Mapa.Width, this.Mapa.Height);
                 this.Mapa.DrawToBitmap(image, new Rectangle(0, 0, this.Mapa.Width, this.Mapa.Height));
-                //image.Save("hola1234.jpeg", ImageFormat.Jpeg);
-                //image.Save(saveFileDialog1.FileName & ageName);
 
                 System.IO.FileStream fs = (System.IO.FileStream)saveFileDialog1.OpenFile();
                 image.Save(fs,System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -997,106 +1018,177 @@ namespace ASTERIX
 
         #region Functions to calculate Performances from ASTERIX file
 
-        public void CalculatreDetectionSensitivityTest_fromASTERIXfile(List<Trayectoria> lista)
+        public List<double> CalculatreDetectionSensitivityTest_fromASTERIXfile(List<Trayectoria> lista)
         {
-
-        }
-
-        public void CalculatreDataRenewalRateTest_fromASTERIXfile(List<Trayectoria> lista)
-        {
-            double counter_bueno = 0;
-            double counter_total = 0;
+            double found = 0;
+            double expected = 0;
 
             foreach(Trayectoria trajectory in lista)
             {
-                for(int i = 0; i < (trajectory.listaSMR.Count() - 1); i++)
+                if(trajectory.listaSMR.Count() > 0 && trajectory.lista_MLAT.First().TOT == "Aircraft.")
                 {
-                    while(i < trajectory.listaSMR.Count() - 1)
+                    // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+                    List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+
+                    if (trajectory.listaSMR.Count() == 1)
                     {
-                        if(Math.Abs(trajectory.listaSMR[i + 1].timetotal - trajectory.listaSMR[i].timetotal) < 20) 
-                        {
-                            if (Math.Abs(trajectory.listaSMR[i + 1].timetotal - trajectory.listaSMR[i].timetotal) < 1.05)
-                            {
-                                counter_bueno++;
-                            }
-                            counter_total++;
-                        }
-
-                        i++;
-                    }
-                }
-            }
-
-            double probability;
-            if (counter_total == 0) { probability = 0; }
-            else { probability = (counter_bueno / counter_total) * 100; }
-        }
-
-        public void CalculatreDataRenewalRateTest_fromASTERIXfile1(List<Trayectoria> lista)
-        {
-            double found_messages = 0;
-            double expected_messages = 0;
-
-            foreach (Trayectoria trajectory in lista)
-            {
-                // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
-                List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
-                List<CAT10> list_1 = new List<CAT10>();
-                int i = 0;
-                while (i < trajectory.listaSMR.Count() - 1)
-                {
-                    double timedelay = Math.Abs(trajectory.listaSMR[i].timetotal - trajectory.listaSMR[i + 1].timetotal);
-                    if (timedelay <= 30)
-                    {
-                        list_1.Add(trajectory.listaSMR[i]);
+                        list_of_list_of_planes1.Add(trajectory.listaSMR);
                     }
                     else
                     {
-                        list_1.Add(trajectory.listaSMR[i]);
+                        List<CAT10> list_1 = new List<CAT10>();
+                        int i = 0;
+                        while (i < trajectory.listaSMR.Count() - 1)
+                        {
+                            double timedelay = Math.Abs(trajectory.listaSMR[i].timetotal - trajectory.listaSMR[i + 1].timetotal);
+                            if (timedelay <= 30)
+                            {
+                                list_1.Add(trajectory.listaSMR[i]);
+                            }
+                            else
+                            {
+                                list_1.Add(trajectory.listaSMR[i]);
+                                list_of_list_of_planes1.Add(list_1);
+                                list_1 = new List<CAT10>();
+                            }
+                            i++;
+                        }
                         list_of_list_of_planes1.Add(list_1);
-                        list_1 = new List<CAT10>();
+
+                        // Ahora añadimos el último trafico
+
+                        if (Math.Abs(trajectory.listaSMR.Last().timetotal - trajectory.listaSMR[trajectory.listaSMR.Count - 2].timetotal) < 30)
+                        {
+                            list_of_list_of_planes1.Last().Add(trajectory.listaSMR.Last());
+                        }
+                        else
+                        {
+                            list_of_list_of_planes1.Add(new List<CAT10> { trajectory.listaSMR.Last() });
+                        }
                     }
-                    i++;
-                }
-                list_of_list_of_planes1.Add(list_1);
 
-                // Si hay alguna lista con 0 traficos se elimina
-
-                for (i = list_of_list_of_planes1.Count(); i <= 0; i--)
-                {
-                    if (list_of_list_of_planes1[i].Count == 0)
+                    for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
                     {
-                        list_of_list_of_planes1.RemoveAt(i);
+                        if (list_of_list_of_planes1[i].Count == 0)
+                        {
+                            list_of_list_of_planes1.RemoveAt(i);
+                        }
                     }
-                }
 
-                // Vamos lista por lista calculando los paquetes que deberian llegar y los que nos llegan
-
-                for (i = 0; i < list_of_list_of_planes1.Count(); i++)
-                {
-                    List<CAT10> listplanes = list_of_list_of_planes1[i];
-
-                    if (listplanes.Count() > 1)
+                    foreach (List<CAT10> lista_SMR in list_of_list_of_planes1)
                     {
-                        found_messages = found_messages + listplanes.Count();
-                        expected_messages = expected_messages + Math.Floor(listplanes.Last().timetotal - listplanes.First().timetotal + 1);
+                        if(lista_SMR.Count == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            double time = Math.Floor(lista_SMR.Last().timetotal - lista_SMR.First().timetotal) + 1;
+                            expected += time;
+                            found += lista_SMR.Count();
+                        }
                     }
                 }
             }
 
-            double probabilityofupdate;
-            if (found_messages == 0 && expected_messages == 0)
+            if(expected == 0)
             {
-                probabilityofupdate = 0;
+                return new List<double> { 0, 0, 0 * 100 };
             }
             else
             {
-                probabilityofupdate = found_messages / expected_messages;
+                return new List<double> { found, expected , (found / expected) * 100 };
             }
         }
 
-        public void CalculatePositionAccuracyTest_fromASTERIXfile(List<Trayectoria> list1)
+        public List<double> CalculatreDataRenewalRateTest_fromASTERIXfile(List<Trayectoria> lista)
         {
+            double found = 0;
+            double expected = 0;
+
+            foreach (Trayectoria trajectory in lista)
+            {
+                if (trajectory.listaSMR.Count() > 0 && trajectory.lista_MLAT.First().TOT == "Aircraft.")
+                {
+                    // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+                    List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+
+                    if (trajectory.listaSMR.Count() == 1)
+                    {
+                        list_of_list_of_planes1.Add(trajectory.listaSMR);
+                    }
+                    else
+                    {
+                        List<CAT10> list_1 = new List<CAT10>();
+                        int i = 0;
+                        while (i < trajectory.listaSMR.Count() - 1)
+                        {
+                            double timedelay = Math.Abs(trajectory.listaSMR[i].timetotal - trajectory.listaSMR[i + 1].timetotal);
+                            if (timedelay <= 30)
+                            {
+                                list_1.Add(trajectory.listaSMR[i]);
+                            }
+                            else
+                            {
+                                list_1.Add(trajectory.listaSMR[i]);
+                                list_of_list_of_planes1.Add(list_1);
+                                list_1 = new List<CAT10>();
+                            }
+                            i++;
+                        }
+                        list_of_list_of_planes1.Add(list_1);
+
+                        // Ahora añadimos el último trafico
+
+                        if (Math.Abs(trajectory.listaSMR.Last().timetotal - trajectory.listaSMR[trajectory.listaSMR.Count - 2].timetotal) < 30)
+                        {
+                            list_of_list_of_planes1.Last().Add(trajectory.listaSMR.Last());
+                        }
+                        else
+                        {
+                            list_of_list_of_planes1.Add(new List<CAT10> { trajectory.listaSMR.Last() });
+                        }
+                    }
+
+                    for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
+                    {
+                        if (list_of_list_of_planes1[i].Count == 0)
+                        {
+                            list_of_list_of_planes1.RemoveAt(i);
+                        }
+                    }
+
+                    foreach (List<CAT10> lista_SMR in list_of_list_of_planes1)
+                    {
+                        if (lista_SMR.Count == 0)
+                        {
+
+                        }
+                        else
+                        {
+                            double time = Math.Floor(lista_SMR.Last().timetotal - lista_SMR.First().timetotal);
+                            expected += time;
+                            found += lista_SMR.Count();
+                        }
+                    }
+                }
+            }
+
+            if (expected == 0)
+            {
+                return new List<double> { 0, 0, 0 };
+            }
+            else
+            {
+                return new List<double> { found, expected, (found / expected) };
+            }
+        }
+
+        public List<double> CalculatePositionAccuracyTest_fromASTERIXfile(List<Trayectoria> list1, List<CAT21> listaCAT21, double PIC)
+        {
+            lista_distancias_PA_X.Clear();
+            lista_distancias_PA_Y.Clear();
+
             // Primero separamos los tráficos CAT21 según su Target Identification
 
             List<string> lista_TA = new List<string>();
@@ -1126,8 +1218,25 @@ namespace ASTERIX
                 lista_de_listas.Add(list);
             }
 
+            // Filtramos por PIC
+            List<CAT21> listaCAT21messages = new List<CAT21>();
+            listaCAT21messages.AddRange(listaCAT21);
+            List<CAT21> list3 = new List<CAT21>();
+            for (int i = 0; i < listaCAT21messages.Count; i++)
+            {
+                if (listaCAT21messages[i].PIC >= PIC)
+                {
+                    list3.Add(listaCAT21messages[i]);
+                }
+            }
+            listaCAT21messages.Clear();
+            listaCAT21messages.AddRange(list3);
+
             // Ahora empezamos a calcular la precisión
             List<double> lista_distances = new List<double>();
+            List<double> lista_errorhorizontal = new List<double>();
+            List<double> lista_errorvertical = new List<double>();
+
             foreach (Trayectoria trajectory in list1)
             {
                 // recorremos las listas CAT21 y nos quedamos con la que tenga la misma TA que la lista MLAT de la trayectoria
@@ -1239,17 +1348,45 @@ namespace ASTERIX
 
                             // 2. Calculamos distancia
 
-                            double X1 = smr.coordSystemCartesian.X;
-                            double Y1 = smr.coordSystemCartesian.Y;
+                            var ccordStereographic = GeoUtils1.change_system_cartesian2stereographic(newCcoordinatesADSB);
 
-                            double X2 = newCcoordinatesADSB.X;
-                            double Y2 = newCcoordinatesADSB.Y;
+                            double X1 = smr.coordStereographic.U;
+                            double Y1 = smr.coordStereographic.V;
+
+                            double X2 = ccordStereographic.U;
+                            double Y2 = ccordStereographic.V;
 
                             double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
                             lista_distances.Add(distances);
+                            smr.errorX = (X2 - X1);
+                            smr.errorY = (Y2 - Y1);
                         }
                     }
                 }
+            }
+
+            return lista_distances;
+        }
+
+        public List<double> CalculateFalseTargetReportTest_fromASTERIXfile(List<Trayectoria> trayectorias, List<CAT10> lista_sMR)
+        {
+            double number_of_updates = Math.Abs(lista_sMR.Last().timetotal - lista_sMR.First().timetotal + 1);
+            double number_of_target_reports = lista_sMR.Count();
+            double number_of_known_targets = 0;
+
+            foreach(Trayectoria trajectory in trayectorias)
+            {
+                number_of_known_targets = number_of_known_targets + trajectory.listaSMR.Count();
+            }
+            
+            if(number_of_updates == 0)
+            {
+                return new List<double> { 0, 0, 0 };
+            }
+            else
+            {
+                double FTRT = (number_of_target_reports - (number_of_known_targets /** number_of_updates*/)) / number_of_updates;
+                return new List<double> { number_of_known_targets, number_of_target_reports, number_of_updates, FTRT };
             }
         }
 
@@ -1257,8 +1394,172 @@ namespace ASTERIX
 
         #region Functions to calculate Performances from Calibration Vehicle
 
-        public void CalculatePositionAccuracy_fromCalibrationVehicle(List<Trayectoria> list1, List<MLATCalibrationData> list2)
+        public List<double> CalculatreDetectionSensitivityTest_fromCalibrationVehicle(Trayectoria trajectory)
         {
+            double found = 0;
+            double expected = 0;
+
+            if (trajectory.listaSMR.Count() > 0 && trajectory.lista_MLAT.First().TOT == "Aircraft.")
+            {
+                // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+                List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+
+                if (trajectory.listaSMR.Count() == 1)
+                {
+                    list_of_list_of_planes1.Add(trajectory.listaSMR);
+                }
+                else
+                {
+                    List<CAT10> list_1 = new List<CAT10>();
+                    int i = 0;
+                    while (i < trajectory.listaSMR.Count() - 1)
+                    {
+                        double timedelay = Math.Abs(trajectory.listaSMR[i].timetotal - trajectory.listaSMR[i + 1].timetotal);
+                        if (timedelay <= 30)
+                        {
+                            list_1.Add(trajectory.listaSMR[i]);
+                        }
+                        else
+                        {
+                            list_1.Add(trajectory.listaSMR[i]);
+                            list_of_list_of_planes1.Add(list_1);
+                            list_1 = new List<CAT10>();
+                        }
+                        i++;
+                    }
+                    list_of_list_of_planes1.Add(list_1);
+
+                    // Ahora añadimos el último trafico
+
+                    if (Math.Abs(trajectory.listaSMR.Last().timetotal - trajectory.listaSMR[trajectory.listaSMR.Count - 2].timetotal) < 30)
+                    {
+                        list_of_list_of_planes1.Last().Add(trajectory.listaSMR.Last());
+                    }
+                    else
+                    {
+                        list_of_list_of_planes1.Add(new List<CAT10> { trajectory.listaSMR.Last() });
+                    }
+                }
+
+                for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
+                {
+                    if (list_of_list_of_planes1[i].Count == 0)
+                    {
+                        list_of_list_of_planes1.RemoveAt(i);
+                    }
+                }
+
+                foreach (List<CAT10> lista_SMR in list_of_list_of_planes1)
+                {
+                    if (lista_SMR.Count == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        double time = Math.Floor(lista_SMR.Last().timetotal - lista_SMR.First().timetotal) + 1;
+                        expected += time;
+                        found += lista_SMR.Count();
+                    }
+                }
+            }
+
+            if (expected == 0)
+            {
+                return new List<double> { 0, 0, 0 * 100 };
+            }
+            else
+            {
+                return new List<double> { found, expected, (found / expected) * 100 };
+            }
+        }
+
+        public List<double> CalculatreDataRenewalRateTest_fromCalibrationVehicle(Trayectoria trajectory)
+        {
+            double found = 0;
+            double expected = 0;
+
+            if (trajectory.listaSMR.Count() > 0 && trajectory.lista_MLAT.First().TOT == "Aircraft.")
+            {
+                // Ahora dividimos cada lista si entre un paquete y otro hay mas de 30s
+                List<List<CAT10>> list_of_list_of_planes1 = new List<List<CAT10>>();
+
+                if (trajectory.listaSMR.Count() == 1)
+                {
+                    list_of_list_of_planes1.Add(trajectory.listaSMR);
+                }
+                else
+                {
+                    List<CAT10> list_1 = new List<CAT10>();
+                    int i = 0;
+                    while (i < trajectory.listaSMR.Count() - 1)
+                    {
+                        double timedelay = Math.Abs(trajectory.listaSMR[i].timetotal - trajectory.listaSMR[i + 1].timetotal);
+                        if (timedelay <= 30)
+                        {
+                            list_1.Add(trajectory.listaSMR[i]);
+                        }
+                        else
+                        {
+                            list_1.Add(trajectory.listaSMR[i]);
+                            list_of_list_of_planes1.Add(list_1);
+                            list_1 = new List<CAT10>();
+                        }
+                        i++;
+                    }
+                    list_of_list_of_planes1.Add(list_1);
+
+                    // Ahora añadimos el último trafico
+
+                    if (Math.Abs(trajectory.listaSMR.Last().timetotal - trajectory.listaSMR[trajectory.listaSMR.Count - 2].timetotal) < 30)
+                    {
+                        list_of_list_of_planes1.Last().Add(trajectory.listaSMR.Last());
+                    }
+                    else
+                    {
+                        list_of_list_of_planes1.Add(new List<CAT10> { trajectory.listaSMR.Last() });
+                    }
+                }
+
+                for (int i = list_of_list_of_planes1.Count(); i <= 0; i--)
+                {
+                    if (list_of_list_of_planes1[i].Count == 0)
+                    {
+                        list_of_list_of_planes1.RemoveAt(i);
+                    }
+                }
+
+                foreach (List<CAT10> lista_SMR in list_of_list_of_planes1)
+                {
+                    if (lista_SMR.Count == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        double time = Math.Floor(lista_SMR.Last().timetotal - lista_SMR.First().timetotal);
+                        expected += time;
+                        found += lista_SMR.Count();
+                    }
+                }
+            }
+
+            if (expected == 0)
+            {
+                return new List<double> { 0, 0, 0 * 100 };
+            }
+            else
+            {
+                return new List<double> { found, expected, (found / expected) };
+            }
+        }
+
+        public List<double> CalculatePositionAccuracy_fromCalibrationVehicle(List<Trayectoria> list1, List<MLATCalibrationData> list2)
+        {
+            lista_distancias_PA_X_VC.Clear();
+            lista_distancias_PA_Y_VC.Clear();
+
+            overlay_distances.Clear();
             List<MLATCalibrationData> listaADSB = new List<MLATCalibrationData>();
             listaADSB.AddRange(list2);
 
@@ -1273,9 +1574,9 @@ namespace ASTERIX
 
             // Primero buscamos la trayectoria que tiene el vehiculo de calibración
             Trayectoria trajectory = new Trayectoria();
-            for(int i = 0; i<lista_Trayectorias1.Count(); i++)
+            for(int i = 0; i< list1.Count(); i++)
             {
-                if(lista_Trayectorias1[i].lista_MLAT.First().TargetAdress_decoded == "MLAT01")
+                if(lista_Trayectorias1[i].lista_MLAT.First().TargetAdress_decoded == tb_CalibrationVehicleName.Text)
                 {
                     trajectory = lista_Trayectorias1[i];
                 }
@@ -1352,19 +1653,36 @@ namespace ASTERIX
                         // Ahora convertimos las coordenadas geodesicas a system cartesian
                         var coordGeocentric = GeoUtils1.change_geodesic2geocentric(newCoordinatesADSB);
                         var coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+                        var coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
 
 
-                        double X1 = smr.coordSystemCartesian.X;
-                        double Y1 = smr.coordSystemCartesian.Y;
+                        double U1 = smr.coordStereographic.U;
+                        double V1 = smr.coordStereographic.V;
 
-                        double X2 = coordSystemCartesian.X;
-                        double Y2 = coordSystemCartesian.Y;
+                        double U2 = coordStereographic.U;
+                        double V2 = coordStereographic.V;
 
-                        double distances = Math.Sqrt((X2 - X1) * (X2 - X1) + (Y2 - Y1) * (Y2 - Y1));
+                        double distances = Math.Sqrt((U2 - U1) * (U2 - U1) + (V2 - V1) * (V2 - V1));
                         listadistances.Add(distances);
+                        lista_distancias_PA_X_VC.Add(U2 - U1);
+                        lista_distancias_PA_Y_VC.Add(V2 - V1);
+                        //listaDeltaX.Add(U2 - U1);
+                        //listaDeltaY.Add(V2 - V1);
+
+                        // Añadimos distancias al overlay
+
+                        List<PointLatLng> polygonpoints = new List<PointLatLng>() { new PointLatLng(newCoordinatesADSB.Lat * GeoUtils.RADS2DEGS, newCoordinatesADSB.Lon * GeoUtils.RADS2DEGS), new PointLatLng(smr.coordGeodesic.Lat * GeoUtils.RADS2DEGS, smr.coordGeodesic.Lon * GeoUtils.RADS2DEGS) };
+                        GMapPolygon polygon = new GMapPolygon(polygonpoints, "Polygon");
+                        //{
+                        //    Stroke = new Pen(Color.Red, 2),
+                        //    Fill = new SolidBrush(Color.Red)
+                        //};
+                        overlay_distances.Polygons.Add(polygon);
                     }
                 }
             }
+
+            return listadistances;
         }
 
 
@@ -2061,6 +2379,8 @@ namespace ASTERIX
 
             GMapOverlay overlay = new GMapOverlay();
 
+            progressbar.Maximum = list_of_list_of_planes1.Count();
+
 
             // Ahora que lo tenemos organizado pasamos a relacionar las trayectorias SMR con las MLAT
             // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2280,77 +2600,77 @@ namespace ASTERIX
 
                 // Ahora, si hay alguna lista SMR de menos de 15 posiciones y se superpone en tiempo con otra lista SMR más grande eliminamos la lista y su indice
 
-                for(int i = 0; i < lista_de_listas_1.Count(); i++)
-                {
-                    var listSMR = lista_de_listas_1[i];
+                //for(int i = 0; i < lista_de_listas_1.Count(); i++)
+                //{
+                //    var listSMR = lista_de_listas_1[i];
 
-                    if (listSMR.First().Tracknumber_value == 3983)
-                    {
+                //    if (listSMR.First().Tracknumber_value == 3983)
+                //    {
 
-                    }
+                //    }
 
-                    double t_inicial_SMR_S = listSMR.First().timetotal;
-                    double t_final_SMR_S = listSMR.Last().timetotal;
+                //    double t_inicial_SMR_S = listSMR.First().timetotal;
+                //    double t_final_SMR_S = listSMR.Last().timetotal;
 
-                    if (listSMR.Count() <= 15)
-                    {
-                        List<int> list_indices_eliminar = new List<int>();
+                //    if (listSMR.Count() <= 15)
+                //    {
+                //        List<int> list_indices_eliminar = new List<int>();
 
-                        for (int j = 0; j < lista_de_listas_1.Count(); j++)
-                        {
-                            double t_inicial_SMR_L = lista_de_listas_1[j].First().timetotal;
-                            double t_final_SMR_L = lista_de_listas_1[j].Last().timetotal;
+                //        for (int j = 0; j < lista_de_listas_1.Count(); j++)
+                //        {
+                //            double t_inicial_SMR_L = lista_de_listas_1[j].First().timetotal;
+                //            double t_final_SMR_L = lista_de_listas_1[j].Last().timetotal;
 
-                            if (j == i) { j++; }
-                            else
-                            {
-                                if(t_inicial_SMR_S < t_inicial_SMR_L && t_final_SMR_S > t_inicial_SMR_L)
-                                {
-                                    if (listSMR.First().Tracknumber_value == 1634)
-                                    {
+                //            if (j == i) { j++; }
+                //            else
+                //            {
+                //                if(t_inicial_SMR_S < t_inicial_SMR_L && t_final_SMR_S > t_inicial_SMR_L)
+                //                {
+                //                    if (listSMR.First().Tracknumber_value == 1634)
+                //                    {
 
-                                    }
+                //                    }
 
-                                    list_indices_eliminar.Add(i);
-                                }
+                //                    list_indices_eliminar.Add(i);
+                //                }
 
-                                else if(t_final_SMR_S > t_final_SMR_L && t_inicial_SMR_S < t_final_SMR_L)
-                                {
-                                    if (listSMR.First().Tracknumber_value == 1634)
-                                    {
+                //                else if(t_final_SMR_S > t_final_SMR_L && t_inicial_SMR_S < t_final_SMR_L)
+                //                {
+                //                    if (listSMR.First().Tracknumber_value == 1634)
+                //                    {
 
-                                    }
+                //                    }
 
-                                    list_indices_eliminar.Add(i);
-                                }
+                //                    list_indices_eliminar.Add(i);
+                //                }
 
-                                else if(t_inicial_SMR_S > t_inicial_SMR_L && t_final_SMR_S < t_final_SMR_L)
-                                {
-                                    if (listSMR.First().Tracknumber_value == 1634)
-                                    {
+                //                else if(t_inicial_SMR_S > t_inicial_SMR_L && t_final_SMR_S < t_final_SMR_L)
+                //                {
+                //                    if (listSMR.First().Tracknumber_value == 1634)
+                //                    {
 
-                                    }
+                //                    }
 
-                                    list_indices_eliminar.Add(i);
-                                }
-                            }
-                        }
+                //                    list_indices_eliminar.Add(i);
+                //                }
+                //            }
+                //        }
 
-                        // Ahora las eliminamos de la lista de indices
+                //        // Ahora las eliminamos de la lista de indices
 
-                        var list_indices_eliminar_1 = new HashSet<int>(list_indices_eliminar).ToList();
-                        foreach(int ind in list_indices_eliminar_1)
-                        {
-                            if (listSMR.First().Tracknumber_value == 1634)
-                            {
+                //        var list_indices_eliminar_1 = new HashSet<int>(list_indices_eliminar).ToList();
+                //        foreach(int ind in list_indices_eliminar_1)
+                //        {
+                //            if (listSMR.First().Tracknumber_value == 1634)
+                //            {
 
-                            }
+                //            }
 
-                            lista_indices_usados.Remove(ind);
-                            lista_de_listas_1.Remove(lista_de_listas_1[ind]);
-                        }
-                    }
-                }
+                //            lista_indices_usados.Remove(ind);
+                //            lista_de_listas_1.Remove(lista_de_listas_1[ind]);
+                //        }
+                //    }
+                //}
 
                 // Ahora hay que ordenarlas por tiempo, dando preferencia a las listas SMR que estan mas cerca
                 // Primero las ordenamos por tiempo y a ver que sale
@@ -2360,6 +2680,8 @@ namespace ASTERIX
                     trajectory.listaSMR.AddRange(lista_de_listas_1[i]);
                 }
                 trajectory.listaSMR.OrderBy(o => o.timetotal).ToList();
+
+                progressbar.Value = progressbar.Value + 1;
             }
 
             List<string> lista_TA = new List<string>();
@@ -2485,8 +2807,11 @@ namespace ASTERIX
                 trajectory.lista_MLAT = lista_1;
                 listaTrayectorias.Add(trajectory);
             }
+            progressbar.Visible = true;
+            progressbar.Maximum = listas_MLAT.Count();
 
-            lista_Trayectorias1.Clear();
+            List<Trayectoria> lista_Trayectorias2 = new List<Trayectoria>();
+            //lista_Trayectorias1.Clear();
 
             List<double> hola1 = new List<double>();
             List<double> hola2 = new List<double>();
@@ -2529,7 +2854,7 @@ namespace ASTERIX
                                     }
 
                                     double timedelay = Math.Abs(trajectory.lista_MLAT[i].timetotal - lista_SMR.First().timetotal);
-                                    if (timedelay <= 15)
+                                    if (timedelay <8)
                                     {
                                         lista_indices1.Add(j);
                                     }
@@ -2608,79 +2933,79 @@ namespace ASTERIX
                 //lista_indices_usados.Clear();
                 lista_indices_usados.AddRange(lista_indices_usados_1);
 
-                // Ahora, si hay alguna lista SMR de menos de 15 posiciones y se superpone en tiempo con otra lista SMR más grande eliminamos la lista y su indice
+                //// Ahora, si hay alguna lista SMR de menos de 15 posiciones y se superpone en tiempo con otra lista SMR más grande eliminamos la lista y su indice
 
-                for (int i = 0; i < lista_de_listas_1.Count(); i++)
-                {
-                    var listSMR = lista_de_listas_1[i];
+                //for (int i = 0; i < lista_de_listas_1.Count(); i++)
+                //{
+                //    var listSMR = lista_de_listas_1[i];
 
-                    if (listSMR.First().Tracknumber_value == 1634)
-                    {
+                //    if (listSMR.First().Tracknumber_value == 1634)
+                //    {
 
-                    }
+                //    }
 
-                    double t_inicial_SMR_S = listSMR.First().timetotal;
-                    double t_final_SMR_S = listSMR.Last().timetotal;
+                //    double t_inicial_SMR_S = listSMR.First().timetotal;
+                //    double t_final_SMR_S = listSMR.Last().timetotal;
 
-                    if (listSMR.Count() <= 15)
-                    {
-                        List<int> list_indices_eliminar = new List<int>();
+                //    if (listSMR.Count() <= 15)
+                //    {
+                //        List<int> list_indices_eliminar = new List<int>();
 
-                        for (int j = 0; j < lista_de_listas_1.Count(); j++)
-                        {
-                            double t_inicial_SMR_L = lista_de_listas_1[j].First().timetotal;
-                            double t_final_SMR_L = lista_de_listas_1[j].Last().timetotal;
+                //        for (int j = 0; j < lista_de_listas_1.Count(); j++)
+                //        {
+                //            double t_inicial_SMR_L = lista_de_listas_1[j].First().timetotal;
+                //            double t_final_SMR_L = lista_de_listas_1[j].Last().timetotal;
 
-                            if (j == i) { j++; }
-                            else
-                            {
-                                if (t_inicial_SMR_S < t_inicial_SMR_L && t_final_SMR_S > t_inicial_SMR_L)
-                                {
-                                    if (listSMR.First().Tracknumber_value == 1634)
-                                    {
+                //            if (j == i) { j++; }
+                //            else
+                //            {
+                //                if (t_inicial_SMR_S < t_inicial_SMR_L && t_final_SMR_S > t_inicial_SMR_L)
+                //                {
+                //                    if (listSMR.First().Tracknumber_value == 1634)
+                //                    {
 
-                                    }
+                //                    }
 
-                                    list_indices_eliminar.Add(i);
-                                }
+                //                    list_indices_eliminar.Add(i);
+                //                }
 
-                                else if (t_final_SMR_S > t_final_SMR_L && t_inicial_SMR_S < t_final_SMR_L)
-                                {
-                                    if (listSMR.First().Tracknumber_value == 1634)
-                                    {
+                //                else if (t_final_SMR_S > t_final_SMR_L && t_inicial_SMR_S < t_final_SMR_L)
+                //                {
+                //                    if (listSMR.First().Tracknumber_value == 1634)
+                //                    {
 
-                                    }
+                //                    }
 
-                                    list_indices_eliminar.Add(i);
-                                }
+                //                    list_indices_eliminar.Add(i);
+                //                }
 
-                                else if (t_inicial_SMR_S > t_inicial_SMR_L && t_final_SMR_S < t_final_SMR_L)
-                                {
-                                    if (listSMR.First().Tracknumber_value == 1634)
-                                    {
+                //                else if (t_inicial_SMR_S > t_inicial_SMR_L && t_final_SMR_S < t_final_SMR_L)
+                //                {
+                //                    if (listSMR.First().Tracknumber_value == 1634)
+                //                    {
 
-                                    }
+                //                    }
 
-                                    list_indices_eliminar.Add(i);
-                                }
-                            }
-                        }
+                //                    list_indices_eliminar.Add(i);
+                //                }
+                //            }
+                //        }
 
-                        // Ahora las eliminamos de la lista de indices
+                //        // Ahora las eliminamos de la lista de indices
 
-                        var list_indices_eliminar_1 = new HashSet<int>(list_indices_eliminar).ToList();
-                        foreach (int ind in list_indices_eliminar_1)
-                        {
-                            if (listSMR.First().Tracknumber_value == 1634)
-                            {
+                //        var list_indices_eliminar_1 = new HashSet<int>(list_indices_eliminar).ToList();
+                //        foreach (int ind in list_indices_eliminar_1)
+                //        {
+                //            if (listSMR.First().Tracknumber_value == 1634)
+                //            {
 
-                            }
+                //            }
 
-                            lista_indices_usados.Remove(ind);
-                            lista_de_listas_1.Remove(lista_de_listas_1[ind]);
-                        }
-                    }
-                }
+                //            lista_indices_usados.Remove(ind);
+                //            lista_de_listas_1.Remove(lista_de_listas_1[ind]);
+                //        }
+                //    }
+                //}
 
                 // Ahora hay que ordenarlas por tiempo, dando preferencia a las listas SMR que estan mas cerca
                 // Primero las ordenamos por tiempo y a ver que sale
@@ -2690,6 +3015,8 @@ namespace ASTERIX
                     trajectory.listaSMR.AddRange(lista_de_listas_1[i]);
                 }
                 trajectory.listaSMR.OrderBy(o => o.timetotal).ToList();
+
+                progressbar.Value = progressbar.Value + 1;
             }
 
             List<string> lista_TA = new List<string>();
@@ -2720,7 +3047,7 @@ namespace ASTERIX
                 trajectory.lista_MLAT.OrderBy(o => o.timetotal);
                 trajectory.listaSMR.OrderBy(o => o.timetotal);
 
-                lista_Trayectorias1.Add(trajectory);
+                lista_Trayectorias2.Add(trajectory);
             }
 
             // Ahora eliminamos las trayectorias SMR ya usadas (las de la lista de indices usados)
@@ -2730,6 +3057,8 @@ namespace ASTERIX
             {
                 listas_SMR.RemoveAt(lista_indices_usados_2[i]);
             }
+
+            lista_Trayectorias1.AddRange(lista_Trayectorias2);
         }
 
         public void Predict(Trayectoria trayectoria)
@@ -2848,31 +3177,196 @@ namespace ASTERIX
 
         #endregion
 
-        #region Buttons to Calculate PErformances from ASTERIX File
+        #region Buttons to Calculate Performances from ASTERIX File
 
         private void pb_DetectionSensitivityTest_ED116_ASTERIXfile_Click(object sender, EventArgs e)
         {
+            var results = CalculatreDetectionSensitivityTest_fromASTERIXfile(lista_Trayectorias1);
 
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 4;
+            dataGridView1.Columns[0].Name = "Received Updates";
+            dataGridView1.Columns[1].Name = "Expected Updates";
+            dataGridView1.Columns[2].Name = "Data Sensitivity";
+            dataGridView1.Columns[3].Name = "ED-116 value (%)";
+
+            string DS = Math.Round(results[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            int n = dataGridView1.Rows.Add(results[0], results[1], DS, "90 - 99%");
         }
 
         private void bt_CalculateDataRenewalRateTest_ED116_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            CalculatreDataRenewalRateTest_fromASTERIXfile1(lista_Trayectorias1);
+            var results = CalculatreDataRenewalRateTest_fromASTERIXfile(lista_Trayectorias1);
+
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 4;
+            dataGridView1.Columns[0].Name = "Received Updates";
+            dataGridView1.Columns[1].Name = "Expected Updates";
+            dataGridView1.Columns[2].Name = "Data Renewal Rate (s)";
+            dataGridView1.Columns[3].Name = "ED-116 value (%)";
+
+            string DS = Math.Round(results[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            int n = dataGridView1.Rows.Add(results[0], results[1], DS, "1 s");
         }
 
         private void bt_CalculateFalseTargetReportTest_ED116_ASTERIXfile_Click(object sender, EventArgs e)
         {
+            if (counter_CalculateGV > 0)
+            {
+                var results = CalculateFalseTargetReportTest_fromASTERIXfile(lista_Trayectorias1, listaSMR);
 
+                // Creamos DGV y columnas
+                dataGridView1.Rows.Clear();
+                dataGridView1.ColumnCount = 4  ;
+                dataGridView1.Columns[0].Name = "Number of known Targets";
+                dataGridView1.Columns[1].Name = "Number of target reports";
+                dataGridView1.Columns[2].Name = "Number of updates";
+                dataGridView1.Columns[3].Name = "False Target Report Test";
+
+                int n = dataGridView1.Rows.Add("Number of known Targets", "Number of target reports", "Number of updates", "False Target Report Test");
+
+                string FTRT = Math.Round(results.Last(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+                n = dataGridView1.Rows.Add(results[0], results[1], results[2], FTRT);
+            }
+            else
+            {
+                MessageBox.Show("Please calculate Ground Vehicle trajectories first.");
+            }
         }
 
         private void bt_CalculatePositionAccuracyTest_ED116_ASTERIXfile_Click(object sender, EventArgs e)
         {
-            CalculatePositionAccuracyTest_fromASTERIXfile(lista_Trayectorias1);
-        }
+            string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
+            string[] properties = comboBox1.Text.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
 
+            double PIC;
+            try
+            {
+                PIC = Convert.ToInt32(properties[0]);
+            }
+            catch
+            {
+                // Buscamos todos los PIC
+                List<double> listPIC = new List<double>();
+                for (int i = 0; i < listaCAT21.Count(); i++)
+                {
+                    listPIC.Add(listaCAT21[i].PIC);
+                }
+
+                listPIC.Sort();
+                PIC = Percentile(listPIC, 0.75);
+            }
+
+            //var lista1 = CalculatePositionAccuracyTest_fromASTERIXfile(lista_Trayectorias1, listaCAT21, PIC);
+
+            // Creamos DGV y columnas
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 7;
+            dataGridView1.Columns[0].Name = "95th Percentile (m)";
+            dataGridView1.Columns[1].Name = "ED-116 Value (m)";
+            dataGridView1.Columns[2].Name = "99th Percentile (m)";
+            dataGridView1.Columns[3].Name = "ED-116 Value (m)";
+            dataGridView1.Columns[4].Name = "Mean (m)";
+            dataGridView1.Columns[5].Name = "STD Deviation (m)";
+            dataGridView1.Columns[6].Name = "Samples";
+
+            int n = dataGridView1.Rows.Add("95th Percentile (m)", "ED-116 Value (m)", "99th Percentile (m)", "ED-117 Value (m)", "Mean (m)", "STD Deviation (m)", "Samples");
+
+            var results1 = CalculatePositionAccuracyTest_fromASTERIXfile(lista_Trayectorias1, listaCAT21, PIC);
+
+            string P951 = Math.Round(Percentile(results1, 0.95), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            string P991 = Math.Round(Percentile(results1, 0.99), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            string STD1 = Math.Round(CalculateStandardDeviation(results1), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            string AVG1 = "0";
+            if (results1.Count() != 0) { AVG1 = Math.Round(results1.Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
+            n = dataGridView1.Rows.Add(P951, "7.5", P991, "-----", AVG1, STD1, results1.Count().ToString());
+        }
 
         #endregion
 
+        #region Buttons to Calculate Performances from Calibration Vehicle
+
+        private void pb_DetectionSensitivityTest_ED116_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            Trayectoria trayectoria = new Trayectoria();
+            foreach(Trayectoria trajectory in lista_Trayectorias1)
+            {
+                if(trajectory.lista_MLAT.First().TargetAdress_decoded == tb_CalibrationVehicleName.Text)
+                {
+                    trayectoria = trajectory;
+                }
+            }
+            var results = CalculatreDetectionSensitivityTest_fromCalibrationVehicle(trayectoria);
+
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 4;
+            dataGridView1.Columns[0].Name = "Received Updates";
+            dataGridView1.Columns[1].Name = "Expected Updates";
+            dataGridView1.Columns[2].Name = "Data Sensitivity";
+            dataGridView1.Columns[3].Name = "ED-116 value (%)";
+
+            string DS = Math.Round(results[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            int n = dataGridView1.Rows.Add(results[0], results[1], DS, "90 - 99%");
+        }
+
+        private void bt_CalculateDataRenewalRateTest_ED116_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            Trayectoria trayectoria = new Trayectoria();
+            foreach (Trayectoria trajectory in lista_Trayectorias1)
+            {
+                if (trajectory.lista_MLAT.First().TargetAdress_decoded == tb_CalibrationVehicleName.Text)
+                {
+                    trayectoria = trajectory;
+                }
+            }
+            var results = CalculatreDataRenewalRateTest_fromCalibrationVehicle(trayectoria);
+
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 4;
+            dataGridView1.Columns[0].Name = "Received Updates";
+            dataGridView1.Columns[1].Name = "Expected Updates";
+            dataGridView1.Columns[2].Name = "Data Renewal Rate (s)";
+            dataGridView1.Columns[3].Name = "ED-116 value (%)";
+
+            string DS = Math.Round(results[2], 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            int n = dataGridView1.Rows.Add(results[0], results[1], DS, "1 s");
+        }
+
+        private void bt_CalculatePositionAccuracyTest_ED116_CalibrationVehicle_Click(object sender, EventArgs e)
+        {
+            CalculatePositionAccuracy_fromCalibrationVehicle(lista_Trayectorias1, listaCalibrationDataVehicle);
+            ShowDistancesPA.Visible = true;
+
+            // Creamos DGV y columnas
+            dataGridView1.Rows.Clear();
+            dataGridView1.ColumnCount = 7;
+            dataGridView1.Columns[0].Name = "95th Percentile (m)";
+            dataGridView1.Columns[1].Name = "ED-116 Value (m)";
+            dataGridView1.Columns[2].Name = "99th Percentile (m)";
+            dataGridView1.Columns[3].Name = "ED-116 Value (m)";
+            dataGridView1.Columns[4].Name = "Mean (m)";
+            dataGridView1.Columns[5].Name = "STD Deviation (m)";
+            dataGridView1.Columns[6].Name = "Samples";
+
+            DataGridViewCellStyle style = new DataGridViewCellStyle(dataGridView1.RowsDefaultCellStyle);
+            style.BackColor = System.Drawing.Color.LightGray;
+
+            DataGridViewCellStyle style1 = new DataGridViewCellStyle(dataGridView1.RowsDefaultCellStyle);
+            style1.Font = new System.Drawing.Font(dataGridView1.Font, FontStyle.Bold);
+
+            int n = dataGridView1.Rows.Add("95th Percentile (m)", "ED-116 Value (m)", "99th Percentile (m)", "ED-117 Value (m)", "Mean (m)", "STD Deviation (m)", "Samples");
+
+            var results1 = CalculatePositionAccuracy_fromCalibrationVehicle(lista_Trayectorias1, listaCalibrationDataVehicle);
+
+            string P951 = Math.Round(Percentile(results1, 0.95), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            string P991 = Math.Round(Percentile(results1, 0.99), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            string STD1 = Math.Round(CalculateStandardDeviation(results1), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar("."));
+            string AVG1 = "0";
+            if (results1.Count() != 0) { AVG1 = Math.Round(results1.Average(), 3).ToString().Replace(Convert.ToChar(","), Convert.ToChar(".")); }
+            n = dataGridView1.Rows.Add(P951, "-----", P991, "-----", AVG1, STD1, results1.Count().ToString());
+        }
+
+        #endregion
 
         #region Functions to Filter / Organize Lists of Traffics
         public List<List<CAT10>> FilterCAT10(List<CAT10> list)
@@ -2912,6 +3406,21 @@ namespace ASTERIX
             }
 
             List<List<CAT10>> result = new List<List<CAT10>>() { listaAircraft, listaGroundVehicle, listaSMR1 };
+            return result;
+        }
+
+        public List<List<CAT10>> GetCalibrationVehicleMLATData(List<Trayectoria> lista, string TA)
+        {
+            List<List<CAT10>> result = new List<List<CAT10>>();
+            foreach(Trayectoria trajectory in lista)
+            {
+                if(trajectory.lista_MLAT.First().TargetAdress_decoded == TA)
+                {
+                    result.Add(trajectory.lista_MLAT);
+                    result.Add(trajectory.lista_MLAT);
+                }
+            }
+
             return result;
         }
 
@@ -4035,109 +4544,261 @@ namespace ASTERIX
 
         #endregion
 
-        public void ColorEveryTrackNumberAndPlotMap()
+        private void bt_CalculateTrajectories_Aircraft_Click(object sender, EventArgs e)
         {
-            Mapa.Overlays.Clear();
+            progressbar.Value = 0;
+            progressbar.Visible = true;
 
-            // Separamos los paquetes por Tracknumber
+            SMR_para_GroundVehicles = CalculateTrajectories3(listaSMR, listaMLAT_Aircraft, listaCAT21); // Funcion que calcula tracking de SMR a partir de la distancia media entre las trayectorias SMR y MLAT
 
-            List<double> listaSMRTrackNumbers = new List<double>();
-            for (int i = 0; i < listaSMR.Count(); i++)
-            {
-                double tracknumber = listaSMR[i].Tracknumber_value;
+            progressbar.Visible = false;
+            bt_CalculateTrajectories_GroundVehicles.Visible = true;
 
-                if (listaSMRTrackNumbers.Contains(tracknumber))
-                {
-
-                }
-                else
-                {
-                    listaSMRTrackNumbers.Add(tracknumber);
-                }
-            }
-
-            List<List<CAT10>> list_of_lists_of_tracknumber = new List<List<CAT10>>();
-
-            foreach (double tracknumber in listaSMRTrackNumbers)
-            {
-                List<CAT10> list_of_tracknumbers = new List<CAT10>();
-                for (int i = 0; i < listaSMR.Count(); i++)
-                {
-                    if (listaSMR[i].Tracknumber_value == tracknumber && listaSMR[i].TrackNumber.Length > 0)
-                    {
-                        list_of_tracknumbers.Add(listaSMR[i]);
-                    }
-                }
-                list_of_lists_of_tracknumber.Add(list_of_tracknumbers);
-            }
-
-            // Pintamos los trayectos por Track Number
-            GMapOverlay polygonsoverlay = new GMapOverlay();
-            int j = 0;
-            foreach (List<CAT10> list in list_of_lists_of_tracknumber)
-            {
-                for (int i = 0; i < list.Count() - 1; i++)
-                {
-                    SolidColorBrush color;
-                    System.Windows.Media.Color color1;
-                    try
-                    {
-                        color = new SolidColorBrush((Color)ColorConverter.ConvertFromString(listColors[j]));
-                        color1 = Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B);
-                    }
-                    catch
-                    {
-                        color = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ff0000"));
-                        color1 = Color.FromArgb(color.Color.A, color.Color.R, color.Color.G, color.Color.B);
-                    }
-
-                    PointLatLng marker1 = new PointLatLng(list[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS, list[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS);
-                    PointLatLng marker2 = new PointLatLng(list[i + 1].coordGeodesic.Lat * GeoUtils.RADS2DEGS, list[i + 1].coordGeodesic.Lon * GeoUtils.RADS2DEGS);
-
-                    List<PointLatLng> listpoints = new List<PointLatLng>() { marker1, marker2 };
-                    GMapPolygon polygon = new GMapPolygon(listpoints, "")
-                    {
-                        Stroke = new System.Drawing.Pen(System.Drawing.Color.FromArgb(color1.A, color1.R, color1.G, color1.B))
-                    };
-                    polygonsoverlay.Polygons.Add(polygon);
-                }
-                j++;
-
-                if (j == listColors.Count()) { j = 0; }
-            }
-
-            Mapa.Overlays.Add(polygonsoverlay);
+            panel5.Visible = true;
+            lb_Trajectories.Text = "Choos thee number of trajectory to plot. There are " + lista_Trayectorias1.Count() + " trajectories.";
+            //FilterbyAirportZonesSMR(lista_Trayectorias1);
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        public void FilterbyAirportZonesSMR(List<Trayectoria> lista)
         {
-            int num = Convert.ToInt32(textBox1.Text);
+            List<Trayectoria> listas = new List<Trayectoria>();
+            listas.AddRange(lista);
 
-            GMapOverlay overlay = new GMapOverlay();
-            int counter = 0;
-            foreach (CAT10 smr in lista_Trayectorias1[num].listaSMR)
+            listaMLAT_Stand_1 = new List<Trayectoria>();
+            listaMLAT_Stand_T1_1 = new List<Trayectoria>();
+            listaMLAT_Stand_T2_1 = new List<Trayectoria>();
+            listaMLAT_Apron_1 = new List<Trayectoria>();
+            listaMLAT_Apron_T1_1 = new List<Trayectoria>();
+            listaMLAT_Apron_T2_1 = new List<Trayectoria>();
+            listaMLAT_MA_1 = new List<Trayectoria>();
+            listaMLAT_RWY1_1 = new List<Trayectoria>();
+            listaMLAT_RWY2_1 = new List<Trayectoria>();
+            listaMLAT_RWY3_1 = new List<Trayectoria>();
+            listaMLAT_Taxiway_1 = new List<Trayectoria>();
+
+            foreach (Trayectoria trajectory in listas)
             {
-                PointLatLng marker1 = new PointLatLng(smr.coordGeodesic.Lat * GeoUtils.RADS2DEGS, smr.coordGeodesic.Lon * GeoUtils.RADS2DEGS);
-                GMarkerGoogle marker = new GMarkerGoogle(marker1, red_circle);
-                marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                marker.ToolTipText = smr.timetotal.ToString() + "     " + smr.Tracknumber_value.ToString();
-                overlay.Markers.Add(marker);
-                counter++;
+                Trayectoria trayectoria_Stand = new Trayectoria();
+                Trayectoria trayectoria_Stand_T1 = new Trayectoria();
+                Trayectoria trayectoria_Stand_T2 = new Trayectoria();
+                Trayectoria trayectoria_Apron = new Trayectoria();
+                Trayectoria trayectoria_Apron_T1 = new Trayectoria();
+                Trayectoria trayectoria_Apron_T2 = new Trayectoria();
+                Trayectoria trayectoria_MA = new Trayectoria();
+                Trayectoria trayectoria_RW1 = new Trayectoria();
+                Trayectoria trayectoria_RW2 = new Trayectoria();
+                Trayectoria trayectoria_RW3 = new Trayectoria();
+                Trayectoria trayectoria_Taxiway = new Trayectoria();
+
+                trayectoria_Stand.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_Stand_T1.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_Stand_T2.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_Apron.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_Apron_T1.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_Apron_T2.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_MA.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_RW1.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_RW2.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_RW3.lista_MLAT.AddRange(trajectory.lista_MLAT);
+                trayectoria_Taxiway.lista_MLAT.AddRange(trajectory.lista_MLAT);
+
+
+                foreach (CAT10 smr in trajectory.listaSMR)
+                {
+                    double[] coordenadas = new double[] { smr.coordGeodesic.Lat * GeoUtils.RADS2DEGS, smr.coordGeodesic.Lon * GeoUtils.RADS2DEGS };
+
+                    bool insideA = polygonA.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideB = polygonB.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideC = polygonC.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideD = polygonD.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideE = polygonE.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideF = polygonF.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideG = polygonG.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideH = polygonH.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideI = polygonI.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideW = polygonW.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideX = polygonX.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+                    bool insideY = polygonY.IsInside(new PointLatLng(coordenadas[0], coordenadas[1]));
+
+                    if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) + (insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) + (insideI ? 1 : 0) + (insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                    {
+                        if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) + (insideD ? 1 : 0) + (insideE ? 1 : 0) > 0)
+                        {
+                            trayectoria_Stand.listaSMR.Add(smr);
+                            trayectoria_Stand.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+
+                            if ((insideA ? 1 : 0) + (insideB ? 1 : 0) + (insideC ? 1 : 0) > 0) 
+                            {
+                                trayectoria_Stand_T1.listaSMR.Add(smr);
+                                trayectoria_Stand_T1.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                            }
+                            else 
+                            {
+                                trayectoria_Stand_T2.listaSMR.Add(smr);
+                                trayectoria_Stand_T2.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                            }
+                        }
+
+                        else if((insideF ? 1 : 0) + (insideG ? 1 : 0) + (insideH ? 1 : 0) > 0)
+                        {
+                            trayectoria_Apron.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                            trayectoria_Apron.listaSMR.Add(smr);
+
+                            if (insideH)
+                            {
+                                trayectoria_Apron_T1.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                                trayectoria_Apron_T1.listaSMR.Add(smr); 
+                            }
+                            else 
+                            {
+                                trayectoria_Apron_T2.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                                trayectoria_Apron_T2.listaSMR.Add(smr);
+                            }
+                        }
+
+                        else if (insideI)
+                        {
+                            trayectoria_MA.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                            trayectoria_MA.listaSMR.Add(smr);
+
+                            if ((insideW ? 1 : 0) + (insideX ? 1 : 0) + (insideY ? 1 : 0) > 0)
+                            {
+                                if (insideW)
+                                {
+                                    trayectoria_RW1.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                                    trayectoria_RW1.listaSMR.Add(smr);
+                                }
+                                if (insideX)
+                                {
+                                    trayectoria_RW2.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                                    trayectoria_RW2.listaSMR.Add(smr);
+                                }
+                                if (insideY)
+                                {
+                                    trayectoria_RW3.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                                    trayectoria_RW3.listaSMR.Add(smr);
+                                }
+                            }
+                            else
+                            {
+                                trayectoria_Taxiway.TA = trajectory.lista_MLAT.First().TargetAdress_decoded;
+                                trayectoria_Taxiway.listaSMR.Add(smr);
+                            }
+                        }
+                    }
+                }
+
+                listaMLAT_Stand_1.Add(trayectoria_Stand);
+                listaMLAT_Stand_T1_1.Add(trayectoria_Stand_T1);
+                listaMLAT_Stand_T2_1.Add(trayectoria_Stand_T2);
+                listaMLAT_Apron_1.Add(trayectoria_Apron);
+                listaMLAT_Apron_T1_1.Add(trayectoria_Apron_T1);
+                listaMLAT_Apron_T2_1.Add(trayectoria_Apron_T2);
+                listaMLAT_MA_1.Add(trayectoria_MA);
+                listaMLAT_RWY1_1.Add(trayectoria_RW1);
+                listaMLAT_RWY2_1.Add(trayectoria_RW2);
+                listaMLAT_RWY3_1.Add(trayectoria_RW3);
+                listaMLAT_Taxiway_1.Add(trayectoria_Taxiway);
             }
 
-            counter = 0;
-            foreach (CAT10 mlat in lista_Trayectorias1[num].lista_MLAT)
+            CalculatePositionAccuracyTest_fromASTERIXfile(listaMLAT_Stand_1, listaCAT21, 0);
+        }
+
+        private void bt_CalculateTrajectories_GroundVehicles_Click(object sender, EventArgs e)
+        {
+            progressbar.Value = 0;
+            progressbar.Visible = true;
+
+            CalculateTrajectories4(SMR_para_GroundVehicles, listaMLAT_GroundVehicle);
+
+            progressbar.Visible = false;
+            counter_CalculateGV++;
+
+            lb_Trajectories.Text = "Choos thee number of trajectory to plot. There are " + lista_Trayectorias1.Count() + " trajectories.";
+        }
+
+        public double Percentile(List<double> sequence, double excelPercentile)
+        {
+            sequence.Sort();
+            int N = sequence.Count();
+            double n = (N - 1) * excelPercentile + 1;
+            if (sequence.Count() == 0) { return 0; }
+            else
             {
-                PointLatLng marker1 = new PointLatLng(mlat.coordGeodesic.Lat * GeoUtils.RADS2DEGS, mlat.coordGeodesic.Lon * GeoUtils.RADS2DEGS);
-                GMarkerGoogle marker = new GMarkerGoogle(marker1, blue_circle);
-                marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
-                marker.ToolTipText = string.Concat(mlat.timetotal.ToString()) + "     " + counter.ToString();
-                overlay.Markers.Add(marker);
-                counter++;
+                // Another method: double n = (N + 1) * excelPercentile;
+                if (n == 1d) return sequence[0];
+                else if (n == N) return sequence[N - 1];
+                else
+                {
+                    int k = (int)n;
+                    double d = n - k;
+                    return sequence[k - 1] + d * (sequence[k] - sequence[k - 1]);
+                }
+            }
+        }
+
+        private double CalculateStandardDeviation(IEnumerable<double> values)
+        {
+            double standardDeviation = 0;
+
+            if (values.Any())
+            {
+                // Compute the average.     
+                double avg = values.Average();
+
+                // Perform the Sum of (value-avg)_2_2.      
+                double sum = values.Sum(d => Math.Pow(d - avg, 2));
+
+                // Put it all together.      
+                standardDeviation = Math.Sqrt((sum) / (values.Count() - 1));
             }
 
+            return standardDeviation;
+        }
+
+        private void bt_ShowTrajectory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int num = Convert.ToInt32(textBox1.Text);
+
+                GMapOverlay overlay = new GMapOverlay();
+
+                int counter = 0;
+                foreach (CAT10 mlat in lista_Trayectorias1[num].lista_MLAT)
+                {
+                    PointLatLng marker1 = new PointLatLng(mlat.coordGeodesic.Lat * GeoUtils.RADS2DEGS, mlat.coordGeodesic.Lon * GeoUtils.RADS2DEGS);
+                    GMarkerGoogle marker = new GMarkerGoogle(marker1, blue_circle);
+                    marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                    marker.ToolTipText = string.Concat(mlat.timetotal.ToString()) + "     " + counter.ToString();
+                    overlay.Markers.Add(marker);
+                    counter++;
+                }
+
+                counter = 0;
+                foreach (CAT10 smr in lista_Trayectorias1[num].listaSMR)
+                {
+                    PointLatLng marker1 = new PointLatLng(smr.coordGeodesic.Lat * GeoUtils.RADS2DEGS, smr.coordGeodesic.Lon * GeoUtils.RADS2DEGS);
+                    GMarkerGoogle marker = new GMarkerGoogle(marker1, red_circle);
+                    marker.ToolTipMode = MarkerTooltipMode.OnMouseOver;
+                    marker.ToolTipText = smr.timetotal.ToString() + "     " + smr.Tracknumber_value.ToString();
+                    overlay.Markers.Add(marker);
+                    counter++;
+                }
+
+                Mapa.Overlays.Clear();
+                Mapa.Overlays.Add(overlay);
+            }
+            catch
+            {
+                MessageBox.Show("Please enter a valid value.");
+            }
+        }
+
+        private void ShowDistancesPA_Click(object sender, EventArgs e)
+        {
             Mapa.Overlays.Clear();
-            Mapa.Overlays.Add(overlay);
+            Mapa.Overlays.Add(overlay_distances);
         }
     }
 }

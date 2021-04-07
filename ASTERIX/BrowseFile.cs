@@ -17,6 +17,8 @@ namespace ASTERIX
     public partial class BrowseFile : Form
     {
         public List<CAT10> listaCAT10 = new List<CAT10>();
+        public List<CAT10> listaMLAT = new List<CAT10>();
+        public List<CAT10> listaSMR = new List<CAT10>();
         public List<CAT20> listaCAT20 = new List<CAT20>();
         public List<CAT21> listaCAT21 = new List<CAT21>();
         public List<CAT21v23> listaCAT21v23 = new List<CAT21v23>();
@@ -72,6 +74,14 @@ namespace ASTERIX
         public List<CAT10> ListaCAT10
         {
             get { return listaCAT10; }
+        }
+        public List<CAT10> ListaMLAT
+        {
+            get { return listaMLAT; }
+        }
+        public List<CAT10> ListaSMR
+        {
+            get { return listaSMR; }
         }
 
         private void bt_SelectFile_Click(object sender, EventArgs e)
@@ -216,6 +226,28 @@ namespace ASTERIX
             }
 
             lb_PacketsDecoded.Text = "The file has been decoded successfully.";
+
+            int counter_smr = 0;
+            int counter_mlat = 0;
+
+            foreach(CAT10 cat10 in listaCAT10)
+            {
+                if(cat10.SAC == 0 && cat10.SIC == 7)
+                {
+                    counter_smr++;
+                }
+                else if(cat10.SAC == 0 && cat10.SIC == 107)
+                {
+                    counter_mlat++;
+                }
+            }
+
+            tableLayoutPanel2.Visible = true;
+
+            lb_CAT21.Text = listaCAT21.Count().ToString() + "   packets.";
+            lb_MLAT.Text = counter_mlat.ToString() + "   packets.";
+            lb_SMR.Text = counter_smr.ToString() + "   packets.";
+
         }
 
         private void pb_CalibrationVehicle_Click(object sender, EventArgs e)
@@ -234,193 +266,268 @@ namespace ASTERIX
                 // Intentamos decodificartlo como los archivos .txt "sencillos"
                 try
                 {
-                    foreach(string path in list_paths)
-                    {
-                        string[] startinglines = File.ReadAllLines(path);
-
-                        StreamReader sr = new StreamReader(path);
-                        string line = sr.ReadLine();
-
-                        while (line != null)
-                        {
-                            if (line.Length > 0)
-                            {
-                                string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
-                                string[] properties = line.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
-
-                                if (properties[0] != "IGNORE")
-                                {
-                                    MLATCalibrationData data1 = new MLATCalibrationData(properties[0], properties[1], properties[2], properties[3], properties[4], properties[5], properties[6], properties[7], properties[8], properties[9]);
-                                    listaMLATCalibrationVehicleData.Add(data1);
-                                }
-                                else
-                                {
-                                    MLATCalibrationData data1 = new MLATCalibrationData("", properties[1], properties[2], "", "", "", "", properties[5], properties[6], properties[7]);
-                                    listaMLATCalibrationVehicleData.Add(data1);
-                                }
-                            }
-                            line = sr.ReadLine();
-                        }
-                    }
-
-                    // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
-                    // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
-                    for (int i = 0; i < listaMLATCalibrationVehicleData.Count() - 1; i++)
-                    {
-                        if (Math.Abs(listaMLATCalibrationVehicleData[i + 1].time1 - listaMLATCalibrationVehicleData[i].time1) > 12 * 3600)
-                        {
-                            i = i + 1;
-                            while (i < listaMLATCalibrationVehicleData.Count())
-                            {
-                                listaMLATCalibrationVehicleData[i].timetotal = listaMLATCalibrationVehicleData[i].time1 + 24 * 3600;
-                                i = i + 1;
-                            }
-                            break;
-                        }
-                    }
+                    DecodeCalibrationVehicleFile1(list_paths);
                 }
-                // Si no podemos decodificar como los archivos .txt sencillos es que es un archivo txt complicado y lo decodificamos de otra forma
                 catch
                 {
-                    foreach(string path in list_filepaths)
+                    try
                     {
-                        string[] startinglines = File.ReadAllLines(path);
-
-                        StreamReader sr = new StreamReader(path);
-
-                        // Leemos las primeras lineas 
-
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-                        sr.ReadLine();
-
-                        // Ahora con un Loop calculamos los valores
-
-                        string line = sr.ReadLine();
-                        while (line != null)
-                        {
-                            string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
-                            string[] properties = line.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
-
-                            // leemos el tiempo
-                            string time = properties[1];
-                            string[] mychars1 = { Convert.ToString(":") };
-                            string[] properties1 = time.Split(mychars1, StringSplitOptions.RemoveEmptyEntries);
-
-                            double hour = Convert.ToDouble(properties1[0]);
-                            double minute = Convert.ToDouble(properties1[1]);
-                            double second = Convert.ToDouble(properties1[2].Replace(Convert.ToChar("."), Convert.ToChar(",")));
-
-
-                            // leemos la altitud
-                            string alt = properties[5];
-                            double altitude = Convert.ToDouble(alt.Replace(Convert.ToChar("."), Convert.ToChar(","))) * GeoUtils.FEET2METERS;
-
-                            // leemos GS Lat
-                            string lat = properties[9];
-                            string[] mychars2 = { Convert.ToString("º?"), Convert.ToString("'?"), Convert.ToString("?"), Convert.ToString("�"), Convert.ToString("\"") };
-                            string[] properties2 = lat.Split(mychars2, StringSplitOptions.RemoveEmptyEntries);
-
-                            double lat_degrees = Convert.ToDouble(properties2[0]);
-                            double lat_minutes = Convert.ToDouble(properties2[1]);
-                            double lat_seconds = Convert.ToDouble(properties2[2].Replace(Convert.ToChar("."), Convert.ToChar(",")));
-                            double latitude = lat_degrees + lat_minutes / 60 + lat_seconds / 3600;
-
-                            if (properties2[3] == "S")
-                            {
-                                latitude = latitude * (-1);
-                            }
-
-
-                            // leemos GS Lon
-                            string lon = properties[11];
-                            string[] mychars3 = { Convert.ToString("º?"), Convert.ToString("'?"), Convert.ToString("?"), Convert.ToString("�"), Convert.ToString("\"") };
-                            string[] properties3 = lon.Split(mychars3, StringSplitOptions.RemoveEmptyEntries);
-
-                            double lon_degrees = Convert.ToDouble(properties3[0]);
-                            double lon_minutes = Convert.ToDouble(properties3[1]);
-                            double lon_seconds = Convert.ToDouble(properties3[2].Replace(Convert.ToChar("."), Convert.ToChar(",")));
-                            double longitude = lon_degrees + lon_minutes / 60 + lon_seconds / 3600;
-
-                            if (properties[3] == "W")
-                            {
-                                longitude = longitude * (-1);
-                            }
-
-                            // Ahora creamos el objeto de coordenadas geodesicas, systema cartesian, estereograficas
-
-                            // Calculamos Coordenadas Geodesicas:
-                            CoordinatesWGS84 coordGeodesic = new CoordinatesWGS84(latitude * GeoUtils.DEGS2RADS, longitude * GeoUtils.DEGS2RADS, altitude);
-
-                            // Calculamos coordenadas System Cartesian:
-                            CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordGeodesic);
-                            CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
-
-                            // Calculamos coordenadas Stereograficas:
-                            CoordinatesUVH coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
-
-
-
-                            // Ahora metemos toda la info en un objeto y el objeto en una lista
-                            MLATCalibrationData data1 = new MLATCalibrationData();
-
-                            data1.Lat = latitude;
-                            data1.Lon = longitude;
-                            data1.Alt = altitude;
-                            data1.Hour = hour;
-                            data1.Min = minute;
-                            data1.Sec = second;
-                            data1.timespan = TimeSpan.FromSeconds(hour * 3600 + minute * 60 + second);
-                            data1.timetotal = hour * 3600 + minute * 60 + second;
-                            data1.coordGeodesic = coordGeodesic;
-                            data1.coordSystemCartesian = coordSystemCartesian;
-                            data1.coordStereographic = coordStereographic;
-
-                            listaMLATCalibrationVehicleData.Add(data1);
-
-                            line = sr.ReadLine();
-                        }
+                        DecodeCalibrationVehicleFile2(list_paths);
                     }
-
-                    // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
-                    // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
-                    for (int i = 0; i < listaMLATCalibrationVehicleData.Count() - 1; i++)
+                    catch
                     {
-                        if (Math.Abs(listaMLATCalibrationVehicleData[i + 1].time1 - listaMLATCalibrationVehicleData[i].time1) > 12 * 3600)
-                        {
-                            i = i + 1;
-                            while (i < listaMLATCalibrationVehicleData.Count())
-                            {
-                                listaMLATCalibrationVehicleData[i].timetotal = listaMLATCalibrationVehicleData[i].time1 + 24 * 3600;
-                                i = i + 1;
-                            }
-                            break;
-                        }
+                        DecodeCalibrationVehicleFile3(list_paths);
                     }
                 }
             }
+
+            tableLayoutPanel3.Visible = true;
+            lb_dgps.Text = listaMLATCalibrationVehicleData.Count().ToString() + "   packets.";
         }
+
+        #region Functions to decode different formats of .txt Calibration Vehicle Files
+
+        // Function to decode simple format with no TA or TI info on the top
+        public void DecodeCalibrationVehicleFile1(string[] list_paths)
+        {
+            foreach (string path in list_paths)
+            {
+                string[] startinglines = File.ReadAllLines(path);
+
+                StreamReader sr = new StreamReader(path);
+                string line = sr.ReadLine();
+
+                while (line != null && line != "    \t" && line != "\t")
+                {
+                    if (line.Length > 0)
+                    {
+                        string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
+                        string[] properties = line.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
+
+                        if (properties[0] != "IGNORE")
+                        {
+                            MLATCalibrationData data1 = new MLATCalibrationData(properties[0], properties[1], properties[2], properties[3], properties[4], properties[5], properties[6], properties[7], properties[8], properties[9]);
+                            listaMLATCalibrationVehicleData.Add(data1);
+                        }
+                        else
+                        {
+                            MLATCalibrationData data1 = new MLATCalibrationData("", properties[1], properties[2], "", "", "", "", properties[5], properties[6], properties[7]);
+                            listaMLATCalibrationVehicleData.Add(data1);
+                        }
+                    }
+                    line = sr.ReadLine();
+                }
+            }
+
+            // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
+            // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
+            for (int i = 0; i < listaMLATCalibrationVehicleData.Count() - 1; i++)
+            {
+                if (Math.Abs(listaMLATCalibrationVehicleData[i + 1].time1 - listaMLATCalibrationVehicleData[i].time1) > 12 * 3600)
+                {
+                    i = i + 1;
+                    while (i < listaMLATCalibrationVehicleData.Count())
+                    {
+                        listaMLATCalibrationVehicleData[i].timetotal = listaMLATCalibrationVehicleData[i].time1 + 24 * 3600;
+                        i = i + 1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        // Function to decode simple format with TA or TI info on the top
+        public void DecodeCalibrationVehicleFile2(string[] list_paths)
+        {
+            foreach (string path in list_paths)
+            {
+                string[] startinglines = File.ReadAllLines(path);
+
+                StreamReader sr = new StreamReader(path);
+                string line = sr.ReadLine();
+                line = sr.ReadLine();
+
+                while (line != null && line != "    \t" && line != "\t")
+                {
+                    if (line.Length > 0)
+                    {
+                        string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
+                        string[] properties = line.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
+
+                        if (properties[0] != "IGNORE")
+                        {
+                            MLATCalibrationData data1 = new MLATCalibrationData(properties[0], properties[1], properties[2], properties[3], properties[4], properties[5], properties[6], properties[7], properties[8], properties[9]);
+                            listaMLATCalibrationVehicleData.Add(data1);
+                        }
+                        else
+                        {
+                            MLATCalibrationData data1 = new MLATCalibrationData("", properties[1], properties[2], "", "", "", "", properties[5], properties[6], properties[7]);
+                            listaMLATCalibrationVehicleData.Add(data1);
+                        }
+                    }
+                    line = sr.ReadLine();
+                }
+            }
+
+            // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
+            // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
+            for (int i = 0; i < listaMLATCalibrationVehicleData.Count() - 1; i++)
+            {
+                if (Math.Abs(listaMLATCalibrationVehicleData[i + 1].time1 - listaMLATCalibrationVehicleData[i].time1) > 12 * 3600)
+                {
+                    i = i + 1;
+                    while (i < listaMLATCalibrationVehicleData.Count())
+                    {
+                        listaMLATCalibrationVehicleData[i].timetotal = listaMLATCalibrationVehicleData[i].time1 + 24 * 3600;
+                        i = i + 1;
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void DecodeCalibrationVehicleFile3(string[] list_paths)
+        {
+            foreach (string path in list_paths)
+            {
+                string[] startinglines = File.ReadAllLines(path);
+
+                StreamReader sr = new StreamReader(path);
+
+                // Leemos las primeras lineas 
+
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+                sr.ReadLine();
+
+                // Ahora con un Loop calculamos los valores
+
+                string line = sr.ReadLine();
+                while (line != null)
+                {
+                    string[] mychars = { Convert.ToString(""), Convert.ToString(' '), Convert.ToString('\t') };
+                    string[] properties = line.Split(mychars, StringSplitOptions.RemoveEmptyEntries);
+
+                    // leemos el tiempo
+                    string time = properties[1];
+                    string[] mychars1 = { Convert.ToString(":") };
+                    string[] properties1 = time.Split(mychars1, StringSplitOptions.RemoveEmptyEntries);
+
+                    double hour = Convert.ToDouble(properties1[0]);
+                    double minute = Convert.ToDouble(properties1[1]);
+                    double second = Convert.ToDouble(properties1[2].Replace(Convert.ToChar("."), Convert.ToChar(",")));
+
+
+                    // leemos la altitud
+                    string alt = properties[5];
+                    double altitude = Convert.ToDouble(alt.Replace(Convert.ToChar("."), Convert.ToChar(","))) * GeoUtils.FEET2METERS;
+
+                    // leemos GS Lat
+                    string lat = properties[9];
+                    string[] mychars2 = { Convert.ToString("º?"), Convert.ToString("'?"), Convert.ToString("?"), Convert.ToString("�"), Convert.ToString("\"") };
+                    string[] properties2 = lat.Split(mychars2, StringSplitOptions.RemoveEmptyEntries);
+
+                    double lat_degrees = Convert.ToDouble(properties2[0]);
+                    double lat_minutes = Convert.ToDouble(properties2[1]);
+                    double lat_seconds = Convert.ToDouble(properties2[2].Replace(Convert.ToChar("."), Convert.ToChar(",")));
+                    double latitude = lat_degrees + lat_minutes / 60 + lat_seconds / 3600;
+
+                    if (properties2[3] == "S")
+                    {
+                        latitude = latitude * (-1);
+                    }
+
+
+                    // leemos GS Lon
+                    string lon = properties[11];
+                    string[] mychars3 = { Convert.ToString("º?"), Convert.ToString("'?"), Convert.ToString("?"), Convert.ToString("�"), Convert.ToString("\"") };
+                    string[] properties3 = lon.Split(mychars3, StringSplitOptions.RemoveEmptyEntries);
+
+                    double lon_degrees = Convert.ToDouble(properties3[0]);
+                    double lon_minutes = Convert.ToDouble(properties3[1]);
+                    double lon_seconds = Convert.ToDouble(properties3[2].Replace(Convert.ToChar("."), Convert.ToChar(",")));
+                    double longitude = lon_degrees + lon_minutes / 60 + lon_seconds / 3600;
+
+                    if (properties[3] == "W")
+                    {
+                        longitude = longitude * (-1);
+                    }
+
+                    // Ahora creamos el objeto de coordenadas geodesicas, systema cartesian, estereograficas
+
+                    // Calculamos Coordenadas Geodesicas:
+                    CoordinatesWGS84 coordGeodesic = new CoordinatesWGS84(latitude * GeoUtils.DEGS2RADS, longitude * GeoUtils.DEGS2RADS, altitude);
+
+                    // Calculamos coordenadas System Cartesian:
+                    CoordinatesXYZ coordGeocentric = GeoUtils1.change_geodesic2geocentric(coordGeodesic);
+                    CoordinatesXYZ coordSystemCartesian = GeoUtils1.change_geocentric2system_cartesian(coordGeocentric);
+
+                    // Calculamos coordenadas Stereograficas:
+                    CoordinatesUVH coordStereographic = GeoUtils1.change_system_cartesian2stereographic(coordSystemCartesian);
+
+
+
+                    // Ahora metemos toda la info en un objeto y el objeto en una lista
+                    MLATCalibrationData data1 = new MLATCalibrationData();
+
+                    data1.Lat = latitude;
+                    data1.Lon = longitude;
+                    data1.Alt = altitude;
+                    data1.Hour = hour;
+                    data1.Min = minute;
+                    data1.Sec = second;
+                    data1.timespan = TimeSpan.FromSeconds(hour * 3600 + minute * 60 + second);
+                    data1.timetotal = hour * 3600 + minute * 60 + second;
+                    data1.coordGeodesic = coordGeodesic;
+                    data1.coordSystemCartesian = coordSystemCartesian;
+                    data1.coordStereographic = coordStereographic;
+
+                    listaMLATCalibrationVehicleData.Add(data1);
+
+                    line = sr.ReadLine();
+                }
+            }
+
+            // Ahora asignamo el valor de tiempo real (si hemos pasado de 23:59:59 a 0:00:00 vamos a tener problemas, hay que especificar que aunque hayamos papsado a tiempo = 0 es un tiwmpomayor que el anterior)
+            // Recorremos la lista. si entre un tiempo y otro hay un cambio de +12h es que hemos cambiado de dia
+            for (int i = 0; i < listaMLATCalibrationVehicleData.Count() - 1; i++)
+            {
+                if (Math.Abs(listaMLATCalibrationVehicleData[i + 1].time1 - listaMLATCalibrationVehicleData[i].time1) > 12 * 3600)
+                {
+                    i = i + 1;
+                    while (i < listaMLATCalibrationVehicleData.Count())
+                    {
+                        listaMLATCalibrationVehicleData[i].timetotal = listaMLATCalibrationVehicleData[i].time1 + 24 * 3600;
+                        i = i + 1;
+                    }
+                    break;
+                }
+            }
+        }
+
+
+        #endregion
     }
 }

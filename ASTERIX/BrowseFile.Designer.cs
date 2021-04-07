@@ -42,9 +42,23 @@
             this.lb_PacketsDecoded = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.lb_CAT21 = new System.Windows.Forms.Label();
+            this.lb_MLAT = new System.Windows.Forms.Label();
+            this.lb_SMR = new System.Windows.Forms.Label();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.lb_dgps = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ASTERIXfile)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_CalibrationVehicle)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -159,12 +173,152 @@
             this.comboBox1.TabIndex = 14;
             this.comboBox1.Text = "CAT 21 v2.1";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(848, 218);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.52381F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.47619F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(733, 525);
+            this.tableLayoutPanel1.TabIndex = 15;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.71233F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.28767F));
+            this.tableLayoutPanel2.Controls.Add(this.lb_SMR, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.lb_MLAT, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.lb_CAT21, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label4, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.label5, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label6, 0, 2);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(438, 91);
+            this.tableLayoutPanel2.TabIndex = 0;
+            this.tableLayoutPanel2.Visible = false;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(110, 30);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "CAT 21:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(3, 30);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 25);
+            this.label5.TabIndex = 2;
+            this.label5.Text = "MLAT:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(3, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(66, 25);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "SMR:";
+            // 
+            // lb_CAT21
+            // 
+            this.lb_CAT21.AutoSize = true;
+            this.lb_CAT21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_CAT21.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_CAT21.Location = new System.Drawing.Point(119, 0);
+            this.lb_CAT21.Name = "lb_CAT21";
+            this.lb_CAT21.Size = new System.Drawing.Size(316, 30);
+            this.lb_CAT21.TabIndex = 4;
+            this.lb_CAT21.Text = "CAT 21:";
+            // 
+            // lb_MLAT
+            // 
+            this.lb_MLAT.AutoSize = true;
+            this.lb_MLAT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_MLAT.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_MLAT.Location = new System.Drawing.Point(119, 30);
+            this.lb_MLAT.Name = "lb_MLAT";
+            this.lb_MLAT.Size = new System.Drawing.Size(316, 30);
+            this.lb_MLAT.TabIndex = 5;
+            this.lb_MLAT.Text = "CAT 21:";
+            // 
+            // lb_SMR
+            // 
+            this.lb_SMR.AutoSize = true;
+            this.lb_SMR.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_SMR.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_SMR.Location = new System.Drawing.Point(119, 60);
+            this.lb_SMR.Name = "lb_SMR";
+            this.lb_SMR.Size = new System.Drawing.Size(316, 31);
+            this.lb_SMR.TabIndex = 6;
+            this.lb_SMR.Text = "CAT 21:";
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.71233F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.28767F));
+            this.tableLayoutPanel3.Controls.Add(this.lb_dgps, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.label10, 0, 0);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 284);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(414, 91);
+            this.tableLayoutPanel3.TabIndex = 1;
+            this.tableLayoutPanel3.Visible = false;
+            // 
+            // lb_dgps
+            // 
+            this.lb_dgps.AutoSize = true;
+            this.lb_dgps.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lb_dgps.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_dgps.Location = new System.Drawing.Point(113, 0);
+            this.lb_dgps.Name = "lb_dgps";
+            this.lb_dgps.Size = new System.Drawing.Size(298, 91);
+            this.lb_dgps.TabIndex = 4;
+            this.lb_dgps.Text = "CAT 21:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(3, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(104, 91);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "D-GPS:";
+            // 
             // BrowseFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1472, 940);
+            this.ClientSize = new System.Drawing.Size(1904, 1041);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lb_PacketsDecoded);
@@ -181,6 +335,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_ASTERIXfile)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_CalibrationVehicle)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -199,5 +358,16 @@
         private System.Windows.Forms.Label lb_PacketsDecoded;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lb_SMR;
+        private System.Windows.Forms.Label lb_MLAT;
+        private System.Windows.Forms.Label lb_CAT21;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.Label lb_dgps;
+        private System.Windows.Forms.Label label10;
     }
 }

@@ -8,6 +8,7 @@ namespace LIBRERIACLASES
     {
         public int id;
         public int time_since_last_update = 0;
+        public string TA;
 
         public bool ended = false;
         public bool updated = false;

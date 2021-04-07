@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using Clases;
 using LIBRERIACLASES;
 using System.IO;
+using MultiCAT6;
+using DotNetMatrix;
+using MultiCAT6.Utils;
 
 
 namespace ASTERIX
@@ -26,6 +29,7 @@ namespace ASTERIX
 
         List<CAT10> listaMLAT = new List<CAT10>();
         List<CAT10> listaSMR = new List<CAT10>();
+        List<MLATCalibrationData> listaCalibrationDataVehicle = new List<MLATCalibrationData>();
 
         // CoordenadasSMR
         double LatSMR = 41.295618;
@@ -37,734 +41,871 @@ namespace ASTERIX
 
         string direccion;
 
-        public Export(List<CAT10> listaCAT10, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23)
+        public Export(List<CAT10> listaCAT10, List<CAT10> listaMLAT, List<CAT21> listaCAT21, List<CAT21v23> listaCAT21v23, List<MLATCalibrationData> listaCalibrationDataVehicle)
         {
             InitializeComponent();
             this.listaCAT10 = listaCAT10;
+            this.listaMLAT = listaMLAT;
             this.listaCAT21 = listaCAT21;
             this.listaCAT21v23 = listaCAT21v23;
-
-            if(listaCAT10.Count>0)
-            {
-                int i = 0;
-
-                while (i < listaCAT10.Count)
-                {
-                    int SAC = listaCAT10[i].SAC;
-                    int SIC = listaCAT10[i].SIC;
-
-                    if (SAC == 0 && SIC == 7)
-                    {
-                        listaSMR.Add(listaCAT10[i]);
-                    }
-                    if (SAC == 0 && SIC == 107)
-                    {
-                        listaMLAT.Add(listaCAT10[i]);
-                    }
-                    i = i + 1;
-                }
-            }
+            this.listaCalibrationDataVehicle = listaCalibrationDataVehicle;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Export_Load(object sender, EventArgs e)
         {
-            lb_decoding.Visible = true;
-            lb_decoding.Text = "DECODING";
-
-            if (listaCAT21v23.Count>0)
-            {
-                // Generamos el nuevo documento
-
-                direccion = tb_direction.Text;
-
-                int abc1 = tb_direction.Text.Length - 4;
-
-                tb_direction.Text = tb_direction.Text.Substring(0, abc1);
-                tb_direction.Text = tb_direction.Text + "CAT21v023" + ".kml";
-
-                StreamWriter f = File.CreateText(tb_direction.Text);
-
-                // Leemos las partes del documento 
-                string[] startinglines = File.ReadAllLines("docs/start.txt");
-                string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
-                string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
-                string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
-                string[] white_style = File.ReadAllLines("docs/1White_style.txt");
-                string[] body = File.ReadAllLines("docs/body.txt");
-
-
-                f.WriteLine(startinglines[0]);
-                f.WriteLine(startinglines[1]);
-                f.WriteLine(startinglines[2]);
-                f.WriteLine("\t<name>" + "CAT21v0.23" + "</name>");
-
-                f.WriteLine(blue_style[0]);
-                f.WriteLine(blue_style[1]);
-                f.WriteLine(blue_style[2]);
-                f.WriteLine(blue_style[3]);
-                f.WriteLine(blue_style[4]);
-                f.WriteLine(blue_style[5]);
-                f.WriteLine(blue_style[6]);
-                f.WriteLine(blue_style[7]);
-                f.WriteLine(blue_style[8]);
-
-                f.WriteLine(green_style[0]);
-                f.WriteLine(green_style[1]);
-                f.WriteLine(green_style[2]);
-                f.WriteLine(green_style[3]);
-                f.WriteLine(green_style[4]);
-                f.WriteLine(green_style[5]);
-                f.WriteLine(green_style[6]);
-                f.WriteLine(green_style[7]);
-                f.WriteLine(green_style[8]);
-
-                f.WriteLine(red_style[0]);
-                f.WriteLine(red_style[1]);
-                f.WriteLine(red_style[2]);
-                f.WriteLine(red_style[3]);
-                f.WriteLine(red_style[4]);
-                f.WriteLine(red_style[5]);
-                f.WriteLine(red_style[6]);
-                f.WriteLine(red_style[7]);
-                f.WriteLine(red_style[8]);
-
-                f.WriteLine(white_style[0]);
-                f.WriteLine(white_style[1]);
-                f.WriteLine(white_style[2]);
-                f.WriteLine(white_style[3]);
-                f.WriteLine(white_style[4]);
-                f.WriteLine(white_style[5]);
-                f.WriteLine(white_style[6]);
-                f.WriteLine(white_style[7]);
-                f.WriteLine(white_style[8]);
-
-                f.WriteLine(body[0]);
-
-                //Codigo para plotear todos los aviones
-                //...................................................................................................................... CAT21v23
-
-                //Lo hacemos una vez para el primer avion
-
-                listaNombresCAT21v23.Clear();
-
-                string Nombre1 = listaCAT21v23[0].TargetIdentification_decoded;
-                listaNombresCAT21v23.Add(Nombre1);
-
-                f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
-                f.WriteLine("\t\t <styleUrl>#" + "red" + "</styleUrl>");
-                f.WriteLine(body[3]);
-                f.WriteLine("\t\t\t<coordinates>");
-
-                int i = 0;
-                while (i < listaCAT21v23.Count)
-                {
-                    if (listaCAT21v23[i].TargetIdentification_decoded == Nombre1 && listaCAT21v23[i].TargetIdentification.Length > 0)
-                    {
-                        string latWGS84 = listaCAT21v23[i].latWGS84.ToString();
-                        string lonWGS84 = listaCAT21v23[i].lonWGS84.ToString();
-
-                        latWGS84 = latWGS84.Replace(",", ".");
-                        lonWGS84 = lonWGS84.Replace(",", ".");
-
-                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                    }
-                    i = i + 1;
-                }
-
-                f.WriteLine("\t\t\t</coordinates>");
-                f.WriteLine("\t\t</LineString>");
-                f.WriteLine("\t</Placemark>");
-
-                //Ahora lo hacemos para el resto
-                i = 1;
-                while (i < listaCAT21v23.Count)
-                {
-                    string Nombre = listaCAT21v23[i].TargetIdentification_decoded;
-
-                    if (listaNombresCAT21v23.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
-                    {
-                        listaNombresCAT21v23.Add(Nombre);
-
-                        f.WriteLine("\t<Placemark>");
-                        f.WriteLine("\t\t<name>" + Nombre + "</name>");
-                        f.WriteLine("\t\t <styleUrl>#" + "red" + "</styleUrl>");
-                        f.WriteLine(body[3]);
-                        f.WriteLine("\t\t\t<coordinates>");
-
-                        int j = 0;
-                        while (j < listaCAT21v23.Count)
-                        {
-                            if (listaCAT21v23[j].TargetIdentification_decoded == Nombre)
-                            {
-                                double a = listaCAT21v23[j].latWGS84;
-                                double b = listaCAT21v23[j].lonWGS84;
-
-                                string latWGS84 = listaCAT21v23[j].latWGS84.ToString();
-                                string lonWGS84 = listaCAT21v23[j].lonWGS84.ToString();
-
-                                latWGS84 = latWGS84.Replace(",", ".");
-                                lonWGS84 = lonWGS84.Replace(",", ".");
-
-                                if (a != Double.NaN && b != Double.NaN)
-                                {
-                                    f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                                }
-                            }
-                            j = j + 1;
-                        }
-
-                        f.WriteLine("\t\t\t</coordinates>");
-                        f.WriteLine("\t\t</LineString>");
-                        f.WriteLine("\t</Placemark>");
-                    }
-
-                    i = i + 1;
-                }
-
-
-                f.WriteLine(" </Document> </kml>");
-                f.Close();
-
-                tb_direction.Text = direccion;
-            }
-
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------------- CAT21
-
-            if (listaCAT21.Count > 0)
-            {
-                // Generamos el nuevo documento
-                direccion = tb_direction.Text;
-
-                int abc1 = tb_direction.Text.Length  - 4;
-
-                tb_direction.Text = tb_direction.Text.Substring(0, abc1);
-                tb_direction.Text = tb_direction.Text + "CAT21v21" + ".kml";
-
-                StreamWriter f = File.CreateText(tb_direction.Text);
-
-                // Leemos las partes del documento 
-                string[] startinglines = File.ReadAllLines("docs/start.txt");
-                string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
-                string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
-                string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
-                string[] white_style = File.ReadAllLines("docs/1White_style.txt");
-                string[] body = File.ReadAllLines("docs/body.txt");
-
-
-                f.WriteLine(startinglines[0]);
-                f.WriteLine(startinglines[1]);
-                f.WriteLine(startinglines[2]);
-                f.WriteLine("\t<name>" + "CAT21v2.1" + "</name>");
-
-                f.WriteLine(blue_style[0]);
-                f.WriteLine(blue_style[1]);
-                f.WriteLine(blue_style[2]);
-                f.WriteLine(blue_style[3]);
-                f.WriteLine(blue_style[4]);
-                f.WriteLine(blue_style[5]);
-                f.WriteLine(blue_style[6]);
-                f.WriteLine(blue_style[7]);
-                f.WriteLine(blue_style[8]);
-
-                f.WriteLine(green_style[0]);
-                f.WriteLine(green_style[1]);
-                f.WriteLine(green_style[2]);
-                f.WriteLine(green_style[3]);
-                f.WriteLine(green_style[4]);
-                f.WriteLine(green_style[5]);
-                f.WriteLine(green_style[6]);
-                f.WriteLine(green_style[7]);
-                f.WriteLine(green_style[8]);
-
-                f.WriteLine(red_style[0]);
-                f.WriteLine(red_style[1]);
-                f.WriteLine(red_style[2]);
-                f.WriteLine(red_style[3]);
-                f.WriteLine(red_style[4]);
-                f.WriteLine(red_style[5]);
-                f.WriteLine(red_style[6]);
-                f.WriteLine(red_style[7]);
-                f.WriteLine(red_style[8]);
-
-                f.WriteLine(white_style[0]);
-                f.WriteLine(white_style[1]);
-                f.WriteLine(white_style[2]);
-                f.WriteLine(white_style[3]);
-                f.WriteLine(white_style[4]);
-                f.WriteLine(white_style[5]);
-                f.WriteLine(white_style[6]);
-                f.WriteLine(white_style[7]);
-                f.WriteLine(white_style[8]);
-
-                f.WriteLine(body[0]);
-
-                listaNombresCAT21.Clear();
-
-                string Nombre1 = listaCAT21[0].TargetIdentification_decoded;
-                listaNombresCAT21.Add(Nombre1);
-
-                f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
-                f.WriteLine("\t\t <styleUrl>#" + "green" + "</styleUrl>");
-                f.WriteLine(body[3]);
-                f.WriteLine("\t\t\t<coordinates>");
-
-                int i = 0;
-                while (i < listaCAT21.Count)
-                {
-                    if (listaCAT21[i].TargetIdentification_decoded == Nombre1)
-                    {
-                        string latWGS84 = listaCAT21[i].latWGS84.ToString();
-                        string lonWGS84 = listaCAT21[i].lonWGS84.ToString();
-
-                        latWGS84 = latWGS84.Replace(",", ".");
-                        lonWGS84 = lonWGS84.Replace(",", ".");
-
-                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                    }
-                    i = i + 1;
-                }
-
-                f.WriteLine("\t\t\t</coordinates>");
-                f.WriteLine("\t\t</LineString>");
-                f.WriteLine("\t</Placemark>");
-
-                //Ahora lo hacemos para el resto
-                i = 0;
-                while (i < listaCAT21.Count)
-                {
-                    string Nombre = listaCAT21[i].TargetIdentification_decoded;
-
-                    if (listaNombresCAT21.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
-                    {
-                    }
-
-                    if (listaNombresCAT21.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
-                    {
-                        listaNombresCAT21.Add(Nombre);
-
-                        f.WriteLine("\t<Placemark>");
-                        f.WriteLine("\t\t<name>" + Nombre + "</name>");
-                        f.WriteLine("\t\t <styleUrl>#" + "green" + "</styleUrl>");
-                        f.WriteLine(body[3]);
-                        f.WriteLine("\t\t\t<coordinates>");
-
-                        int j = 0;
-                        while (j < listaCAT21.Count)
-                        {
-                            if (listaCAT21[j].TargetIdentification_decoded == Nombre)
-                            {
-                                string latWGS84 = listaCAT21[j].latWGS84.ToString();
-                                string lonWGS84 = listaCAT21[j].lonWGS84.ToString();
-
-                                latWGS84 = latWGS84.Replace(",", ".");
-                                lonWGS84 = lonWGS84.Replace(",", ".");
-
-                                if (latWGS84 != "0" && lonWGS84 != "0") { f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84); }
-                            }
-                            j = j + 1;
-                        }
-
-                        f.WriteLine("\t\t\t</coordinates>");
-                        f.WriteLine("\t\t</LineString>");
-                        f.WriteLine("\t</Placemark>");
-                    }
-
-                    i = i + 1;
-                }
-
-                f.WriteLine(" </Document> </kml>");
-                f.Close();
-
-                tb_direction.Text = direccion;
-
-            }
-
-
-
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------------- MLAT
-
-            if (listaMLAT.Count > 0)
-            {
-                // Generamos el nuevo documento
-
-                direccion = tb_direction.Text;
-
-                int abc1 = tb_direction.Text.Length - 4;
-
-                tb_direction.Text = tb_direction.Text.Substring(0, abc1);
-                tb_direction.Text = tb_direction.Text + "CAT10MLAT" + ".kml";
-
-                StreamWriter f = File.CreateText(tb_direction.Text);
-
-                // Leemos las partes del documento 
-                string[] startinglines = File.ReadAllLines("docs/start.txt");
-                string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
-                string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
-                string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
-                string[] white_style = File.ReadAllLines("docs/1White_style.txt");
-                string[] body = File.ReadAllLines("docs/body.txt");
-
-
-                f.WriteLine(startinglines[0]);
-                f.WriteLine(startinglines[1]);
-                f.WriteLine(startinglines[2]);
-                f.WriteLine("\t<name>" + "CAT10 (MLAT)" + "</name>");
-
-                f.WriteLine(blue_style[0]);
-                f.WriteLine(blue_style[1]);
-                f.WriteLine(blue_style[2]);
-                f.WriteLine(blue_style[3]);
-                f.WriteLine(blue_style[4]);
-                f.WriteLine(blue_style[5]);
-                f.WriteLine(blue_style[6]);
-                f.WriteLine(blue_style[7]);
-                f.WriteLine(blue_style[8]);
-
-                f.WriteLine(green_style[0]);
-                f.WriteLine(green_style[1]);
-                f.WriteLine(green_style[2]);
-                f.WriteLine(green_style[3]);
-                f.WriteLine(green_style[4]);
-                f.WriteLine(green_style[5]);
-                f.WriteLine(green_style[6]);
-                f.WriteLine(green_style[7]);
-                f.WriteLine(green_style[8]);
-
-                f.WriteLine(red_style[0]);
-                f.WriteLine(red_style[1]);
-                f.WriteLine(red_style[2]);
-                f.WriteLine(red_style[3]);
-                f.WriteLine(red_style[4]);
-                f.WriteLine(red_style[5]);
-                f.WriteLine(red_style[6]);
-                f.WriteLine(red_style[7]);
-                f.WriteLine(red_style[8]);
-
-                f.WriteLine(white_style[0]);
-                f.WriteLine(white_style[1]);
-                f.WriteLine(white_style[2]);
-                f.WriteLine(white_style[3]);
-                f.WriteLine(white_style[4]);
-                f.WriteLine(white_style[5]);
-                f.WriteLine(white_style[6]);
-                f.WriteLine(white_style[7]);
-                f.WriteLine(white_style[8]);
-
-                f.WriteLine(body[0]);
-
-                listaNombresCAT10.Clear();
-
-                int i = 0;
-                while (listaMLAT[i].TargetIdentification_decoded == "") { i = i + 1; }
-
-                string Nombre1 = listaMLAT[i].TargetIdentification_decoded;
-                listaNombresCAT10.Add(Nombre1);
-
-                f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
-                f.WriteLine("\t\t <styleUrl>#" + "blue" + "</styleUrl>");
-                f.WriteLine(body[3]);
-                f.WriteLine("\t\t\t<coordinates>");
-
-                int j = 0;
-                while (j < listaMLAT.Count)
-                {
-                    if (listaMLAT[j].TargetIdentification_decoded == Nombre1)
-                    {
-                        double rho = Math.Sqrt((listaMLAT[j].X_cartesian) * (listaMLAT[j].X_cartesian) + (listaMLAT[j].Y_cartesian) * (listaMLAT[j].Y_cartesian));
-                        double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[j].X_cartesian, listaMLAT[j].Y_cartesian);
-                        double[] coordenadas = NewCoordinatesMLAT(rho, theta);
-
-                        string latWGS84 = coordenadas[0].ToString();
-                        string lonWGS84 = coordenadas[1].ToString();
-
-                        latWGS84 = latWGS84.Replace(",", ".");
-                        lonWGS84 = lonWGS84.Replace(",", ".");
-
-                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                    }
-                    j = j + 1;
-                }
-
-                f.WriteLine("\t\t\t</coordinates>");
-                f.WriteLine("\t\t</LineString>");
-                f.WriteLine("\t</Placemark>");
-
-                //Ahora lo hacemos para el resto
-
-                while (i < listaMLAT.Count)
-                {
-                    string Nombre = listaMLAT[i].TargetIdentification_decoded;
-
-                    if (listaNombresCAT10.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
-                    {
-                    }
-
-                    if (listaNombresCAT10.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
-                    {
-                        listaNombresCAT10.Add(Nombre);
-
-                        f.WriteLine("\t<Placemark>");
-                        f.WriteLine("\t\t<name>" + Nombre + "</name>");
-                        f.WriteLine("\t\t <styleUrl>#" + "blue" + "</styleUrl>");
-                        f.WriteLine(body[3]);
-                        f.WriteLine("\t\t\t<coordinates>");
-
-                        j = 0;
-                        while (j < listaMLAT.Count)
-                        {
-                            if (listaMLAT[j].TargetIdentification_decoded == Nombre)
-                            {
-                                double rho = Math.Sqrt((listaMLAT[j].X_cartesian) * (listaMLAT[j].X_cartesian) + (listaMLAT[j].Y_cartesian) * (listaMLAT[j].Y_cartesian));
-                                double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[j].X_cartesian, listaMLAT[j].Y_cartesian);
-                                double[] coordenadas = NewCoordinatesMLAT(rho, theta);
-
-                                string latWGS84 = coordenadas[0].ToString();
-                                string lonWGS84 = coordenadas[1].ToString();
-
-                                latWGS84 = latWGS84.Replace(",", ".");
-                                lonWGS84 = lonWGS84.Replace(",", ".");
-
-                                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                            }
-                            j = j + 1;
-                        }
-
-                        f.WriteLine("\t\t\t</coordinates>");
-                        f.WriteLine("\t\t</LineString>");
-                        f.WriteLine("\t</Placemark>");
-                    }
-
-                    i = i + 1;
-                }
-
-                f.WriteLine(" </Document> </kml>");
-                f.Close();
-
-                tb_direction.Text = direccion;
-            }
-
-            //-------------------------------------------------------------------------------------------------------------------------------------------------------------- SMR
-
-            if (listaSMR.Count > 0)
-            {
-                // Generamos el nuevo documento
-
-                direccion = tb_direction.Text;
-
-                int abc1 = tb_direction.Text.Length - 1 - 4;
-
-                tb_direction.Text = tb_direction.Text.Substring(0, abc1);
-                tb_direction.Text = tb_direction.Text + "CAT10SMR" + ".kml";
-
-                StreamWriter f = File.CreateText(tb_direction.Text);
-
-                // Leemos las partes del documento 
-                string[] startinglines = File.ReadAllLines("docs/start.txt");
-                string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
-                string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
-                string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
-                string[] white_style = File.ReadAllLines("docs/1White_style.txt");
-                string[] body = File.ReadAllLines("docs/body.txt");
-
-
-                f.WriteLine(startinglines[0]);
-                f.WriteLine(startinglines[1]);
-                f.WriteLine(startinglines[2]);
-                f.WriteLine("\t<name>" + "CAT10 (SMR)" + "</name>");
-
-                f.WriteLine(blue_style[0]);
-                f.WriteLine(blue_style[1]);
-                f.WriteLine(blue_style[2]);
-                f.WriteLine(blue_style[3]);
-                f.WriteLine(blue_style[4]);
-                f.WriteLine(blue_style[5]);
-                f.WriteLine(blue_style[6]);
-                f.WriteLine(blue_style[7]);
-                f.WriteLine(blue_style[8]);
-
-                f.WriteLine(green_style[0]);
-                f.WriteLine(green_style[1]);
-                f.WriteLine(green_style[2]);
-                f.WriteLine(green_style[3]);
-                f.WriteLine(green_style[4]);
-                f.WriteLine(green_style[5]);
-                f.WriteLine(green_style[6]);
-                f.WriteLine(green_style[7]);
-                f.WriteLine(green_style[8]);
-
-                f.WriteLine(red_style[0]);
-                f.WriteLine(red_style[1]);
-                f.WriteLine(red_style[2]);
-                f.WriteLine(red_style[3]);
-                f.WriteLine(red_style[4]);
-                f.WriteLine(red_style[5]);
-                f.WriteLine(red_style[6]);
-                f.WriteLine(red_style[7]);
-                f.WriteLine(red_style[8]);
-
-                f.WriteLine(white_style[0]);
-                f.WriteLine(white_style[1]);
-                f.WriteLine(white_style[2]);
-                f.WriteLine(white_style[3]);
-                f.WriteLine(white_style[4]);
-                f.WriteLine(white_style[5]);
-                f.WriteLine(white_style[6]);
-                f.WriteLine(white_style[7]);
-                f.WriteLine(white_style[8]);
-
-                f.WriteLine(body[0]);
-
-                listaNombresCAT10.Clear();
-
-                int i = 0;
-                while (listaSMR[i].Tracknumber_value.ToString() == "") { i = i + 1; }
-
-                string Nombre1 = listaSMR[i].Tracknumber_value.ToString();
-                listaNombresCAT10.Add(Nombre1);
-
-                f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
-                f.WriteLine("\t\t <styleUrl>#" + "white" + "</styleUrl>");
-                f.WriteLine(body[3]);
-                f.WriteLine("\t\t\t<coordinates>");
-
-                int j = 0;
-                while (j < listaSMR.Count)
-                {
-                    if (listaSMR[j].Tracknumber_value.ToString() == Nombre1 && listaSMR[j].MeasuredPositioninPolarCoordinates.Length > 0)
-                    {
-                        double rho = Math.Sqrt((listaSMR[j].X_cartesian) * (listaSMR[j].X_cartesian) + (listaSMR[j].Y_cartesian) * (listaSMR[j].Y_cartesian));
-                        double theta = (180 / Math.PI) * Math.Atan2(listaSMR[j].X_cartesian, listaSMR[j].Y_cartesian);
-                        double[] coordenadas = NewCoordinatesSMR(rho, theta);
-
-                        string latWGS84 = coordenadas[0].ToString();
-                        string lonWGS84 = coordenadas[1].ToString();
-
-                        latWGS84 = latWGS84.Replace(",", ".");
-                        lonWGS84 = lonWGS84.Replace(",", ".");
-
-                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                    }
-                    j = j + 1;
-                }
-
-                f.WriteLine("\t\t\t</coordinates>");
-                f.WriteLine("\t\t</LineString>");
-                f.WriteLine("\t</Placemark>");
-
-                //Ahora lo hacemos para el resto
-
-                while (i < listaSMR.Count)
-                {
-                    string Nombre = listaSMR[i].Tracknumber_value.ToString();
-
-                    if (listaNombresCAT10.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
-                    {
-                    }
-
-                    if (listaNombresCAT10.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
-                    {
-                        listaNombresCAT10.Add(Nombre);
-
-                        f.WriteLine("\t<Placemark>");
-                        f.WriteLine("\t\t<name>" + Nombre + "</name>");
-                        f.WriteLine("\t\t <styleUrl>#" + "white" + "</styleUrl>");
-                        f.WriteLine(body[3]);
-                        f.WriteLine("\t\t\t<coordinates>");
-
-                        j = 0;
-                        while (j < listaSMR.Count)
-                        {
-                            if (listaSMR[j].Tracknumber_value.ToString() == Nombre)
-                            {
-                                if (listaSMR[j].PositioninCartesianCoordinates.Length > 0)
-                                {
-                                    double rho = Math.Sqrt((listaSMR[j].X_cartesian) * (listaSMR[j].X_cartesian) + (listaSMR[j].Y_cartesian) * (listaSMR[j].Y_cartesian));
-                                    double theta = (180 / Math.PI) * Math.Atan2(listaSMR[j].X_cartesian, listaSMR[j].Y_cartesian);
-                                    double[] coordenadas = NewCoordinatesSMR(rho, theta);
-
-                                    string latWGS84 = coordenadas[0].ToString();
-                                    string lonWGS84 = coordenadas[1].ToString();
-
-                                    latWGS84 = latWGS84.Replace(",", ".");
-                                    lonWGS84 = lonWGS84.Replace(",", ".");
-
-                                    f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                                }
-
-                                else if (listaSMR[j].MeasuredPositioninPolarCoordinates.Length > 0)
-                                {
-                                    double[] coordenadas = NewCoordinatesMLAT(listaCAT10[j].Rho, listaCAT10[j].Theta);
-
-                                    string latWGS84 = coordenadas[0].ToString();
-                                    string lonWGS84 = coordenadas[1].ToString();
-
-                                    latWGS84 = latWGS84.Replace(",", ".");
-                                    lonWGS84 = lonWGS84.Replace(",", ".");
-
-                                    f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
-                                }
-                            }
-                            j = j + 1;
-                        }
-
-                        f.WriteLine("\t\t\t</coordinates>");
-                        f.WriteLine("\t\t</LineString>");
-                        f.WriteLine("\t</Placemark>");
-                    }
-
-                    i = i + 1;
-                }
-
-                f.WriteLine(" </Document> </kml>");
-                f.Close();
-
-                tb_direction.Text = direccion;
-
-            }
-
-            lb_decoding.Visible = true;
-            lb_decoding.Text = "The file has been decoded successfully.";
-
-            //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         }
+
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    lb_decoding.Visible = true;
+        //    lb_decoding.Text = "DECODING";
+
+        //    if (listaCAT21v23.Count>0)
+        //    {
+        //        // Generamos el nuevo documento
+
+        //        direccion = tb_direction.Text;
+
+        //        int abc1 = tb_direction.Text.Length - 4;
+
+        //        tb_direction.Text = tb_direction.Text.Substring(0, abc1);
+        //        tb_direction.Text = tb_direction.Text + "CAT21v023" + ".kml";
+
+        //        StreamWriter f = File.CreateText(tb_direction.Text);
+
+        //        // Leemos las partes del documento 
+        //        string[] startinglines = File.ReadAllLines("docs/start.txt");
+        //        string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+        //        string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+        //        string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+        //        string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+        //        string[] turquesa_style = File.ReadAllLines("docs/1Turquesa_style.txt");
+        //        string[] body = File.ReadAllLines("docs/body.txt");
+
+
+        //        f.WriteLine(startinglines[0]);
+        //        f.WriteLine(startinglines[1]);
+        //        f.WriteLine(startinglines[2]);
+        //        f.WriteLine("\t<name>" + "CAT21v0.23" + "</name>");
+
+        //        f.WriteLine(blue_style[0]);
+        //        f.WriteLine(blue_style[1]);
+        //        f.WriteLine(blue_style[2]);
+        //        f.WriteLine(blue_style[3]);
+        //        f.WriteLine(blue_style[4]);
+        //        f.WriteLine(blue_style[5]);
+        //        f.WriteLine(blue_style[6]);
+        //        f.WriteLine(blue_style[7]);
+        //        f.WriteLine(blue_style[8]);
+
+        //        f.WriteLine(green_style[0]);
+        //        f.WriteLine(green_style[1]);
+        //        f.WriteLine(green_style[2]);
+        //        f.WriteLine(green_style[3]);
+        //        f.WriteLine(green_style[4]);
+        //        f.WriteLine(green_style[5]);
+        //        f.WriteLine(green_style[6]);
+        //        f.WriteLine(green_style[7]);
+        //        f.WriteLine(green_style[8]);
+
+        //        f.WriteLine(red_style[0]);
+        //        f.WriteLine(red_style[1]);
+        //        f.WriteLine(red_style[2]);
+        //        f.WriteLine(red_style[3]);
+        //        f.WriteLine(red_style[4]);
+        //        f.WriteLine(red_style[5]);
+        //        f.WriteLine(red_style[6]);
+        //        f.WriteLine(red_style[7]);
+        //        f.WriteLine(red_style[8]);
+
+        //        f.WriteLine(white_style[0]);
+        //        f.WriteLine(white_style[1]);
+        //        f.WriteLine(white_style[2]);
+        //        f.WriteLine(white_style[3]);
+        //        f.WriteLine(white_style[4]);
+        //        f.WriteLine(white_style[5]);
+        //        f.WriteLine(white_style[6]);
+        //        f.WriteLine(white_style[7]);
+        //        f.WriteLine(white_style[8]);
+
+        //        f.WriteLine(turquesa_style[0]);
+        //        f.WriteLine(turquesa_style[1]);
+        //        f.WriteLine(turquesa_style[2]);
+        //        f.WriteLine(turquesa_style[3]);
+        //        f.WriteLine(turquesa_style[4]);
+        //        f.WriteLine(turquesa_style[5]);
+        //        f.WriteLine(turquesa_style[6]);
+        //        f.WriteLine(turquesa_style[7]);
+        //        f.WriteLine(turquesa_style[8]);
+
+        //        f.WriteLine(body[0]);
+
+        //        //Codigo para plotear todos los aviones
+        //        //...................................................................................................................... CAT21v23
+
+        //        //Lo hacemos una vez para el primer avion
+
+        //        listaNombresCAT21v23.Clear();
+
+        //        string Nombre1 = listaCAT21v23[0].TargetIdentification_decoded;
+        //        listaNombresCAT21v23.Add(Nombre1);
+
+        //        f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+        //        f.WriteLine("\t\t <styleUrl>#" + "red" + "</styleUrl>");
+        //        f.WriteLine(body[3]);
+        //        f.WriteLine("\t\t\t<coordinates>");
+
+        //        int i = 0;
+        //        while (i < listaCAT21v23.Count)
+        //        {
+        //            if (listaCAT21v23[i].TargetIdentification_decoded == Nombre1 && listaCAT21v23[i].TargetIdentification.Length > 0)
+        //            {
+        //                string latWGS84 = listaCAT21v23[i].latWGS84.ToString();
+        //                string lonWGS84 = listaCAT21v23[i].lonWGS84.ToString();
+
+        //                latWGS84 = latWGS84.Replace(",", ".");
+        //                lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //            }
+        //            i = i + 1;
+        //        }
+
+        //        f.WriteLine("\t\t\t</coordinates>");
+        //        f.WriteLine("\t\t</LineString>");
+        //        f.WriteLine("\t</Placemark>");
+
+        //        //Ahora lo hacemos para el resto
+        //        i = 1;
+        //        while (i < listaCAT21v23.Count)
+        //        {
+        //            string Nombre = listaCAT21v23[i].TargetIdentification_decoded;
+
+        //            if (listaNombresCAT21v23.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+        //            {
+        //                listaNombresCAT21v23.Add(Nombre);
+
+        //                f.WriteLine("\t<Placemark>");
+        //                f.WriteLine("\t\t<name>" + Nombre + "</name>");
+        //                f.WriteLine("\t\t <styleUrl>#" + "red" + "</styleUrl>");
+        //                f.WriteLine(body[3]);
+        //                f.WriteLine("\t\t\t<coordinates>");
+
+        //                int j = 0;
+        //                while (j < listaCAT21v23.Count)
+        //                {
+        //                    if (listaCAT21v23[j].TargetIdentification_decoded == Nombre)
+        //                    {
+        //                        double a = listaCAT21v23[j].latWGS84;
+        //                        double b = listaCAT21v23[j].lonWGS84;
+
+        //                        string latWGS84 = listaCAT21v23[j].latWGS84.ToString();
+        //                        string lonWGS84 = listaCAT21v23[j].lonWGS84.ToString();
+
+        //                        latWGS84 = latWGS84.Replace(",", ".");
+        //                        lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                        if (a != Double.NaN && b != Double.NaN)
+        //                        {
+        //                            f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //                        }
+        //                    }
+        //                    j = j + 1;
+        //                }
+
+        //                f.WriteLine("\t\t\t</coordinates>");
+        //                f.WriteLine("\t\t</LineString>");
+        //                f.WriteLine("\t</Placemark>");
+        //            }
+
+        //            i = i + 1;
+        //        }
+
+
+        //        f.WriteLine(" </Document> </kml>");
+        //        f.Close();
+
+        //        tb_direction.Text = direccion;
+        //    }
+
+        //    //-------------------------------------------------------------------------------------------------------------------------------------------------------------- CAT21
+
+        //    if (listaCAT21.Count > 0)
+        //    {
+        //        // Generamos el nuevo documento
+        //        direccion = tb_direction.Text;
+
+        //        int abc1 = tb_direction.Text.Length  - 4;
+
+        //        tb_direction.Text = tb_direction.Text.Substring(0, abc1);
+        //        tb_direction.Text = tb_direction.Text + "CAT21v21" + ".kml";
+
+        //        StreamWriter f = File.CreateText(tb_direction.Text);
+
+        //        // Leemos las partes del documento 
+        //        string[] startinglines = File.ReadAllLines("docs/start.txt");
+        //        string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+        //        string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+        //        string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+        //        string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+        //        string[] turquesa_style = File.ReadAllLines("docs/1Turquesa_style.txt");
+        //        string[] body = File.ReadAllLines("docs/body.txt");
+
+
+        //        f.WriteLine(startinglines[0]);
+        //        f.WriteLine(startinglines[1]);
+        //        f.WriteLine(startinglines[2]);
+        //        f.WriteLine("\t<name>" + "CAT21v2.1" + "</name>");
+
+        //        f.WriteLine(blue_style[0]);
+        //        f.WriteLine(blue_style[1]);
+        //        f.WriteLine(blue_style[2]);
+        //        f.WriteLine(blue_style[3]);
+        //        f.WriteLine(blue_style[4]);
+        //        f.WriteLine(blue_style[5]);
+        //        f.WriteLine(blue_style[6]);
+        //        f.WriteLine(blue_style[7]);
+        //        f.WriteLine(blue_style[8]);
+
+        //        f.WriteLine(green_style[0]);
+        //        f.WriteLine(green_style[1]);
+        //        f.WriteLine(green_style[2]);
+        //        f.WriteLine(green_style[3]);
+        //        f.WriteLine(green_style[4]);
+        //        f.WriteLine(green_style[5]);
+        //        f.WriteLine(green_style[6]);
+        //        f.WriteLine(green_style[7]);
+        //        f.WriteLine(green_style[8]);
+
+        //        f.WriteLine(red_style[0]);
+        //        f.WriteLine(red_style[1]);
+        //        f.WriteLine(red_style[2]);
+        //        f.WriteLine(red_style[3]);
+        //        f.WriteLine(red_style[4]);
+        //        f.WriteLine(red_style[5]);
+        //        f.WriteLine(red_style[6]);
+        //        f.WriteLine(red_style[7]);
+        //        f.WriteLine(red_style[8]);
+
+        //        f.WriteLine(white_style[0]);
+        //        f.WriteLine(white_style[1]);
+        //        f.WriteLine(white_style[2]);
+        //        f.WriteLine(white_style[3]);
+        //        f.WriteLine(white_style[4]);
+        //        f.WriteLine(white_style[5]);
+        //        f.WriteLine(white_style[6]);
+        //        f.WriteLine(white_style[7]);
+        //        f.WriteLine(white_style[8]);
+
+        //        f.WriteLine(turquesa_style[0]);
+        //        f.WriteLine(turquesa_style[1]);
+        //        f.WriteLine(turquesa_style[2]);
+        //        f.WriteLine(turquesa_style[3]);
+        //        f.WriteLine(turquesa_style[4]);
+        //        f.WriteLine(turquesa_style[5]);
+        //        f.WriteLine(turquesa_style[6]);
+        //        f.WriteLine(turquesa_style[7]);
+        //        f.WriteLine(turquesa_style[8]);
+
+        //        f.WriteLine(body[0]);
+
+        //        listaNombresCAT21.Clear();
+
+        //        string Nombre1 = listaCAT21[0].TargetIdentification_decoded;
+        //        listaNombresCAT21.Add(Nombre1);
+
+        //        f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+        //        f.WriteLine("\t\t <styleUrl>#" + "green" + "</styleUrl>");
+        //        f.WriteLine(body[3]);
+        //        f.WriteLine("\t\t\t<coordinates>");
+
+        //        int i = 0;
+        //        while (i < listaCAT21.Count)
+        //        {
+        //            if (listaCAT21[i].TargetIdentification_decoded == Nombre1)
+        //            {
+        //                string latWGS84 = listaCAT21[i].latWGS84.ToString();
+        //                string lonWGS84 = listaCAT21[i].lonWGS84.ToString();
+
+        //                latWGS84 = latWGS84.Replace(",", ".");
+        //                lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //            }
+        //            i = i + 1;
+        //        }
+
+        //        f.WriteLine("\t\t\t</coordinates>");
+        //        f.WriteLine("\t\t</LineString>");
+        //        f.WriteLine("\t</Placemark>");
+
+        //        //Ahora lo hacemos para el resto
+        //        i = 0;
+        //        while (i < listaCAT21.Count)
+        //        {
+        //            string Nombre = listaCAT21[i].TargetIdentification_decoded;
+
+        //            if (listaNombresCAT21.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
+        //            {
+        //            }
+
+        //            if (listaNombresCAT21.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+        //            {
+        //                listaNombresCAT21.Add(Nombre);
+
+        //                f.WriteLine("\t<Placemark>");
+        //                f.WriteLine("\t\t<name>" + Nombre + "</name>");
+        //                f.WriteLine("\t\t <styleUrl>#" + "green" + "</styleUrl>");
+        //                f.WriteLine(body[3]);
+        //                f.WriteLine("\t\t\t<coordinates>");
+
+        //                int j = 0;
+        //                while (j < listaCAT21.Count)
+        //                {
+        //                    if (listaCAT21[j].TargetIdentification_decoded == Nombre)
+        //                    {
+        //                        string latWGS84 = listaCAT21[j].latWGS84.ToString();
+        //                        string lonWGS84 = listaCAT21[j].lonWGS84.ToString();
+
+        //                        latWGS84 = latWGS84.Replace(",", ".");
+        //                        lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                        if (latWGS84 != "0" && lonWGS84 != "0") { f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84); }
+        //                    }
+        //                    j = j + 1;
+        //                }
+
+        //                f.WriteLine("\t\t\t</coordinates>");
+        //                f.WriteLine("\t\t</LineString>");
+        //                f.WriteLine("\t</Placemark>");
+        //            }
+
+        //            i = i + 1;
+        //        }
+
+        //        f.WriteLine(" </Document> </kml>");
+        //        f.Close();
+
+        //        tb_direction.Text = direccion;
+
+        //    }
+
+        //    //-------------------------------------------------------------------------------------------------------------------------------------------------------------- MLAT
+
+        //    if (listaMLAT.Count > 0)
+        //    {
+        //        // Generamos el nuevo documento
+
+        //        direccion = tb_direction.Text;
+
+        //        int abc1 = tb_direction.Text.Length - 4;
+
+        //        tb_direction.Text = tb_direction.Text.Substring(0, abc1);
+        //        tb_direction.Text = tb_direction.Text + "CAT10MLAT" + ".kml";
+
+        //        StreamWriter f = File.CreateText(tb_direction.Text);
+
+        //        // Leemos las partes del documento 
+        //        string[] startinglines = File.ReadAllLines("docs/start.txt");
+        //        string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+        //        string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+        //        string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+        //        string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+        //        string[] turquesa_style = File.ReadAllLines("docs/1Turquesa_style.txt");
+        //        string[] body = File.ReadAllLines("docs/body.txt");
+
+
+        //        f.WriteLine(startinglines[0]);
+        //        f.WriteLine(startinglines[1]);
+        //        f.WriteLine(startinglines[2]);
+        //        f.WriteLine("\t<name>" + "CAT10 (MLAT)" + "</name>");
+
+        //        f.WriteLine(blue_style[0]);
+        //        f.WriteLine(blue_style[1]);
+        //        f.WriteLine(blue_style[2]);
+        //        f.WriteLine(blue_style[3]);
+        //        f.WriteLine(blue_style[4]);
+        //        f.WriteLine(blue_style[5]);
+        //        f.WriteLine(blue_style[6]);
+        //        f.WriteLine(blue_style[7]);
+        //        f.WriteLine(blue_style[8]);
+
+        //        f.WriteLine(green_style[0]);
+        //        f.WriteLine(green_style[1]);
+        //        f.WriteLine(green_style[2]);
+        //        f.WriteLine(green_style[3]);
+        //        f.WriteLine(green_style[4]);
+        //        f.WriteLine(green_style[5]);
+        //        f.WriteLine(green_style[6]);
+        //        f.WriteLine(green_style[7]);
+        //        f.WriteLine(green_style[8]);
+
+        //        f.WriteLine(red_style[0]);
+        //        f.WriteLine(red_style[1]);
+        //        f.WriteLine(red_style[2]);
+        //        f.WriteLine(red_style[3]);
+        //        f.WriteLine(red_style[4]);
+        //        f.WriteLine(red_style[5]);
+        //        f.WriteLine(red_style[6]);
+        //        f.WriteLine(red_style[7]);
+        //        f.WriteLine(red_style[8]);
+
+        //        f.WriteLine(white_style[0]);
+        //        f.WriteLine(white_style[1]);
+        //        f.WriteLine(white_style[2]);
+        //        f.WriteLine(white_style[3]);
+        //        f.WriteLine(white_style[4]);
+        //        f.WriteLine(white_style[5]);
+        //        f.WriteLine(white_style[6]);
+        //        f.WriteLine(white_style[7]);
+        //        f.WriteLine(white_style[8]);
+
+        //        f.WriteLine(turquesa_style[0]);
+        //        f.WriteLine(turquesa_style[1]);
+        //        f.WriteLine(turquesa_style[2]);
+        //        f.WriteLine(turquesa_style[3]);
+        //        f.WriteLine(turquesa_style[4]);
+        //        f.WriteLine(turquesa_style[5]);
+        //        f.WriteLine(turquesa_style[6]);
+        //        f.WriteLine(turquesa_style[7]);
+        //        f.WriteLine(turquesa_style[8]);
+
+        //        f.WriteLine(body[0]);
+
+        //        listaNombresCAT10.Clear();
+
+        //        int i = 0;
+        //        while (listaMLAT[i].TargetIdentification_decoded == "") { i = i + 1; }
+
+        //        string Nombre1 = listaMLAT[i].TargetIdentification_decoded;
+        //        listaNombresCAT10.Add(Nombre1);
+
+        //        f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+        //        f.WriteLine("\t\t <styleUrl>#" + "blue" + "</styleUrl>");
+        //        f.WriteLine(body[3]);
+        //        f.WriteLine("\t\t\t<coordinates>");
+
+        //        int j = 0;
+        //        while (j < listaMLAT.Count)
+        //        {
+        //            if (listaMLAT[j].TargetIdentification_decoded == Nombre1)
+        //            {
+        //                double rho = Math.Sqrt((listaMLAT[j].X_cartesian) * (listaMLAT[j].X_cartesian) + (listaMLAT[j].Y_cartesian) * (listaMLAT[j].Y_cartesian));
+        //                double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[j].X_cartesian, listaMLAT[j].Y_cartesian);
+        //                double[] coordenadas = NewCoordinatesMLAT(rho, theta);
+
+        //                string latWGS84 = coordenadas[0].ToString();
+        //                string lonWGS84 = coordenadas[1].ToString();
+
+        //                latWGS84 = latWGS84.Replace(",", ".");
+        //                lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //            }
+        //            j = j + 1;
+        //        }
+
+        //        f.WriteLine("\t\t\t</coordinates>");
+        //        f.WriteLine("\t\t</LineString>");
+        //        f.WriteLine("\t</Placemark>");
+
+        //        //Ahora lo hacemos para el resto
+
+        //        while (i < listaMLAT.Count)
+        //        {
+        //            string Nombre = listaMLAT[i].TargetIdentification_decoded;
+
+        //            if (listaNombresCAT10.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
+        //            {
+        //            }
+
+        //            if (listaNombresCAT10.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+        //            {
+        //                listaNombresCAT10.Add(Nombre);
+
+        //                f.WriteLine("\t<Placemark>");
+        //                f.WriteLine("\t\t<name>" + Nombre + "</name>");
+        //                f.WriteLine("\t\t <styleUrl>#" + "blue" + "</styleUrl>");
+        //                f.WriteLine(body[3]);
+        //                f.WriteLine("\t\t\t<coordinates>");
+
+        //                j = 0;
+        //                while (j < listaMLAT.Count)
+        //                {
+        //                    if (listaMLAT[j].TargetIdentification_decoded == Nombre)
+        //                    {
+        //                        double rho = Math.Sqrt((listaMLAT[j].X_cartesian) * (listaMLAT[j].X_cartesian) + (listaMLAT[j].Y_cartesian) * (listaMLAT[j].Y_cartesian));
+        //                        double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[j].X_cartesian, listaMLAT[j].Y_cartesian);
+        //                        double[] coordenadas = NewCoordinatesMLAT(rho, theta);
+
+        //                        string latWGS84 = coordenadas[0].ToString();
+        //                        string lonWGS84 = coordenadas[1].ToString();
+
+        //                        latWGS84 = latWGS84.Replace(",", ".");
+        //                        lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //                    }
+        //                    j = j + 1;
+        //                }
+
+        //                f.WriteLine("\t\t\t</coordinates>");
+        //                f.WriteLine("\t\t</LineString>");
+        //                f.WriteLine("\t</Placemark>");
+        //            }
+
+        //            i = i + 1;
+        //        }
+
+        //        f.WriteLine(" </Document> </kml>");
+        //        f.Close();
+
+        //        tb_direction.Text = direccion;
+        //    }
+
+        //    //-------------------------------------------------------------------------------------------------------------------------------------------------------------- SMR
+
+        //    if (listaSMR.Count > 0)
+        //    {
+        //        // Generamos el nuevo documento
+
+        //        direccion = tb_direction.Text;
+
+        //        int abc1 = tb_direction.Text.Length - 1 - 4;
+
+        //        tb_direction.Text = tb_direction.Text.Substring(0, abc1);
+        //        tb_direction.Text = tb_direction.Text + "CAT10SMR" + ".kml";
+
+        //        StreamWriter f = File.CreateText(tb_direction.Text);
+
+        //        // Leemos las partes del documento 
+        //        string[] startinglines = File.ReadAllLines("docs/start.txt");
+        //        string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+        //        string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+        //        string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+        //        string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+        //        string[] turquesa_style = File.ReadAllLines("docs/1Turquesa_style.txt");
+        //        string[] body = File.ReadAllLines("docs/body.txt");
+
+
+        //        f.WriteLine(startinglines[0]);
+        //        f.WriteLine(startinglines[1]);
+        //        f.WriteLine(startinglines[2]);
+        //        f.WriteLine("\t<name>" + "CAT10 (SMR)" + "</name>");
+
+        //        f.WriteLine(blue_style[0]);
+        //        f.WriteLine(blue_style[1]);
+        //        f.WriteLine(blue_style[2]);
+        //        f.WriteLine(blue_style[3]);
+        //        f.WriteLine(blue_style[4]);
+        //        f.WriteLine(blue_style[5]);
+        //        f.WriteLine(blue_style[6]);
+        //        f.WriteLine(blue_style[7]);
+        //        f.WriteLine(blue_style[8]);
+
+        //        f.WriteLine(green_style[0]);
+        //        f.WriteLine(green_style[1]);
+        //        f.WriteLine(green_style[2]);
+        //        f.WriteLine(green_style[3]);
+        //        f.WriteLine(green_style[4]);
+        //        f.WriteLine(green_style[5]);
+        //        f.WriteLine(green_style[6]);
+        //        f.WriteLine(green_style[7]);
+        //        f.WriteLine(green_style[8]);
+
+        //        f.WriteLine(red_style[0]);
+        //        f.WriteLine(red_style[1]);
+        //        f.WriteLine(red_style[2]);
+        //        f.WriteLine(red_style[3]);
+        //        f.WriteLine(red_style[4]);
+        //        f.WriteLine(red_style[5]);
+        //        f.WriteLine(red_style[6]);
+        //        f.WriteLine(red_style[7]);
+        //        f.WriteLine(red_style[8]);
+
+        //        f.WriteLine(white_style[0]);
+        //        f.WriteLine(white_style[1]);
+        //        f.WriteLine(white_style[2]);
+        //        f.WriteLine(white_style[3]);
+        //        f.WriteLine(white_style[4]);
+        //        f.WriteLine(white_style[5]);
+        //        f.WriteLine(white_style[6]);
+        //        f.WriteLine(white_style[7]);
+        //        f.WriteLine(white_style[8]);
+
+        //        f.WriteLine(turquesa_style[0]);
+        //        f.WriteLine(turquesa_style[1]);
+        //        f.WriteLine(turquesa_style[2]);
+        //        f.WriteLine(turquesa_style[3]);
+        //        f.WriteLine(turquesa_style[4]);
+        //        f.WriteLine(turquesa_style[5]);
+        //        f.WriteLine(turquesa_style[6]);
+        //        f.WriteLine(turquesa_style[7]);
+        //        f.WriteLine(turquesa_style[8]);
+
+        //        f.WriteLine(body[0]);
+
+        //        listaNombresCAT10.Clear();
+
+        //        int i = 0;
+        //        while (listaSMR[i].Tracknumber_value.ToString() == "") { i = i + 1; }
+
+        //        string Nombre1 = listaSMR[i].Tracknumber_value.ToString();
+        //        listaNombresCAT10.Add(Nombre1);
+
+        //        f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+        //        f.WriteLine("\t\t <styleUrl>#" + "white" + "</styleUrl>");
+        //        f.WriteLine(body[3]);
+        //        f.WriteLine("\t\t\t<coordinates>");
+
+        //        int j = 0;
+        //        while (j < listaSMR.Count)
+        //        {
+        //            if (listaSMR[j].Tracknumber_value.ToString() == Nombre1 && listaSMR[j].MeasuredPositioninPolarCoordinates.Length > 0)
+        //            {
+        //                double rho = Math.Sqrt((listaSMR[j].X_cartesian) * (listaSMR[j].X_cartesian) + (listaSMR[j].Y_cartesian) * (listaSMR[j].Y_cartesian));
+        //                double theta = (180 / Math.PI) * Math.Atan2(listaSMR[j].X_cartesian, listaSMR[j].Y_cartesian);
+        //                double[] coordenadas = NewCoordinatesSMR(rho, theta);
+
+        //                string latWGS84 = coordenadas[0].ToString();
+        //                string lonWGS84 = coordenadas[1].ToString();
+
+        //                latWGS84 = latWGS84.Replace(",", ".");
+        //                lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //            }
+        //            j = j + 1;
+        //        }
+
+        //        f.WriteLine("\t\t\t</coordinates>");
+        //        f.WriteLine("\t\t</LineString>");
+        //        f.WriteLine("\t</Placemark>");
+
+        //        //Ahora lo hacemos para el resto
+
+        //        while (i < listaSMR.Count)
+        //        {
+        //            string Nombre = listaSMR[i].Tracknumber_value.ToString();
+
+        //            if (listaNombresCAT10.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
+        //            {
+        //            }
+
+        //            if (listaNombresCAT10.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+        //            {
+        //                listaNombresCAT10.Add(Nombre);
+
+        //                f.WriteLine("\t<Placemark>");
+        //                f.WriteLine("\t\t<name>" + Nombre + "</name>");
+        //                f.WriteLine("\t\t <styleUrl>#" + "white" + "</styleUrl>");
+        //                f.WriteLine(body[3]);
+        //                f.WriteLine("\t\t\t<coordinates>");
+
+        //                j = 0;
+        //                while (j < listaSMR.Count)
+        //                {
+        //                    if (listaSMR[j].Tracknumber_value.ToString() == Nombre)
+        //                    {
+        //                        if (listaSMR[j].PositioninCartesianCoordinates.Length > 0)
+        //                        {
+        //                            double rho = Math.Sqrt((listaSMR[j].X_cartesian) * (listaSMR[j].X_cartesian) + (listaSMR[j].Y_cartesian) * (listaSMR[j].Y_cartesian));
+        //                            double theta = (180 / Math.PI) * Math.Atan2(listaSMR[j].X_cartesian, listaSMR[j].Y_cartesian);
+        //                            double[] coordenadas = NewCoordinatesSMR(rho, theta);
+
+        //                            string latWGS84 = coordenadas[0].ToString();
+        //                            string lonWGS84 = coordenadas[1].ToString();
+
+        //                            latWGS84 = latWGS84.Replace(",", ".");
+        //                            lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                            f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //                        }
+
+        //                        else if (listaSMR[j].MeasuredPositioninPolarCoordinates.Length > 0)
+        //                        {
+        //                            double[] coordenadas = NewCoordinatesMLAT(listaCAT10[j].Rho, listaCAT10[j].Theta);
+
+        //                            string latWGS84 = coordenadas[0].ToString();
+        //                            string lonWGS84 = coordenadas[1].ToString();
+
+        //                            latWGS84 = latWGS84.Replace(",", ".");
+        //                            lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //                            f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+        //                        }
+        //                    }
+        //                    j = j + 1;
+        //                }
+
+        //                f.WriteLine("\t\t\t</coordinates>");
+        //                f.WriteLine("\t\t</LineString>");
+        //                f.WriteLine("\t</Placemark>");
+        //            }
+
+        //            i = i + 1;
+        //        }
+
+        //        f.WriteLine(" </Document> </kml>");
+        //        f.Close();
+
+        //        tb_direction.Text = direccion;
+
+        //    }
+
+        //    //-------------------------------------------------------------------------------------------------------------------------------------------------------------- Calibration Vehicle
+
+        //    if (listaCalibrationDataVehicle.Count > 0)
+        //    {
+        //        // Generamos el nuevo documento
+
+        //        direccion = tb_direction.Text;
+
+        //        int abc1 = tb_direction.Text.Length - 1 - 4;
+
+        //        tb_direction.Text = tb_direction.Text.Substring(0, abc1);
+        //        tb_direction.Text = tb_direction.Text + "CalibrationVehicle" + ".kml";
+
+        //        StreamWriter f = File.CreateText(tb_direction.Text);
+
+        //        // Leemos las partes del documento 
+        //        string[] startinglines = File.ReadAllLines("docs/start.txt");
+        //        string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+        //        string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+        //        string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+        //        string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+        //        string[] turquesa_style = File.ReadAllLines("docs/1Turquesa_style.txt");
+        //        string[] body = File.ReadAllLines("docs/body.txt");
+
+
+        //        f.WriteLine(startinglines[0]);
+        //        f.WriteLine(startinglines[1]);
+        //        f.WriteLine(startinglines[2]);
+        //        f.WriteLine("\t<name>" + "CAT10 (SMR)" + "</name>");
+
+        //        f.WriteLine(blue_style[0]);
+        //        f.WriteLine(blue_style[1]);
+        //        f.WriteLine(blue_style[2]);
+        //        f.WriteLine(blue_style[3]);
+        //        f.WriteLine(blue_style[4]);
+        //        f.WriteLine(blue_style[5]);
+        //        f.WriteLine(blue_style[6]);
+        //        f.WriteLine(blue_style[7]);
+        //        f.WriteLine(blue_style[8]);
+
+        //        f.WriteLine(green_style[0]);
+        //        f.WriteLine(green_style[1]);
+        //        f.WriteLine(green_style[2]);
+        //        f.WriteLine(green_style[3]);
+        //        f.WriteLine(green_style[4]);
+        //        f.WriteLine(green_style[5]);
+        //        f.WriteLine(green_style[6]);
+        //        f.WriteLine(green_style[7]);
+        //        f.WriteLine(green_style[8]);
+
+        //        f.WriteLine(red_style[0]);
+        //        f.WriteLine(red_style[1]);
+        //        f.WriteLine(red_style[2]);
+        //        f.WriteLine(red_style[3]);
+        //        f.WriteLine(red_style[4]);
+        //        f.WriteLine(red_style[5]);
+        //        f.WriteLine(red_style[6]);
+        //        f.WriteLine(red_style[7]);
+        //        f.WriteLine(red_style[8]);
+
+        //        f.WriteLine(white_style[0]);
+        //        f.WriteLine(white_style[1]);
+        //        f.WriteLine(white_style[2]);
+        //        f.WriteLine(white_style[3]);
+        //        f.WriteLine(white_style[4]);
+        //        f.WriteLine(white_style[5]);
+        //        f.WriteLine(white_style[6]);
+        //        f.WriteLine(white_style[7]);
+        //        f.WriteLine(white_style[8]);
+
+        //        f.WriteLine(turquesa_style[0]);
+        //        f.WriteLine(turquesa_style[1]);
+        //        f.WriteLine(turquesa_style[2]);
+        //        f.WriteLine(turquesa_style[3]);
+        //        f.WriteLine(turquesa_style[4]);
+        //        f.WriteLine(turquesa_style[5]);
+        //        f.WriteLine(turquesa_style[6]);
+        //        f.WriteLine(turquesa_style[7]);
+        //        f.WriteLine(turquesa_style[8]);
+
+        //        f.WriteLine(body[0]);
+
+        //        f.WriteLine("\t<Placemark>");
+        //        f.WriteLine("\t\t<name>" + "Calibration Vehicle" + "</name>");
+        //        f.WriteLine("\t\t <styleUrl>#" + "turquesa" + "</styleUrl>");
+        //        f.WriteLine(body[3]);
+        //        f.WriteLine("\t\t\t<coordinates>");
+
+        //        int i = 0;
+        //        while (i < listaCalibrationDataVehicle.Count)
+        //        {
+
+        //            string latWGS84 = (listaCalibrationDataVehicle[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS).ToString();
+        //            string lonWGS84 = (listaCalibrationDataVehicle[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS).ToString();
+
+        //            latWGS84 = latWGS84.Replace(",", ".");
+        //            lonWGS84 = lonWGS84.Replace(",", ".");
+
+        //            f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+
+        //            f.WriteLine("\t\t\t</coordinates>");
+        //            f.WriteLine("\t\t</LineString>");
+        //            f.WriteLine("\t</Placemark>");
+
+        //            i = i + 1;
+        //        }
+
+        //        f.WriteLine(" </Document> </kml>");
+        //        f.Close();
+        //    }
+
+        //    lb_decoding.Visible = true;
+        //    lb_decoding.Text = "The file has been decoded successfully.";
+
+        //    //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        //}
 
         private void textBoxtb_direction_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void bt_Browse_Click(object sender, EventArgs e)
-        {
-            lb_decoding.Visible = true;
-            lb_decoding.Text = "DECODING";
+        //private void bt_Browse_Click(object sender, EventArgs e)
+        //{
+        //    lb_decoding.Visible = true;
+        //    lb_decoding.Text = "DECODING";
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string direccion = saveFileDialog1.FileName;
-                char char1;
-                int i = 0;
-                bool bool1 = false;
-                while (i < direccion.Length && direccion[i] != Convert.ToChar(":") && bool1 == false)
-                {
-                    try
-                    {
-                        char1 = Convert.ToChar(direccion[i]);
-                    }
-                    catch
-                    {
-                        bool1 = true;
-                    }
-                    i = i + 1;
-                }
-                char1 = Convert.ToChar(direccion[i + 1]);
-                char char2 = Convert.ToChar("/");
+        //    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string direccion = saveFileDialog1.FileName;
+        //        char char1;
+        //        int i = 0;
+        //        bool bool1 = false;
+        //        while (i < direccion.Length && direccion[i] != Convert.ToChar(":") && bool1 == false)
+        //        {
+        //            try
+        //            {
+        //                char1 = Convert.ToChar(direccion[i]);
+        //            }
+        //            catch
+        //            {
+        //                bool1 = true;
+        //            }
+        //            i = i + 1;
+        //        }
+        //        char1 = Convert.ToChar(direccion[i + 1]);
+        //        char char2 = Convert.ToChar("/");
 
-                tb_direction.Text = direccion.Replace(char1, char2);
-            }
-
-
-        }
+        //        tb_direction.Text = direccion.Replace(char1, char2);
+        //    }
+        //}
 
         public double toRadians(double grados)
         {
@@ -925,5 +1066,939 @@ namespace ASTERIX
 
         }
 
+        private void pb_Export2CSV_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = ".CSV (CSV(*.csv) | *.csv";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                List<string> outputCsv = new List<string>();
+                outputCsv.Add("TIDENT;TARGET ADDRESS;TRACK NUMBER;TIME;RADAR LOCAL X;RADAR LOCAL Y;ARP HEIGHT;GPS LOCAL X;GPS LOCAL Y;GPS LOCAL Z;ERROR LOCAL X;ERROR LOCAL Y;ERROR LOCAL XY;AREA;GBS;");
+
+                foreach(CAT10 mlat in listaMLAT)
+                {
+                    if (mlat.TOT == "Aircraft." || mlat.TOT == "Undetermined")
+                    {
+                        if (mlat.TOT == "Aircraft." || mlat.TargetAdress_decoded == "342384" || mlat.TargetAdress_decoded == "342387" || mlat.TargetAdress_decoded == "342386" || mlat.TargetAdress_decoded == "342385" || mlat.TargetAdress_decoded == "342383" || mlat.TargetAdress_decoded == "3433D5")
+                        {
+                            string line = "";
+
+                            // TIDENT:
+
+                            if (mlat.TargetIdentification.Length > 0)
+                            {
+                                line += mlat.TargetIdentification_decoded;
+                                line += ";";
+                            }
+                            else
+                            {
+                                line += ";";
+                            }
+
+                            // TARGET ADDRESS
+
+                            if (mlat.TargetAdress.Length > 0)
+                            {
+                                line += mlat.TargetAdress_decoded;
+                                line += ";";
+                            }
+                            else
+                            {
+                                line += ";";
+                            }
+
+                            // TRACK NUMBER
+
+                            if (mlat.TrackNumber.Length > 0)
+                            {
+                                line += mlat.Tracknumber_value.ToString();
+                                line += ";";
+                            }
+                            else
+                            {
+                                line += ";";
+                            }
+
+                            // TIME
+
+                            TimeSpan t = TimeSpan.FromSeconds(mlat.TimeofDay_seconds);
+
+                            line += t.Hours.ToString() + ":" + t.Minutes.ToString() + ":" + Math.Round(Convert.ToDouble(t.Seconds), 3).ToString().Replace(",", ".") + "." + t.Milliseconds.ToString();
+                            line += ";";
+
+                            // RADAR LOCAL X e Y
+
+                            if (mlat.coordSystemCartesian != null)
+                            {
+
+                                line += mlat.coordSystemCartesian.X + ";" + mlat.coordSystemCartesian.Y + ";";
+                            }
+                            else
+                            {
+                                line += ";";
+                            }
+
+                            // ARP HEIGHT
+
+                            line += "53.321;";
+
+                            // GPS LOCAL X, Y y Z
+
+
+                            if (mlat.coordSystemCartesianReference != null)
+                            {
+
+                                line += mlat.coordSystemCartesianReference.X + ";" + mlat.coordSystemCartesianReference.Y + ";" + mlat.coordSystemCartesianReference.Z + ";";
+                            }
+                            else
+                            {
+                                line += "0;0;0;";
+                            }
+
+                            // ERROR LOCAL X, Y y XY
+
+                            line += mlat.errorX.ToString().Replace(";", ".") + ";" + mlat.errorY.ToString().Replace(";", ".") + ";" + mlat.errorXY.ToString().Replace(";", ".") + ";";
+
+                            // AREA
+
+                            line += mlat.zone + ";";
+
+                            // GBS
+
+                            if (mlat.GBS == "Transponder Ground bit not set.")
+                            {
+                                line += "0" + ";";
+                            }
+                            else
+                            {
+                                line += "1" + ";";
+                            }
+
+                            outputCsv.Add(line);
+                        }
+
+                    }
+                }
+
+                
+                File.WriteAllLines(fichero.FileName, outputCsv.ToArray(), System.Text.Encoding.UTF8);
+            }
+        }
+
+        private void pb_Export2KML_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fichero = new SaveFileDialog();
+            fichero.Filter = ".KML (KML(*.kml) | *.kml";
+            if (fichero.ShowDialog() == DialogResult.OK)
+            {
+                //lb_decoding.Visible = true;
+                //lb_decoding.Text = "DECODING";
+
+                if (listaCAT21v23.Count > 0)
+                {
+                    // Generamos el nuevo documento
+
+                    direccion = fichero.FileName;
+
+                    int abc1 = direccion.Length - 4;
+
+                    direccion = direccion.Substring(0, abc1);
+                    direccion = direccion + "CAT21v023" + ".kml";
+
+                    StreamWriter f = File.CreateText(direccion);
+
+                    // Leemos las partes del documento 
+                    string[] startinglines = File.ReadAllLines("docs/start.txt");
+                    string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+                    string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+                    string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+                    string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+                    string[] body = File.ReadAllLines("docs/body.txt");
+
+
+                    f.WriteLine(startinglines[0]);
+                    f.WriteLine(startinglines[1]);
+                    f.WriteLine(startinglines[2]);
+                    f.WriteLine("\t<name>" + "CAT21v0.23" + "</name>");
+
+                    f.WriteLine(blue_style[0]);
+                    f.WriteLine(blue_style[1]);
+                    f.WriteLine(blue_style[2]);
+                    f.WriteLine(blue_style[3]);
+                    f.WriteLine(blue_style[4]);
+                    f.WriteLine(blue_style[5]);
+                    f.WriteLine(blue_style[6]);
+                    f.WriteLine(blue_style[7]);
+                    f.WriteLine(blue_style[8]);
+
+                    f.WriteLine(green_style[0]);
+                    f.WriteLine(green_style[1]);
+                    f.WriteLine(green_style[2]);
+                    f.WriteLine(green_style[3]);
+                    f.WriteLine(green_style[4]);
+                    f.WriteLine(green_style[5]);
+                    f.WriteLine(green_style[6]);
+                    f.WriteLine(green_style[7]);
+                    f.WriteLine(green_style[8]);
+
+                    f.WriteLine(red_style[0]);
+                    f.WriteLine(red_style[1]);
+                    f.WriteLine(red_style[2]);
+                    f.WriteLine(red_style[3]);
+                    f.WriteLine(red_style[4]);
+                    f.WriteLine(red_style[5]);
+                    f.WriteLine(red_style[6]);
+                    f.WriteLine(red_style[7]);
+                    f.WriteLine(red_style[8]);
+
+                    f.WriteLine(white_style[0]);
+                    f.WriteLine(white_style[1]);
+                    f.WriteLine(white_style[2]);
+                    f.WriteLine(white_style[3]);
+                    f.WriteLine(white_style[4]);
+                    f.WriteLine(white_style[5]);
+                    f.WriteLine(white_style[6]);
+                    f.WriteLine(white_style[7]);
+                    f.WriteLine(white_style[8]);
+
+                    f.WriteLine(body[0]);
+
+                    //Codigo para plotear todos los aviones
+                    //...................................................................................................................... CAT21v23
+
+                    //Lo hacemos una vez para el primer avion
+
+                    listaNombresCAT21v23.Clear();
+
+                    string Nombre1 = listaCAT21v23[0].TargetIdentification_decoded;
+                    listaNombresCAT21v23.Add(Nombre1);
+
+                    f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+                    f.WriteLine("\t\t <styleUrl>#" + "red" + "</styleUrl>");
+                    f.WriteLine(body[3]);
+                    f.WriteLine("\t\t\t<coordinates>");
+
+                    int i = 0;
+                    while (i < listaCAT21v23.Count)
+                    {
+                        if (listaCAT21v23[i].TargetIdentification_decoded == Nombre1 && listaCAT21v23[i].TargetIdentification.Length > 0)
+                        {
+                            string latWGS84 = listaCAT21v23[i].latWGS84.ToString();
+                            string lonWGS84 = listaCAT21v23[i].lonWGS84.ToString();
+
+                            latWGS84 = latWGS84.Replace(",", ".");
+                            lonWGS84 = lonWGS84.Replace(",", ".");
+
+                            if (listaCAT21[i].ECAT != "Reserved" && listaCAT21[i].ECAT != "Unmanned aerial vehicle." && listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." &&
+                                listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." && listaCAT21[i].ECAT != "Ultralight/Handglider/Paraglider." && listaCAT21[i].ECAT != "Parachutist/Skydiver." &&
+                                listaCAT21[i].ECAT != "Surface emergency vehicle" && listaCAT21[i].ECAT != "Surface service vehicle" && listaCAT21[i].ECAT != "Fixed ground or tethered obstruction." &&
+                                listaCAT21[i].ECAT != "Cluster obstacle." && listaCAT21[i].ECAT != "Line obstacle." && listaCAT21[i].ECAT != "No ADS-B Emitter Category Information.")
+                            {
+                                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                            }
+                        }
+                        i = i + 1;
+                    }
+
+                    f.WriteLine("\t\t\t</coordinates>");
+                    f.WriteLine("\t\t</LineString>");
+                    f.WriteLine("\t</Placemark>");
+
+                    //Ahora lo hacemos para el resto
+                    i = 1;
+                    while (i < listaCAT21v23.Count)
+                    {
+                        string Nombre = listaCAT21v23[i].TargetIdentification_decoded;
+
+                        if (listaNombresCAT21v23.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+                        {
+                            listaNombresCAT21v23.Add(Nombre);
+
+                            f.WriteLine("\t<Placemark>");
+                            f.WriteLine("\t\t<name>" + Nombre + "</name>");
+                            f.WriteLine("\t\t <styleUrl>#" + "red" + "</styleUrl>");
+                            f.WriteLine(body[3]);
+                            f.WriteLine("\t\t\t<coordinates>");
+
+                            int j = 0;
+                            while (j < listaCAT21v23.Count)
+                            {
+                                if (listaCAT21v23[j].TargetIdentification_decoded == Nombre)
+                                {
+                                    double a = listaCAT21v23[j].latWGS84;
+                                    double b = listaCAT21v23[j].lonWGS84;
+
+                                    string latWGS84 = listaCAT21v23[j].latWGS84.ToString();
+                                    string lonWGS84 = listaCAT21v23[j].lonWGS84.ToString();
+
+                                    latWGS84 = latWGS84.Replace(",", ".");
+                                    lonWGS84 = lonWGS84.Replace(",", ".");
+
+                                    if (a != Double.NaN && b != Double.NaN)
+                                    {
+                                        if (listaCAT21[i].ECAT != "Reserved" && listaCAT21[i].ECAT != "Unmanned aerial vehicle." && listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." &&
+                                                listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." && listaCAT21[i].ECAT != "Ultralight/Handglider/Paraglider." && listaCAT21[i].ECAT != "Parachutist/Skydiver." &&
+                                                listaCAT21[i].ECAT != "Surface emergency vehicle" && listaCAT21[i].ECAT != "Surface service vehicle" && listaCAT21[i].ECAT != "Fixed ground or tethered obstruction." &&
+                                                listaCAT21[i].ECAT != "Cluster obstacle." && listaCAT21[i].ECAT != "Line obstacle." && listaCAT21[i].ECAT != "No ADS-B Emitter Category Information.")
+                                        {
+                                            f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                                        }
+                                    }
+                                }
+                                j = j + 1;
+                            }
+
+                            f.WriteLine("\t\t\t</coordinates>");
+                            f.WriteLine("\t\t</LineString>");
+                            f.WriteLine("\t</Placemark>");
+                        }
+
+                        i = i + 1;
+                    }
+
+
+                    f.WriteLine(" </Document> </kml>");
+                    f.Close();
+
+                    //tb_direction.Text = direccion;
+                }
+
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------------- CAT21
+
+                if (listaCAT21.Count > 0)
+                {
+                    // Generamos el nuevo documento
+                    direccion = fichero.FileName;
+
+                    int abc1 = direccion.Length - 4;
+
+                    direccion = direccion.Substring(0, abc1);
+                    direccion = direccion + "CAT21v21" + ".kml";
+
+                    StreamWriter f = File.CreateText(direccion);
+
+                    // Leemos las partes del documento 
+                    string[] startinglines = File.ReadAllLines("docs/start.txt");
+                    string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+                    string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+                    string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+                    string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+                    string[] body = File.ReadAllLines("docs/body.txt");
+
+
+                    f.WriteLine(startinglines[0]);
+                    f.WriteLine(startinglines[1]);
+                    f.WriteLine(startinglines[2]);
+                    f.WriteLine("\t<name>" + "CAT21v2.1" + "</name>");
+
+                    f.WriteLine(blue_style[0]);
+                    f.WriteLine(blue_style[1]);
+                    f.WriteLine(blue_style[2]);
+                    f.WriteLine(blue_style[3]);
+                    f.WriteLine(blue_style[4]);
+                    f.WriteLine(blue_style[5]);
+                    f.WriteLine(blue_style[6]);
+                    f.WriteLine(blue_style[7]);
+                    f.WriteLine(blue_style[8]);
+
+                    f.WriteLine(green_style[0]);
+                    f.WriteLine(green_style[1]);
+                    f.WriteLine(green_style[2]);
+                    f.WriteLine(green_style[3]);
+                    f.WriteLine(green_style[4]);
+                    f.WriteLine(green_style[5]);
+                    f.WriteLine(green_style[6]);
+                    f.WriteLine(green_style[7]);
+                    f.WriteLine(green_style[8]);
+
+                    f.WriteLine(red_style[0]);
+                    f.WriteLine(red_style[1]);
+                    f.WriteLine(red_style[2]);
+                    f.WriteLine(red_style[3]);
+                    f.WriteLine(red_style[4]);
+                    f.WriteLine(red_style[5]);
+                    f.WriteLine(red_style[6]);
+                    f.WriteLine(red_style[7]);
+                    f.WriteLine(red_style[8]);
+
+                    f.WriteLine(white_style[0]);
+                    f.WriteLine(white_style[1]);
+                    f.WriteLine(white_style[2]);
+                    f.WriteLine(white_style[3]);
+                    f.WriteLine(white_style[4]);
+                    f.WriteLine(white_style[5]);
+                    f.WriteLine(white_style[6]);
+                    f.WriteLine(white_style[7]);
+                    f.WriteLine(white_style[8]);
+
+                    f.WriteLine(body[0]);
+
+                    listaNombresCAT21.Clear();
+
+                    string Nombre1 = listaCAT21[0].TargetIdentification_decoded;
+                    listaNombresCAT21.Add(Nombre1);
+
+                    f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+                    f.WriteLine("\t\t <styleUrl>#" + "green" + "</styleUrl>");
+                    f.WriteLine(body[3]);
+                    f.WriteLine("\t\t\t<coordinates>");
+
+                    int i = 0;
+                    while (i < listaCAT21.Count)
+                    {
+                        if (listaCAT21[i].TargetIdentification_decoded == Nombre1)
+                        {
+                            string latWGS84 = listaCAT21[i].latWGS84.ToString();
+                            string lonWGS84 = listaCAT21[i].lonWGS84.ToString();
+
+                            latWGS84 = latWGS84.Replace(",", ".");
+                            lonWGS84 = lonWGS84.Replace(",", ".");
+
+                            if (listaCAT21[i].ECAT != "Reserved" && listaCAT21[i].ECAT != "Unmanned aerial vehicle." && listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." &&
+                                listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." && listaCAT21[i].ECAT != "Ultralight/Handglider/Paraglider." && listaCAT21[i].ECAT != "Parachutist/Skydiver." &&
+                                listaCAT21[i].ECAT != "Surface emergency vehicle" && listaCAT21[i].ECAT != "Surface service vehicle" && listaCAT21[i].ECAT != "Fixed ground or tethered obstruction." &&
+                                listaCAT21[i].ECAT != "Cluster obstacle." && listaCAT21[i].ECAT != "Line obstacle." && listaCAT21[i].ECAT != "No ADS-B Emitter Category Information.")
+                            {
+                                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                            }
+                        }
+                        i = i + 1;
+                    }
+
+                    f.WriteLine("\t\t\t</coordinates>");
+                    f.WriteLine("\t\t</LineString>");
+                    f.WriteLine("\t</Placemark>");
+
+                    //Ahora lo hacemos para el resto
+                    i = 0;
+                    while (i < listaCAT21.Count)
+                    {
+                        if(listaCAT21[i].TargetIdentification_decoded == "BZ08")
+                        {
+
+                        }
+
+                        string Nombre = listaCAT21[i].TargetIdentification_decoded;
+
+                        if (listaNombresCAT21.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
+                        {
+                        }
+
+                        if (listaNombresCAT21.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+                        {
+                            listaNombresCAT21.Add(Nombre);
+
+                            f.WriteLine("\t<Placemark>");
+                            f.WriteLine("\t\t<name>" + Nombre + "</name>");
+                            f.WriteLine("\t\t <styleUrl>#" + "green" + "</styleUrl>");
+                            f.WriteLine(body[3]);
+                            f.WriteLine("\t\t\t<coordinates>");
+
+                            int j = 0;
+                            while (j < listaCAT21.Count)
+                            {
+                                if (listaCAT21[j].TargetIdentification_decoded == Nombre)
+                                {
+                                    string latWGS84 = listaCAT21[j].latWGS84.ToString();
+                                    string lonWGS84 = listaCAT21[j].lonWGS84.ToString();
+
+                                    latWGS84 = latWGS84.Replace(",", ".");
+                                    lonWGS84 = lonWGS84.Replace(",", ".");
+
+                                    if (listaCAT21[i].ECAT != "Reserved" && listaCAT21[i].ECAT != "Unmanned aerial vehicle." && listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." &&
+                                        listaCAT21[i].ECAT != "Space/Transatmospheric Vehicle." && listaCAT21[i].ECAT != "Ultralight/Handglider/Paraglider." && listaCAT21[i].ECAT != "Parachutist/Skydiver." &&
+                                        listaCAT21[i].ECAT != "Surface emergency vehicle." && listaCAT21[i].ECAT != "Surface service vehicle." && listaCAT21[i].ECAT != "Fixed ground or tethered obstruction." &&
+                                        listaCAT21[i].ECAT != "Cluster obstacle." && listaCAT21[i].ECAT != "Line obstacle." && listaCAT21[i].ECAT != "No ADS-B Emitter Category Information.")
+                                    {
+                                        if (latWGS84 != "0" && lonWGS84 != "0") { f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84); }
+                                    }
+                                }
+                                j = j + 1;
+                            }
+
+                            f.WriteLine("\t\t\t</coordinates>");
+                            f.WriteLine("\t\t</LineString>");
+                            f.WriteLine("\t</Placemark>");
+                        }
+
+                        i = i + 1;
+                    }
+
+                    f.WriteLine(" </Document> </kml>");
+                    f.Close();
+
+                    //tb_direction.Text = direccion;
+
+                }
+
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------------- MLAT
+
+                if (listaMLAT.Count > 0)
+                {
+                    // Generamos el nuevo documento
+
+                    direccion = fichero.FileName;
+
+                    int abc1 = direccion.Length - 4;
+
+                    direccion = direccion.Substring(0, abc1);
+                    direccion = direccion + "CAT10MLAT" + ".kml";
+
+                    StreamWriter f = File.CreateText(direccion);
+
+                    // Leemos las partes del documento 
+                    string[] startinglines = File.ReadAllLines("docs/start.txt");
+                    string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+                    string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+                    string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+                    string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+                    string[] body = File.ReadAllLines("docs/body.txt");
+
+
+                    f.WriteLine(startinglines[0]);
+                    f.WriteLine(startinglines[1]);
+                    f.WriteLine(startinglines[2]);
+                    f.WriteLine("\t<name>" + "CAT10 (MLAT)" + "</name>");
+
+                    f.WriteLine(blue_style[0]);
+                    f.WriteLine(blue_style[1]);
+                    f.WriteLine(blue_style[2]);
+                    f.WriteLine(blue_style[3]);
+                    f.WriteLine(blue_style[4]);
+                    f.WriteLine(blue_style[5]);
+                    f.WriteLine(blue_style[6]);
+                    f.WriteLine(blue_style[7]);
+                    f.WriteLine(blue_style[8]);
+
+                    f.WriteLine(green_style[0]);
+                    f.WriteLine(green_style[1]);
+                    f.WriteLine(green_style[2]);
+                    f.WriteLine(green_style[3]);
+                    f.WriteLine(green_style[4]);
+                    f.WriteLine(green_style[5]);
+                    f.WriteLine(green_style[6]);
+                    f.WriteLine(green_style[7]);
+                    f.WriteLine(green_style[8]);
+
+                    f.WriteLine(red_style[0]);
+                    f.WriteLine(red_style[1]);
+                    f.WriteLine(red_style[2]);
+                    f.WriteLine(red_style[3]);
+                    f.WriteLine(red_style[4]);
+                    f.WriteLine(red_style[5]);
+                    f.WriteLine(red_style[6]);
+                    f.WriteLine(red_style[7]);
+                    f.WriteLine(red_style[8]);
+
+                    f.WriteLine(white_style[0]);
+                    f.WriteLine(white_style[1]);
+                    f.WriteLine(white_style[2]);
+                    f.WriteLine(white_style[3]);
+                    f.WriteLine(white_style[4]);
+                    f.WriteLine(white_style[5]);
+                    f.WriteLine(white_style[6]);
+                    f.WriteLine(white_style[7]);
+                    f.WriteLine(white_style[8]);
+
+                    f.WriteLine(body[0]);
+
+                    listaNombresCAT10.Clear();
+
+                    int i = 0;
+                    while (listaMLAT[i].TargetIdentification_decoded == "") { i = i + 1; }
+
+                    string Nombre1 = listaMLAT[i].TargetIdentification_decoded;
+                    listaNombresCAT10.Add(Nombre1);
+
+                    f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+                    f.WriteLine("\t\t <styleUrl>#" + "blue" + "</styleUrl>");
+                    f.WriteLine(body[3]);
+                    f.WriteLine("\t\t\t<coordinates>");
+
+                    int j = 0;
+                    while (j < listaMLAT.Count)
+                    {
+                        if (listaMLAT[j].TargetIdentification_decoded == Nombre1)
+                        {
+                            double rho = Math.Sqrt((listaMLAT[j].X_cartesian) * (listaMLAT[j].X_cartesian) + (listaMLAT[j].Y_cartesian) * (listaMLAT[j].Y_cartesian));
+                            double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[j].X_cartesian, listaMLAT[j].Y_cartesian);
+                            double[] coordenadas = NewCoordinatesMLAT(rho, theta);
+
+                            string latWGS84 = coordenadas[0].ToString();
+                            string lonWGS84 = coordenadas[1].ToString();
+
+                            latWGS84 = latWGS84.Replace(",", ".");
+                            lonWGS84 = lonWGS84.Replace(",", ".");
+
+                            if (listaMLAT[i].TOT == "Aircraft.")
+                            {
+                                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                            }
+                        }
+                        j = j + 1;
+                    }
+
+                    f.WriteLine("\t\t\t</coordinates>");
+                    f.WriteLine("\t\t</LineString>");
+                    f.WriteLine("\t</Placemark>");
+
+                    //Ahora lo hacemos para el resto
+
+                    while (i < listaMLAT.Count)
+                    {
+                        string Nombre = listaMLAT[i].TargetIdentification_decoded;
+
+                        if (listaNombresCAT10.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
+                        {
+                        }
+
+                        if (listaNombresCAT10.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+                        {
+                            listaNombresCAT10.Add(Nombre);
+
+                            f.WriteLine("\t<Placemark>");
+                            f.WriteLine("\t\t<name>" + Nombre + "</name>");
+                            f.WriteLine("\t\t <styleUrl>#" + "blue" + "</styleUrl>");
+                            f.WriteLine(body[3]);
+                            f.WriteLine("\t\t\t<coordinates>");
+
+                            j = 0;
+                            while (j < listaMLAT.Count)
+                            {
+                                if (listaMLAT[j].TargetIdentification_decoded == Nombre)
+                                {
+                                    double rho = Math.Sqrt((listaMLAT[j].X_cartesian) * (listaMLAT[j].X_cartesian) + (listaMLAT[j].Y_cartesian) * (listaMLAT[j].Y_cartesian));
+                                    double theta = (180 / Math.PI) * Math.Atan2(listaMLAT[j].X_cartesian, listaMLAT[j].Y_cartesian);
+                                    double[] coordenadas = NewCoordinatesMLAT(rho, theta);
+
+                                    string latWGS84 = coordenadas[0].ToString();
+                                    string lonWGS84 = coordenadas[1].ToString();
+
+                                    latWGS84 = latWGS84.Replace(",", ".");
+                                    lonWGS84 = lonWGS84.Replace(",", ".");
+
+                                    if (listaMLAT[i].TOT == "Aircraft.")
+                                    {
+                                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                                    }
+                                }
+                                j = j + 1;
+                            }
+
+                            f.WriteLine("\t\t\t</coordinates>");
+                            f.WriteLine("\t\t</LineString>");
+                            f.WriteLine("\t</Placemark>");
+                        }
+
+                        i = i + 1;
+                    }
+
+                    f.WriteLine(" </Document> </kml>");
+                    f.Close();
+
+                    //tb_direction.Text = direccion;
+                }
+
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------------- SMR
+
+                if (listaSMR.Count > 0)
+                {
+                    // Generamos el nuevo documento
+
+                    direccion = fichero.FileName;
+
+                    int abc1 = direccion.Length - 1 - 4;
+
+                    direccion = direccion.Substring(0, abc1);
+                    direccion = direccion + "CAT10SMR" + ".kml";
+
+                    StreamWriter f = File.CreateText(direccion);
+
+                    // Leemos las partes del documento 
+                    string[] startinglines = File.ReadAllLines("docs/start.txt");
+                    string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+                    string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+                    string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+                    string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+                    string[] body = File.ReadAllLines("docs/body.txt");
+
+
+                    f.WriteLine(startinglines[0]);
+                    f.WriteLine(startinglines[1]);
+                    f.WriteLine(startinglines[2]);
+                    f.WriteLine("\t<name>" + "CAT10 (SMR)" + "</name>");
+
+                    f.WriteLine(blue_style[0]);
+                    f.WriteLine(blue_style[1]);
+                    f.WriteLine(blue_style[2]);
+                    f.WriteLine(blue_style[3]);
+                    f.WriteLine(blue_style[4]);
+                    f.WriteLine(blue_style[5]);
+                    f.WriteLine(blue_style[6]);
+                    f.WriteLine(blue_style[7]);
+                    f.WriteLine(blue_style[8]);
+
+                    f.WriteLine(green_style[0]);
+                    f.WriteLine(green_style[1]);
+                    f.WriteLine(green_style[2]);
+                    f.WriteLine(green_style[3]);
+                    f.WriteLine(green_style[4]);
+                    f.WriteLine(green_style[5]);
+                    f.WriteLine(green_style[6]);
+                    f.WriteLine(green_style[7]);
+                    f.WriteLine(green_style[8]);
+
+                    f.WriteLine(red_style[0]);
+                    f.WriteLine(red_style[1]);
+                    f.WriteLine(red_style[2]);
+                    f.WriteLine(red_style[3]);
+                    f.WriteLine(red_style[4]);
+                    f.WriteLine(red_style[5]);
+                    f.WriteLine(red_style[6]);
+                    f.WriteLine(red_style[7]);
+                    f.WriteLine(red_style[8]);
+
+                    f.WriteLine(white_style[0]);
+                    f.WriteLine(white_style[1]);
+                    f.WriteLine(white_style[2]);
+                    f.WriteLine(white_style[3]);
+                    f.WriteLine(white_style[4]);
+                    f.WriteLine(white_style[5]);
+                    f.WriteLine(white_style[6]);
+                    f.WriteLine(white_style[7]);
+                    f.WriteLine(white_style[8]);
+
+                    f.WriteLine(body[0]);
+
+                    listaNombresCAT10.Clear();
+
+                    int i = 0;
+                    while (listaSMR[i].Tracknumber_value.ToString() == "") { i = i + 1; }
+
+                    string Nombre1 = listaSMR[i].Tracknumber_value.ToString();
+                    listaNombresCAT10.Add(Nombre1);
+
+                    f.WriteLine("\t\t<name>" + Nombre1 + "</name>");
+                    f.WriteLine("\t\t <styleUrl>#" + "white" + "</styleUrl>");
+                    f.WriteLine(body[3]);
+                    f.WriteLine("\t\t\t<coordinates>");
+
+                    int j = 0;
+                    while (j < listaSMR.Count)
+                    {
+                        if (listaSMR[j].Tracknumber_value.ToString() == Nombre1 && listaSMR[j].MeasuredPositioninPolarCoordinates.Length > 0)
+                        {
+                            double rho = Math.Sqrt((listaSMR[j].X_cartesian) * (listaSMR[j].X_cartesian) + (listaSMR[j].Y_cartesian) * (listaSMR[j].Y_cartesian));
+                            double theta = (180 / Math.PI) * Math.Atan2(listaSMR[j].X_cartesian, listaSMR[j].Y_cartesian);
+                            double[] coordenadas = NewCoordinatesSMR(rho, theta);
+
+                            string latWGS84 = coordenadas[0].ToString();
+                            string lonWGS84 = coordenadas[1].ToString();
+
+                            latWGS84 = latWGS84.Replace(",", ".");
+                            lonWGS84 = lonWGS84.Replace(",", ".");
+
+                            if (listaSMR[i].MessageType_decodified == "Target Report")
+                            {
+                                f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                            }
+                        }
+                        j = j + 1;
+                    }
+
+                    f.WriteLine("\t\t\t</coordinates>");
+                    f.WriteLine("\t\t</LineString>");
+                    f.WriteLine("\t</Placemark>");
+
+                    //Ahora lo hacemos para el resto
+
+                    while (i < listaSMR.Count)
+                    {
+                        string Nombre = listaSMR[i].Tracknumber_value.ToString();
+
+                        if (listaNombresCAT10.Contains(Nombre) == true && Nombre != "") // si numero esta ern la lista quiere decir que ya lo hemos dibujado y pasamos al siguiente nombre
+                        {
+                        }
+
+                        if (listaNombresCAT10.Contains(Nombre) == false && Nombre != "") // Si el numero no esta en la lista tenemos que dinujarlo
+                        {
+                            listaNombresCAT10.Add(Nombre);
+
+                            f.WriteLine("\t<Placemark>");
+                            f.WriteLine("\t\t<name>" + Nombre + "</name>");
+                            f.WriteLine("\t\t <styleUrl>#" + "white" + "</styleUrl>");
+                            f.WriteLine(body[3]);
+                            f.WriteLine("\t\t\t<coordinates>");
+
+                            j = 0;
+                            while (j < listaSMR.Count)
+                            {
+                                if (listaSMR[j].Tracknumber_value.ToString() == Nombre)
+                                {
+                                    if (listaSMR[j].PositioninCartesianCoordinates.Length > 0)
+                                    {
+                                        double rho = Math.Sqrt((listaSMR[j].X_cartesian) * (listaSMR[j].X_cartesian) + (listaSMR[j].Y_cartesian) * (listaSMR[j].Y_cartesian));
+                                        double theta = (180 / Math.PI) * Math.Atan2(listaSMR[j].X_cartesian, listaSMR[j].Y_cartesian);
+                                        double[] coordenadas = NewCoordinatesSMR(rho, theta);
+
+                                        string latWGS84 = coordenadas[0].ToString();
+                                        string lonWGS84 = coordenadas[1].ToString();
+
+                                        latWGS84 = latWGS84.Replace(",", ".");
+                                        lonWGS84 = lonWGS84.Replace(",", ".");
+
+                                        if (listaSMR[i].MessageType_decodified == "Target Report")
+                                        {
+                                            f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                                        }
+                                    }
+
+                                    else if (listaSMR[j].MeasuredPositioninPolarCoordinates.Length > 0)
+                                    {
+                                        double[] coordenadas = NewCoordinatesMLAT(listaCAT10[j].Rho, listaCAT10[j].Theta);
+
+                                        string latWGS84 = coordenadas[0].ToString();
+                                        string lonWGS84 = coordenadas[1].ToString();
+
+                                        latWGS84 = latWGS84.Replace(",", ".");
+                                        lonWGS84 = lonWGS84.Replace(",", ".");
+
+                                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+                                    }
+                                }
+                                j = j + 1;
+                            }
+
+                            f.WriteLine("\t\t\t</coordinates>");
+                            f.WriteLine("\t\t</LineString>");
+                            f.WriteLine("\t</Placemark>");
+                        }
+
+                        i = i + 1;
+                    }
+
+                    f.WriteLine(" </Document> </kml>");
+                    f.Close();
+
+                    //tb_direction.Text = direccion;
+                }
+
+                //-------------------------------------------------------------------------------------------------------------------------------------------------------------- Calibration Vehicle
+
+                if (listaCalibrationDataVehicle.Count > 0)
+                {
+                    // Generamos el nuevo documento
+
+                    direccion = fichero.FileName;
+
+                    int abc1 = direccion.Length - 1 - 4;
+
+                    direccion = direccion.Substring(0, abc1);
+                    direccion = direccion + "Calibration Vehicle" + ".kml";
+
+                    StreamWriter f = File.CreateText(direccion);
+
+                    // Leemos las partes del documento 
+                    string[] startinglines = File.ReadAllLines("docs/start.txt");
+                    string[] blue_style = File.ReadAllLines("docs/1Blue_style.txt");
+                    string[] green_style = File.ReadAllLines("docs/1Green_style.txt");
+                    string[] red_style = File.ReadAllLines("docs/1Red_style.txt");
+                    string[] white_style = File.ReadAllLines("docs/1White_style.txt");
+                    string[] turquesa_style = File.ReadAllLines("docs/1Turquesa_style.txt");
+                    string[] body = File.ReadAllLines("docs/body.txt");
+
+
+                    f.WriteLine(startinglines[0]);
+                    f.WriteLine(startinglines[1]);
+                    f.WriteLine(startinglines[2]);
+                    f.WriteLine("\t<name>" + "Calibration Vehicle" + "</name>");
+
+                    f.WriteLine(blue_style[0]);
+                    f.WriteLine(blue_style[1]);
+                    f.WriteLine(blue_style[2]);
+                    f.WriteLine(blue_style[3]);
+                    f.WriteLine(blue_style[4]);
+                    f.WriteLine(blue_style[5]);
+                    f.WriteLine(blue_style[6]);
+                    f.WriteLine(blue_style[7]);
+                    f.WriteLine(blue_style[8]);
+
+                    f.WriteLine(green_style[0]);
+                    f.WriteLine(green_style[1]);
+                    f.WriteLine(green_style[2]);
+                    f.WriteLine(green_style[3]);
+                    f.WriteLine(green_style[4]);
+                    f.WriteLine(green_style[5]);
+                    f.WriteLine(green_style[6]);
+                    f.WriteLine(green_style[7]);
+                    f.WriteLine(green_style[8]);
+
+                    f.WriteLine(red_style[0]);
+                    f.WriteLine(red_style[1]);
+                    f.WriteLine(red_style[2]);
+                    f.WriteLine(red_style[3]);
+                    f.WriteLine(red_style[4]);
+                    f.WriteLine(red_style[5]);
+                    f.WriteLine(red_style[6]);
+                    f.WriteLine(red_style[7]);
+                    f.WriteLine(red_style[8]);
+
+                    f.WriteLine(white_style[0]);
+                    f.WriteLine(white_style[1]);
+                    f.WriteLine(white_style[2]);
+                    f.WriteLine(white_style[3]);
+                    f.WriteLine(white_style[4]);
+                    f.WriteLine(white_style[5]);
+                    f.WriteLine(white_style[6]);
+                    f.WriteLine(white_style[7]);
+                    f.WriteLine(white_style[8]);
+
+                    f.WriteLine(turquesa_style[0]);
+                    f.WriteLine(turquesa_style[1]);
+                    f.WriteLine(turquesa_style[2]);
+                    f.WriteLine(turquesa_style[3]);
+                    f.WriteLine(turquesa_style[4]);
+                    f.WriteLine(turquesa_style[5]);
+                    f.WriteLine(turquesa_style[6]);
+                    f.WriteLine(turquesa_style[7]);
+                    f.WriteLine(turquesa_style[8]);
+
+                    f.WriteLine(body[0]);
+
+                    //f.WriteLine("\t<Placemark>");
+                    f.WriteLine("\t\t<name>" + "Calibration Vehicle" + "</name>");
+                    f.WriteLine("\t\t <styleUrl>#" + "turquesa" + "</styleUrl>");
+                    f.WriteLine(body[3]);
+                    f.WriteLine("\t\t\t<coordinates>");
+
+                    int i = 0;
+                    while (i < listaCalibrationDataVehicle.Count)
+                    {
+
+                        string latWGS84 = (listaCalibrationDataVehicle[i].coordGeodesic.Lat * GeoUtils.RADS2DEGS).ToString();
+                        string lonWGS84 = (listaCalibrationDataVehicle[i].coordGeodesic.Lon * GeoUtils.RADS2DEGS).ToString();
+
+                        latWGS84 = latWGS84.Replace(",", ".");
+                        lonWGS84 = lonWGS84.Replace(",", ".");
+
+                        f.WriteLine("\t\t\t" + lonWGS84 + "," + latWGS84);
+
+                        i = i + 1;
+                    }
+
+                    f.WriteLine("\t\t\t</coordinates>");
+                    f.WriteLine("\t\t</LineString>");
+                    f.WriteLine("\t</Placemark>");
+
+                    f.WriteLine(" </Document> </kml>");
+                    f.Close();
+                }
+
+                //lb_decoding.Visible = true;
+                //lb_decoding.Text = "The file has been decoded successfully.";
+
+                //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+            }
+        }
     }
 }

@@ -36,11 +36,11 @@
             this.btn_mapsimulation = new System.Windows.Forms.Button();
             this.btn_Tables = new System.Windows.Forms.Button();
             this.btn_browsefiles = new System.Windows.Forms.Button();
-            this.btn_Menu = new System.Windows.Forms.Button();
             this.panelLogo = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.panelDesktopPanel = new System.Windows.Forms.Panel();
+            this.bt_Export = new System.Windows.Forms.Button();
             this.panelMenu.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -48,12 +48,12 @@
             // panelMenu
             // 
             this.panelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.panelMenu.Controls.Add(this.bt_Export);
             this.panelMenu.Controls.Add(this.btn_ED_SMR);
             this.panelMenu.Controls.Add(this.btn_ed);
             this.panelMenu.Controls.Add(this.btn_mapsimulation);
             this.panelMenu.Controls.Add(this.btn_Tables);
             this.panelMenu.Controls.Add(this.btn_browsefiles);
-            this.panelMenu.Controls.Add(this.btn_Menu);
             this.panelMenu.Controls.Add(this.panelLogo);
             this.panelMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelMenu.Location = new System.Drawing.Point(0, 0);
@@ -69,7 +69,7 @@
             this.btn_ED_SMR.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ED_SMR.ForeColor = System.Drawing.Color.Gainsboro;
             this.btn_ED_SMR.Image = ((System.Drawing.Image)(resources.GetObject("btn_ED_SMR.Image")));
-            this.btn_ED_SMR.Location = new System.Drawing.Point(0, 453);
+            this.btn_ED_SMR.Location = new System.Drawing.Point(0, 403);
             this.btn_ED_SMR.Name = "btn_ED_SMR";
             this.btn_ED_SMR.Size = new System.Drawing.Size(243, 50);
             this.btn_ED_SMR.TabIndex = 9;
@@ -87,7 +87,7 @@
             this.btn_ed.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_ed.ForeColor = System.Drawing.Color.Gainsboro;
             this.btn_ed.Image = ((System.Drawing.Image)(resources.GetObject("btn_ed.Image")));
-            this.btn_ed.Location = new System.Drawing.Point(0, 403);
+            this.btn_ed.Location = new System.Drawing.Point(0, 353);
             this.btn_ed.Name = "btn_ed";
             this.btn_ed.Size = new System.Drawing.Size(243, 50);
             this.btn_ed.TabIndex = 8;
@@ -105,7 +105,7 @@
             this.btn_mapsimulation.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_mapsimulation.ForeColor = System.Drawing.Color.Gainsboro;
             this.btn_mapsimulation.Image = ((System.Drawing.Image)(resources.GetObject("btn_mapsimulation.Image")));
-            this.btn_mapsimulation.Location = new System.Drawing.Point(0, 353);
+            this.btn_mapsimulation.Location = new System.Drawing.Point(0, 303);
             this.btn_mapsimulation.Name = "btn_mapsimulation";
             this.btn_mapsimulation.Size = new System.Drawing.Size(243, 50);
             this.btn_mapsimulation.TabIndex = 7;
@@ -123,7 +123,7 @@
             this.btn_Tables.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_Tables.ForeColor = System.Drawing.Color.Gainsboro;
             this.btn_Tables.Image = ((System.Drawing.Image)(resources.GetObject("btn_Tables.Image")));
-            this.btn_Tables.Location = new System.Drawing.Point(0, 303);
+            this.btn_Tables.Location = new System.Drawing.Point(0, 253);
             this.btn_Tables.Name = "btn_Tables";
             this.btn_Tables.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btn_Tables.Size = new System.Drawing.Size(243, 50);
@@ -142,7 +142,7 @@
             this.btn_browsefiles.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_browsefiles.ForeColor = System.Drawing.Color.Gainsboro;
             this.btn_browsefiles.Image = ((System.Drawing.Image)(resources.GetObject("btn_browsefiles.Image")));
-            this.btn_browsefiles.Location = new System.Drawing.Point(0, 253);
+            this.btn_browsefiles.Location = new System.Drawing.Point(0, 203);
             this.btn_browsefiles.Name = "btn_browsefiles";
             this.btn_browsefiles.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.btn_browsefiles.Size = new System.Drawing.Size(243, 50);
@@ -152,24 +152,6 @@
             this.btn_browsefiles.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_browsefiles.UseVisualStyleBackColor = true;
             this.btn_browsefiles.Click += new System.EventHandler(this.btn_browsefiles_Click);
-            // 
-            // btn_Menu
-            // 
-            this.btn_Menu.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_Menu.FlatAppearance.BorderSize = 0;
-            this.btn_Menu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Menu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Menu.ForeColor = System.Drawing.Color.Gainsboro;
-            this.btn_Menu.Image = ((System.Drawing.Image)(resources.GetObject("btn_Menu.Image")));
-            this.btn_Menu.Location = new System.Drawing.Point(0, 203);
-            this.btn_Menu.Name = "btn_Menu";
-            this.btn_Menu.Size = new System.Drawing.Size(243, 50);
-            this.btn_Menu.TabIndex = 1;
-            this.btn_Menu.Text = "          Menu";
-            this.btn_Menu.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_Menu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btn_Menu.UseVisualStyleBackColor = true;
-            this.btn_Menu.Click += new System.EventHandler(this.btn_Menu_Click);
             // 
             // panelLogo
             // 
@@ -211,6 +193,24 @@
             this.panelDesktopPanel.Size = new System.Drawing.Size(1661, 965);
             this.panelDesktopPanel.TabIndex = 19;
             // 
+            // bt_Export
+            // 
+            this.bt_Export.Dock = System.Windows.Forms.DockStyle.Top;
+            this.bt_Export.FlatAppearance.BorderSize = 0;
+            this.bt_Export.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bt_Export.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bt_Export.ForeColor = System.Drawing.Color.Gainsboro;
+            this.bt_Export.Image = ((System.Drawing.Image)(resources.GetObject("bt_Export.Image")));
+            this.bt_Export.Location = new System.Drawing.Point(0, 453);
+            this.bt_Export.Name = "bt_Export";
+            this.bt_Export.Size = new System.Drawing.Size(243, 50);
+            this.bt_Export.TabIndex = 10;
+            this.bt_Export.Text = "Export";
+            this.bt_Export.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bt_Export.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.bt_Export.UseVisualStyleBackColor = true;
+            this.bt_Export.Click += new System.EventHandler(this.bt_Export_Click);
+            // 
             // Portada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,7 +232,6 @@
         #endregion
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Panel panelMenu;
-        private System.Windows.Forms.Button btn_Menu;
         private System.Windows.Forms.Panel panelLogo;
         private System.Windows.Forms.Button btn_browsefiles;
         private System.Windows.Forms.Panel panel1;
@@ -242,6 +241,7 @@
         private System.Windows.Forms.Button btn_mapsimulation;
         private System.Windows.Forms.Button btn_Tables;
         private System.Windows.Forms.Button btn_ED_SMR;
+        private System.Windows.Forms.Button bt_Export;
     }
 }
 
